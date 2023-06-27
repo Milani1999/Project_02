@@ -1,0 +1,225 @@
+/* *********************************************Header***********************************************************/
+
+.Navigation {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    height: 60px;
+    width: 100%;
+    z-index: 1000;
+    color: aliceblue;
+}
+
+/* *********************************************Foooter***********************************************************/
+
+
+
+/* *********************************************Home Page****************************************************** */
+
+* {
+    font-family: 'Laila', sans-serif;
+}
+
+.HomeComponent {
+    height: 100vh;
+    text-align: center;
+}
+
+.HomeComponent .item {
+    height: 100vh;
+    opacity: 0.4;
+}
+
+.HomeComponent .centered {
+    position: absolute;
+    top: 20%;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.HomeComponent .h1-heading {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 90px;
+    color: rgb(8, 48, 8);
+}
+
+.HomeComponent .p-centered {
+    font-size: 40px;
+    text-align: center;
+    font-weight: 500;
+    font-weight: bold;
+    color: rgb(8, 48, 8);
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.HomeComponent .btn {
+    font-size: 25px;
+}
+
+
+@media screen and (max-width: 1200px) {
+
+    .HomeComponent .item {
+        height: 100%;
+        width: auto;
+    }
+
+    .HomeComponent .h1-heading {
+        font-size: 80px;
+    }
+
+    .HomeComponent .p-centered {
+        font-size: 30px;
+        padding-top: 30px;
+    }
+
+    .HomeComponent .btn {
+        font-size: 20px;
+        left: 37%;
+        margin-top: 40px;
+    }
+}
+
+
+@media screen and (max-width: 992px) {
+    .HomeComponent .h1-heading {
+        font-size: 60px;
+    }
+
+    .HomeComponent .p-centered {
+        font-size: 30px;
+        padding-top: 30px;
+    }
+
+    .HomeComponent .btn {
+        font-size: 20px;
+        left: 37%;
+        margin-top: 40px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .HomeComponent .item {
+        height: 50vh;
+    }
+
+    .HomeComponent .h1-heading {
+        font-size: 50px;
+        margin-top: 100px;
+    }
+
+    .HomeComponent .p-centered {
+        font-size: 20px;
+        padding-top: 30px;
+    }
+
+    .HomeComponent .btn {
+        font-size: 15px;
+        left: 37%;
+        margin-top: 35px;
+    }
+}
+
+/* *********************************************About us page****************************************************** */
+.AboutComponent {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.AboutComponent .h1-heading {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 50px;
+    color: rgb(8, 48, 8);
+    margin-top: 90px;
+    margin-bottom: 40px;
+}
+
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+@keyframes rotate {
+	100% {
+		transform: rotate(1turn);
+	}
+}
+
+.AboutComponent .row {
+	position: relative;
+	border-radius: 10px;
+	overflow: hidden;
+    border: 5px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 10px;
+	
+	&::before {
+		content: '';
+		position: absolute;
+		z-index: -2;
+		width: 100%;
+		height: 100%;
+		background-color: #399953;
+		background-repeat: no-repeat;
+		background-size: 50% 50%, 50% 50%;
+		background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+		background-image: linear-gradient(#399953, #25492f), linear-gradient(#0bf017, #fbb300), linear-gradient(#589c0a, #03411c), linear-gradient(#0fad64, #022917);
+		animation: rotate 5s linear infinite;
+	}
+	
+	&::after {
+		content: '';
+		position: absolute;
+		z-index: -1;
+		left: 6px;
+		top: 6px;
+		width: calc(100% - 12px);
+		height: calc(100% - 12px);
+		background: white;
+		border-radius: 5px;
+	}
+}
+
+
+
+.AboutComponent .col-sm-9 {
+    font-size: 16px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: justify;
+}
+
+.AboutComponent .col-sm-3 {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.AboutComponent .h4-heading {
+    font-size: 29px;
+    font-weight: bolder;
+}
+
+.AboutComponent img {
+    width: 130px;
+    height: 100px;
+}
+
+
+/* *********************************************Our school****************************************************** */
+
+.SchoolComponent {
+    height: 650px;
+    background-color: rgb(182, 214, 182);
+}
+
+.SchoolComponent .h1-heading {
+    text-align: center;
+    color: rgb(8, 48, 8);
+    font-weight: bolder;
+    font-size: 50px;
+    padding-top: 85px;
+}
