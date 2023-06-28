@@ -1,15 +1,63 @@
-import React from "react";
+import React, { Component } from "react";
+import "./navbar.css";
 
-function Header(){
-return(
-    <div className="Navigation">
-<a href="#HomeComponent">1</a>
-<a href="#AboutComponent">2</a>
-<a href="#SchoolComponent">3</a>
-<a href="">4</a>
-<a href="">5</a>
-    </div>
-)
+
+
+class Navbar extends Component {
+  state = {
+    clicked: false,
+  };
+
+  handleClick = () => {
+    this.setState({ clicked: !this.state.clicked });
+  };
+
+  render() {
+    return (
+      <nav>      
+        <a href="#home" className="logo-link">
+  <img src="images/universal.jpg" alt="logo" />
+</a>
+
+
+        
+        
+        <div>
+          <ul
+            id="navbar"
+            className={this.state.clicked ? "active" : ""}
+            onClick={this.handleClick}
+          >
+            <li>
+              <a href="#Home">Home</a>
+            </li>
+            <li>
+              <a href="#Aboutus">About Us</a>
+            </li>
+            <li className="dropdown">
+              <a href="#OurSchool" className="dropbtn">
+                Our School <i className="fa fa-caret-down"></i>
+              </a>
+              <div className="dropdown-content">
+                <a href="#news">News and Event</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#notice">Notices</a>
+                <a href="#career">Careers</a>
+              </div>
+            </li>
+            <li>
+              <a href="contact">Contact us</a>
+            </li>
+            <li><a href="login">Login</a></li> 
+          </ul>
+        </div>
+
+        <div id="mobile" onClick={this.handleClick}>
+          <i className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
+        </div>
+      </nav>
+    );
+  }
 }
 
-export default Header;
+export default Navbar;
