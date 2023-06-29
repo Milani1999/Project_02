@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./navbar.css";
+import "./header.css";
 
 
 
@@ -16,7 +16,7 @@ class Navbar extends Component {
     return (
       <nav>      
         <a href="#home" className="logo-link">
-  <img src="images/universal.jpg" alt="logo" />
+  <img src="images/uni2.png" alt="logo" />
 </a>
 
 
