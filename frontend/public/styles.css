@@ -213,7 +213,7 @@
 
 .SchoolComponent {
     height: 650px;
-    background-color: rgb(182, 214, 182);
+    background-color: rgb(72, 196, 72);
 }
 
 .SchoolComponent .h1-heading {
@@ -222,4 +222,58 @@
     font-weight: bolder;
     font-size: 50px;
     padding-top: 85px;
+    margin-bottom: 100px;
 }
+
+.SchoolComponent img{
+    margin-top: -80px;
+    width: 100px;
+    height: 100px;
+}
+
+
+.SchoolComponent .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;           
+  }
+  
+  .SchoolComponent .popup-content {
+    position: relative;
+    width: 90%;
+    height: 50%;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .SchoolComponent .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .SchoolComponent .popup-header h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .SchoolComponent .popup-header h1:last-child {
+    cursor: pointer;
+  }
+  
+  .SchoolComponent .closeButton{
+    color: rgb(104, 13, 13);
+  }
+  
