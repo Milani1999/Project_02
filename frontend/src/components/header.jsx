@@ -7,7 +7,7 @@ return(
 <a href="#AboutComponent">2</a>
 <a href="#SchoolComponent">3</a>
 <a href="">4</a>
-<a href="">5</a>
+<a href="#ContactUsComponent">5</a>
     </div>
 )
 }
