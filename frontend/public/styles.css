@@ -284,11 +284,12 @@
 .ContactUsComponent {
     height: 650px;
     overflow: hidden;
+    background-color:rgb(6, 78, 6);
 }
 
 .ContactUsComponent .h1-heading {
     text-align: center;
-    color: rgb(8, 48, 8);
+    color: rgb(242, 243, 242);
     font-weight: bolder;
     font-size: 50px;
     padding-top: 85px;
@@ -304,6 +305,7 @@
 
 table tr td {
     text-align: center;
+    color: rgb(242, 243, 242);
   }
 
 .ContactUsComponent td{
@@ -312,7 +314,7 @@ table tr td {
 }
 
 .ContactUsComponent .Fa-Icon{
-    color: #022917;
+    color: rgb(242, 243, 242);
     font-size: 35px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -324,6 +326,7 @@ table tr td {
     margin-top: 20px;
     margin-bottom: 20px;
     padding-right: 30px;
+    color: rgb(242, 243, 242);
 }
 
 
