@@ -29,13 +29,13 @@ class Navbar extends Component {
             onClick={this.handleClick}
           >
             <li>
-              <a href="#Home">Home</a>
+              <a href="#HomeComponent">Home</a>
             </li>
             <li>
-              <a href="#Aboutus">About Us</a>
+              <a href="#AboutComponent">About Us</a>
             </li>
             <li className="dropdown">
-              <a href="#OurSchool" className="dropbtn">
+              <a href="#SchoolComponent" className="dropbtn">
                 Our School <i className="fa fa-caret-down"></i>
               </a>
               <div className="dropdown-content">

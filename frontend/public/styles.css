@@ -294,12 +294,55 @@
 .ContactUsComponent {
     height: 650px;
     overflow: hidden;
+    background-color:rgb(59, 182, 59);
 }
 
 .ContactUsComponent .h1-heading {
     text-align: center;
-    color: rgb(8, 48, 8);
+    color: rgb(242, 243, 242);
     font-weight: bolder;
     font-size: 50px;
     padding-top: 85px;
+    margin-bottom: 50px;
+}
+
+.ContactUsComponent .col-6,
+.ContactUsComponent table {
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table tr td {
+    text-align: center;
+  }
+
+.ContactUsComponent td{
+    padding: 10px;
+    font-size: 18px;
+}
+
+.ContactUsComponent .Fa-Icon{
+    color: #022917;
+    font-size: 35px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.ContactUsComponent .Fa-Icon-So{
+    color: #022917;
+    font-size: 35px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-right: 30px;
+}
+
+
+.ContactUsComponent .h4-social{
+    margin-top: 50px;
+}
+
+.ContactUsComponent iframe{
+    height: 400px;
+    width: 600px;
 }
