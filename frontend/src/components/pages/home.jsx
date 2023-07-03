@@ -36,7 +36,7 @@ function Home() {
           <p className="p-centered">In a multicultural environment such as ours,
             we instill values of respect and tolerance in our students.
           </p>
-          <button type="button" className="btn btn-success">Know more about us !</button>
+          <a href="#SchoolComponent"><button type="button" className="btn btn-success">Know more about us !</button></a>
         </div>
       </div>
     </div>

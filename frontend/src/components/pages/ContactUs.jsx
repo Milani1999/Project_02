@@ -10,25 +10,27 @@ function ContactUs() {
                 <h1 className="h1-heading">Contact Us</h1>
                 <div className="col-6">
                     <table>
-                        <tr>
-                            <td><FontAwesomeIcon icon={faLocationDot} className="Fa-Icon" /><br />
-                                <b>Universal International School,</b><br />
-                                339/, 51 Akkara 18 Rd,<br />
-                                Balangoda, Sri Lanka.</td>
-                            <td><FontAwesomeIcon icon={faPhone} className="Fa-Icon" /><br />0777810740<br /><br /><br /></td>
-                        </tr>
-                        <tr>
-                            <td><FontAwesomeIcon icon={faGlobe} className="Fa-Icon" /><br /><a href="http://www.uissrilanka.com">www.uissrilanka.com</a></td>
-                            <td><FontAwesomeIcon icon={faEnvelope} className="Fa-Icon" /><br />info@uissrilanka.com</td>
-                        </tr>
-                        <tr>
-                            <td colSpan={2}>
-                                <h4 className="h4-social">Stay Connected With Us!</h4>
-                                <a href="https://www.facebook.com/Universal-International-School-116576195107317/" target="blank"><FontAwesomeIcon icon={faFacebookF} className="Fa-Icon-So" /></a>
-                                <a href="https://www.youtube.com/@universalschool1691" target="blank"><FontAwesomeIcon icon={faYoutube} className="Fa-Icon-So" /></a>
-                                <a href="https://twitter.com/i/flow/login?redirect_after_login=%2F" target="blank"><FontAwesomeIcon icon={faTwitter} className="Fa-Icon-So" /></a>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td><FontAwesomeIcon icon={faLocationDot} className="Fa-Icon" /><br />
+                                    <b>Universal International School,</b><br />
+                                    339/, 51 Akkara 18 Rd,<br />
+                                    Balangoda, Sri Lanka.</td>
+                                <td><FontAwesomeIcon icon={faPhone} className="Fa-Icon" /><br />0777810740<br /><br /><br /></td>
+                            </tr>
+                            <tr>
+                                <td><FontAwesomeIcon icon={faGlobe} className="Fa-Icon" /><br /><a href="http://www.uissrilanka.com">www.uissrilanka.com</a></td>
+                                <td><FontAwesomeIcon icon={faEnvelope} className="Fa-Icon" /><br />info@uissrilanka.com</td>
+                            </tr>
+                            <tr>
+                                <td colSpan={2}>
+                                    <h4 className="h4-social">Stay Connected With Us!</h4>
+                                    <a href="https://www.facebook.com/Universal-International-School-116576195107317/" target="blank"><FontAwesomeIcon icon={faFacebookF} className="Fa-Icon-So" /></a>
+                                    <a href="https://www.youtube.com/@universalschool1691" target="blank"><FontAwesomeIcon icon={faYoutube} className="Fa-Icon-So" /></a>
+                                    <a href="https://twitter.com/i/flow/login?redirect_after_login=%2F" target="blank"><FontAwesomeIcon icon={faTwitter} className="Fa-Icon-So" /></a>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div className="col-6">
