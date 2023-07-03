@@ -294,7 +294,7 @@
 .ContactUsComponent {
     height: 650px;
     overflow: hidden;
-    background-color:rgb(6, 78, 6);
+    background-color:rgb(59, 182, 59);
 }
 
 .ContactUsComponent .h1-heading {
@@ -340,4 +340,9 @@ table tr td {
 
 .ContactUsComponent .h4-social{
     margin-top: 50px;
+}
+
+.ContactUsComponent iframe{
+    height: 400px;
+    width: 600px;
 }
