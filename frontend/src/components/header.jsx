@@ -46,7 +46,7 @@ class Navbar extends Component {
               </div>
             </li>
             <li>
-              <a href="contact">Contact us</a>
+              <a href="#ContactUsComponent">Contact us</a>
             </li>
             <li><a href="login">Login</a></li> 
           </ul>
