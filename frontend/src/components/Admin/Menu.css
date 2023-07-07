@@ -3,26 +3,36 @@
     padding: 0;
     box-sizing: border-box;
   }
-  
+  /*side bar icon menu*/
   Menu{
-width: 100px;
-height:100%;
-background-color: rgb(18, 84, 39);
-display: flex;
-flex-direction:column;
-align-items: center;
-box-shadow: 0px 0px 20px rgba0, 0, 0, 0, 0.4;
+    width: 230px;
+    height:100%;
+    background-color: rgb(18, 84, 39);
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    box-shadow: 0px 0px 20px rgba0, 0, 0, 0, 0.4;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background-color  .2s ease;
+    
+    
+}
+Menu li :hover{
+  background-color:rgb(13, 95, 39);
+  opacity: 5px;
+ 
 
-  }
+}
   Menu img{
-width: 3cm;
+width: 3.5cm;
 padding: 30px;
 display: flex;
 
   }
 
   Menu ul{
-    padding-top: 30px;
+    padding-top: 20px;
     width: 100%;
 display: flex;
 flex-direction: column;
@@ -30,35 +40,44 @@ align-items: center;
   }
   Menu ul li{
     list-style: none;
-    margin: 20px;
+    margin: 12px;
     position: relative;
     color: #a9e9ad;
     width: 100%;
     text-align: center;
+    padding: 8px;
 
   }
   Menu ul li a{
-    position: relative;
-    font-size: 18px;
+   
+    font-size: 17px;
     color: azure;
     text-decoration: none;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
 }
 Menu ul li a:before{
+    position: absolute;
     content: "";
     top: 5px;
-    left:10;
+    left: -18px;
     width:0px;
-    height:18px;
-    background: rgb(32, 155, 42);
-    border-radius: 50%;
-    
+    height:2px;
+    background: rgb(122, 188, 31);
+    border-radius: 40%;
+    -webkit-border-radius: 40%;
+    -moz-border-radius: 40%;
+    -ms-border-radius: 40%;
+    -o-border-radius: 40%;
 }
-Menu ul li a :hover {
+Menu ul li a  :hover {
     color: rgb(122, 188, 31);
 }
-Menu ul li :hover a::before{
-    width: 20;
+Menu ul li a:hover ::before{
+    width: 10px;
     transition: 0.3s;
     -webkit-transition: 0.3s;
     -moz-transition: 0.3s;
@@ -73,3 +92,25 @@ Menu ul li.active a::before{
     transition: all 0.3s;
     
 }
+
+.sidep{
+  font-size: 15px;
+  color: aliceblue;
+  text-align: center;
+  position: relative;
+}
+.sidebar-divider {
+  margin: 10px 0;
+  border-top: 2px solid #a9e9ad;
+  width: 80%; 
+}
+
+@media only screen and (max-width:768px){       
+  Menu{
+    min-width: 150px;
+    width: 150;
+  }
+}
+
+
+
