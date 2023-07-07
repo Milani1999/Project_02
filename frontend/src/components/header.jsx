@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./header.css";
 
 
@@ -14,14 +15,14 @@ class Navbar extends Component {
 
   render() {
     return (
-      <nav>      
+      <nav>
         <a href="#home" className="logo-link">
-  <img src="images/uni2.png" alt="logo" />
-</a>
+          <img src="images/uni2.png" alt="logo" />
+        </a>
 
 
-        
-        
+
+
         <div>
           <ul
             id="navbar"
@@ -29,26 +30,26 @@ class Navbar extends Component {
             onClick={this.handleClick}
           >
             <li>
-              <a href="#HomeComponent">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="#AboutComponent">About Us</a>
+              <Link to="/About">About Us</Link>
             </li>
             <li className="dropdown">
-              <a href="#SchoolComponent" className="dropbtn">
+              <Link to="/School" className="dropbtn">
                 Our School <i className="fa fa-caret-down"></i>
-              </a>
+              </Link>
               <div className="dropdown-content">
-                <a href="#news">News and Event</a>
+                <Link to="/Events">News and Event</Link>
                 <a href="#gallery">Gallery</a>
                 <a href="#notice">Notices</a>
                 <a href="#career">Careers</a>
               </div>
             </li>
             <li>
-              <a href="contact">Contact us</a>
+              <Link to="/Contact">Contact us</Link>
             </li>
-            <li><a href="login">Login</a></li> 
+            <li><Link to="/Administrator">Login</Link></li>
           </ul>
         </div>
 

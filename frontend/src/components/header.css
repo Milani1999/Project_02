@@ -10,6 +10,7 @@ nav {
     font-family: sans-serif;
     position: fixed;
     z-index: 9999;
+    top: 0;
   }
   
   #navbar {
