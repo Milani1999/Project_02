@@ -3,7 +3,7 @@ import Navbar from "./components/header";
 import Home from "./components/pages/home";
 import Footer from "./components/footer";
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import AdminUI from "./components/Admin/AdminUI";
+import Menu from "./components/Admin/Menu";
 import LandingPage from "./components/pages/landinPage";
 import AboutUs from "./components/pages/aboutus";
 import School from "./components/pages/OurSchool";
@@ -23,7 +23,7 @@ function App() {
         <Route path="/School" element={<School />} />
         <Route path="/Events" element={<Events/>} />
         <Route path="/Contact" element={<ContactUs />} />
-        <Route path="/Administrator" element={<AdminUI/>} />
+        <Route path="/Administrator" element={<Menu/>} />
       </Routes>
       <Footer />
     </Router>
