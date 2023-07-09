@@ -1,0 +1,17 @@
+{
+  "name": "edutrack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start":"npx nodemon backend/index.js",
+    "client":"npm start --prefix frontend",
+    "dev":"concurrently \"npm start\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
