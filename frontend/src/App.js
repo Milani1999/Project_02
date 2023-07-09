@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/header';
 import Footer from './components/footer';
-import Menu from "./components/Admin/Menu";
+import AdminApp from "./components/Admin/AdminApp";
 import LandingPage from "./components/pages/landinPage";
 import AboutUs from "./components/pages/aboutus";
 import School from "./components/pages/OurSchool";
@@ -23,7 +23,7 @@ function App() {
           <Route path="/School" element={<School />} />
           <Route path="/Events" element={<Events />} />
           <Route path="/Contact" element={<ContactUs />} />
-          <Route path="/Administrator" element={<Menu />} />
+          <Route path="/Administrator" element={<AdminApp />} />
         </Routes>
         <FooterRoutes/>
       </div>
