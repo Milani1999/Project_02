@@ -1,15 +1,17 @@
-// App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import Navbar from './components/header';
-import Footer from './components/footer';
-import AdminApp from "./components/Admin/AdminApp";
-import LandingPage from "./components/pages/landinPage";
-import AboutUs from "./components/pages/aboutus";
-import School from "./components/pages/OurSchool";
-import ContactUs from "./components/pages/ContactUs";
-import Events from "./components/pages/Events";
-import Home from "./components/pages/home";
+import Navbar from './components/Header/header';
+import Footer from './components/Footer/footer';
+import LandingPage from "./view/LandingPage/landinPage";
+import AboutUs from "./components/section/aboutus";
+import School from "./components/section/OurSchool";
+import ContactUs from "./components/section/ContactUs";
+import Events from "./components/section/Events";
+import Home from "./components/section/home";
+import StudentDetails from './components/Student/student_details';
+import AdminApp from "./components/Admin/AdminApp"
+import './assets/Style/styles.css'
+
 
 function App() {
   return (
@@ -23,42 +25,43 @@ function App() {
           <Route path="/School" element={<School />} />
           <Route path="/Events" element={<Events />} />
           <Route path="/Contact" element={<ContactUs />} />
-          <Route path="/Administrator" element={<AdminApp />} />
+          <Route path="/Students" element={<StudentDetails />} />
+          <Route path="/administrator" element={<AdminApp />} />
         </Routes>
-        <FooterRoutes/>
+        <FooterRoutes />
       </div>
     </Router>
   );
 }
+const excludedPaths = ["/administrator"];
 
 function HeaderRoutes() {
   const location = useLocation();
-  const excludeHeader = location.pathname === '/Administrator';
-
+  const excludeHeader = excludedPaths.includes(location.pathname);
   return (
     <React.Fragment>
-      {!excludeHeader && (
-        <React.Fragment>
-          <Navbar />
-        </React.Fragment>
-      )}
+      {!excludeHeader && <Navbar />}
     </React.Fragment>
   );
 }
 
 function FooterRoutes() {
   const location = useLocation();
-  const excludeFooter = location.pathname === '/Administrator';
-
+  const excludeFooter = excludedPaths.includes(location.pathname);
   return (
     <React.Fragment>
-      {!excludeFooter && (
-        <React.Fragment>
-          <Footer />
-        </React.Fragment>
-      )}
+      {!excludeFooter && <Footer />}
     </React.Fragment>
   );
 }
+
+
+
+
+
+
+
+
+
 
 export default App;

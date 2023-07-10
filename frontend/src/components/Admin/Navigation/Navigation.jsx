@@ -1,6 +1,5 @@
 import Nav from "../NavIcon/Nav";
 import "./Navigation.css";
-import { Link } from 'react-router-dom';
 import { FiChevronLeft } from "react-icons/fi";
 import { TbDashboard } from "react-icons/tb";
 import { VscGraphLine } from "react-icons/vsc";
@@ -8,8 +7,8 @@ import {
   AiOutlineUsergroupAdd,
   AiOutlineDollarCircle,
 } from "react-icons/ai";
-import {  MdSwapHoriz,MdCalendarMonth,MdSpeakerNotes,MdOutlineSettings } from "react-icons/md";
-import {  BiLogOut,BiFile,BiBookOpen } from "react-icons/bi";
+import { MdSwapHoriz, MdCalendarMonth, MdSpeakerNotes, MdOutlineSettings } from "react-icons/md";
+import { BiLogOut, BiFile, BiBookOpen } from "react-icons/bi";
 import { useState } from "react";
 
 const Navigation = () => {
@@ -44,17 +43,17 @@ const Navigation = () => {
         <span>David</span>
       </header>
 
-      <Nav Icon={TbDashboard} title={"Dashboard"}  Link ={"../Dashboard"}/>
+      <Nav Icon={TbDashboard} title={"Dashboard"} />
       <Nav Icon={AiOutlineUsergroupAdd} title={"Users"} />
       <Nav Icon={BiFile} title={"Attendence"} />
       <Nav Icon={BiBookOpen} title={"Curriculum"} />
       <Nav Icon={VscGraphLine} title={"Student Performance"} />
       <Nav Icon={MdCalendarMonth} title={"Event Calender"} />
       <Nav Icon={MdSpeakerNotes} title={"Notices"} />
-      <Nav Icon={AiOutlineDollarCircle} title={"Payments"} /> 
+      <Nav Icon={AiOutlineDollarCircle} title={"Payments"} />
 
       <div className="divider"></div>
-      <Nav Icon={MdOutlineSettings} title={"Settings"} /> 
+      <Nav Icon={MdOutlineSettings} title={"Settings"} />
       <Nav
         Icon={MdSwapHoriz}
         title={darkTheme ? "Switch to Light Theme" : "Switch to Dark Theme"}
