@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function Attendence() {
+function Teacher() {
   return (
     <div>
-      <h1>Attendence</h1>
+      Hiiiiii
     </div>
   )
 }
+
+export default Teacher;
