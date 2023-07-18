@@ -9,9 +9,14 @@ import ContactUs from "./components/section/ContactUs";
 import Events from "./components/section/Events";
 import Home from "./components/section/home";
 import StudentDetails from './components/Student/student_details';
-import AdminApp from "./components/Admin/AdminApp"
+import MainLayout from './components/Administrator/Main/Mainlayout';
+import Dashboard from './components/Administrator/pages/Dashboard';
+import TeacherList  from './components/Administrator/pages/TeacherList';
+import EditTeacher from './components/Administrator/pages/EditTeacher';
+import AddStudent from './components/Administrator/pages/AddStudent';
+import Subject from './components/Administrator/pages/Subject';
 import './assets/Style/styles.css'
-
+import Calender from './components/Administrator/pages/Calender';
 
 function App() {
   return (
@@ -26,7 +31,14 @@ function App() {
           <Route path="/Events" element={<Events />} />
           <Route path="/Contact" element={<ContactUs />} />
           <Route path="/Students" element={<StudentDetails />} />
-          <Route path="/administrator" element={<AdminApp />} />
+          <Route path="/administrator" element={<MainLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="TeacherList" element={<TeacherList />}/>
+            <Route path="editTeacher" element={<EditTeacher />}/>
+            <Route path="AddStudent" element={<AddStudent />}/>
+            <Route path="Subject" element={<Subject />}/>
+            <Route path="calender" element={<Calender />}/>
+         </Route>
         </Routes>
         <FooterRoutes />
       </div>
