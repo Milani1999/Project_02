@@ -1,0 +1,34 @@
+.Popup, .popup-container{
+    background-color: white;
+    border: 2px solid green;
+    width: 1200px;
+    height: 95vh;
+    padding: 25px;
+}
+
+.viewTable td{
+    padding: 5px;
+    text-align: center;
+}
+
+.popup-container-view{
+    background-color: white;
+    border: 2px solid green;
+    padding: 5px 50px;
+    align-items: center;
+}
+
+img{
+    border-radius: 100px;
+}
+
+.popup-container-delete{
+    background-color: white;
+    border: 2px solid green;
+    padding: 30px;
+    text-align: center;
+}
+
+.imgEdit{
+    margin-left: 220px;
+}

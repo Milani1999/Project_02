@@ -1,12 +1,8 @@
 const mongoose = require("mongoose");
-const bcrypt = require('bcrypt');
 
-const studentSchema = new mongoose.Schema({
-    // user: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "User",
-    //     required: true,
-    // },
+const staffSchema = new mongoose.Schema({
+
+
     fullname: {
         type: String,
         required: true,
@@ -56,43 +52,32 @@ const studentSchema = new mongoose.Schema({
         required: true,
     },
 
-    admission_no: {
+    employee_id: {
         type: String,
         required: true,
     },
-    parent_Name: {
+
+    email: {
         type: String,
-    },
-    parent_occupation: {
-        type: String,
-    },
-    admission_year: {
-        type: Date,
         required: true,
     },
-    grade: {
-        type: Number,
+
+    epf_No: {
+        type: String,
+    },
+
+    subjects_taught: {
+        type: String,
         required: true,
     },
-    extra_activities: {
-        type: String,
-        enum: ['games', 'hobbies', 'gardening'],
-    },
-}, {
-    timestamps: true,
-});
 
-studentSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) {
-        next();
-    }
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-});
+    // assigned_classes: {
+    //     type: String,
+    //     required: true,
+    // },
 
-studentSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
-};
+})
+const Staff = new mongoose.model("Staff", staffSchema)
 
-const Student = mongoose.model("Student", studentSchema);
-module.exports = Student;
+module.exports = Staff;
+
