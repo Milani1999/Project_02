@@ -1,0 +1,17 @@
+
+:where(.css-dev-only-do-not-override-1m62vyb).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-1m62vyb).ant-table-wrapper .ant-table-thead >tr>td {
+    position: relative;
+    color: rgba(0, 0, 0, 0.88);
+    font-weight: 600;
+    text-align:center;
+    background: #bde4c5;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s ease;
+    border: 5px;
+    width: 20%;
+}
+.ant-btn-primary {
+    color: #fff;
+    background-color: #a9aaad;
+    box-shadow: 
+}

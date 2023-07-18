@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Space, Table } from 'antd';
+import './TeacherList.css';
 const data = [
   {
     key: '1',
+    Id:"T01",
     name: 'M.Perera',
     age: 32,
     address: 'No 03,Flower road ,Balangode',
@@ -10,18 +12,21 @@ const data = [
   },
   {
     key: '2',
+    Id:"T02",
     name: 'A.Nayana',
     age: 42,
     address: 'Balangoda No. 1 Lake Park',
   },
   {
     key: '3',
+    Id:"T03",
     name: 'A.Prasanna',
     age: 25,
     address: 'No 03,Peradeniya',
   },
   {
     key: '4',
+    Id:"T04",
     name: 'A.M.Amanda',
     age: 32,
     address: 'No 05,Base road,Balangoda',
@@ -47,8 +52,20 @@ const App = () => {
       order: 'descend',
       columnKey: 'age',
     });
+    <Table
+    columns={columns}
+    dataSource={data}
+    bordered
+    
+  />
   };
   const columns = [
+    {
+      title: 'Id',
+      dataIndex: 'Id',
+      key: 'Id',
+      
+    },
     {
       title: 'Name',
       dataIndex: 'name',
@@ -80,7 +97,7 @@ const App = () => {
           marginBottom: 16,
         }}
       >
-        <Button onClick={setAgeSort}>Sort age</Button>
+       
         <Button onClick={clearFilters}>Clear filters</Button>
         <Button onClick={clearAll}>Clear filters and sorters</Button>
       </Space>
