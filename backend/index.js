@@ -1,28 +1,39 @@
 const express = require('express')
 const dotenv = require("dotenv");
 const connectDB = require('./config/db');
-const students = require('./data/students')
-const studentRoutes=require("./routes/studentRoutes");
+const studentRoutes = require("./routes/studentRoutes");
+const userRoutes = require('./routes/userRoutes');
+const staffRoutes = require('./routes/staffRoutes');
+const markRoutes=require('./routes/markRoutes')
+const gradeRoutes=require('./routes/gradeROutes')
+const subjectRoutes=require('./routes/subjectRoutes')
+const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 
 const app = express();
 dotenv.config();
 connectDB();
 
+
+app.use(express.json());
+
 app.get('/', (req, res) => {
   res.send("API is running in PORT ....");
 })
 
-// app.get('/api/students', (req, res) => {
-//   res.json(students);
-// })
+app.use('/api/users', userRoutes);
 
-// app.get('/api/students/:id', (req, res) => {
-//   const student = students.find((n) => n.id === req.params.id);
-//   res.json(student);
-// });
+app.use("/api/students", studentRoutes);
 
-app.use("/api/students",studentRoutes);
+app.use("/api/staff", staffRoutes);
 
+app.use("/api/subjects", subjectRoutes);
+
+app.use("/api/marks", markRoutes);
+
+app.use("/api/grades", gradeRoutes);
+
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(5000, () => {
   console.log("Server started on port 5000");
