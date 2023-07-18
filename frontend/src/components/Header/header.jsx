@@ -47,11 +47,7 @@ class Navbar extends Component {
             <li>
               <a href="contact">Contact us</a>
             </li>
-<<<<<<< Updated upstream:frontend/src/components/header.jsx
-            <li><a href="login">Login</a></li> 
-=======
             <li><Link to="/signIn">Login</Link></li>
->>>>>>> Stashed changes:frontend/src/components/Header/header.jsx
           </ul>
         </div>
 
