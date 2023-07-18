@@ -8,7 +8,6 @@ import AboutUs from "./components/Section/aboutus";
 import School from "./components/Section/OurSchool";
 import ContactUs from "./components/Section/ContactUs";
 import Events from "./View/Events/Events";
-import ScrollToTop from "./components/ScrollToTop";
 import LandingPage from "./View/LandingPage/landinPage";
 import SignIn from "./View/Signin/SignIn";
 
