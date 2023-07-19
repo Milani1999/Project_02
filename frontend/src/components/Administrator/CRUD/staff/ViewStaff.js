@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Form, Button, Container, Alert, Table, Col, Row } from 'react-bootstrap';
+import { Form, Button, Alert, Table, Col, Row } from 'react-bootstrap';
 import Popup from 'reactjs-popup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -96,7 +96,7 @@ const ViewStaff = () => {
 
 
     return (
-        <Container>
+        <div>
             {showSuccessMessage && (
                 <Alert variant="success" onClose={() => setShowSuccessMessage(false)} dismissible>
                     {successMessage}
@@ -105,12 +105,15 @@ const ViewStaff = () => {
             {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
             <Table striped hover className="mt-5">
-                <thead>
+               
                     <tr>
-                        <th>
+                        <th colSpan={7}>
+                        </th>
+                        <th style={{textAlign:'center',width:'100px'}}>
                             <AddStaff />
                         </th>
                     </tr>
+                    <thead>
                     <tr>
                         <th style={{ textAlign: 'center' }}>Profile</th>
                         <th style={{ textAlign: 'center' }}>Employee ID</th>
@@ -425,7 +428,7 @@ const ViewStaff = () => {
                 )}
             </Popup>
 
-        </Container>
+        </div>
     );
 };
 

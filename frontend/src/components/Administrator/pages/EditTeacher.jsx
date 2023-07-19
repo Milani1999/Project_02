@@ -1,9 +1,10 @@
 import React from 'react'
+import ViewStaff from '../CRUD/staff/ViewStaff'
 
 function EditTeacher() {
   return (
     <div>
-      Edit teachers here
+      <ViewStaff/>
     </div>
   )
 }

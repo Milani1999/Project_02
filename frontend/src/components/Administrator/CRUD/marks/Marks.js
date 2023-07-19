@@ -3,7 +3,7 @@ import axios from "axios";
 import { Container, Table, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Marks = () => {
+const ViewStudents = () => {
   const [students, setStudents] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedTerm, setSelectedTerm] = useState("");
@@ -153,4 +153,4 @@ const Marks = () => {
   );
 };
 
-export default Marks;
+export default ViewStudents;

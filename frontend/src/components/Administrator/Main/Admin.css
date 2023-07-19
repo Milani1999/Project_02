@@ -1,6 +1,6 @@
 body {
   font-family: Roboto, sans-serif;
- 
+
 }
 
 .trigger {
@@ -100,7 +100,7 @@ padding: 5px;
 
 }
 main{
-  height: 85vh;
+  height: 80vh;
   overflow-y: scroll;
   background-color: transparent !important;
 }

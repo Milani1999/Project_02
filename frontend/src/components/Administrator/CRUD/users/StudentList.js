@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Table, Button, Row, Col, Alert, Form } from "react-bootstrap";
+import { Table, Button, Row, Col, Alert, Form } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import "react-datepicker/dist/react-datepicker.css";
 import AddStudents from "./AddStudents";
@@ -53,7 +53,7 @@ const ViewStudents = () => {
   };
 
 
-  
+
   const handleEditSubmit = async () => {
     try {
       const { _id, admission_no, ...updatedStudentData } = selectedStudent;
@@ -129,7 +129,7 @@ const ViewStudents = () => {
     : students;
 
   return (
-    <Container>
+    <div>
       {showSuccessMessage && (
         <Alert variant="success" onClose={() => setShowSuccessMessage(false)} dismissible>
           {successMessage}
@@ -137,10 +137,10 @@ const ViewStudents = () => {
       )}
       {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
-      <Table striped hover className="mt-5">
+      <Table striped hover className="mt-5" responsive="sm">
         <thead>
           <tr>
-            <th colSpan={4}>
+            <th colSpan={6}>
               <div>
                 <label htmlFor="gradeSelect">Select Grade: </label>
                 <select id="gradeSelect" value={selectedGrade} onChange={handleGradeChange}>
@@ -153,38 +153,38 @@ const ViewStudents = () => {
                 </select>
               </div>
             </th>
-            <th colSpan={3} style={{ textAlign: 'right' }}>
+            <th style={{ textAlign: 'center', width: '100px' }}>
               <AddStudents />
             </th>
           </tr>
           <tr>
+            <th style={{ textAlign: 'center' }}>Picture</th>
             <th style={{ textAlign: 'center' }}>Admission No</th>
             <th style={{ textAlign: 'center' }}>Admission Date</th>
             <th style={{ textAlign: 'center' }}>Full Name</th>
             <th style={{ textAlign: 'center' }}>Address</th>
             <th style={{ textAlign: 'center' }}>Phone No</th>
-            <th style={{ textAlign: 'center' }}>Picture</th>
             <th style={{ textAlign: 'center' }}>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredStudents.map((student) => (
             <tr key={student._id}>
+              <td style={{ verticalAlign: 'middle' }}>
+                <img src={student.picture} alt="Profile" width="100" height="100" />
+              </td>
               <td style={{ verticalAlign: 'middle' }}>{student.admission_no}</td>
               <td style={{ verticalAlign: 'middle' }}>{new Date(student.admission_year).toLocaleDateString()}</td>
               <td style={{ verticalAlign: 'middle' }}>{student.fullname}</td>
               <td style={{ verticalAlign: 'middle' }}>{student.address}</td>
               <td style={{ verticalAlign: 'middle' }}>{student.phone}</td>
               <td style={{ verticalAlign: 'middle' }}>
-                <img src={student.picture} alt="Profile" width="100" height="100" />
-              </td>
-              <td style={{ verticalAlign: 'middle' }}>
                 <Button variant="info" onClick={() => handleView(student)} className="m-1" style={{ width: '100px' }}>
                   View
-                </Button><br/>
+                </Button><br />
                 <Button variant="success" onClick={() => handleEdit(student)} className="m-1" style={{ width: '100px' }}>
                   Edit
-                </Button><br/>
+                </Button><br />
                 <Button variant="danger" onClick={() => handleDelete(student)} className="m-1" style={{ width: '100px' }}>
                   Delete
                 </Button>
@@ -466,7 +466,7 @@ const ViewStudents = () => {
           </Button>
         </div>
       </Popup>
-    </Container>
+    </div>
   );
 };
 

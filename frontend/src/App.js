@@ -16,8 +16,13 @@ import EditStudent from './components/Administrator/pages/EditStudent';
 import Subject from './components/Administrator/pages/Subject';
 import './assets/Style/styles.css'
 import Calender from './components/Administrator/pages/Calender';
+import Timetable from './components/Administrator/pages/Timetable';
+import Attendence from './components/Administrator/pages/Attendence';
+import Grade from './components/Administrator/pages/Grade';
+import Notices from './components/Administrator/pages/Notices';
 import ViewStaff from './components/Administrator/CRUD/staff/ViewStaff';
 import ViewStudents from './components/Administrator/CRUD/users/StudentList';
+import Marks from './components/Administrator/CRUD/marks/Marks';
 
 function App() {
   return (
@@ -59,7 +64,7 @@ function App() {
 }
 
 const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
-,"/addstudents","/addstaff","/viewstaff","/marks" ];
+,"/addstudents","/addstaff","/viewstaff","/marks","/administrator/EditTeacher","/administrator/EditStudent" ];
 function HeaderRoutes() {
   const location = useLocation();
   const excludeHeader = excludedPaths.includes(location.pathname);
