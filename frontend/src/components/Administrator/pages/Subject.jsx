@@ -42,7 +42,7 @@ const App = () => (
   <>
     <Divider>Subjects</Divider>
     <Space>
-      <Button type="primary">Primary</Button>
+      <Button type="primary">Add Subject</Button>
       
    
     </Space>
