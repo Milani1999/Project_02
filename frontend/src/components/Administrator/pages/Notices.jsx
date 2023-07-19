@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Form, Input, Button, message, Select, Modal } from "antd";
+import { Form, Input, Button, message, Select, Modal, Upload } from "antd";
+import { InboxOutlined } from "@ant-design/icons";
 
 import "./Notices.css";
 
 const { Option } = Select;
+const { Dragger } = Upload;
 
 const Notices = () => {
   const [form] = Form.useForm();
@@ -14,7 +16,16 @@ const Notices = () => {
 
   const handleSubmit = async (values) => {
     try {
-      await axios.post("/api/notices", { ...values, recipientType });
+      const formData = new FormData();
+      formData.append("recipientType", recipientType);
+      formData.append("title", values.title);
+      formData.append("message", values.message);
+      formData.append("file", values.file?.fileList[0]?.originFileObj);
+
+      await axios.post("/api/notices", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
       setIsNoticeSent(true);
       showConfirmationModal();
       form.resetFields();
@@ -39,8 +50,8 @@ const Notices = () => {
 
   return (
     <div className="notice-page">
-      <h1>Send Notice</h1>
-      <Form form={form} onFinish={handleSubmit}>
+      <h1 >Send Notice</h1>
+      <Form form={form} onFinish={handleSubmit} layout="vertical">
         <Form.Item
           label="Recipient Type"
           name="recipientType"
@@ -65,6 +76,19 @@ const Notices = () => {
           rules={[{ required: true, message: "Please enter the message" }]}
         >
           <Input.TextArea placeholder="Enter the message" rows={4} />
+        </Form.Item>
+        <Form.Item
+          label="Attachment"
+          name="file"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => e && e.fileList}
+        >
+          <Dragger name="file" multiple={false}>
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+          </Dragger>
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
