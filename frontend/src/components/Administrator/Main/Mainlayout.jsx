@@ -69,46 +69,23 @@ const MainLayout = () => {
               label: "Users",
               children:[
                 {
-                  key: "Teacher",
+                  key: "EditTeacher",
                   icon: <AiOutlineUser className="fs-4" />,
                   label: "Teacher",
-                  children:[
-                    {
-                      key: "TeacherList",
-                      icon: <FaClipboardList className="fs-4" />,
-                      label: "Teacher List",
-                    },
-                 
-                    {
-                      key: "editTeacher",
-                      icon: <FaClipboardList className="fs-4" />,
-                      label: "Edit Teacher",
-                    },
-                  ]
+                
                 },
+                    
+          
                 {
-                  key: "student",
+                  key: "EditStudent",
                   icon: <AiOutlineUser className="fs-4" />,
                   label: "Student",
-                  children :[
-                    {
-                      key: "StudentList",
-                      icon: <FaClipboardList className="fs-4" />,
-                      label: "Student List",
-                    },
-                    
-                
-                    {
-                      key: "AddStudent",
-                      icon: <FaClipboardList className="fs-4" />,
-                      label: "Edit Student",
-                    },
-                  ]
+                 
                 },
-              ]
+          ],
             },
             {
-              key: "attendence",
+              key: "Attendence",
               icon: <FaClipboardList className="fs-4" />,
               label: "Attendence",
             },
@@ -149,7 +126,7 @@ const MainLayout = () => {
               label: "Event Calender",
             },
             {
-              key: "notices",
+              key: "Notices",
               icon: <FaClipboardList className="fs-4" />,
               label: "Notices",
             },
