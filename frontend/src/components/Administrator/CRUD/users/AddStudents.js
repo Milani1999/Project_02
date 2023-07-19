@@ -126,7 +126,7 @@ function AddStudents() {
 
   return (
     <div>
-      <Button variant="primary" onClick={() => setIsPopupOpen(true)}>
+      <Button variant="primary" onClick={() => setIsPopupOpen(true)} style={{textAlign:'center'}}>
         Add Student
       </Button>
 

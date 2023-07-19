@@ -42,7 +42,7 @@ const MainLayout = () => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
-            <span className="sm-logo"><img src="images/uni2.png"></img></span>
+            <span className="sm-logo"><img src="images/uni2.png" alt="img"></img></span>
             
           </h2>
         </div>
@@ -52,7 +52,7 @@ const MainLayout = () => {
           mode="inline"
           defaultSelectedKeys={[""]}
           onClick={({ key }) => {
-            if (key == "signout") {
+            if (key === "signout") {
             } else {
               navigate(key);
             }
@@ -214,8 +214,8 @@ const MainLayout = () => {
         </Header>
         <Content
           style={{
-            margin: "24px 16px",
-            padding: 24,
+            margin: "2px 16px",
+            padding: "2px 24px",
             minHeight: 280,
             background: colorBgContainer,
           }}
