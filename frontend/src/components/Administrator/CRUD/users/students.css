@@ -28,3 +28,7 @@ img{
     padding: 30px;
     text-align: center;
 }
+
+.mt-5 td{
+    width: 12.5%;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Header/header';
 import Footer from './components/Footer/footer';
@@ -16,12 +16,14 @@ import EditStudent from './components/Administrator/pages/EditStudent';
 import Subject from './components/Administrator/pages/Subject';
 import './assets/Style/styles.css'
 import Calender from './components/Administrator/pages/Calender';
-import ViewStaff from './components/Administrator/CRUD/staff/ViewStaff';
-import ViewStudents from './components/Administrator/CRUD/users/StudentList';
 import Timetable from './components/Administrator/pages/Timetable';
 import Attendence from './components/Administrator/pages/Attendence';
 import Grade from './components/Administrator/pages/Grade';
 import Notices from './components/Administrator/pages/Notices';
+import ViewStaff from './components/Administrator/CRUD/staff/ViewStaff';
+import ViewStudents from './components/Administrator/CRUD/users/StudentList';
+import Marks from './components/Administrator/CRUD/marks/Marks';
+
 function App() {
   return (
     <Router>
@@ -37,7 +39,7 @@ function App() {
           <Route path="/Students" element={<StudentDetails />} />
 
 
-
+          <Route path="marks" element={<Marks/>}/>
           <Route path="/viewstaff" element={<ViewStaff/>}/>
           <Route path="/viewstudents" element={<ViewStudents/>}/>
 
@@ -60,11 +62,17 @@ function App() {
     </Router>
   );
 }
-const excludedPaths = ["/administrator","/viewstaff","/viewstudents"];
 
+const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
+,"/addstudents","/addstaff","/viewstaff","/marks","/administrator/EditTeacher","/administrator/EditStudent" ];
 function HeaderRoutes() {
   const location = useLocation();
   const excludeHeader = excludedPaths.includes(location.pathname);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   return (
     <React.Fragment>
       {!excludeHeader && <Navbar />}
@@ -75,6 +83,11 @@ function HeaderRoutes() {
 function FooterRoutes() {
   const location = useLocation();
   const excludeFooter = excludedPaths.includes(location.pathname);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   return (
     <React.Fragment>
       {!excludeFooter && <Footer />}
