@@ -1,0 +1,18 @@
+/* Timetable.css */
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .filter-select {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter-select span {
+    margin-right: 0.5rem;
+  }
+  
+
+  

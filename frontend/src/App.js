@@ -11,15 +11,17 @@ import Home from "./components/section/home";
 import StudentDetails from './components/Student/student_details';
 import MainLayout from './components/Administrator/Main/Mainlayout';
 import Dashboard from './components/Administrator/pages/Dashboard';
-import TeacherList from './components/Administrator/pages/TeacherList';
 import EditTeacher from './components/Administrator/pages/EditTeacher';
-import AddStudent from './components/Administrator/pages/AddStudent';
+import EditStudent from './components/Administrator/pages/EditStudent';
 import Subject from './components/Administrator/pages/Subject';
 import './assets/Style/styles.css'
 import Calender from './components/Administrator/pages/Calender';
 import ViewStaff from './components/Administrator/CRUD/staff/ViewStaff';
 import ViewStudents from './components/Administrator/CRUD/users/StudentList';
-
+import Timetable from './components/Administrator/pages/Timetable';
+import Attendence from './components/Administrator/pages/Attendence';
+import Grade from './components/Administrator/pages/Grade';
+import Notices from './components/Administrator/pages/Notices';
 function App() {
   return (
     <Router>
@@ -42,13 +44,15 @@ function App() {
 
           <Route path="/administrator" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="TeacherList" element={<TeacherList />} />
-            <Route path="editTeacher" element={<EditTeacher />} />
-            <Route path="AddStudent" element={<AddStudent />} />
+       
+            <Route path="EditTeacher" element={<EditTeacher />} />
+            <Route path="EditStudent" element={<EditStudent />} />
             <Route path="Subject" element={<Subject />} />
             <Route path="calender" element={<Calender />} />
-
-
+            <Route path="Timetable" element={<Timetable />} />
+            <Route path="Attendence" element={<Attendence />} />
+            <Route path="Grade" element={<Grade />} />
+            <Route path="Notices" element={<Notices />} />
           </Route>
         </Routes>
         <FooterRoutes />

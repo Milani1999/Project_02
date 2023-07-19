@@ -1,0 +1,21 @@
+.notice-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .notice-page h1 {
+    margin-bottom: 20px;
+  }
+  
+  .notice-page .ant-form-item {
+    margin-bottom: 16px;
+  }
+  
+  .notice-page .ant-form-item-label {
+    text-align: left;
+  }
+  
+  .notice-page .ant-btn {
+    margin-top: 10px;
+  }
