@@ -6,7 +6,7 @@ import LandingPage from "./view/LandingPage/landinPage";
 import AboutUs from "./components/section/aboutus";
 import School from "./components/section/OurSchool";
 import ContactUs from "./components/section/ContactUs";
-import Events from "./components/section/Events";
+import Events from "./view/Events/Events";
 import Home from "./components/section/home";
 import StudentDetails from './components/Student/student_details';
 import MainLayout from './components/Administrator/Main/Mainlayout';
@@ -23,6 +23,7 @@ import Notices from './components/Administrator/pages/Notices';
 import ViewStaff from './components/Administrator/CRUD/staff/ViewStaff';
 import ViewStudents from './components/Administrator/CRUD/users/StudentList';
 import Marks from './components/Administrator/CRUD/marks/Marks';
+import SignIn from './view/Signin/SignIn';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/Events" element={<Events />} />
           <Route path="/Contact" element={<ContactUs />} />
           <Route path="/Students" element={<StudentDetails />} />
+          <Route path="/Login" element={<SignIn />} />
 
 
           <Route path="marks" element={<Marks/>}/>
