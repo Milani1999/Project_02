@@ -1,0 +1,51 @@
+*{
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card-container{
+  width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0px 10px 8px #999;
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  background-color: white;
+  height: fit-content;
+  /* box-shadow: none !important; */
+}
+
+.css-887cpn-MuiPaper-root{
+  box-shadow: none !important;
+}
+.card-container:hover{
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.card-img{
+  height: 250px;
+  width: 100%;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.card-title,
+.card-desc{
+  margin: 0.5rem 5%;
+}
+
+.card-btn{
+  text-align: center;
+  width: 90%;
+  border-radius: 5px;
+  border-radius: 0.5rem 1rem;
+  background-color: darkgreen;
+  color: antiquewhite;
+  text-decoration: none;
+  margin: 0.5rem auto;
+  
+}.card-btn:hover{
+  text-decoration: none !important;
+  color: #999;
+}
