@@ -37,6 +37,7 @@ const MainLayout = () => {
       },
     });
   };
+  
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -104,14 +105,15 @@ const MainLayout = () => {
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Grade",
                 },
+              ],
+            },
                 {
                   key: "Timetable",
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Timetable",
                 },
-              
-              ],
-            },
+            
+            
             
           
             {
@@ -121,9 +123,21 @@ const MainLayout = () => {
              
             },
             {
-              key: "calender",
+              key: "Events",
               icon: <RiCalendar2Line className="fs-4" />,
-              label: "Event Calender",
+              label: "Events",
+              children: [
+                {
+                  key: "calender",
+                  icon: <RiCalendarCheckFill className="fs-4" />,
+                  label: "Event Calendar",
+                },
+                {
+                  key: "Grade",
+                  icon: <RiCalendarCheckFill className="fs-4" />,
+                  label: "Edit Events",
+                },
+              ],
             },
             {
               key: "Notices",
@@ -154,6 +168,7 @@ const MainLayout = () => {
               onClick: () => setCollapsed(!collapsed),
             }
           )}
+          
           <div className="d-flex gap-4 align-items-center">
           <div className="position-relative"> <RiMoonLine className="fs-4" /></div>
             <div className="position-relative">
@@ -211,6 +226,7 @@ const MainLayout = () => {
      
     </>
           </div>
+          
         </Header>
         <Content
           style={{

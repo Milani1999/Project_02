@@ -49,6 +49,7 @@ function App() {
        
             <Route path="EditTeacher" element={<EditTeacher />} />
             <Route path="EditStudent" element={<EditStudent />} />
+            
             <Route path="Subject" element={<Subject />} />
             <Route path="calender" element={<Calender />} />
             <Route path="Timetable" element={<Timetable />} />
