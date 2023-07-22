@@ -1,236 +1,227 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Table, Button, Modal, Form, Input, Select } from "antd";
+import React, { useState, useEffect } from 'react';
+import './Timetable.css';
+import axios from 'axios';
+const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
-import "./Timetable.css";
+const availableSubjects = [
+  'Math',
+  'Science',
+  'English',
+  'History',
+  'Art',
+  'Music',
+  'Physical Education',
+];
 
-const { Option } = Select;
+const availableTeachers = [
+  'Mr. Perera',
+  'Ms. Kamali',
+  'Mrs. Amali',
+  'Mr. Sara',
+  'Ms. Dayana',
+  'Mr. Dias',
+  'Mrs. Roshini',
+];
+
+const grades = [
+  
+  {
+    name: 'Grade 1',
+    
+    timetable: [
+      
+      ['8:00 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: 'Science', teacher: 'Ms. Kamali' }, { subject: 'English', teacher: 'Mrs. Amali' }, { subject: 'History', teacher: 'Mr. Sara' }, { subject: 'Art', teacher: 'Ms. Dayana' }],
+      ['8:30 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['9:00 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['9:30 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['10:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['11:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['11:30 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['12:00 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+     
+    ],
+  },
+  {
+    name: 'Grade 2',
+    timetable: [
+      ['8:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: 'Math', teacher: 'Mrs. Roshini' }, { subject: 'English', teacher: 'Ms. Kamali' }, { subject: 'Art', teacher: 'Mr. Dias' }, { subject: 'Physical Education', teacher: 'Ms. Dayana' }],
+      ['8:30 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['9:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['9:30 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['9:30 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['10:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['10:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+      ['10:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
+    ],
+  },
+];
 
 const Timetable = () => {
-  const [classes, setClasses] = useState([]);
-  const [subjects, setSubjects] = useState([]);
-  const [teachers, setTeachers] = useState([]);
-  const [timetables, setTimetables] = useState([]);
-  const [selectedClass, setSelectedClass] = useState("");
-  const [selectedTimeRange, setSelectedTimeRange] = useState("");
-  const [selectedTeacher, setSelectedTeacher] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [form] = Form.useForm();
+  const [selectedGrade, setSelectedGrade] = useState(grades[0]);
+  const [timetableData, setTimetableData] = useState(selectedGrade.timetable);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCellData, setSelectedCellData] = useState(null);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    fetchClasses();
-    fetchSubjects();
-    fetchTeachers();
-    fetchTimetables();
+    fetchTimetableData();
   }, []);
 
-  const fetchClasses = async () => {
+  const fetchTimetableData = async () => {
     try {
-      const response = await axios.get("/api/classes");
-      setClasses(response.data);
+      const response = await axios.get('/api/timetable');
+      if (response.data && response.data.length > 0) {
+        setSelectedGrade(response.data[0]);
+        setTimetableData(response.data[0].timetable);
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching timetable data:', error);
     }
   };
 
-  const fetchSubjects = async () => {
+  const handleCellUpdate = async () => {
     try {
-      const response = await axios.get("/api/subjects");
-      setSubjects(response.data);
+      const updatedTimetableData = [...timetableData];
+      updatedTimetableData[selectedCellData.timeIndex][
+        daysOfWeek.indexOf(selectedCellData.day) + 1
+      ] = {
+        subject: selectedCellData.subject,
+        teacher: selectedCellData.teacher,
+      };
+      setTimetableData(updatedTimetableData);
+      setShowModal(false);
+      setPopupMessage('Timetable updated successfully!');
+      setShowPopup(true);
+
+      await axios.post('/api/timetable', {
+        grade: selectedGrade.name,
+        timetable: updatedTimetableData,
+      });
     } catch (error) {
-      console.error(error);
+      console.error('Error updating timetable data:', error);
     }
   };
 
-  const fetchTeachers = async () => {
-    try {
-      const response = await axios.get("/api/teachers");
-      setTeachers(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+  const closePopup = () => {
+    setShowPopup(false);
   };
 
-  const fetchTimetables = async () => {
-    try {
-      const response = await axios.get("/api/timetables");
-      setTimetables(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+  const handleGradeSelect = (e) => {
+    const selectedGradeName = e.target.value;
+    const grade = grades.find((grade) => grade.name === selectedGradeName);
+    setSelectedGrade(grade);
+    setTimetableData(grade.timetable);
   };
 
-  const handleClassChange = (value) => {
-    setSelectedClass(value);
-    setSelectedTimeRange("");
-    setSelectedTeacher("");
+  const handleCellClick = (cellData, rowIndex, colIndex) => {
+    setSelectedCellData({
+      subject: cellData.subject,
+      teacher: cellData.teacher,
+      day: daysOfWeek[colIndex - 1],
+      timeIndex: rowIndex,
+    });
+    setShowModal(true);
   };
-
-  const handleModalOpen = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-    form.resetFields();
-  };
-
-  const handleFormSubmit = async (values) => {
-    const timetableData = {
-      class: selectedClass,
-      subject: values.subject,
-      day: values.day,
-      time: values.time,
-      teacher: values.teacher,
-    };
-
-    try {
-      await axios.post("/api/timetables", timetableData);
-      fetchTimetables();
-      handleModalClose();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const columns = [
-    {
-      title: "Class",
-      dataIndex: "class",
-      key: "class",
-      filters: classes.map((cls) => ({ text: cls.name, value: cls.id })),
-      onFilter: (value, record) => record.class === value,
-    },
-    {
-      title: "Subject",
-      dataIndex: "subject",
-      key: "subject",
-      filters: subjects.map((subject) => ({ text: subject.name, value: subject.id })),
-      onFilter: (value, record) => record.subject === value,
-    },
-    {
-      title: "Day",
-      dataIndex: "day",
-      key: "day",
-    },
-    {
-      title: "Time",
-      dataIndex: "time",
-      key: "time",
-      filters: [
-        { text: "Morning", value: "morning" },
-        { text: "Afternoon", value: "afternoon" },
-        { text: "Evening", value: "evening" },
-      ],
-      onFilter: (value, record) => record.time.toLowerCase().includes(value),
-    },
-    {
-      title: "Teacher",
-      dataIndex: "teacher",
-      key: "teacher",
-      filters: teachers.map((teacher) => ({ text: teacher.name, value: teacher.id })),
-      onFilter: (value, record) => record.teacher === value,
-    },
-  ];
-
-  const filteredTimetables = timetables.filter(
-    (timetable) =>
-      (!selectedClass || timetable.class === selectedClass) &&
-      (!selectedTimeRange ||
-        timetable.time.toLowerCase().includes(selectedTimeRange)) &&
-      (!selectedTeacher || timetable.teacher === selectedTeacher)
-  );
 
   return (
-    <div>
-      <h3 className="mb-4 title">Timetable</h3>
-      <div className="filter-container">
-        <div className="filter-select">
-          <span>Class:</span>
-          <select onChange={(e) => handleClassChange(e.target.value)}>
-            <option value="">01</option>
-            <option value="">02</option>
-            {classes.map((cls) => (
-              <option value={cls.id} key={cls.id}>
-                {cls.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="filter-select">
-          <span>Time Range:</span>
-          <select onChange={(e) => setSelectedTimeRange(e.target.value)}>
-            <option value="">All</option>
-            <option value="morning">Morning</option>
-            <option value="afternoon">Afternoon</option>
-            <option value="evening">Evening</option>
-          </select>
-        </div>
-        <div className="filter-select">
-          <span>Teacher:</span>
-          <select onChange={(e) => setSelectedTeacher(e.target.value)}>
-            <option value="">All</option>
-            {teachers.map((teacher) => (
-              <option value={teacher.id} key={teacher.id}>
-                {teacher.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <Button type="primary" onClick={handleModalOpen}>
-          Add Timetable
-        </Button>
+    <div className="timetable-container">
+      <h1><center>Timetable</center></h1>
+      <div className="grade-selection">
+        <label htmlFor="grade">Select Grade:</label>
+        <select id="grade" value={selectedGrade.name} onChange={handleGradeSelect}>
+          {grades.map((grade) => (
+            <option key={grade.name} value={grade.name}>
+              {grade.name}
+            </option>
+          ))}
+        </select>
       </div>
-      <Table columns={columns} dataSource={filteredTimetables} pagination={false} />
-
-      <Modal
-        title="Add Timetable"
-        visible={isModalVisible}
-        onCancel={handleModalClose}
-        footer={null}
-      >
-        <Form form={form} onFinish={handleFormSubmit}>
-          <Form.Item
-            label="Subject"
-            name="subject"
-            rules={[{ required: true, message: "Please enter the subject" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Day"
-            name="day"
-            rules={[{ required: true, message: "Please enter the day" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Time"
-            name="time"
-            rules={[{ required: true, message: "Please enter the time" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Teacher"
-            name="teacher"
-            rules={[{ required: true, message: "Please enter the teacher" }]}
-          >
-            <Select>
-              {teachers.map((teacher) => (
-                <Option value={teacher.id} key={teacher.id}>
-                  {teacher.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Add
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <div className="timetable-header">
+        <div className="timetable-cell empty">Time</div>
+        {daysOfWeek.map((day) => (
+          <div key={day} className="timetable-cell header">
+            {day}
+          </div>
+        ))}
+      </div>
+      {timetableData.map((rowData, rowIndex) => (
+        <div key={rowIndex} className="timetable-row">
+          <div className="timetable-cell time">{rowData[0]}</div>
+          {rowData.map((cellData, colIndex) =>
+            colIndex !== 0 ? (
+              <div
+                key={colIndex}
+                className="timetable-cell"
+                onClick={() => handleCellClick(cellData, rowIndex, colIndex)}
+              >
+                <div className="cell-content">
+                  <div className="subject">{cellData.subject}</div>
+                  <div className="teacher">{cellData.teacher}</div>
+                </div>
+              </div>
+            ) : null
+          )}
+        </div>
+      ))}
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Edit Subject and Teacher</p>
+            <div className="select-container">
+              <label htmlFor="subject">Subject:</label>
+              <select
+                id="subject"
+                value={selectedCellData.subject}
+                onChange={(e) =>
+                  setSelectedCellData({
+                    ...selectedCellData,
+                    subject: e.target.value,
+                  })
+                }
+              >
+                <option value="">-- Select Subject --</option>
+                {availableSubjects.map((subject) => (
+                  <option key={subject} value={subject}>
+                    {subject}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="select-container">
+              <label htmlFor="teacher">Teacher:</label>
+              <select
+                id="teacher"
+                value={selectedCellData.teacher}
+                onChange={(e) =>
+                  setSelectedCellData({
+                    ...selectedCellData,
+                    teacher: e.target.value,
+                  })
+                }
+              >
+                <option value="">-- Select Teacher --</option>
+                {availableTeachers.map((teacher) => (
+                  <option key={teacher} value={teacher}>
+                    {teacher}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button onClick={handleCellUpdate}>Save</button>
+            <button onClick={() => setShowModal(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
+      
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <p>{popupMessage}</p>
+            <button onClick={closePopup}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
