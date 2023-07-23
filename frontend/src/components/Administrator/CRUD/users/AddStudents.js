@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Popup from "reactjs-popup";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 function AddStudents() {
   const [formData, setFormData] = useState({
@@ -23,7 +21,7 @@ function AddStudents() {
     parent_Name: "",
     parent_occupation: "",
     admission_year: null,
-    grade: null,
+    grade: "",
     extra_activities: "",
   });
 
@@ -34,7 +32,13 @@ function AddStudents() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "phone" && value.length !== 10) {
+      setError("Phone number should contain exactly 10 digits");
+    } else {
+      setError("");
+    }
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+
   };
 
   const handleDateChange = (date, name) => {
@@ -92,7 +96,7 @@ function AddStudents() {
         config
       );
 
-      setMessage("Student added successfully!");
+      alert("Student added successfully!");
       setFormData({
         fullname: "",
         first_name: "",
@@ -101,8 +105,7 @@ function AddStudents() {
         dateOfBirth: null,
         phone: "",
         gender: "",
-        picture:
-          "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
+        picture: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
         username: "",
         password: "",
         role: "",
@@ -113,7 +116,8 @@ function AddStudents() {
         grade: "",
         extra_activities: "",
       });
-      setError("");
+      setError();
+      window.location.reload();
     } catch (error) {
       setError(error.response.data.message);
     }
@@ -121,19 +125,27 @@ function AddStudents() {
 
   const handleCancel = () => {
     setIsPopupOpen(false);
+    setMessage("");
+    setError("");
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.target.name === 'phone' && e.target.value.length >= 10) {
+      e.preventDefault();
+    }
   };
 
 
   return (
     <div>
-      <Button variant="primary" onClick={() => setIsPopupOpen(true)} style={{textAlign:'center'}}>
+      <Button variant="primary" onClick={() => setIsPopupOpen(true)} style={{ textAlign: 'center' }}>
         Add Student
       </Button>
+      {/* {message && <p style={{ color: "green" }}>{message}</p>} */}
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
         <div className="Popup">
           {error && <p style={{ color: "red" }}>{error}</p>}
-          {message && <p style={{ color: "green" }}>{message}</p>}
 
           <Form onSubmit={submitHandler}>
             <Row>
@@ -189,25 +201,25 @@ function AddStudents() {
                   />
                 </Form.Group>
                 <Form.Group controlId="dateOfBirth">
-                  <Form.Label>Date of Birth</Form.Label>
-                  <br />
-                  <DatePicker
-                    selected={formData.dateOfBirth}
-                    onChange={(date) =>
-                      handleDateChange(date, "dateOfBirth")
-                    }
-                    className="form-control"
-                    placeholderText="Select Date of Birth"
+                  <Form.Label>Date of Birth</Form.Label><br />
+                  <Form.Control
+                    type="date"
+                    name="dateOfBirth"
+                    value={formData.dateOfBirth}
+                    placeholder="Enter date of birth"
+                    onChange={(e) => handleDateChange(e.target.value, "dateOfBirth")}
                   />
+
                 </Form.Group>
                 <Form.Group controlId="phone">
                   <Form.Label>Phone</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="number"
                     name="phone"
                     value={formData.phone}
                     placeholder="Enter Phone"
                     onChange={handleChange}
+                    onKeyDown={handleKeyPress}
                   />
                 </Form.Group>
                 <Form.Group controlId="gender">
@@ -263,10 +275,10 @@ function AddStudents() {
                     value={formData.role}
                     onChange={handleChange}
                   >
+                    <option value="">Select Role</option>
                     <option value="student">student</option>
                   </Form.Control>
                 </Form.Group>
-
 
                 <Form.Group controlId="parent_Name">
                   <Form.Label>Parent Name</Form.Label>
@@ -291,13 +303,11 @@ function AddStudents() {
                 <Form.Group controlId="admission_year">
                   <Form.Label>Admission Date</Form.Label>
                   <br />
-                  <DatePicker
-                    selected={formData.admission_year}
-                    onChange={(date) =>
-                      handleDateChange(date, "admission_year")
-                    }
-                    className="form-control"
-                    placeholderText="Select Admission Year"
+                  <Form.Control
+                    type="date"
+                    name="admission_year"
+                    value={formData.admission_year}
+                    onChange={(e) => handleDateChange(e.target.value, "admission_year")}
                   />
                 </Form.Group>
                 <Form.Group controlId="grade">
@@ -310,20 +320,18 @@ function AddStudents() {
                     onChange={handleChange}
                   />
                 </Form.Group>
+
                 <Form.Group controlId="extra_activities">
                   <Form.Label>Extra Activities</Form.Label>
                   <Form.Control
-                    as="select"
+                    type="text"
                     name="extra_activities"
                     value={formData.extra_activities}
+                    placeholder="Enter Extra Activities with , seperated"
                     onChange={handleChange}
-                  >
-                    <option value="">Select Extra Activities</option>
-                    <option value="games">Games</option>
-                    <option value="hobbies">Hobbies</option>
-                    <option value="gardening">Gardening</option>
-                  </Form.Control>
+                  />
                 </Form.Group>
+
                 <Button variant="primary" type="submit" className="mt-5 mx-3">
                   Add
                 </Button>

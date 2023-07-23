@@ -1,4 +1,5 @@
-.Popup, .popup-container{
+.Popup,
+.popup-container {
     background-color: white;
     border: 2px solid green;
     width: 1200px;
@@ -6,29 +7,30 @@
     padding: 25px;
 }
 
-.viewTable td{
-    padding: 5px;
-    text-align: center;
-}
-
-.popup-container-view{
+.popup-container-view {
     background-color: white;
     border: 2px solid green;
     padding: 5px 50px;
     align-items: center;
 }
 
-img{
+img {
     border-radius: 100px;
 }
 
-.popup-container-delete{
+.popup-container-delete {
     background-color: white;
     border: 2px solid green;
     padding: 30px;
     text-align: center;
 }
 
-.imgEdit{
+.imgEdit {
     margin-left: 220px;
+}
+
+.viewTableStaff td{
+    text-align: left;
+    padding: 6px;
+    padding-left: 20px;
 }

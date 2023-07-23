@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Header/header';
 import Footer from './components/Footer/footer';
@@ -24,6 +24,7 @@ import ViewStaff from './components/Administrator/CRUD/staff/ViewStaff';
 import ViewStudents from './components/Administrator/CRUD/users/StudentList';
 import Marks from './components/Administrator/CRUD/marks/Marks';
 import SignIn from './view/Signin/SignIn';
+import Auth from './view/Signin/ProtectedRoute';
 
 function App() {
   return (
@@ -41,14 +42,33 @@ function App() {
           <Route path="/Login" element={<SignIn />} />
 
 
-          <Route path="marks" element={<Marks/>}/>
-          <Route path="/viewstaff" element={<ViewStaff/>}/>
-          <Route path="/viewstudents" element={<ViewStudents/>}/>
+          <Route path="marks" element={<Marks />} />
+
+          {/* <Route
+            path="/viewstaff"
+            element={
+              <Auth expectedRoles={["staff"]}>
+                <ViewStaff />
+              </Auth>
+            }
+          />
+
+          <Route
+            path="/viewstudents"
+            element={
+              <Auth expectedRoles={["student"]}>
+                <ViewStudents />
+              </Auth>
+            }
+          /> */}
 
 
-          <Route path="/administrator" element={<MainLayout />}>
+          <Route
+            path="/administrator"
+            element={<Auth expectedRoles={["admin"]}><MainLayout /></Auth>}>
+
             <Route index element={<Dashboard />} />
-       
+
             <Route path="EditTeacher" element={<EditTeacher />} />
             <Route path="EditStudent" element={<EditStudent />} />
             <Route path="Subject" element={<Subject />} />
@@ -65,8 +85,21 @@ function App() {
   );
 }
 
-const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
-,"/addstudents","/addstaff","/viewstaff","/marks","/administrator/EditTeacher","/administrator/EditStudent" ];
+const excludedPaths = [
+  "/administrator",
+  "/login",
+  "/viewstudents",
+  "/viewstudents/create",
+  "/subjects",
+  "/addstudents",
+  "/addstaff",
+  "/viewstaff",
+  "/marks",
+  "/administrator/EditTeacher",
+  "/administrator/EditStudent",
+  "/Login"
+];
+
 function HeaderRoutes() {
   const location = useLocation();
   const excludeHeader = excludedPaths.includes(location.pathname);

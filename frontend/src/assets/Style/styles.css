@@ -309,11 +309,9 @@
     align-items: center;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 
-table tr td {
-    text-align: center;
-  }
 
 .ContactUsComponent td{
     padding: 10px;
