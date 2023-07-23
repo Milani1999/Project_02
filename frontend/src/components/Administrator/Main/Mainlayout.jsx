@@ -5,7 +5,7 @@ import {
   AiOutlineUser,
   AiOutlineFund
 } from "react-icons/ai";
-import { RiCalendarCheckFill, RiCalendar2Line, RiMoonLine, RiMoneyDollarCircleLine } from "react-icons/ri";
+import { RiCalendarCheckFill,RiCalendar2Line,RiMoonLine,RiMoneyDollarCircleLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
@@ -37,16 +37,14 @@ const MainLayout = () => {
       },
     });
   };
-
-
-
+  
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
             <span className="sm-logo"><img src="images/uni2.png" alt="img"></img></span>
-
+            
           </h2>
         </div>
         <div className="divider"></div>
@@ -70,22 +68,22 @@ const MainLayout = () => {
               key: "users",
               icon: <AiOutlineUser className="fs-4" />,
               label: "Users",
-              children: [
+              children:[
                 {
                   key: "EditTeacher",
                   icon: <AiOutlineUser className="fs-4" />,
                   label: "Teacher",
-
+                
                 },
-
-
+                    
+          
                 {
                   key: "EditStudent",
                   icon: <AiOutlineUser className="fs-4" />,
                   label: "Student",
-
+                 
                 },
-              ],
+          ],
             },
             {
               key: "Attendence",
@@ -107,26 +105,39 @@ const MainLayout = () => {
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Grade",
                 },
+              ],
+            },
                 {
                   key: "Timetable",
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Timetable",
                 },
-
-              ],
-            },
-
-
+            
+            
+            
+          
             {
               key: "perform",
               icon: <AiOutlineFund className="fs-4" />,
               label: "Performance",
-
+             
             },
             {
-              key: "calender",
+              key: "Events",
               icon: <RiCalendar2Line className="fs-4" />,
-              label: "Event Calender",
+              label: "Events",
+              children: [
+                {
+                  key: "calender",
+                  icon: <RiCalendarCheckFill className="fs-4" />,
+                  label: "Event Calendar",
+                },
+                {
+                  key: "Grade",
+                  icon: <RiCalendarCheckFill className="fs-4" />,
+                  label: "Edit Events",
+                },
+              ],
             },
             {
               key: "Notices",
@@ -138,7 +149,7 @@ const MainLayout = () => {
               icon: <RiMoneyDollarCircleLine className="fs-4" />,
               label: "Payments",
             },
-
+            
           ]}
         />
       </Sider>
@@ -157,19 +168,20 @@ const MainLayout = () => {
               onClick: () => setCollapsed(!collapsed),
             }
           )}
+          
           <div className="d-flex gap-4 align-items-center">
-            <div className="position-relative"> <RiMoonLine className="fs-4" /></div>
+          <div className="position-relative"> <RiMoonLine className="fs-4" /></div>
             <div className="position-relative">
-              {contextHolder}
-              <Button type="primary" onClick={openNotification}>
-                <span className="badge bg-warning rounded-circle p-2 position-absolute">
-                  3
-                </span>
-
-                <IoIosNotifications className="fs-4" />
-
+            {contextHolder}
+      <Button type="primary" onClick={openNotification}>
+      <span className="badge bg-warning rounded-circle p-2 position-absolute">
+                3
+              </span>
+     
+              <IoIosNotifications className="fs-4" />
+              
               </Button>
-            </div>
+            </div>           
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>
@@ -187,7 +199,7 @@ const MainLayout = () => {
                 aria-expanded="false"
               >
                 <h5 className="mb-0">User name</h5>
-
+                
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
@@ -203,7 +215,7 @@ const MainLayout = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    onClick={() => {
+onClick={() => {
                       localStorage.removeItem("userInfo");
                       navigate("/Login");
                       window.location.reload();
@@ -215,9 +227,10 @@ const MainLayout = () => {
               </div>
             </div>
             <>
-
-            </>
+     
+    </>
           </div>
+          
         </Header>
         <Content
           style={{
@@ -226,7 +239,7 @@ const MainLayout = () => {
             minHeight: 280,
             background: colorBgContainer,
           }}
-
+  
         >
           <ToastContainer
             position="top-right"
@@ -239,11 +252,11 @@ const MainLayout = () => {
             draggable
             theme="light"
           />
-
+          
           <Outlet />
-
+    
         </Content>
-
+        
       </Layout>
     </Layout>
   );
