@@ -23,6 +23,7 @@ import Notices from './components/Administrator/pages/Notices';
 import ViewStaff from './components/Administrator/CRUD/staff/ViewStaff';
 import ViewStudents from './components/Administrator/CRUD/users/StudentList';
 import Marks from './components/Administrator/CRUD/marks/Marks';
+import Performance from './components/Administrator/pages/Performance';
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
             <Route path="calender" element={<Calender />} />
             <Route path="Timetable" element={<Timetable />} />
             <Route path="Attendence" element={<Attendence />} />
+            <Route path="Performance" element={<Performance />} />
             <Route path="Grade" element={<Grade />} />
             <Route path="Notices" element={<Notices />} />
           </Route>
@@ -65,7 +67,7 @@ function App() {
 }
 
 const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
-,"/addstudents","/addstaff","/viewstaff","/marks","/administrator/EditTeacher","/administrator/EditStudent","/administrator/Timetable" ];
+,"/addstudents","/addstaff","/viewstaff","/marks","/administrator/EditTeacher","/administrator/EditStudent","/administrator/Timetable","/administrator/Performance" ];
 function HeaderRoutes() {
   const location = useLocation();
   const excludeHeader = excludedPaths.includes(location.pathname);

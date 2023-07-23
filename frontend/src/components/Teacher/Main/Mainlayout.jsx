@@ -60,9 +60,9 @@ const MainLayout = () => {
           }}
           items={[
             {
-              key: "",
+              key: "Teacher",
               icon: <AiOutlineDashboard className="fs-4" />,
-              label: "Dashboard",
+              label: "TeachDashboard",
             },
             {
               key: "users",
