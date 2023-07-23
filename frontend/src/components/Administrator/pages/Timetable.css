@@ -1,18 +1,225 @@
-/* Timetable.css */
-.filter-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  
-  .filter-select {
-    display: flex;
-    align-items: center;
-  }
-  
-  .filter-select span {
-    margin-right: 0.5rem;
-  }
-  
 
+
+/* Common styles */
+.timetable-container {
+  display: flex;
+  flex-direction: column;
+  margin: 6px 6px;
+  padding: 5px 10px;
+  border: 5px;
+  position: relative;
+}
+
+.timetable-row {
+  display: flex;
+  border: 1px solid #ccc;
+}
+
+.timetable-cell {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  background-color: #f0f2e1;
+}
+
+.timetable-cell.empty {
+  background-color: #f3f3f3;
+}
+
+.timetable-cell.header {
+  font-weight: bold;
+  background-color: #bbf0c5;
+}
+.timetable-cell.empty {
+  font-weight: bold;
+  background-color: #c2c6c5;
+}
+.timetable-cell.time {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+.cell-content {
+  font-size: 14px;
+}
+
+.subject {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.teacher {
+  font-style: italic;
+  color: #555;
+}
+
+/* Popup styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  max-width: 300px; /* Reduce the width of the popup */
+  max-height: 300px; /* Reduce the height of the popup */
+  overflow: auto;
+}
+
+.modal-content p {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-content button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.modal-content button:last-child {
+  background-color: #ccc;
+}
+
+/* Hover effect */
+.timetable-cell:hover {
+  background-color: #d0d3d0;
+}
+/* Timetable header */
+.timetable-header {
+  display: grid;
+  grid-template-columns: 1fr repeat(5, 1fr); /* Divide the header cells into 6 columns of equal width */
+  align-items: center;
+  background-color: #9a9da0;
+  color: #136d42;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.timetable-header .timetable-cell {
+  border: none;
+  cursor: default;
+}
+
+
+/* Popup styles */
+.modal-content {
+  background-color: #fdfdfb;
+  padding: 20px;
+  border-radius: 4px;
+  max-width: 300px;
+  max-height: 300px;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 1fr; 
+  gap: 10px; 
+  color: rgb(6, 63, 21);
   
+}
+
+.modal-content label {
+  display: block; 
+
+}
+
+/* Save and Cancel buttons */
+.modal-content button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #0e6e28;
+  color: #fff;
+  border-radius: 4px;
+  width: 100px;
+}
+
+.modal-content button:last-child {
+  margin-right: 0;
+}
+
+
+.grade-selection {
+  margin-bottom: 10px;
+}
+
+.grade-selection label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.grade-selection select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #075e16;
+  font-size: 16px;
+}
+
+.grade-selection select:focus {
+  outline: none;
+  border-color: #ecf2ed;
+  box-shadow: 0 0 4px #258d0d;
+}
+
+.grade-selection select option {
+  color: #075e16;
+}
+
+/*popup message edit*/
+.popup {
+  position: fixed;
+  top: 20px; /* Adjust this value to control the distance from the top */
+  left: 60%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.popup-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.popup p {
+  margin: 0;
+}
+
+.popup button {
+  background-color: #cbeaca;
+  color: #090909;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}

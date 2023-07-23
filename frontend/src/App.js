@@ -51,6 +51,7 @@ function App() {
        
             <Route path="EditTeacher" element={<EditTeacher />} />
             <Route path="EditStudent" element={<EditStudent />} />
+            
             <Route path="Subject" element={<Subject />} />
             <Route path="calender" element={<Calender />} />
             <Route path="Timetable" element={<Timetable />} />
@@ -66,7 +67,7 @@ function App() {
 }
 
 const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
-,"/addstudents","/addstaff","/viewstaff","/marks","/administrator/EditTeacher","/administrator/EditStudent" ];
+,"/addstudents","/addstaff","/viewstaff","/marks","/administrator/EditTeacher","/administrator/EditStudent","/administrator/Timetable" ];
 function HeaderRoutes() {
   const location = useLocation();
   const excludeHeader = excludedPaths.includes(location.pathname);
