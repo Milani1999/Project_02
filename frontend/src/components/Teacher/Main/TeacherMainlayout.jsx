@@ -5,7 +5,7 @@ import {
   AiOutlineUser,
   AiOutlineFund
 } from "react-icons/ai";
-import { RiCalendarCheckFill,RiCalendar2Line,RiMoonLine,RiMoneyDollarCircleLine } from "react-icons/ri";
+import { RiCalendarCheckFill,RiMoonLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
@@ -18,7 +18,7 @@ import './Admin.css';
 import { Button, notification } from 'antd';
 
 const { Header, Sider, Content } = Layout;
-const MainLayout = () => {
+const TeacherMainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -60,95 +60,54 @@ const MainLayout = () => {
           }}
           items={[
             {
-              key: "Teacher",
+              key: "",
               icon: <AiOutlineDashboard className="fs-4" />,
-              label: "TeachDashboard",
+              label: "Dashboard",
             },
             {
-              key: "users",
+              key: "Profile",
               icon: <AiOutlineUser className="fs-4" />,
-              label: "Users",
-              children:[
-                {
-                  key: "EditTeacher",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Teacher",
-                
-                },
-                    
-          
-                {
-                  key: "EditStudent",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Student",
-                 
-                },
-          ],
+              label: "Profile",
             },
             {
-              key: "Attendence",
+              key: "TAttendence",
               icon: <FaClipboardList className="fs-4" />,
               label: "Attendence",
             },
-            {
-              key: "Curriculum",
-              icon: <RiCalendarCheckFill className="fs-4" />,
-              label: "Curriculum",
-              children: [
-                {
-                  key: "Subject",
-                  icon: <RiCalendarCheckFill className="fs-4" />,
-                  label: "Subject",
-                },
-                {
-                  key: "Grade",
-                  icon: <RiCalendarCheckFill className="fs-4" />,
-                  label: "Grade",
-                },
-              ],
-            },
-                {
-                  key: "Timetable",
+        
+              {
+                  key: "TTimetable",
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Timetable",
                 },
-            
+                {
+                  key: "VStudents",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "View Students",
+                },
             
             
           
             {
-              key: "Performance",
+              key: "TMarks",
               icon: <AiOutlineFund className="fs-4" />,
-              label: "Performance",
+              label: "Marks",
              
             },
+           
             {
-              key: "Events",
-              icon: <RiCalendar2Line className="fs-4" />,
-              label: "Events",
-              children: [
-                {
-                  key: "calender",
-                  icon: <RiCalendarCheckFill className="fs-4" />,
-                  label: "Event Calendar",
-                },
-                {
-                  key: "Grade",
-                  icon: <RiCalendarCheckFill className="fs-4" />,
-                  label: "Edit Events",
-                },
-              ],
-            },
-            {
-              key: "Notices",
+              key: "TNotices",
               icon: <FaClipboardList className="fs-4" />,
               label: "Notices",
             },
             {
-              key: "payments",
-              icon: <RiMoneyDollarCircleLine className="fs-4" />,
-              label: "Payments",
+              key: "TCalendar",
+              icon: <RiCalendarCheckFill className="fs-4" />,
+              label: "Event Calendar",
             },
+             
+            
+          
             
           ]}
         />
@@ -257,4 +216,4 @@ const MainLayout = () => {
     </Layout>
   );
 };
-export default MainLayout;
+export default TeacherMainLayout;

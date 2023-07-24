@@ -23,7 +23,15 @@ import Notices from './components/Administrator/pages/Notices';
 import SignIn from './view/Signin/SignIn';
 import Auth from './view/Signin/ProtectedRoute';
 import Performance from './components/Administrator/pages/Performance';
-
+import TeacherDashboard from'./components/Teacher/Pages/TeacherDashboard';
+import Profile from './components/Teacher/Pages/Profile';
+import TAttendence from'./components/Teacher/Pages/TAttendence';
+import TMarks from './components/Teacher/Pages/TMarks';
+import TNotices from'./components/Teacher/Pages/TNotices';
+import VStudents from './components/Teacher/Pages/VStudents';
+import TeacherMainlayout from './components/Teacher/Main/TeacherMainlayout';
+import TCalendar from './components/Teacher/Pages/TCalendar';
+import TTimetable from './components/Teacher/Pages/TTimetable';
 function App() {
   return (
     <Router>
@@ -57,7 +65,15 @@ function App() {
             }
           /> */}
 
-<Route path="/Teacher" element={<MainLayout />} />
+<Route path="/Teacher" element={<TeacherMainlayout />} />
+<Route index element={<TeacherDashboard />} />
+          <Route path="Profile" element={<Profile />} />
+          <Route path="TAttendence" element={<TAttendence />} />
+          <Route path="TTimetable" element={<TTimetable />} />
+          <Route path="TMarks" element={<TMarks/>} />
+          <Route path="TNotices" element={<TNotices />} />
+          <Route path="VStudents" element={<VStudents/>}/>
+          <Route path="TCalendar" element={<TCalendar />} />
           <Route
             path="/administrator"
             element={<Auth expectedRoles={["admin"]}><MainLayout /></Auth>}>
@@ -84,7 +100,7 @@ function App() {
 
 const excludedPaths = ["/administrator", "/Login", "/viewstudents","/viewstudents/create","/subjects"
 ,"/addstudents","/addstaff","/viewstaff","/administrator/EditTeacher","/administrator/EditStudent",
-"/administrator/Timetable","/administrator/Subject","/administrator/Grade" ];
+"/administrator/Timetable","/administrator/Subject","/administrator/Grade" ,"/Teacher","/TNotices","/TCalendar","/TTimetable"];
 
 function HeaderRoutes() {
   const location = useLocation();
