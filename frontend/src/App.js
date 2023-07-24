@@ -22,6 +22,7 @@ import Grade from './components/Administrator/pages/Grade';
 import Notices from './components/Administrator/pages/Notices';
 import SignIn from './view/Signin/SignIn';
 import Auth from './view/Signin/ProtectedRoute';
+import Performance from './components/Administrator/pages/Performance';
 
 function App() {
   return (
@@ -56,7 +57,7 @@ function App() {
             }
           /> */}
 
-
+<Route path="/Teacher" element={<MainLayout />} />
           <Route
             path="/administrator"
             element={<Auth expectedRoles={["admin"]}><MainLayout /></Auth>}>
@@ -72,6 +73,7 @@ function App() {
             <Route path="Attendence" element={<Attendence />} />
             <Route path="Grade" element={<Grade />} />
             <Route path="Notices" element={<Notices />} />
+            <Route path="Performance" element={<Performance />} />
           </Route>
         </Routes>
         <FooterRoutes />
