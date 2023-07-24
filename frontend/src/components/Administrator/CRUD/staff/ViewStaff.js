@@ -235,7 +235,6 @@ const ViewStaff = () => {
                             <Row>
                                 <Col md={6}>
                                     <div>
-                                        {/* <Form.Label>Profile Picture</Form.Label> */}
                                         {selectedStaff.picture && <img src={selectedStaff.picture} alt="Profile" width="100px" height="100px" />}
                                         <Form.Control
                                             type="file"
@@ -244,7 +243,8 @@ const ViewStaff = () => {
                                             name="picture"
                                             onChange={(e) => setImageFile(e.target.files[0])}
                                         />
-                                    </div>                                    <div>
+                                    </div>
+                                    <div>
                                         <Form.Label>Employee ID</Form.Label>
                                         <Form.Control
                                             type="text"
@@ -300,12 +300,15 @@ const ViewStaff = () => {
                                         <Form.Label>Date of Birth</Form.Label>
                                         <Form.Control
                                             type="date"
-                                            selected={selectedStaff.dateOfBirth ? new Date(selectedStaff.dateOfBirth) : null}
-                                            onChange={(date) => setSelectedStaff({ ...selectedStaff, dateOfBirth: date })}
+                                            id="dateOfBirth"
+                                            name="dateOfBirth"
+                                            value={selectedStaff.dateOfBirth ? selectedStaff.dateOfBirth.slice(0, 10) : ""}
+                                            onChange={(e) => setSelectedStaff({ ...selectedStaff, dateOfBirth: e.target.value })}
                                             className="form-control"
                                             placeholderText="Select Date of Birth"
                                         />
                                     </div>
+
 
                                     <div>
                                         <Form.Label>Phone</Form.Label>

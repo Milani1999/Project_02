@@ -1,191 +1,148 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Table, Button, Row, Col, Alert, Form } from "react-bootstrap";
-import Popup from "reactjs-popup";
-import "react-datepicker/dist/react-datepicker.css";
-import AddStudents from "./AddStudents";
-import './students.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Form, Button, Table, Col, Row } from 'react-bootstrap';
+import Popup from 'reactjs-popup';
+import AddStudents from './AddStudents'
+import './students.css'
 
 const ViewStudents = () => {
-  const [students, setStudents] = useState([]);
-  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [studentsList, setStudentsList] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState({});
   const [showViewPopup, setShowViewPopup] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [selectedGrade, setSelectedGrade] = useState("");
+  const [imageFile, setImageFile] = useState(null);
 
-  useEffect(() => {
-    fetchStudents();
-  }, []);
 
-  const fetchStudents = async () => {
+  const fetchStudentsData = async () => {
     try {
-      const response = await axios.get("/api/students");
-      setStudents(response.data);
+      const response = await axios.get('/api/students');
+      setStudentsList(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleView = (student) => {
-    setSelectedStudent(student);
+  useEffect(() => {
+    fetchStudentsData();
+  }, []);
+
+  const handleView = (students) => {
+    setSelectedStudents(students);
     setShowViewPopup(true);
   };
 
   const handleCloseViewPopup = () => {
-    setSelectedStudent(null);
+    setSelectedStudents({});
     setShowViewPopup(false);
   };
 
-  const handleEdit = (student) => {
-    setSelectedStudent(student);
+  const handleEdit = (students) => {
+    setSelectedStudents(students);
     setShowEditPopup(true);
   };
 
   const handleCloseEditPopup = () => {
-    setSelectedStudent(null);
+    setSelectedStudents({});
     setShowEditPopup(false);
-    setErrorMessage("");
-    setSuccessMessage("");
   };
 
-
-
-  const handleEditSubmit = async () => {
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const { _id, admission_no, ...updatedStudentData } = selectedStudent;
-      const existingStudent = students.find((student) => student.admission_no === admission_no);
+      const { _id, picture, ...studentsData } = selectedStudents;
 
-      if (existingStudent && existingStudent._id !== _id) {
-        setErrorMessage("Admission number already exists. Please choose a different admission number.");
-        return;
+      if (imageFile) {
+        const data = new FormData();
+        data.append("file", imageFile);
+        data.append("upload_preset", "edutrack");
+        data.append("cloud_name", "dprnxaqxi");
+        const response = await fetch("https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload", {
+          method: "post",
+          body: data,
+        });
+        const cloudinaryData = await response.json();
+        studentsData.picture = cloudinaryData.url.toString();
       }
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      const { data } = await axios.put(`/api/students/${_id}`, updatedStudentData, config);
-      if (data.success) {
-        const updatedStudents = students.map((student) =>
-          student._id === _id ? { ...student, ...updatedStudentData } : student
-        );
-        setStudents(updatedStudents);
-        setSelectedStudent(null);
-        setShowEditPopup(false);
-        setSuccessMessage("Student details updated successfully.");
-        setShowSuccessMessage(true);
-      } else {
-        setErrorMessage("Error updating student details. Please try again.");
-      }
+      await axios.put(`/api/students/${_id}`, studentsData);
+      setShowEditPopup(false);
+      fetchStudentsData();
+      alert('Student updated successfully.');
     } catch (error) {
       console.error(error);
-      setErrorMessage("Error updating student details. Please try again.");
+      alert("Please fill all the fields");
     }
   };
 
-  const handleDelete = (student) => {
-    setSelectedStudent(student);
+  const handleDelete = (students) => {
+    setSelectedStudents(students);
     setShowDeletePopup(true);
   };
 
   const handleCloseDeletePopup = () => {
-    setSelectedStudent(null);
+    setSelectedStudents({});
     setShowDeletePopup(false);
-    setErrorMessage("");
-    setSuccessMessage("");
   };
 
   const confirmDelete = async () => {
     try {
-      const { _id } = selectedStudent;
-      const { data } = await axios.delete(`/api/students/${_id}`);
-      if (data.success) {
-        const updatedStudents = students.filter((student) => student._id !== _id);
-        setStudents(updatedStudents);
-        setSelectedStudent(null);
-        setShowDeletePopup(false);
-        setSuccessMessage("Student deleted successfully.");
-        setErrorMessage("");
-        setShowSuccessMessage(true);
-      }
+      const { _id } = selectedStudents;
+      await axios.delete(`/api/students/${_id}`);
+      setShowDeletePopup(false);
+      fetchStudentsData();
+      alert('Student deleted successfully.');
     } catch (error) {
       console.error(error);
-      setErrorMessage("Error deleting student. Please try again.");
+      alert('Failed to delete student');
     }
   };
 
-  const handleGradeChange = (event) => {
-    setSelectedGrade(event.target.value);
-  };
 
-  const filteredStudents = selectedGrade
-    ? students.filter((student) => student.grade.toString() === selectedGrade)
-    : students;
 
   return (
     <div>
-      {showSuccessMessage && (
-        <Alert variant="success" onClose={() => setShowSuccessMessage(false)} dismissible>
-          {successMessage}
-        </Alert>
-      )}
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-
-      <Table striped hover className="mt-5" responsive="sm">
+      <Table striped hover className="mt-5">
         <thead>
           <tr>
-            <th colSpan={6}>
-              <div>
-                <label htmlFor="gradeSelect">Select Grade: </label>
-                <select id="gradeSelect" value={selectedGrade} onChange={handleGradeChange}>
-                  <option value="">All Grades</option>
-                  {Array.from({ length: 11 }, (_, i) => (
-                    <option key={i} value={i + 1}>
-                      Grade {i + 1}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <th colSpan={7}>
             </th>
             <th style={{ textAlign: 'center', width: '100px' }}>
               <AddStudents />
             </th>
           </tr>
+
           <tr>
-            <th style={{ textAlign: 'center' }}>Picture</th>
+            <th style={{ textAlign: 'center' }}>Profile</th>
             <th style={{ textAlign: 'center' }}>Admission No</th>
-            <th style={{ textAlign: 'center' }}>Admission Date</th>
             <th style={{ textAlign: 'center' }}>Full Name</th>
+            <th style={{ textAlign: 'center' }}>First Name</th>
+            <th style={{ textAlign: 'center' }}>Last Name</th>
             <th style={{ textAlign: 'center' }}>Address</th>
-            <th style={{ textAlign: 'center' }}>Phone No</th>
+            <th style={{ textAlign: 'center' }}>Phone</th>
             <th style={{ textAlign: 'center' }}>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {filteredStudents.map((student) => (
-            <tr key={student._id}>
+          {studentsList.map((students) => (
+            <tr key={students._id}>
               <td style={{ verticalAlign: 'middle' }}>
-                <img src={student.picture} alt="Profile" width="100" height="100" />
+                <img src={students.picture} alt="Profile" width="100" height="100" />
               </td>
-              <td style={{ verticalAlign: 'middle' }}>{student.admission_no}</td>
-              <td style={{ verticalAlign: 'middle' }}>{new Date(student.admission_year).toLocaleDateString()}</td>
-              <td style={{ verticalAlign: 'middle' }}>{student.fullname}</td>
-              <td style={{ verticalAlign: 'middle' }}>{student.address}</td>
-              <td style={{ verticalAlign: 'middle' }}>{student.phone}</td>
+              <td style={{ verticalAlign: 'middle' }}>{students.admission_no}</td>
+              <td style={{ verticalAlign: 'middle' }}>{students.fullname}</td>
+              <td style={{ verticalAlign: 'middle' }}>{students.first_name}</td>
+              <td style={{ verticalAlign: 'middle' }}>{students.last_name}</td>
+              <td style={{ verticalAlign: 'middle' }}>{students.address}</td>
+              <td style={{ verticalAlign: 'middle' }}>{students.phone}</td>
               <td style={{ verticalAlign: 'middle' }}>
-                <Button variant="info" onClick={() => handleView(student)} className="m-1" style={{ width: '100px' }}>
+                <Button variant="info" onClick={() => handleView(students)} className="m-1" style={{ width: '100px' }}>
                   View
                 </Button><br />
-                <Button variant="success" onClick={() => handleEdit(student)} className="m-1" style={{ width: '100px' }}>
+                <Button variant="success" onClick={() => handleEdit(students)} className="m-1" style={{ width: '100px' }}>
                   Edit
                 </Button><br />
-                <Button variant="danger" onClick={() => handleDelete(student)} className="m-1" style={{ width: '100px' }}>
+                <Button variant="danger" onClick={() => handleDelete(students)} className="m-1" style={{ width: '100px' }}>
                   Delete
                 </Button>
               </td>
@@ -195,35 +152,76 @@ const ViewStudents = () => {
       </Table>
 
       <Popup open={showViewPopup} onClose={handleCloseViewPopup}>
-        {selectedStudent && (
+        {selectedStudents && (
           <div className="popup-container-view">
-            <table style={{ textAlign: 'right' }} className="viewTable">
+            <table className="viewTableStudents">
               <tr>
-                <td colSpan={2}>
-                  <img src={selectedStudent.picture} alt="Profile" width="100" height="100" />
+                <td colSpan={2} style={{ textAlign: 'center' }}>
+                  <img src={selectedStudents.picture} alt="Profile" width="100" height="100" />
                 </td>
               </tr>
               <tr>
                 <td>Admission No</td>
-                <td>{selectedStudent.admission_no}</td>
+                <td>{selectedStudents.admission_no}</td>
               </tr>
               <tr>
-                <td>Full Name</td><td>{selectedStudent.fullname}</td></tr>
-              <tr><td>First Name</td><td>{selectedStudent.first_name}</td></tr>
-              <tr><td>Last Name</td><td>{selectedStudent.last_name}</td></tr>
-              <tr><td>Address</td><td>{selectedStudent.address}</td></tr>
-              <tr><td>Date of Birth</td><td>{new Date(selectedStudent.dateOfBirth).toLocaleDateString()}</td></tr>
-              <tr><td>Phone</td><td>{selectedStudent.phone}</td></tr>
-              <tr><td>Gender</td><td>{selectedStudent.gender}</td></tr>
-              <tr><td>Username</td><td>{selectedStudent.username}</td></tr>
-              <tr><td>Role</td><td>{selectedStudent.role}</td></tr>
-              <tr><td>Parent Name</td><td>{selectedStudent.parent_Name}</td></tr>
-              <tr><td>Parent Occupation</td><td>{selectedStudent.parent_occupation}</td></tr>
-              <tr><td>Admission Date</td><td>{new Date(selectedStudent.admission_year).toLocaleDateString()}</td></tr>
-              <tr><td>Grade</td><td>{selectedStudent.grade}</td></tr>
-              <tr><td>Extra Activities</td><td>{selectedStudent.extra_activities}</td></tr>
+                <td>Full Name</td>
+                <td>{selectedStudents.fullname}</td>
+              </tr>
               <tr>
-                <td colSpan={2}>
+                <td>First Name</td>
+                <td>{selectedStudents.first_name}</td>
+              </tr>
+              <tr>
+                <td>Last Name</td>
+                <td>{selectedStudents.last_name}</td>
+              </tr>
+              <tr>
+                <td>Address</td>
+                <td>{selectedStudents.address}</td>
+              </tr>
+              <tr>
+                <td>Date of Birth</td>
+                <td>{new Date(selectedStudents.dateOfBirth).toLocaleDateString()}</td>
+              </tr>
+              <tr>
+                <td>Phone</td>
+                <td>{selectedStudents.phone}</td>
+              </tr>
+              <tr>
+                <td>Gender</td>
+                <td>{selectedStudents.gender}</td>
+              </tr>
+              <tr>
+                <td>Username</td>
+                <td>{selectedStudents.username}</td>
+              </tr>
+              <tr>
+                <td>Role</td>
+                <td>{selectedStudents.role}</td>
+              </tr>
+              <tr>
+                <td>Grade</td>
+                <td>{selectedStudents.grade}</td>
+              </tr>
+              <tr>
+                <td>Admission Date</td>
+                <td>{new Date(selectedStudents.admission_year).toLocaleDateString()}</td>
+              </tr>
+              <tr>
+                <td>Parent Name</td>
+                <td>{selectedStudents.parent_Name}</td>
+              </tr>
+              <tr>
+                <td>Parent Occupation</td>
+                <td>{selectedStudents.parent_occupation}</td>
+              </tr>
+              <tr>
+                <td>Extra Activities</td>
+                <td>{selectedStudents.extra_activities}</td>
+              </tr>
+              <tr>
+                <td colSpan={2} style={{ textAlign: 'center' }}>
                   <Button variant="secondary" onClick={handleCloseViewPopup} className="mt-3">
                     Close
                   </Button>
@@ -235,237 +233,224 @@ const ViewStudents = () => {
       </Popup>
 
       <Popup open={showEditPopup} onClose={handleCloseEditPopup}>
-        {selectedStudent && (
+        {selectedStudents && (
           <div className="popup-container">
             <form onSubmit={handleEditSubmit}>
               <Row>
                 <Col md={6}>
                   <div>
+                    {/* <Form.Label>Profile Picture</Form.Label> */}
+                    {selectedStudents.picture && <img src={selectedStudents.picture} alt="Profile" width="100px" height="100px" />}
+                    <Form.Control
+                      type="file"
+                      accept="image/jpeg, image/png"
+                      id="picture"
+                      name="picture"
+                      onChange={(e) => setImageFile(e.target.files[0])}
+                    />
+                  </div>                                    <div>
                     <Form.Label>Admission No</Form.Label>
                     <Form.Control
                       type="text"
                       id="admission_no"
                       name="admission_no"
-                      value={selectedStudent.admission_no}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, admission_no: e.target.value })}
+                      value={selectedStudents.admission_no}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, admission_no: e.target.value })}
                     />
                   </div>
 
-                  {/* <div>
-                    <label htmlFor="picture">Picture</label>
-                    <Form.Control
-                      type="file"
-                      id="picture"
-                      name="picture"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        setSelectedStudent({ ...selectedStudent, picture: file });
-                      }}
-                    />
-                  </div> */}
-
                   <div>
-                    <label htmlFor="fullname">Full Name</label>
+                    <Form.Label>Full Name</Form.Label>
                     <Form.Control
                       type="text"
                       id="fullname"
                       name="fullname"
-                      value={selectedStudent.fullname}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, fullname: e.target.value })}
+                      value={selectedStudents.fullname}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, fullname: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label htmlFor="first_name">First Name</label>
+                    <Form.Label>First Name</Form.Label>
                     <Form.Control
                       type="text"
                       id="first_name"
                       name="first_name"
-                      value={selectedStudent.first_name}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, first_name: e.target.value })}
+                      value={selectedStudents.first_name}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, first_name: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label htmlFor="last_name">Last Name</label>
+                    <Form.Label>Last Name</Form.Label>
                     <Form.Control
                       type="text"
                       id="last_name"
                       name="last_name"
-                      value={selectedStudent.last_name}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, last_name: e.target.value })}
+                      value={selectedStudents.last_name}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, last_name: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label htmlFor="address">Address</label>
+                    <Form.Label>Address</Form.Label>
                     <Form.Control
                       type="text"
                       id="address"
                       name="address"
-                      value={selectedStudent.address}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, address: e.target.value })}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="dateOfBirth">Date of Birth</label>
-                    <Form.Control
-                      type="date"
-                      id="dateOfBirth"
-                      name="dateOfBirth"
-                      value={selectedStudent.dateOfBirth ? selectedStudent.dateOfBirth.slice(0, 10) : ""}
-                      onChange={(e) =>
-                        setSelectedStudent({
-                          ...selectedStudent,
-                          dateOfBirth: e.target.value ? e.target.value : null,
-                        })
-                      }
+                      value={selectedStudents.address}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, address: e.target.value })}
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="phone">Phone</label>
+                    <Form.Label>Date of Birth</Form.Label>
+                    <Form.Control
+                      type="date"
+                      value={selectedStudents.dateOfBirth ? selectedStudents.dateOfBirth.slice(0, 10) : ""}
+                      onChange={(date) => setSelectedStudents({ ...selectedStudents, dateOfBirth: date })}
+                      className="form-control"
+                      placeholderText="Select Date of Birth"
+                    />
+                  </div>
+
+                  <div>
+                    <Form.Label>Phone</Form.Label>
                     <Form.Control
                       type="text"
                       id="phone"
                       name="phone"
-                      value={selectedStudent.phone}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, phone: e.target.value })}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="gender">Gender</label>
-                    <Form.Control
-                      type="text"
-                      id="gender"
-                      name="gender"
-                      value={selectedStudent.gender}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, gender: e.target.value })}
+                      value={selectedStudents.phone}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, phone: e.target.value })}
                     />
                   </div>
                 </Col>
                 <Col md={6}>
                   <div>
-                    <label htmlFor="username">Username</label>
+                    <Form.Label>Gender</Form.Label>
+                    <Form.Control
+                      as="select"
+                      id="gender"
+                      name="gender"
+                      value={selectedStudents.gender}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, gender: e.target.value })}
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </Form.Control>
+                  </div>
+
+                  <div>
+                    <Form.Label>Username</Form.Label>
                     <Form.Control
                       type="text"
                       id="username"
                       name="username"
-                      value={selectedStudent.username}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, username: e.target.value })}
+                      value={selectedStudents.username}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, username: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label htmlFor="password">Password</label>
+                    <Form.Label>Password</Form.Label>
                     <Form.Control
                       type="password"
                       id="password"
                       name="password"
-                      value={selectedStudent.password}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, password: e.target.value })}
+                      value={selectedStudents.password}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, password: e.target.value })}
                     />
                   </div>
-
                   <div>
-                    <label htmlFor="role">Role</label>
+                    <Form.Label>Role</Form.Label>
                     <Form.Control
                       type="text"
                       id="role"
                       name="role"
-                      value={selectedStudent.role}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, role: e.target.value })}
+                      value={selectedStudents.role}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, role: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label htmlFor="parent_Name">Parent Name</label>
+                    <Form.Label>Grade</Form.Label>
+                    <Form.Control
+                      type="number"
+                      id="grade"
+                      name="grade"
+                      value={selectedStudents.grade}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, grade: e.target.value })}
+                    />
+                  </div>
+                  <div>
+
+                    <Form.Label>Parent Name</Form.Label>
                     <Form.Control
                       type="text"
                       id="parent_Name"
                       name="parent_Name"
-                      value={selectedStudent.parent_Name}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, parent_Name: e.target.value })}
+                      value={selectedStudents.parent_Name}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, parent_Name: e.target.value })}
                     />
                   </div>
+
                   <div>
-                    <label htmlFor="parent_occupation">Parent Occupation</label>
+                    <Form.Label>Parent Occupation</Form.Label>
                     <Form.Control
                       type="text"
                       id="parent_occupation"
                       name="parent_occupation"
-                      value={selectedStudent.parent_occupation}
-                      onChange={(e) =>
-                        setSelectedStudent({ ...selectedStudent, parent_occupation: e.target.value })
-                      }
+                      value={selectedStudents.parent_occupation}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, parent_occupation: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label htmlFor="admission_year">Admission Year</label>
+                    <Form.Label>Admission Date</Form.Label>
                     <Form.Control
                       type="date"
-                      id="admission_year"
-                      name="admission_year"
-                      value={selectedStudent.admission_year ? selectedStudent.admission_year.slice(0, 10) : ""}
-                      onChange={(e) =>
-                        setSelectedStudent({
-                          ...selectedStudent,
-                          admission_year: e.target.value ? e.target.value : null,
-                        })
-                      }
+                      value={selectedStudents.admission_year ? selectedStudents.admission_year.slice(0, 10) : ""}
+                      onChange={(date) => setSelectedStudents({ ...selectedStudents, admission_year: date })}
+                      className="form-control"
                     />
                   </div>
+
                   <div>
-                    <label htmlFor="grade">Grade</label>
-                    <Form.Control
-                      type="text"
-                      id="grade"
-                      name="grade"
-                      value={selectedStudent.grade}
-                      onChange={(e) => setSelectedStudent({ ...selectedStudent, grade: e.target.value })}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="extra_activities">Extra Activities</label>
+                    <Form.Label>Extra Activities</Form.Label>
                     <Form.Control
                       type="text"
                       id="extra_activities"
                       name="extra_activities"
-                      value={selectedStudent.extra_activities}
-                      onChange={(e) =>
-                        setSelectedStudent({ ...selectedStudent, extra_activities: e.target.value })
-                      }
+                      value={selectedStudents.extra_activities}
+                      onChange={(e) => setSelectedStudents({ ...selectedStudents, extra_activities: e.target.value })}
                     />
                   </div>
-                  <Button variant="success" type="submit" className="mt-5">
-                    Save
+
+                  <Button variant="primary" type="submit" className='mt-3'>
+                    Update
                   </Button>
-                  <Button variant="secondary" onClick={handleCloseEditPopup} className="mt-5 mx-3">
+                  <Button variant="secondary" onClick={handleCloseEditPopup} className="mx-3 mt-3">
                     Cancel
                   </Button>
                 </Col>
               </Row>
+
             </form>
           </div>
-
         )}
       </Popup>
 
+
       <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-        <div className="popup-container-delete">
-          <h3>Delete Student</h3>
-          <p>Are you sure you want to delete this student?</p>
-          {selectedStudent && (
-            <div>
-              <p>Admission No: {selectedStudent.admission_no}</p>
-              <p>Full Name: {selectedStudent.fullname}</p>
-            </div>
-          )}
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-          <Button variant="secondary" onClick={handleCloseDeletePopup} className="mx-2">
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={confirmDelete} className="mx-2">
-            Delete
-          </Button>
-        </div>
+        {selectedStudents && (
+          <div className="popup-container-delete">
+            <h5>Are you sure you want to delete this student?</h5>
+            Admission No : {selectedStudents.admission_no}<br />
+            Full Name   : {selectedStudents.fullname}<br />
+            <Button variant="danger" onClick={confirmDelete} className='mx-3 mt-3'>
+              Delete
+            </Button>
+            <Button variant="secondary" onClick={handleCloseDeletePopup} className="ml-3 mt-3">
+              Cancel
+            </Button>
+          </div>
+        )}
       </Popup>
+
     </div>
   );
 };

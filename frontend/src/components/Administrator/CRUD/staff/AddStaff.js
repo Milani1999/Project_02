@@ -40,6 +40,7 @@ function AddStaff() {
 
   };
 
+
   const handleDateChange = (date, name) => {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: date }));
   };
