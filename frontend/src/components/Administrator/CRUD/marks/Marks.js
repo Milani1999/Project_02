@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Table, Button } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 
-const ViewStudents = () => {
+const Marks = () => {
   const [students, setStudents] = useState([]);
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedTerm, setSelectedTerm] = useState("");
   const [selectedGrade, setSelectedGrade] = useState("");
   const [subjects, setSubjects] = useState([]);
-  const [marks, setMarks] = useState({});
+  const [marks, setMarks] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState("");
 
   useEffect(() => {
     fetchStudents();
@@ -30,7 +31,7 @@ const ViewStudents = () => {
       const response = await axios.get("/api/subjects");
       setSubjects(response.data.map((grade) => grade.subject_name));
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
@@ -47,29 +48,41 @@ const ViewStudents = () => {
   };
 
   const handleMarksChange = (event, studentId) => {
-    const updatedMarks = { ...marks, [studentId]: event.target.value };
-    setMarks(updatedMarks);
+    const { value } = event.target;
+  
+    // Check if the student is already in the marks array
+    const studentIndex = marks.findIndex((item) => item.student === studentId);
+  
+    if (studentIndex !== -1) {
+      // If the student exists, update the score
+      const updatedMarks = [...marks];
+      updatedMarks[studentIndex] = { ...updatedMarks[studentIndex], score: parseInt(value) || 0 };
+      setMarks(updatedMarks);
+    } else {
+      // If the student does not exist, add a new entry to the marks array
+      setMarks((prevMarks) => [...prevMarks, { student: studentId, score: parseInt(value) || 0 }]);
+    }
   };
-
+  
   const handleSaveMarks = async () => {
     try {
-      // Prepare marks data to be saved
-      const marksData = Object.keys(marks).map((studentId) => ({
-        studentId,
-        marks: marks[studentId],
-      }));
+      const marksData = {
+        year: parseInt(selectedYear),
+        term: selectedTerm,
+        subject: selectedSubject,
+        grade: parseInt(selectedGrade),
+        students: marks.map((item) => ({
+          student: item.student,
+          score: parseInt(item.score),
+        })),
+      };
 
-      // Save marks to the database
-      await axios.post("/api/saveMarks", marksData);
+      await axios.post("/api/marks/create", marksData);
 
-      // Clear marks state
-      setMarks({});
-
-      // Display success message or perform any other action
-      console.log("Marks saved successfully!");
+      setMarks([]);
+      alert("Marks saved successfully!");
     } catch (error) {
-      console.error(error);
-      // Display error message or perform any other action
+      alert(error);
     }
   };
 
@@ -79,7 +92,7 @@ const ViewStudents = () => {
   });
 
   return (
-    <Container>
+    <div>
       <div>
         <label htmlFor="yearSelect">Select Year: </label>
         <select id="yearSelect" value={selectedYear} onChange={handleYearChange}>
@@ -113,7 +126,11 @@ const ViewStudents = () => {
       </div>
       <div>
         <label htmlFor="subjectSelect">Select Subject: </label>
-        <select id="subjectSelect">
+        <select
+          id="subjectSelect"
+          value={selectedSubject}
+          onChange={(e) => setSelectedSubject(e.target.value)}
+        >
           <option value="">All Subjects</option>
           {subjects.map((subject) => (
             <option key={subject} value={subject}>
@@ -125,32 +142,40 @@ const ViewStudents = () => {
       <Table striped hover className="mt-5">
         <thead>
           <tr>
-            <th style={{ textAlign: 'center' }}>Admission No</th>
-            <th style={{ textAlign: 'center' }}>Full Name</th>
-            <th style={{ textAlign: 'center' }}>Marks</th>
+            <th style={{ textAlign: "center" }}>Admission No</th>
+            <th style={{ textAlign: "center" }}>Full Name</th>
+            <th style={{ textAlign: "center" }}>Marks</th>
           </tr>
         </thead>
         <tbody>
-          {filteredStudents.map((student) => (
-            <tr key={student._id}>
-              <td style={{ verticalAlign: 'middle' }}>{student.admission_no}</td>
-              <td style={{ verticalAlign: 'middle' }}>{student.fullname}</td>
-              <td>
-                <input
-                  type="number"
-                  min={0}
-                  max={100}
-                  value={marks[student._id] || ""}
-                  onChange={(event) => handleMarksChange(event, student._id)}
-                />
-              </td>
-            </tr>
-          ))}
+          {filteredStudents.map((student) => {
+            const studentMark = marks.find((item) => item.student === student._id) || {
+              student: student._id,
+              score: "",
+            };
+            return (
+              <tr key={student._id}>
+                <td style={{ verticalAlign: "middle" }}>{student.admission_no}</td>
+                <td style={{ verticalAlign: "middle" }}>{student.fullname}</td>
+                <td>
+                  <input
+                    type="number"
+                    min={0}
+                    max={100}
+                    name={studentMark.score}
+                    onChange={(event) => handleMarksChange(event, student._id)}
+                  />
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
-      <Button variant="primary" onClick={handleSaveMarks}>Save Marks</Button>
-    </Container>
+      <Button variant="primary" onClick={handleSaveMarks}>
+        Save Marks
+      </Button>
+    </div>
   );
 };
 
-export default ViewStudents;
+export default Marks;

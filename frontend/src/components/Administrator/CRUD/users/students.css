@@ -6,11 +6,11 @@
     padding: 25px;
 }
 
-.viewTable td{
-    padding: 5px;
-    text-align: center;
+.viewTableStudents td{
+    text-align: left;
+    padding: 4px;
+    padding-left: 20px;
 }
-
 .popup-container-view{
     background-color: white;
     border: 2px solid green;
@@ -31,4 +31,6 @@ img{
 
 .mt-5 td{
     width: 12.5%;
+    text-align: center;
 }
+

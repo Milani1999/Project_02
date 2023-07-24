@@ -1,0 +1,58 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #F6FFF8;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+  }
+  
+  @media (min-width: 768px) {
+    .gradient-form {
+      height: 100vh !important;
+    }
+  }
+  @media (min-width: 769px) {
+    .gradient-custom-2 {
+      border-top-right-radius: .3rem;
+      border-bottom-right-radius: .3rem;
+    }
+  }
+
+  .sign-in-main-div{
+    background-color: #f2d16c;
+   
+}
+.gradient-form{
+    margin-top: 90px;
+    height: 100vh !important;
+}
+.gradient-custom-2 {
+    background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    }
+    
+    @media (min-width: 768px) {
+    .gradient-form {
+    /* height: 100vh !important; */
+    }
+    }
+    @media (min-width: 769px) {
+    .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+    }
+    }
+    .form-main-row{
+        background-color: #ffffff;
+        margin-top: 100px;
+        border: 1px solid #bebebe;
+        border-radius: 10px;
+        padding-right: 0 !important;
+    }
+
+    .second-col{
+        padding-right: 0 !important;
+    }

@@ -1,0 +1,8 @@
+.mt-4 th,
+td {
+    text-align: center;
+}
+
+td{
+    vertical-align: middle;
+}

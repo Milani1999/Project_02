@@ -3,7 +3,7 @@ import Home from "../../components/section/home";
 import AboutUs from "../../components/section/aboutus";
 import School from "../../components/section/OurSchool";
 import ContactUs from "../../components/section/ContactUs";
-import Events from "../../components/section/Events";
+import Events from "../Events/Events";
 
 
 function LandingPage() {

@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/Header/header';
 import Footer from './components/Footer/footer';
@@ -6,7 +6,7 @@ import LandingPage from "./view/LandingPage/landinPage";
 import AboutUs from "./components/section/aboutus";
 import School from "./components/section/OurSchool";
 import ContactUs from "./components/section/ContactUs";
-import Events from "./components/section/Events";
+import Events from "./view/Events/Events";
 import Home from "./components/section/home";
 import StudentDetails from './components/Student/student_details';
 import MainLayout from './components/Administrator/Main/Mainlayout';
@@ -20,10 +20,8 @@ import Timetable from './components/Administrator/pages/Timetable';
 import Attendence from './components/Administrator/pages/Attendence';
 import Grade from './components/Administrator/pages/Grade';
 import Notices from './components/Administrator/pages/Notices';
-import ViewStaff from './components/Administrator/CRUD/staff/ViewStaff';
-import ViewStudents from './components/Administrator/CRUD/users/StudentList';
-import Marks from './components/Administrator/CRUD/marks/Marks';
-import Performance from './components/Administrator/pages/Performance';
+import SignIn from './view/Signin/SignIn';
+import Auth from './view/Signin/ProtectedRoute';
 
 function App() {
   return (
@@ -38,16 +36,33 @@ function App() {
           <Route path="/Events" element={<Events />} />
           <Route path="/Contact" element={<ContactUs />} />
           <Route path="/Students" element={<StudentDetails />} />
+          <Route path="/Login" element={<SignIn />} />
+
+          {/* <Route
+            path="/viewstaff"
+            element={
+              <Auth expectedRoles={["staff"]}>
+                <ViewStaff />
+              </Auth>
+            }
+          />
+
+          <Route
+            path="/viewstudents"
+            element={
+              <Auth expectedRoles={["student"]}>
+                <ViewStudents />
+              </Auth>
+            }
+          /> */}
 
 
-          <Route path="marks" element={<Marks/>}/>
-          <Route path="/viewstaff" element={<ViewStaff/>}/>
-          <Route path="/viewstudents" element={<ViewStudents/>}/>
+          <Route
+            path="/administrator"
+            element={<Auth expectedRoles={["admin"]}><MainLayout /></Auth>}>
 
-
-          <Route path="/administrator" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
-       
+
             <Route path="EditTeacher" element={<EditTeacher />} />
             <Route path="EditStudent" element={<EditStudent />} />
             
@@ -55,7 +70,6 @@ function App() {
             <Route path="calender" element={<Calender />} />
             <Route path="Timetable" element={<Timetable />} />
             <Route path="Attendence" element={<Attendence />} />
-            <Route path="Performance" element={<Performance />} />
             <Route path="Grade" element={<Grade />} />
             <Route path="Notices" element={<Notices />} />
           </Route>
@@ -67,7 +81,9 @@ function App() {
 }
 
 const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
-,"/addstudents","/addstaff","/viewstaff","/marks","/administrator/EditTeacher","/administrator/EditStudent","/administrator/Timetable","/administrator/Performance" ];
+,"/addstudents","/addstaff","/viewstaff","/administrator/EditTeacher","/administrator/EditStudent",
+"/administrator/Timetable","/administrator/Subject","/administrator/Grade" ];
+
 function HeaderRoutes() {
   const location = useLocation();
   const excludeHeader = excludedPaths.includes(location.pathname);
@@ -98,4 +114,4 @@ function FooterRoutes() {
   );
 }
 
-export default App;
+export default App;
