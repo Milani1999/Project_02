@@ -20,7 +20,6 @@ import Timetable from './components/Administrator/pages/Timetable';
 import Attendence from './components/Administrator/pages/Attendence';
 import Grade from './components/Administrator/pages/Grade';
 import Notices from './components/Administrator/pages/Notices';
-import Marks from './components/Administrator/CRUD/marks/Marks';
 import SignIn from './view/Signin/SignIn';
 import Auth from './view/Signin/ProtectedRoute';
 
@@ -38,9 +37,6 @@ function App() {
           <Route path="/Contact" element={<ContactUs />} />
           <Route path="/Students" element={<StudentDetails />} />
           <Route path="/Login" element={<SignIn />} />
-
-
-          <Route path="marks" element={<Marks />} />
 
           {/* <Route
             path="/viewstaff"
@@ -85,7 +81,8 @@ function App() {
 }
 
 const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
-,"/addstudents","/addstaff","/viewstaff","/marks","/administrator/EditTeacher","/administrator/EditStudent","/administrator/Timetable","/administrator/Timetable" ];
+,"/addstudents","/addstaff","/viewstaff","/administrator/EditTeacher","/administrator/EditStudent",
+"/administrator/Timetable","/administrator/Subject","/administrator/Grade" ];
 
 function HeaderRoutes() {
   const location = useLocation();

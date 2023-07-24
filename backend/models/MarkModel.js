@@ -20,7 +20,8 @@ const MarkSchema = new mongoose.Schema({
   students: [
     {
       student: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Student',
         required: true
       },
       score: {

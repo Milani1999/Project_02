@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Form, Button, Container, Table } from 'react-bootstrap';
+import { Form, Button,Table } from 'react-bootstrap';
 import Popup from 'reactjs-popup';
 import AddSubjects from './AddSubjects';
+import './subject.css'
 
 
 const SubjectList = () => {
@@ -78,7 +79,7 @@ const SubjectList = () => {
     };
 
     return (
-        <Container>
+        <div>
             {successMessage && <div className="alert alert-success">{successMessage}</div>}
             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
 
@@ -90,17 +91,17 @@ const SubjectList = () => {
                         </th>
                     </tr>
                     <tr>
-                        <th style={{ textAlign: 'center' }}>Subject ID</th>
-                        <th style={{ textAlign: 'center' }}>Subject Name</th>
-                        <th style={{ textAlign: 'center' }}>Actions</th>
+                        <th>Subject ID</th>
+                        <th>Subject Name</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {SubjectList.map((subject) => (
                         <tr key={subject._id}>
-                            <td style={{ verticalAlign: 'middle' }}>{subject.subject_id}</td>
-                            <td style={{ verticalAlign: 'middle' }}>{subject.subject_name}</td>
-                            <td style={{ verticalAlign: 'middle' }}>
+                            <td>{subject.subject_id}</td>
+                            <td>{subject.subject_name}</td>
+                            <td>
                                 <Button variant="success" onClick={() => handleEdit(subject)} className="m-1" style={{ width: '100px' }}>
                                     Edit
                                 </Button><br />
@@ -167,7 +168,7 @@ const SubjectList = () => {
                 )}
             </Popup>
 
-        </Container>
+        </div>
     );
 };
 

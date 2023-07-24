@@ -49,7 +49,7 @@ class Navbar extends Component {
             <li>
               <Link to="/Contact">Contact us</Link>
             </li>
-            <li><Link to="/Login">Login</Link></li>
+            <li><Link to="/login">Login</Link></li>
           </ul>
         </div>
 
