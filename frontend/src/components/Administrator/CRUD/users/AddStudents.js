@@ -25,7 +25,6 @@ function AddStudents() {
     extra_activities: "",
   });
 
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -119,7 +118,6 @@ function AddStudents() {
 
   const handleCancel = () => {
     setIsPopupOpen(false);
-    setMessage("");
     setError("");
   };
 

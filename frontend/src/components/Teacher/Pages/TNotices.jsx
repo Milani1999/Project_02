@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function TNotices() {
-  return (
-    <div>
-      heloooo
-    </div>
-  )
+  return <div>heloooo</div>;
 }
 
-export default TNotices
+export default TNotices;

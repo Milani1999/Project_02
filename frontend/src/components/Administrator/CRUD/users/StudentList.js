@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Button, Row, Col, Alert, Form } from "react-bootstrap";
+import { Table, Button, Row, Col, Form } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import AddStudents from "./AddStudents";
 import "./students.css";
