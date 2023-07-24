@@ -16,6 +16,7 @@
     "concurrently": "^8.2.0",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.1",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "recharts": "^2.7.2"
   }
 }
