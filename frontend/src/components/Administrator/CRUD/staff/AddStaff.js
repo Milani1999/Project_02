@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Popup from "reactjs-popup";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 function AddStaff() {
   const [formData, setFormData] = useState({
@@ -33,7 +31,13 @@ function AddStaff() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "phone" && value.length !== 10) {
+      setError("Phone number should contain exactly 10 digits");
+    } else {
+      setError("");
+    }
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+
   };
 
   const handleDateChange = (date, name) => {
@@ -91,7 +95,7 @@ function AddStaff() {
         config
       );
 
-      setMessage("Staff added successfully!");
+      alert("Staff added successfully!");
       setFormData({
         employee_id: "",
         fullname: "",
@@ -112,15 +116,22 @@ function AddStaff() {
         // assigned_classes: "",
       });
       setError("");
+      window.location.reload();
     } catch (error) {
       setError(error.response.data.message);
     }
+
   };
 
   const handleCancel = () => {
     setIsPopupOpen(false);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.target.name === 'phone' && e.target.value.length >= 10) {
+      e.preventDefault();
+    }
+  };
 
   return (
     <div>
@@ -188,25 +199,27 @@ function AddStaff() {
                 </Form.Group>
                 <Form.Group controlId="dateOfBirth">
                   <Form.Label>Date of Birth</Form.Label><br />
-                  <DatePicker
-                    selected={formData.dateOfBirth}
-                    onChange={(date) =>
-                      handleDateChange(date, "dateOfBirth")
-                    }
-                    className="form-control"
-                    placeholderText="Select Date of Birth"
+                  <Form.Control
+                    type="date"
+                    name="dateOfBirth"
+                    value={formData.dateOfBirth}
+                    placeholder="Enter date of birth"
+                    onChange={(e) => handleDateChange(e.target.value, "dateOfBirth")}
                   />
+
                 </Form.Group>
                 <Form.Group controlId="phone">
                   <Form.Label>Phone</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="number"
                     name="phone"
                     value={formData.phone}
                     placeholder="Enter Phone"
                     onChange={handleChange}
+                    onKeyDown={handleKeyPress}
                   />
                 </Form.Group>
+
 
                 <Form.Group controlId="gender">
                   <Form.Label>Gender</Form.Label>

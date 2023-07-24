@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Form, Button, Alert, Table, Col, Row } from 'react-bootstrap';
+import { Form, Button, Table, Col, Row } from 'react-bootstrap';
 import Popup from 'reactjs-popup';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import AddStaff from './AddStaff';
 import './staff.css';
 
@@ -13,9 +11,8 @@ const ViewStaff = () => {
     const [showViewPopup, setShowViewPopup] = useState(false);
     const [showEditPopup, setShowEditPopup] = useState(false);
     const [showDeletePopup, setShowDeletePopup] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
+    const [imageFile, setImageFile] = useState(null);
+
 
     const fetchStaffData = async () => {
         try {
@@ -48,22 +45,33 @@ const ViewStaff = () => {
     const handleCloseEditPopup = () => {
         setSelectedStaff({});
         setShowEditPopup(false);
-        setErrorMessage('');
-        setSuccessMessage('');
     };
 
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { _id, ...staffData } = selectedStaff; // Exclude _id property
+            const { _id, picture, ...staffData } = selectedStaff;
+
+            if (imageFile) {
+                const data = new FormData();
+                data.append("file", imageFile);
+                data.append("upload_preset", "edutrack");
+                data.append("cloud_name", "dprnxaqxi");
+                const response = await fetch("https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload", {
+                    method: "post",
+                    body: data,
+                });
+                const cloudinaryData = await response.json();
+                staffData.picture = cloudinaryData.url.toString();
+            }
+
             await axios.put(`/api/staff/${_id}`, staffData);
             setShowEditPopup(false);
             fetchStaffData();
-            setSuccessMessage('Staff member updated successfully.');
-            setShowSuccessMessage(true);
+            alert('Staff member updated successfully.');
         } catch (error) {
             console.error(error);
-            setErrorMessage('Failed to update staff member.');
+            alert("Please fill all the fields");
         }
     };
 
@@ -75,8 +83,6 @@ const ViewStaff = () => {
     const handleCloseDeletePopup = () => {
         setSelectedStaff({});
         setShowDeletePopup(false);
-        setErrorMessage('');
-        setSuccessMessage('');
     };
 
     const confirmDelete = async () => {
@@ -85,11 +91,10 @@ const ViewStaff = () => {
             await axios.delete(`/api/staff/${_id}`);
             setShowDeletePopup(false);
             fetchStaffData();
-            setSuccessMessage('Staff member deleted successfully.');
-            setShowSuccessMessage(true);
+            alert('Staff member deleted successfully.');
         } catch (error) {
             console.error(error);
-            setErrorMessage('Failed to delete staff member.');
+            alert('Failed to delete staff member.');
         }
     };
 
@@ -97,23 +102,16 @@ const ViewStaff = () => {
 
     return (
         <div>
-            {showSuccessMessage && (
-                <Alert variant="success" onClose={() => setShowSuccessMessage(false)} dismissible>
-                    {successMessage}
-                </Alert>
-            )}
-            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-
             <Table striped hover className="mt-5">
-               
+                <thead>
                     <tr>
                         <th colSpan={7}>
                         </th>
-                        <th style={{textAlign:'center',width:'100px'}}>
+                        <th style={{ textAlign: 'center', width: '100px' }}>
                             <AddStaff />
                         </th>
                     </tr>
-                    <thead>
+
                     <tr>
                         <th style={{ textAlign: 'center' }}>Profile</th>
                         <th style={{ textAlign: 'center' }}>Employee ID</th>
@@ -156,9 +154,9 @@ const ViewStaff = () => {
             <Popup open={showViewPopup} onClose={handleCloseViewPopup}>
                 {selectedStaff && (
                     <div className="popup-container-view">
-                        <table style={{ textAlign: 'right' }} className="viewTable">
+                        <table className="viewTableStaff">
                             <tr>
-                                <td colSpan={2}>
+                                <td colSpan={2} style={{ textAlign: 'center' }}>
                                     <img src={selectedStaff.picture} alt="Profile" width="100" height="100" />
                                 </td>
                             </tr>
@@ -219,7 +217,7 @@ const ViewStaff = () => {
                                 <td>{selectedStaff.assigned_classes}</td>
                             </tr> */}
                             <tr>
-                                <td colSpan={2}>
+                                <td colSpan={2} style={{ textAlign: 'center' }}>
                                     <Button variant="secondary" onClick={handleCloseViewPopup} className="mt-3">
                                         Close
                                     </Button>
@@ -234,11 +232,19 @@ const ViewStaff = () => {
                 {selectedStaff && (
                     <div className="popup-container">
                         <form onSubmit={handleEditSubmit}>
-
                             <Row>
                                 <Col md={6}>
-                                    <img src={selectedStaff.picture} alt="Profile" width="100px" height="100px" className='imgEdit' />
                                     <div>
+                                        {/* <Form.Label>Profile Picture</Form.Label> */}
+                                        {selectedStaff.picture && <img src={selectedStaff.picture} alt="Profile" width="100px" height="100px" />}
+                                        <Form.Control
+                                            type="file"
+                                            accept="image/jpeg, image/png"
+                                            id="picture"
+                                            name="picture"
+                                            onChange={(e) => setImageFile(e.target.files[0])}
+                                        />
+                                    </div>                                    <div>
                                         <Form.Label>Employee ID</Form.Label>
                                         <Form.Control
                                             type="text"
@@ -248,6 +254,7 @@ const ViewStaff = () => {
                                             onChange={(e) => setSelectedStaff({ ...selectedStaff, employee_id: e.target.value })}
                                         />
                                     </div>
+
                                     <div>
                                         <Form.Label>Full Name</Form.Label>
                                         <Form.Control
@@ -288,16 +295,18 @@ const ViewStaff = () => {
                                             onChange={(e) => setSelectedStaff({ ...selectedStaff, address: e.target.value })}
                                         />
                                     </div>
+
                                     <div>
-                                        <Form.Label>Date of Birth</Form.Label><br />
-                                        <DatePicker
+                                        <Form.Label>Date of Birth</Form.Label>
+                                        <Form.Control
+                                            type="date"
                                             selected={selectedStaff.dateOfBirth ? new Date(selectedStaff.dateOfBirth) : null}
                                             onChange={(date) => setSelectedStaff({ ...selectedStaff, dateOfBirth: date })}
                                             className="form-control"
                                             placeholderText="Select Date of Birth"
                                         />
-
                                     </div>
+
                                     <div>
                                         <Form.Label>Phone</Form.Label>
                                         <Form.Control
@@ -366,15 +375,15 @@ const ViewStaff = () => {
                                     </div>
                                     <div>
 
-<Form.Label>EPF No</Form.Label>
-<Form.Control
-    type="text"
-    id="epf_No"
-    name="epf_No"
-    value={selectedStaff.epf_No}
-    onChange={(e) => setSelectedStaff({ ...selectedStaff, epf_No: e.target.value })}
-/>
-</div>
+                                        <Form.Label>EPF No</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            id="epf_No"
+                                            name="epf_No"
+                                            value={selectedStaff.epf_No}
+                                            onChange={(e) => setSelectedStaff({ ...selectedStaff, epf_No: e.target.value })}
+                                        />
+                                    </div>
 
                                     <div>
                                         <Form.Label>Subjects Taught</Form.Label>
