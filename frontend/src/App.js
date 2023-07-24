@@ -37,7 +37,7 @@ function App() {
           <Route path="/Events" element={<Events />} />
           <Route path="/Contact" element={<ContactUs />} />
           <Route path="/Students" element={<StudentDetails />} />
-          <Route path="/Login" element={<SignIn />} />
+          <Route path="/login" element={<SignIn />} />
 
           {/* <Route
             path="/viewstaff"
@@ -82,7 +82,7 @@ function App() {
   );
 }
 
-const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
+const excludedPaths = ["/administrator", "/Login", "/viewstudents","/viewstudents/create","/subjects"
 ,"/addstudents","/addstaff","/viewstaff","/administrator/EditTeacher","/administrator/EditStudent",
 "/administrator/Timetable","/administrator/Subject","/administrator/Grade" ];
 

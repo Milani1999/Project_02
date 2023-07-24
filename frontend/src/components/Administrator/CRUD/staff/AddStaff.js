@@ -141,6 +141,7 @@ function AddStaff() {
       </Button>
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+      <div className="popup-background">
         <div className="Popup">
           {error && <p style={{ color: "red" }}>{error}</p>}
           {message && <p style={{ color: "green" }}>{message}</p>}
@@ -335,9 +336,8 @@ function AddStaff() {
                 </Button>
               </Col>
             </Row>
-
-
           </Form>
+        </div>
         </div>
       </Popup>
     </div>
