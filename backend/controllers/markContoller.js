@@ -1,4 +1,4 @@
-const Mark = require('../models/MarkModel');
+const Mark = require("../models/MarkModel");
 
 const asyncHandler = require("express-async-handler");
 
@@ -11,14 +11,14 @@ const saveMarks = async (req, res) => {
       term,
       subject,
       grade,
-      students
+      students,
     });
 
     await mark.save();
 
-    res.status(200).json({ message: 'Marks saved successfully' });
+    res.status(200).json({ message: "Marks saved successfully" });
   } catch (error) {
-    res.status(500).json({ message: 'Error saving marks', error });
+    res.status(500).json({ message: "Error saving marks", error });
   }
 };
 
@@ -29,25 +29,41 @@ const getMarks = asyncHandler(async (req, res) => {
 
 const getStudentMarksByID = async (req, res) => {
   try {
-    const { studentId } = req.params;
-
-    const mark = await Mark.findOne({ 'students.student': studentId });
-
-    if (!mark) {
-      return res.status(404).json({ message: 'Student marks not found' });
-    }
-
-    const studentMarks = mark.students.find((student) => student.student === studentId);
-
-    if (!studentMarks) {
-      return res.status(404).json({ message: 'Student marks not found' });
-    }
-
-    const { score } = studentMarks; // Get the score of the specific student
-
-    res.json({ studentId, score });
+   
+    const mark = await Mark.aggregate([
+      {
+        $match: {
+          students: { $elemMatch: { student: req.params.id } },
+        },
+      },
+      {
+        $unwind: '$students',
+      },
+      {
+        $match: {
+          'students.student': req.params.id,
+        },
+      },
+      {
+        $addFields: {
+          subject: '$subject', // Include the 'subject' field from the document
+          score: '$students.score',
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          score: 1,
+          subject: 1,
+        },
+      },
+    ]);
+    
+    res.json(mark);
+    
+    
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching student marks', error });
+    res.status(500).json({ message: "Error fetching student marks", error });
   }
 };
 
