@@ -33,3 +33,4 @@ adminSchema.methods.matchPassword = async function (enteredPassword) {
 const Admin = new mongoose.model("Admin", adminSchema)
 
 module.exports = Admin;
+

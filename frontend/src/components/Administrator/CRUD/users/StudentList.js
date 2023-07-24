@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button, Row, Col, Alert, Form } from "react-bootstrap";
 import Popup from "reactjs-popup";
-import "react-datepicker/dist/react-datepicker.css";
 import AddStudents from "./AddStudents";
 import "./students.css";
 import QrGenerator from "../../../QrCode/QrGenerator";
@@ -18,6 +17,7 @@ const ViewStudents = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedGrade, setSelectedGrade] = useState("");
+ 
 
   
     /*--------Start--------QR Generator */
@@ -374,20 +374,6 @@ const ViewStudents = () => {
                       }
                     />
                   </div>
-
-                  {/* <div>
-                    <label htmlFor="picture">Picture</label>
-                    <Form.Control
-                      type="file"
-                      id="picture"
-                      name="picture"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        setSelectedStudent({ ...selectedStudent, picture: file });
-                      }}
-                    />
-                  </div> */}
 
                   <div>
                     <label htmlFor="fullname">Full Name</label>

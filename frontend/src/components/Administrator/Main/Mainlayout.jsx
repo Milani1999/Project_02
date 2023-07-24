@@ -215,7 +215,11 @@ const MainLayout = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    to="/"
+onClick={() => {
+                      localStorage.removeItem("userInfo");
+                      navigate("/Login");
+                      window.location.reload();
+                    }}
                   >
                     Signout
                   </Link>

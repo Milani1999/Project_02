@@ -1,7 +1,6 @@
 import React from "react";
 import {FcCollaboration,FcBusinesswoman,FcKindle } from "react-icons/fc";
 import { Column } from "@ant-design/plots";
-import { Table } from "antd";
 import { Progress, Space } from 'antd';
 import './Dashboard.css';
 

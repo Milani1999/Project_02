@@ -80,7 +80,7 @@
     padding-bottom: 0 !important;
     padding-top: 2px !important;
 }
-.form-label{
+.form-outline .form-label{
     font-size: 20px;
 }
 .btn-close{

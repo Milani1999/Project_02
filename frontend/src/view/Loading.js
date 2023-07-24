@@ -2,7 +2,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 function Loading() {
     return (
-        <Spinner animation="border" variant="success" />
+        <Spinner animation="border" variant="success" style={{width:'30px',height:'30px',marginTop:'10px'}} />
     )
 }
 

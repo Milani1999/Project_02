@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 
 const studentSchema = new mongoose.Schema({
-    // user: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "User",
-    //     required: true,
-    // },
+
     fullname: {
         type: String,
         required: true,
@@ -52,7 +48,7 @@ const studentSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['admin', 'student', 'staff'],
+        enum: ['student'],
         required: true,
     },
 
@@ -76,7 +72,7 @@ const studentSchema = new mongoose.Schema({
     },
     extra_activities: {
         type: String,
-        enum: ['games', 'hobbies', 'gardening'],
+        required: true,
     },
 }, {
     timestamps: true,
