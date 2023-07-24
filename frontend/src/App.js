@@ -99,8 +99,8 @@ function App() {
 }
 
 const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
-,"/addstudents","/addstaff","/viewstaff","/administrator/EditTeacher","/administrator/EditStudent","/TTimetable",
-"/administrator/Timetable","/administrator/Subject","/administrator/Grade" ,"/Teacher","/TNotices","/TCalendar"];
+,"/addstudents","/addstaff","/viewstaff","/administrator/EditTeacher","/administrator/EditStudent",
+"/administrator/Timetable","/administrator/Subject","/administrator/Grade" ,"/Teacher","/TNotices","/TCalendar","/TTimetable"];
 
 function HeaderRoutes() {
   const location = useLocation();
