@@ -1,5 +1,5 @@
 import React from "react";
-import {FcCollaboration,FcBusinesswoman,FcKindle } from "react-icons/fc";
+import { FcCollaboration, FcBusinesswoman, FcKindle } from "react-icons/fc";
 import { Column } from "@ant-design/plots";
 import { Progress, Space } from 'antd';
 import './Dashboard.css';
@@ -185,7 +185,10 @@ const Dashboard = () => {
             </h6>
           
         </div>
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
+      
+      </div>
+      <div className="d-flex">
+      <div className="d-flex=2  flex-grow-1 custom roudned-3 ">
           <div>
             <h3 className="desc">Today Attendence</h3>
             
@@ -196,16 +199,17 @@ const Dashboard = () => {
   <br></br>  <h4>Students</h4><Progress type="dashboard" percent={20} gapDegree={30} />
   </Space>
           </div>
+          
         </div>
-      </div>
-      <div className="mt-4">
-        <h3 className="mb-5 title">No of Students in Each class</h3>
-        <div>
-          <Column {...config} />
-        </div>
-      </div>
-     
+        <div className="mt-4  custombar-width  ">
+    <h3 className="mb-5 title">No of Students in Each class</h3>
+    <div>
+      <Column {...config} />
     </div>
+  </div>
+</div>
+     
+</div>
     
   );
 };

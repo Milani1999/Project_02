@@ -83,9 +83,7 @@ const Timetable = () => {
   const handleCellUpdate = async () => {
     try {
       const updatedTimetableData = [...timetableData];
-      updatedTimetableData[selectedCellData.timeIndex][
-        daysOfWeek.indexOf(selectedCellData.day) + 1
-      ] = {
+      updatedTimetableData[selectedCellData.timeIndex][daysOfWeek.indexOf(selectedCellData.day) + 1] = {
         subject: selectedCellData.subject,
         teacher: selectedCellData.teacher,
       };
@@ -126,7 +124,9 @@ const Timetable = () => {
 
   return (
     <div className="timetable-container">
-      <h1><center>Timetable</center></h1>
+      <h1>
+        <center>Timetable</center>
+      </h1>
       <div className="grade-selection">
         <label htmlFor="grade">Select Grade:</label>
         <select id="grade" value={selectedGrade.name} onChange={handleGradeSelect}>
@@ -213,7 +213,7 @@ const Timetable = () => {
           </div>
         </div>
       )}
-      
+
       {showPopup && (
         <div className="popup">
           <div className="popup-content">

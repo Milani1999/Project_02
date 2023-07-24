@@ -60,9 +60,9 @@ const MainLayout = () => {
           }}
           items={[
             {
-              key: "",
+              key: "Teacher",
               icon: <AiOutlineDashboard className="fs-4" />,
-              label: "Dashboard",
+              label: "TeachDashboard",
             },
             {
               key: "users",
@@ -215,11 +215,7 @@ const MainLayout = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-onClick={() => {
-                      localStorage.removeItem("userInfo");
-                      navigate("/Login");
-                      window.location.reload();
-                    }}
+                    to="/"
                   >
                     Signout
                   </Link>

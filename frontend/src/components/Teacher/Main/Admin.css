@@ -1,0 +1,125 @@
+body {
+  font-family: Roboto, sans-serif;
+
+}
+
+.trigger {
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
+  background: #d2d3d4;
+
+}
+
+
+
+.adminlogo{
+  height: 50px;
+  margin: 5px;
+  padding: 0px 20px;
+  
+}
+.ant-layout {
+  min-height: 100vh;
+
+ 
+  
+}
+.lg-logo{
+  font-size: 15px;
+  
+}
+.divider{
+  position: relative;
+  margin: 0 auto;
+  height: 1px;
+  width: 80%;
+  background-color: rgba(255, 255, 255, 0.438);
+padding: 0px 5px ;
+margin-top: 20px;
+}
+.adminlogo{  
+    margin: 0;
+    height: 50px;
+  }
+.ant-layout-sider {
+  flex: 0 0 250px !important;
+  max-width: 250px !important;
+  min-width: 250px !important;
+  width: 250px !important;
+ 
+}
+.ant-layout-sider-collapsed {
+  flex: 0 0 80px !important;
+  max-width: 80px !important;
+  min-width: 80px !important;
+  width: 80px !important;
+}
+.sm-logo img {
+width: 100%;
+}
+.ant-layout .ant-layout-sider {
+  position: relative;
+  min-width: 0;
+  background:  #023e1c;
+  transition: all 0.2s,background 0s;
+
+  
+}
+.ant-menu-dark.ant-menu{
+  color: rgba(255, 255, 255, 0.65);
+  background:#023e1c;
+  padding: 2px 5px 5px 5px;
+  
+ 
+}
+
+
+.ant-menu-dark.ant-menu.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  background:#055026;
+
+ 
+}
+.ant-menu-dark>.ant-menu.ant-menu-inline .ant-menu-item {
+  position: relative;
+
+}
+.ant-layout-header h5 {
+  line-height: 20px;
+  font-size: 14px;
+}
+.ant-layout-header p {
+  line-height: 20px;
+  font-size: 13px;
+}
+.ant-layout-header div .badge {
+  top: 0px;
+  right: -10px;
+  
+}
+.position-relative{
+padding: 10px;
+
+}
+main{
+  height: 80vh;
+  overflow-y: scroll;
+  background-color: transparent !important;
+}
+
+.ant-menu-item{
+  margin-bottom: 500px;
+}
+.ant-menu-item.ant-menu-item-selected {
+  background-color: rgb(15, 154, 64);
+}
+.ant-layout-sider-collapsed .logo {
+ 
+  height: 32px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
