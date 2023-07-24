@@ -1,72 +1,98 @@
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
 
 const studentSchema = new mongoose.Schema({
+    // user: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "User",
+    //     required: true,
+    // },
+    fullname: {
+        type: String,
+        required: true,
+    },
+    first_name: {
+        type: String,
+        required: true,
+    },
+    last_name: {
+        type: String,
+        required: true,
+    },
+    address: {
+        type: String,
+        required: true,
+    },
+    dateOfBirth: {
+        type: Date,
+        required: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+    },
+    gender: {
+        type: String,
+        enum: ['Male', 'Female'],
+        required: true,
+    },
+    picture: {
+        type: String,
+        required: true,
+        default: "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'student', 'staff'],
+        required: true,
+    },
 
     admission_no: {
         type: String,
-        require: true,
+        required: true,
     },
-
-    student_name: {
+    parent_Name: {
         type: String,
-        require: true
     },
-
-    address: {
+    parent_occupation: {
         type: String,
-        require: true
     },
-
-    dob: {
-        type: String,
-        require: true
-    },
-
-    gender: {
-        type: String,
-        require: true
-    },
-
     admission_year: {
         type: Date,
-        require: true
+        required: true,
     },
-
-    phone: {
-        type: Number,
-        require: true
-    },
-
-    parent: {
-        type: String,
-        require: true
-    },
-
-    occupation: {
-        type: String,
-        require: true
-    },
-
     grade: {
         type: Number,
-        require: true
+        required: true,
     },
-
-    username: {
+    extra_activities: {
         type: String,
-        require: true
+        enum: ['games', 'hobbies', 'gardening'],
     },
+}, {
+    timestamps: true,
+});
 
-    password: {
-        type: String,
-        require: true
-    },
-
-    profile_img: {
-        type: Buffer
+studentSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
+        next();
     }
-})
-const Student = new mongoose.model("Student", studentSchema)
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+});
 
-module.exports=Student;
+studentSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
 
+const Student = mongoose.model("Student", studentSchema);
+module.exports = Student;

@@ -1,0 +1,49 @@
+.notice-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .notices-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+ 
+  
+  .notice-page h1 {
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  
+  .notice-page .ant-form-item {
+    margin-bottom: 16px;
+  }
+  
+  .notice-page .ant-form-item-label {
+    text-align: left;
+  }
+  
+  .notice-page .ant-btn {
+    margin-top: 10px;
+  }
+  .ant-form {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.88);
+    font-size: 14px;
+    line-height: 1.5714285714285714;
+    list-style: none;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+    background-color: rgb(215, 226, 203);
+    padding: 15px 30px;
+}
+.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+    color: #fff;
+    background-color: #0e4114;
+}
+.ant-btn-primary:not(:disabled):not(.ant-btn-disabled) {
+  background-color: rgb(19, 147, 57);
+}

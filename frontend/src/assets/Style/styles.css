@@ -293,12 +293,11 @@
 .ContactUsComponent {
     height: 650px;
     overflow: hidden;
-    background-color:rgb(59, 182, 59);
 }
 
 .ContactUsComponent .h1-heading {
     text-align: center;
-    color: rgb(242, 243, 242);
+    color: rgb(5, 49, 5);
     font-weight: bolder;
     font-size: 50px;
     padding-top: 100px;

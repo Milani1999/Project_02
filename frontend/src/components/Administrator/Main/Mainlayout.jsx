@@ -37,12 +37,13 @@ const MainLayout = () => {
       },
     });
   };
+  
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
-            <span className="sm-logo"><img src="images/uni2.png"></img></span>
+            <span className="sm-logo"><img src="images/uni2.png" alt="img"></img></span>
             
           </h2>
         </div>
@@ -52,7 +53,7 @@ const MainLayout = () => {
           mode="inline"
           defaultSelectedKeys={[""]}
           onClick={({ key }) => {
-            if (key == "signout") {
+            if (key === "signout") {
             } else {
               navigate(key);
             }
@@ -69,46 +70,23 @@ const MainLayout = () => {
               label: "Users",
               children:[
                 {
-                  key: "Teacher",
+                  key: "EditTeacher",
                   icon: <AiOutlineUser className="fs-4" />,
                   label: "Teacher",
-                  children:[
-                    {
-                      key: "TeacherList",
-                      icon: <FaClipboardList className="fs-4" />,
-                      label: "Teacher List",
-                    },
-                 
-                    {
-                      key: "editTeacher",
-                      icon: <FaClipboardList className="fs-4" />,
-                      label: "Edit Teacher",
-                    },
-                  ]
+                
                 },
+                    
+          
                 {
-                  key: "student",
+                  key: "EditStudent",
                   icon: <AiOutlineUser className="fs-4" />,
                   label: "Student",
-                  children :[
-                    {
-                      key: "StudentList",
-                      icon: <FaClipboardList className="fs-4" />,
-                      label: "Student List",
-                    },
-                    
-                
-                    {
-                      key: "AddStudent",
-                      icon: <FaClipboardList className="fs-4" />,
-                      label: "Edit Student",
-                    },
-                  ]
+                 
                 },
-              ]
+          ],
             },
             {
-              key: "attendence",
+              key: "Attendence",
               icon: <FaClipboardList className="fs-4" />,
               label: "Attendence",
             },
@@ -127,14 +105,15 @@ const MainLayout = () => {
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Grade",
                 },
+              ],
+            },
                 {
                   key: "Timetable",
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Timetable",
                 },
-              
-              ],
-            },
+            
+            
             
           
             {
@@ -144,12 +123,24 @@ const MainLayout = () => {
              
             },
             {
-              key: "calender",
+              key: "Events",
               icon: <RiCalendar2Line className="fs-4" />,
-              label: "Event Calender",
+              label: "Events",
+              children: [
+                {
+                  key: "calender",
+                  icon: <RiCalendarCheckFill className="fs-4" />,
+                  label: "Event Calendar",
+                },
+                {
+                  key: "Grade",
+                  icon: <RiCalendarCheckFill className="fs-4" />,
+                  label: "Edit Events",
+                },
+              ],
             },
             {
-              key: "notices",
+              key: "Notices",
               icon: <FaClipboardList className="fs-4" />,
               label: "Notices",
             },
@@ -177,6 +168,7 @@ const MainLayout = () => {
               onClick: () => setCollapsed(!collapsed),
             }
           )}
+          
           <div className="d-flex gap-4 align-items-center">
           <div className="position-relative"> <RiMoonLine className="fs-4" /></div>
             <div className="position-relative">
@@ -234,11 +226,12 @@ const MainLayout = () => {
      
     </>
           </div>
+          
         </Header>
         <Content
           style={{
-            margin: "24px 16px",
-            padding: 24,
+            margin: "2px 16px",
+            padding: "2px 24px",
             minHeight: 280,
             background: colorBgContainer,
           }}
