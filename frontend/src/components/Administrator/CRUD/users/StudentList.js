@@ -25,9 +25,9 @@ const ViewStudents = () => {
 
 
   
-    /*--------End--------QR Generator */
-  
+    /*--------End--------QR Generator */ 
 
+    
   useEffect(() => {
     fetchStudents();
   }, []);
