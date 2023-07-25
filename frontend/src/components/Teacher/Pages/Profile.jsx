@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import './Profile.css';
 
 
-
-
-function Profile({ staff }) {
+function StaffProfile({ staff }) {
   return (
     <div className="profile-container">
       <div className="profile-image">
@@ -12,39 +10,41 @@ function Profile({ staff }) {
       </div>
       <div className="profile-details">
         <h2>{staff.fullname}</h2>
-        <div className="profile-table">
-          <div className="profile-row">
-            <div className="profile-label">Employee ID:</div>
-            <div className="profile-value">{staff.employee_id}</div>
-          </div>
-          <div className="profile-row">
-            <div className="profile-label">Date of Birth:</div>
-            <div className="profile-value">{staff.dateOfBirth}</div>
-          </div>
-          <div className="profile-row">
-            <div className="profile-label">Phone:</div>
-            <div className="profile-value">{staff.phone}</div>
-          </div>
-          <div className="profile-row">
-            <div className="profile-label">Gender:</div>
-            <div className="profile-value">{staff.gender}</div>
-          </div>
-          <div className="profile-row">
-            <div className="profile-label">Email:</div>
-            <div className="profile-value">{staff.email}</div>
-          </div>
-          <div className="profile-row">
-            <div className="profile-label">EPF No:</div>
-            <div className="profile-value">{staff.epf_No}</div>
-          </div>
-          <div className="profile-row">
-            <div className="profile-label">Subjects Taught:</div>
-            <div className="profile-value">{staff.subjects_taught}</div>
-          </div>
-        </div>
-        <p>Profile Picture</p>
+        <p>Employee ID: {staff.employee_id}</p>
+        <p>Date of Birth: {staff.dateOfBirth}</p>
+        <p>Phone: {staff.phone}</p>
+        <p>Gender: {staff.gender}</p>
+        <p>Email: {staff.email}</p>
+        <p>EPF No: {staff.epf_No}</p>
+        <p>Subjects Taught: {staff.subjects_taught}</p>
+       
       </div>
     </div>
   );
 }
-export default Profile;
+
+
+
+function App() {
+  
+  const staffData = {
+    employee_id: "EMP123",
+    fullname: "John Doe",
+    dateOfBirth: "1990-01-01",
+    phone: "1234567890",
+    gender: "Male",
+    email: "john.doe@example.com",
+    epf_No: "EPF123",
+    subjects_taught: "Science,English,History",
+    picture: "" ,
+  };
+
+  return (
+    <div className="App">
+      <h1>Staff Profile</h1>
+      <StaffProfile staff={staffData} />
+    </div>
+  );
+}
+
+export default App;
