@@ -38,6 +38,7 @@ const authUser = asyncHandler(async (req, res) => {
     });
   } else if (staff && (await staff.matchPassword(password))) {
     res.json({
+      id:staff._id,
       name: staff.fullname,
       role: staff.role,
       token: generateToken(staff._id),
