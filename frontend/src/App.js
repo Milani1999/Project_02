@@ -116,52 +116,35 @@ function App() {
   );
 }
 
-const excludedPaths = [
-  "/administrator",
-  "/Login",
-  "/viewstudents",
-  "/viewstudents/create",
-  "/subjects",
-  "/addstudents",
-  "/addstaff",
-  "/viewstaff",
-  "/administrator/EditTeacher",
-  "/administrator/EditStudent",
-  "/administrator/Timetable",
-  "/administrator/Subject",
-  "/administrator/Grade",
-  "/administrator/Attendence",
-  "/Teacher",
-  "/Teacher/TNotices",
-  "/Teacher/TCalendar",
-  "/Teacher/TTimetable",
-  "/Teacher/Profile",
-  "/Teacher/TAttendence",
-  "/Teacher/VStudents",
-  "/Teacher/TMarks",
-  
+const includedPaths = [
+  "/",
+  "/About",
+  "/School",
+  "/Events",
+  "/Contact",
+  "/Students",
 ];
 
 function HeaderRoutes() {
   const location = useLocation();
-  const excludeHeader = excludedPaths.includes(location.pathname);
+  const excludeHeader = includedPaths.includes(location.pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   });
 
-  return <React.Fragment>{!excludeHeader && <Navbar />}</React.Fragment>;
+  return <React.Fragment>{excludeHeader && <Navbar />}</React.Fragment>;
 }
 
 function FooterRoutes() {
   const location = useLocation();
-  const excludeFooter = excludedPaths.includes(location.pathname);
+  const excludeFooter = includedPaths.includes(location.pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   });
 
-  return <React.Fragment>{!excludeFooter && <Footer />}</React.Fragment>;
+  return <React.Fragment>{excludeFooter && <Footer />}</React.Fragment>;
 }
 
 export default App;
