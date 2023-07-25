@@ -116,7 +116,7 @@ const ViewStudents = () => {
     <div>
       <Table striped hover className="mt-5" responsive="sm">
         <thead>
-          <tr>
+          <tr >
             <th colSpan={6}>
               <div>
                 <label htmlFor="gradeSelect">Select Grade: </label>
@@ -138,7 +138,7 @@ const ViewStudents = () => {
               <AddStudents />
             </th>
           </tr>
-          <tr>
+          <tr className="colname">
             <th style={{ textAlign: "center" }}>Picture</th>
             <th style={{ textAlign: "center" }}>Admission No</th>
             <th style={{ textAlign: "center" }}>Admission Date</th>
