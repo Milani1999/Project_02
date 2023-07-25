@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button } from "react-bootstrap";
-import "react-datepicker/dist/react-datepicker.css";
 
 const Marks = () => {
   const [students, setStudents] = useState([]);
@@ -49,17 +48,23 @@ const Marks = () => {
 
   const handleMarksChange = (event, studentId) => {
     const { value } = event.target;
-      const studentIndex = marks.findIndex((item) => item.student === studentId);
-  
+    const studentIndex = marks.findIndex((item) => item.student === studentId);
+
     if (studentIndex !== -1) {
       const updatedMarks = [...marks];
-      updatedMarks[studentIndex] = { ...updatedMarks[studentIndex], score: parseInt(value) || 0 };
+      updatedMarks[studentIndex] = {
+        ...updatedMarks[studentIndex],
+        score: parseInt(value) || 0,
+      };
       setMarks(updatedMarks);
     } else {
-      setMarks((prevMarks) => [...prevMarks, { student: studentId, score: parseInt(value) || 0 }]);
+      setMarks((prevMarks) => [
+        ...prevMarks,
+        { student: studentId, score: parseInt(value) || 0 },
+      ]);
     }
   };
-  
+
   const handleSaveMarks = async () => {
     try {
       const marksData = {
@@ -83,7 +88,9 @@ const Marks = () => {
   };
 
   const filteredStudents = students.filter((student) => {
-    const isGradeMatched = selectedGrade ? student.grade?.toString() === selectedGrade : true;
+    const isGradeMatched = selectedGrade
+      ? student.grade?.toString() === selectedGrade
+      : true;
     return isGradeMatched;
   });
 
@@ -91,7 +98,11 @@ const Marks = () => {
     <div>
       <div>
         <label htmlFor="yearSelect">Select Year: </label>
-        <select id="yearSelect" value={selectedYear} onChange={handleYearChange}>
+        <select
+          id="yearSelect"
+          value={selectedYear}
+          onChange={handleYearChange}
+        >
           {/* <option value="">All Years</option> */}
           {Array.from({ length: 10 }, (_, i) => (
             <option key={i} value={i + 2023}>
@@ -102,7 +113,11 @@ const Marks = () => {
       </div>
       <div>
         <label htmlFor="termSelect">Select Term: </label>
-        <select id="termSelect" value={selectedTerm} onChange={handleTermChange}>
+        <select
+          id="termSelect"
+          value={selectedTerm}
+          onChange={handleTermChange}
+        >
           {/* <option value="">All Terms</option> */}
           <option value="1">Term 1</option>
           <option value="2">Term 2</option>
@@ -111,7 +126,11 @@ const Marks = () => {
       </div>
       <div>
         <label htmlFor="gradeSelect">Select Grade: </label>
-        <select id="gradeSelect" value={selectedGrade} onChange={handleGradeChange}>
+        <select
+          id="gradeSelect"
+          value={selectedGrade}
+          onChange={handleGradeChange}
+        >
           {/* <option value="">All Grades</option> */}
           {Array.from({ length: 11 }, (_, i) => (
             <option key={i} value={i + 1}>
@@ -145,20 +164,24 @@ const Marks = () => {
         </thead>
         <tbody>
           {filteredStudents.map((student) => {
-            const studentMark = marks.find((item) => item.student === student._id) || {
+            const studentMark = marks.find(
+              (item) => item.student === student._id
+            ) || {
               student: student._id,
               score: "",
             };
             return (
               <tr key={student._id}>
-                <td style={{ verticalAlign: "middle" }}>{student.admission_no}</td>
+                <td style={{ verticalAlign: "middle" }}>
+                  {student.admission_no}
+                </td>
                 <td style={{ verticalAlign: "middle" }}>{student.fullname}</td>
                 <td>
                   <input
                     type="number"
                     min={0}
                     max={100}
-                    name={studentMark.score}
+                    value={studentMark.score}
                     onChange={(event) => handleMarksChange(event, student._id)}
                   />
                 </td>
