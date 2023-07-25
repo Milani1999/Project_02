@@ -130,6 +130,7 @@ const excludedPaths = [
   "/administrator/Timetable",
   "/administrator/Subject",
   "/administrator/Grade",
+  "/administrator/Attendence",
   "/Teacher",
   "/Teacher/TNotices",
   "/Teacher/TCalendar",
@@ -138,6 +139,7 @@ const excludedPaths = [
   "/Teacher/TAttendence",
   "/Teacher/VStudents",
   "/Teacher/TMarks",
+  
 ];
 
 function HeaderRoutes() {
