@@ -34,3 +34,29 @@ img {
     padding: 6px;
     padding-left: 20px;
 }
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+    height: 5px;
+
+}
+.btn-primary {
+    color: #fff;
+    background-color: #198f1b;
+    border-color: #46a42e;
+  
+}
+.colname{
+    background-color: #cff1d4;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+   
+}
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+    
+}

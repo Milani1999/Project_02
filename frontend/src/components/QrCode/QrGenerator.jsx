@@ -10,9 +10,9 @@ function QrGenerator(props) {
     setImageQR(image);
   };
   return (
-    <div className="card text-center">
-      <div className="card-body text-center">
-        <p>QR Code </p>
+    <div>
+      {/* <div className="card-body text-center"> */}
+        {/* <p>QR Code </p> */}
         {imageQR && <img src={imageQR} width="40%" alt="qr_code" />}
 
         {
@@ -31,7 +31,7 @@ function QrGenerator(props) {
           </a>
         }
       </div>
-    </div>
+    // </div>
   );
 }
 

@@ -25,7 +25,6 @@ function AddStaff() {
 
   });
 
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -141,9 +140,9 @@ function AddStaff() {
       </Button>
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+      <div className="popup-background">
         <div className="Popup">
           {error && <p style={{ color: "red" }}>{error}</p>}
-          {message && <p style={{ color: "green" }}>{message}</p>}
 
           <Form onSubmit={submitHandler}>
             <Row>
@@ -335,9 +334,8 @@ function AddStaff() {
                 </Button>
               </Col>
             </Row>
-
-
           </Form>
+        </div>
         </div>
       </Popup>
     </div>

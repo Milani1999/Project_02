@@ -1,3 +1,16 @@
 .h6, h6 {
     font-size: 25px;
 }
+.custom {
+    width: 25%;
+    height: 25%;
+    margin-top: 30px;
+    background-color:#e4e6e4;
+    padding: 5px 5px;
+ 
+  }
+  .custombar-width{
+    width: 75%;
+    margin-left: 50px;
+  }
+  
