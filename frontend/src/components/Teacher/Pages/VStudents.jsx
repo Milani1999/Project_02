@@ -97,7 +97,7 @@ function VStudents() {
               <td style={{ verticalAlign: "middle" }}>{student.phone}</td>
               <td style={{ verticalAlign: "middle" }}>
                 <Button
-                  variant="info"
+                  variant="success"
                   onClick={() => handleView(student)}
                   className="m-1"
                   style={{ width: "100px" }}

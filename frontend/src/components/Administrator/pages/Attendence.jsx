@@ -1,9 +1,10 @@
 import React from 'react'
+import QRScanner from '../../QrCode/QRScanner';
 
 function Attendence() {
   return (
     <div>
-      attendence
+      <QRScanner />
     </div>
   )
 }
