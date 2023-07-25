@@ -116,28 +116,13 @@ function App() {
   );
 }
 
-const excludedPaths = [
-  "/administrator",
-  "/Login",
-  "/viewstudents",
-  "/viewstudents/create",
-  "/subjects",
-  "/addstudents",
-  "/addstaff",
-  "/viewstaff",
-  "/administrator/EditTeacher",
-  "/administrator/EditStudent",
-  "/administrator/Timetable",
-  "/administrator/Subject",
-  "/administrator/Grade",
-  "/Teacher",
-  "/Teacher/TNotices",
-  "/Teacher/TCalendar",
-  "/Teacher/TTimetable",
-  "/Teacher/Profile",
-  "/Teacher/TAttendence",
-  "/Teacher/VStudents",
-  "/Teacher/TMarks",
+const includedPaths = [
+  "/",
+  "/About",
+  "/School",
+  "/Events",
+  "/Contact",
+  "/Students",
 ];
 
 function HeaderRoutes() {
