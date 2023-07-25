@@ -82,7 +82,7 @@ function App() {
 
 const excludedPaths = ["/administrator", "/login", "/viewstudents","/viewstudents/create","/subjects"
 ,"/addstudents","/addstaff","/viewstaff","/administrator/EditTeacher","/administrator/EditStudent",
-"/administrator/Timetable","/administrator/Subject","/administrator/Grade" ];
+"/administrator/Timetable","/administrator/Subject","/administrator/Grade","/administrator/Attendence" ];
 
 function HeaderRoutes() {
   const location = useLocation();
