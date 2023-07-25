@@ -12,5 +12,61 @@
   .custombar-width{
     width: 75%;
     margin-left: 50px;
+   
   }
+  .bg{
+
+    background-color: rgb(255, 255, 255);
+   
+
+    
+  }
+  .bg:hover{
+    background-color: rgb(208, 243, 232);
+   
+  }
+
+.followers-card {
+  background-color: #eae6e6;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 260px;
+  height: 140px;
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   
+}
+
+.followers-card:hover {
+  transform: scale(1.05);
+  background-color: rgb(253, 251, 251);
+}
+
+.followers-card .icon {
+  font-size: 40px;
+  margin-bottom: 5px;
+}
+
+.followers-card h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.followers-card .followers-count {
+  font-size: 18px;
+  color: #555;
+}
+
+.followers-card .youtube-icon {
+  color: red;
+}
+
+.followers-card .facebook-icon {
+  color: blue;
+}

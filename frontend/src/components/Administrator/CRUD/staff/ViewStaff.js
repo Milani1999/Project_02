@@ -126,7 +126,7 @@ const ViewStaff = () => {
         </thead>
         <tbody>
           {staffList.map((staff) => (
-            <tr key={staff._id}>
+            <tr key={staff._id} >
               <td style={{ verticalAlign: "middle" }}>
                 <img
                   src={staff.picture}
