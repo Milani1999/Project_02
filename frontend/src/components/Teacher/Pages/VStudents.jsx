@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Table, Button, Row, Col, Form } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import Popup from "reactjs-popup";
+import './VStudents.css'
 
-
-
-
-const ViewStudents = () => {
+function VStudents() {
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [showViewPopup, setShowViewPopup] = useState(false);
- 
-
   const [selectedGrade, setSelectedGrade] = useState("");
-  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     fetchStudents();
@@ -38,13 +33,6 @@ const ViewStudents = () => {
     setShowViewPopup(false);
   };
 
-
- 
-
- 
-
- 
-
   const handleGradeChange = (event) => {
     setSelectedGrade(event.target.value);
   };
@@ -57,7 +45,7 @@ const ViewStudents = () => {
     <div>
       <Table striped hover className="mt-5" responsive="sm">
         <thead>
-          <tr >
+          <tr>
             <th colSpan={6}>
               <div>
                 <label htmlFor="gradeSelect">Select Grade: </label>
@@ -75,9 +63,9 @@ const ViewStudents = () => {
                 </select>
               </div>
             </th>
-           
+            <th style={{ textAlign: "center", width: "100px" }}></th>
           </tr>
-          <tr className="colname">
+          <tr>
             <th style={{ textAlign: "center" }}>Picture</th>
             <th style={{ textAlign: "center" }}>Admission No</th>
             <th style={{ textAlign: "center" }}>Admission Date</th>
@@ -116,8 +104,6 @@ const ViewStudents = () => {
                 >
                   View
                 </Button>
-               
-               
               </td>
             </tr>
           ))}
@@ -129,11 +115,11 @@ const ViewStudents = () => {
           {selectedStudent && (
             <div className="popup-container-view">
               <table
-                style={{ textAlign: "right" }}
-                className="viewTableStudents"
+                style={{ textAlign: "right"}}
+                className="viewTableStudentsStaff"
               >
                 <tr>
-                  <td colSpan={2} style={{ textAlign: "center" }}>
+                  <td colSpan={2} style={{ textAlign: "center"}}>
                     <img
                       src={selectedStudent.picture}
                       alt="Profile"
@@ -208,7 +194,6 @@ const ViewStudents = () => {
                   <td>Extra Activities</td>
                   <td>{selectedStudent.extra_activities}</td>
                 </tr>
-              
                 <tr>
                   <td colSpan={2} style={{ textAlign: "center" }}>
                     <Button
@@ -225,11 +210,8 @@ const ViewStudents = () => {
           )}
         </div>
       </Popup>
-
-
-     
     </div>
   );
-};
+}
 
-export default ViewStudents;
+export default VStudents;
