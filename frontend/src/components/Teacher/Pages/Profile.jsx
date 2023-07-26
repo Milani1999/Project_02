@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchStaffData } from "../StaffData";
+import { fetchStaffData } from "../../Count/Data";
 import './Profile.css';
 const StaffProfile = () => {
   const [staffData, setStaffData] = useState(null);

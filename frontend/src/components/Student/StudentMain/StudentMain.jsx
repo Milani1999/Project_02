@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
@@ -19,6 +19,7 @@ import { IoIosNotifications } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
+import { fetchStudentData } from "../../Count/Data";
 
 import "./StudentMain.css";
 import { Button, notification } from "antd";
@@ -43,6 +44,35 @@ const StudentMain = () => {
       },
     });
   };
+
+  const [studentData, setStudentData] = useState(null);
+  const userInfo = localStorage.getItem("userInfo");
+  const user = JSON.parse(userInfo);
+  const studentId = user?.id;
+
+  useEffect(() => {
+    const fetchStudentDetails = async () => {
+      try {
+        const data = await fetchStudentData(studentId);
+        setStudentData(data);
+      } catch (error) {
+        alert("Error fetching student details:", error);
+      }
+    };
+
+    fetchStudentDetails();
+  }, [studentId]);
+
+  if (!studentData) {
+    return <div>Loading...</div>;
+  }
+
+  const {
+    fullname,
+    picture,
+  } = studentData;
+
+
 
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
@@ -87,15 +117,15 @@ const StudentMain = () => {
               label: "View Notice",
             },
             {
-                key: "Marks",
-                icon: <RiCalendarCheckFill className="fs-4" />,
-                label: "View Marks",
-              },
+              key: "Marks",
+              icon: <RiCalendarCheckFill className="fs-4" />,
+              label: "View Marks",
+            },
             {
               key: "TimeTableStd",
               icon: <RiCalendarCheckFill className="fs-4" />,
               label: "View Timetable",
-                 children: [
+              children: [
                 {
                   key: "MondayTT",
                   icon: <AiOutlineUser className="fs-4" />,
@@ -109,22 +139,22 @@ const StudentMain = () => {
                 },
 
                 {
-                    key: "WednesdayTT",
-                    icon: <AiOutlineUser className="fs-4" />,
-                    label: "Wednesday",
-                  },
+                  key: "WednesdayTT",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Wednesday",
+                },
 
-                  {
-                    key: "ThursdayTT",
-                    icon: <AiOutlineUser className="fs-4" />,
-                    label: "Thursday",
-                  },
+                {
+                  key: "ThursdayTT",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Thursday",
+                },
 
-                  {
-                    key: "FridayTT",
-                    icon: <AiOutlineUser className="fs-4" />,
-                    label: "Friday",
-                  },
+                {
+                  key: "FridayTT",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Friday",
+                },
               ],
             },
 
@@ -185,7 +215,7 @@ const StudentMain = () => {
                 <img
                   width={35}
                   height={35}
-                  src="https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg"
+                  src={picture}
                   alt="profile"
                 />
               </div>
@@ -195,18 +225,9 @@ const StudentMain = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">User name</h5>
+                <h5 className="mb-0">{fullname}</h5>
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li>
-                  <Link
-                    className="dropdown-item py-1 mb-1"
-                    style={{ height: "auto", lineHeight: "20px" }}
-                    to="/"
-                  >
-                    View Profile
-                  </Link>
-                </li>
                 <li>
                   <Link
                     className="dropdown-item py-1 mb-1"

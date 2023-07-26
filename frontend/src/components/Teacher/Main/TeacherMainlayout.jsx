@@ -16,7 +16,7 @@ import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import { Button, notification } from "antd";
-import { fetchStaffData } from "../StaffData";
+import { fetchStaffData } from "../../Count/Data";
 
 const { Header, Sider, Content } = Layout;
 const TeacherMainLayout = () => {
