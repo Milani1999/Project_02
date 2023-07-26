@@ -54,13 +54,13 @@ const Marks = () => {
       const updatedMarks = [...marks];
       updatedMarks[studentIndex] = {
         ...updatedMarks[studentIndex],
-        score: parseInt(value) || 0,
+        score: parseFloat(value) || 0,
       };
       setMarks(updatedMarks);
     } else {
       setMarks((prevMarks) => [
         ...prevMarks,
-        { student: studentId, score: parseInt(value) || 0 },
+        { student: studentId, score: parseFloat(value) || 0 },
       ]);
     }
   };
@@ -78,12 +78,12 @@ const Marks = () => {
         })),
       };
 
-      await axios.post("/api/marks/create", marksData);
+      const response = await axios.post("/api/marks/create", marksData);
 
       setMarks([]);
       alert("Marks saved successfully!");
     } catch (error) {
-      alert(error);
+      alert("Error saving marks. Please try again.");
     }
   };
 
@@ -131,7 +131,7 @@ const Marks = () => {
           value={selectedGrade}
           onChange={handleGradeChange}
         >
-          {/* <option value="">All Grades</option> */}
+          <option value="">All Grades</option>
           {Array.from({ length: 11 }, (_, i) => (
             <option key={i} value={i + 1}>
               Grade {i + 1}
@@ -178,11 +178,10 @@ const Marks = () => {
                 <td style={{ verticalAlign: "middle" }}>{student.fullname}</td>
                 <td>
                   <input
-                    type="number"
-                    min={0}
-                    max={100}
+                    type="text"
                     value={studentMark.score}
                     onChange={(event) => handleMarksChange(event, student._id)}
+                    style={{ width: "50px" }}
                   />
                 </td>
               </tr>
