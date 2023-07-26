@@ -209,7 +209,7 @@ const Dashboard = () => {
     </div>
   </div>
 </div>
-<div className="mt-4 custombar-width  d-flex   flex-grow-1 gap-4 roudned-3">
+<div className="mt-4 custombar-width  d-flex   flex-grow-1 gap-3 roudned-3">
           {/* YouTube Followers Card */}
           <div className="followers-card">
             <AiFillYoutube className="icon youtube-icon" />
