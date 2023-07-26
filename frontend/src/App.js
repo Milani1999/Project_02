@@ -37,6 +37,9 @@ import VStudents from "./components/Teacher/Pages/VStudents";
 import TeacherMainlayout from "./components/Teacher/Main/TeacherMainlayout";
 import TCalendar from "./components/Teacher/Pages/TCalendar";
 import TTimetable from "./components/Teacher/Pages/TTimetable";
+import StudentMain from "./components/Student/StudentMain/StudentMain";
+import ProfilePage from "./components/Student/Pages/ProfilePage";
+import TimeTable from "./components/Student/Pages/TimeTable";
 
 function App() {
   return (
@@ -71,14 +74,9 @@ function App() {
             }
           /> */}
 
-          <Route
-            path="/Teacher"
-            element={
-              <Auth expectedRoles={["staff"]}>
-                <TeacherMainlayout />
-              </Auth>
-            }
-          >
+          <Route path="/Teacher" element={
+              <Auth expectedRoles={["staff"]}> <TeacherMainlayout /></Auth>}>
+
             <Route index element={<TeacherDashboard />} />
             <Route path="Profile" element={<TeacherProfile />} />
             <Route path="TAttendence" element={<TAttendence />} />
@@ -88,14 +86,10 @@ function App() {
             <Route path="VStudents" element={<VStudents />} />
             <Route path="TCalendar" element={<TCalendar />} />
           </Route>
-          <Route
-            path="/administrator"
-            element={
-              <Auth expectedRoles={["admin"]}>
-                <MainLayout />
-              </Auth>
-            }
-          >
+
+
+          <Route path="/administrator" element={<Auth expectedRoles={["admin"]}><MainLayout /></Auth>}>
+
             <Route index element={<Dashboard />} />
 
             <Route path="EditTeacher" element={<EditTeacher />} />
@@ -109,6 +103,30 @@ function App() {
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
           </Route>
+
+
+          
+
+            
+            
+            
+
+            <Route path="/Student" element={<StudentMain/>}>
+                <Route index element={<Dashboard />} />
+                <Route path="ProfilePage" element={<ProfilePage />}/>
+                <Route path="TimeTableStd" element={<TimeTable/>}/>
+
+                {/* <Route path="EditTeacher" element={<EditTeacher />} />
+                <Route path="EditStudent" element={<EditStudent />} />
+
+                <Route path="Subject" element={<Subject />} />
+                <Route path="calender" element={<Calender />} />
+                <Route path="Timetable" element={<Timetable />} />
+                <Route path="Attendence" element={<Attendence />} />
+                <Route path="Grade" element={<Grade />} />
+                <Route path="Notices" element={<Notices />} />
+                <Route path="Performance" element={<Performance />} />  */}
+            </Route>
         </Routes>
         <FooterRoutes />
       </div>
@@ -138,6 +156,7 @@ const excludedPaths = [
   "/Teacher/TAttendence",
   "/Teacher/VStudents",
   "/Teacher/TMarks",
+  "/Student"
 ];
 
 function HeaderRoutes() {
