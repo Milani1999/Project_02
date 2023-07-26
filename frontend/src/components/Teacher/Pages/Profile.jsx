@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchStaffData } from "../StaffData";
-
+import './Profile.css';
 const StaffProfile = () => {
   const [staffData, setStaffData] = useState(null);
   const userInfo = localStorage.getItem("userInfo");
@@ -42,18 +42,50 @@ const StaffProfile = () => {
       <div className="profile-image">
         <img src={picture} alt="Profile" />
       </div>
+      <div className="profile-divider"></div>
+      <div className="profile-container-2">
+      <h1>Staff Member</h1>
       <div className="profile-details">
+    
         <h2>{fullname}</h2>
-        <p>Employee ID: {employee_id}</p>
-        <p>Date of Birth: {dateOfBirth}</p>
-        <p>Address: {address}</p>
-        <p>Phone: {phone}</p>
-        <p>Gender: {gender}</p>
-        <p>Email: {email}</p>
-        <p>EPF No: {epf_No}</p>
-        <p>Subjects Taught: {subjects_taught}</p>
+        <table className="detail-table">
+          <tbody>
+            <tr>
+              <td>Employee ID  :</td>
+              <td>{employee_id}</td>
+            </tr>
+            <tr>
+              <td>Date of Birth  :</td>
+              <td>{dateOfBirth}</td>
+            </tr>
+            <tr>
+              <td>Address  :</td>
+              <td>{address}</td>
+            </tr>
+            <tr>
+              <td>Phone  :</td>
+              <td>{phone}</td>
+            </tr>
+            <tr>
+              <td>Gender  :</td>
+              <td>{gender}</td>
+            </tr>
+            <tr>
+              <td>Email  :</td>
+              <td>{email}</td>
+            </tr>
+            <tr>
+              <td>EPF No  :</td>
+              <td>{epf_No}</td>
+            </tr>
+            <tr>
+              <td>Subjects Taught  :</td>
+              <td>{subjects_taught}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
+    </div></div>
   );
 };
 
