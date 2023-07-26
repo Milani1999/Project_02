@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Row } from "react-bootstrap";
 
+
 function Popup({ content, closePopup }) {
   return (
     <div className="popup-overlay" onClick={closePopup}>
@@ -32,7 +33,7 @@ function Card({ title, content, imageUrl }) {
   };
 
   return (
-    <div className="col-sm-4 col-md-4">
+    <div className="col-sm-4">
       <div className="rounded shadow-sm py-4 px-4">
         <img
           src={imageUrl}
@@ -42,7 +43,7 @@ function Card({ title, content, imageUrl }) {
         />
         <h3 className="mb-0">{title}</h3>
         <br />
-        <p>{showPopup ? "" : shortContent}</p>
+        <p>{showPopup ? content : shortContent}</p>
         {content.length > 400 && !showPopup && (
           <button className="btn btn-success" onClick={handleClickOpen}>
             Read More

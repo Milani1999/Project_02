@@ -8,6 +8,7 @@
     justify-content: center;
     height: 100vh;
     background-color: #399953;
+  
 }
 .EventComponent{
     height: 650px;
@@ -19,12 +20,14 @@
     height: 100vh;
     background-color: #399953;
     font-family: 'Roboto', sans-serif !important;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .EventComponent .h1-heading{
     text-align: center; 
     font-weight: bolder;
-    font-size: 90px;
+    font-size: 50px;
     color: rgb(8, 48, 8);
     font-family: 'Roboto', sans-serif !important;
 }
