@@ -21,11 +21,9 @@ const SignInCom = () => {
       const user = JSON.parse(userInfo);
       if (user.role === "admin") {
         navigate("/administrator");
-      }
-      // else if (user.role === "student") {
-      //     navigate("/viewstudents");
-      // }
-      else if (user.role === "staff") {
+      } else if (user.role === "student") {
+        navigate("/Student");
+      } else if (user.role === "staff") {
         navigate("/Teacher");
       }
     }
