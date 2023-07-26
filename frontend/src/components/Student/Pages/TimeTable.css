@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+.timetable-container {
+  font-family: "Roboto", sans-serif;
+}
+
+.timetable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid grey;
+}
+
+.timetable th,
+.timetable td {
+  border: 2px solid grey;
+  padding: 10px;
+  text-align: center;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.timetable th {
+  background-color: #c0e9c5; /* Light green tone for header */
+}
+
+.timetable tbody tr:nth-child(even) {
+  background-color: #d6f7d9; /* Light green tone for even rows */
+}
+
+.grade,
+.day {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Hover effect */
+.timetable th:hover,
+.timetable td:hover {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
