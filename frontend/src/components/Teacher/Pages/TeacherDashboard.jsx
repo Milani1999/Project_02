@@ -215,7 +215,7 @@ const Dashboard = () => {
             <Column {...config} />
           </div>
         </div>
-        <div className="d-flex=2  flex-grow-1 custom roudned-3 ">
+        <div className="d-flex=2  flex-grow-1 custom1 roudned-3 ">
           <div style={wrapperStyle}>
             <Calendar fullscreen={false} onPanelChange={onPanelChange} />
           </div>
