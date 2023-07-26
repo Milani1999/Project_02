@@ -210,26 +210,27 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="mt-4  custombar-width  ">
-          <h3 className="mb-5 title">No of Students in Each class</h3>
-          <div>
-            <Column {...config} />
+    <h3 className="mb-5 title">No of Students in Each class</h3>
+    <div>
+      <Column {...config} />
+    </div>
+  </div>
+</div>
+<div className="mt-4 custombar-width  d-flex   flex-grow-1 gap-3 roudned-3">
+          {/* YouTube Followers Card */}
+          <div className="followers-card">
+            <AiFillYoutube className="icon youtube-icon" />
+            <h3>YouTube</h3>
+            <div className="followers-count">1000+ Followers</div>
+          </div> 
+          <div className="followers-card">
+            <AiFillFacebook className="icon facebook-icon" />
+            <h3>Facebook</h3>
+            <div className="followers-count">500+ Followers</div>
           </div>
         </div>
-      </div>
-      <div className="mt-4 custombar-width  d-flex   flex-grow-1 gap-4 roudned-3">
-        {/* YouTube Followers Card */}
-        <div className="followers-card">
-          <AiFillYoutube className="icon youtube-icon" />
-          <h3>YouTube</h3>
-          <div className="followers-count">1000+ Followers</div>
         </div>
-        <div className="followers-card">
-          <AiFillFacebook className="icon facebook-icon" />
-          <h3>Facebook</h3>
-          <div className="followers-count">500+ Followers</div>
-        </div>
-      </div>
-    </div>
+    
   );
 };
 
