@@ -1,0 +1,63 @@
+.teacher-notices-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.notice-card {
+  cursor: pointer;
+  border: 2px solid #dedddd;
+  border-radius: 5px;
+  padding: 16px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s, background-color 0.4s; 
+ 
+}
+
+.notice-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.notice-card p {
+  color: #333333;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.notice-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgb(180, 241, 208);
+}
+
+.notice-card.selected {
+  background-color: #f0f0f0; /* Set the background color for selected notice card */
+}
+
+.modal {
+  text-align: center;
+}
+
+.ant-modal-title {
+  font-size: 1.5rem;
+  color: #333333;
+}
+
+.ant-modal-content {
+  font-size: 1rem;
+  color: #333333;
+}
+
+.ant-modal-footer {
+  display: none;
+}
+
+a {
+  color: #1890ff;
+  margin-top: 10px;
+  display: block;
+}
+
+a:hover {
+  text-decoration: underline;
+}

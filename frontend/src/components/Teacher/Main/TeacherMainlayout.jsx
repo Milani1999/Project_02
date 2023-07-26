@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
@@ -16,6 +16,7 @@ import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import { Button, notification } from "antd";
+import { fetchStaffData } from "../StaffData";
 
 const { Header, Sider, Content } = Layout;
 const TeacherMainLayout = () => {
@@ -37,6 +38,34 @@ const TeacherMainLayout = () => {
       },
     });
   };
+
+
+  const [staffData, setStaffData] = useState(null);
+  const userInfo = localStorage.getItem("userInfo");
+  const user = JSON.parse(userInfo);
+  const staffId = user?.id;
+
+  useEffect(() => {
+    const fetchStaffDetails = async () => {
+      try {
+        const data = await fetchStaffData(staffId);
+        setStaffData(data);
+      } catch (error) {
+        alert("Error fetching staff details:", error);
+      }
+    };
+
+    fetchStaffDetails();
+  }, [staffId]);
+
+  if (!staffData) {
+    return <div>Loading...</div>;
+  }
+
+  const {
+    fullname,
+    picture,
+  } = staffData;
 
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
@@ -143,7 +172,7 @@ const TeacherMainLayout = () => {
                 <img
                   width={35}
                   height={35}
-                  src="https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg"
+                  src={picture}
                   alt="profile"
                 />
               </div>
@@ -153,18 +182,10 @@ const TeacherMainLayout = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">User name</h5>
+                <h5 className="mb-0">{fullname}</h5>
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li>
-                  <Link
-                    className="dropdown-item py-1 mb-1"
-                    style={{ height: "auto", lineHeight: "20px" }}
-                    to="/"
-                  >
-                    View Profile
-                  </Link>
-                </li>
+                
                 <li>
                   <Link
                     className="dropdown-item py-1 mb-1"

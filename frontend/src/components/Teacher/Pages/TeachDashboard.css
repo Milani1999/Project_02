@@ -1,0 +1,25 @@
+.h6, h6 {
+    font-size: 25px;
+}
+.custom {
+    width: 25%;
+    height: 25%;
+    margin-top: 50px;
+    background-color:#f0eeee;
+  
+    margin-left: 2px;
+ 
+  }
+  .custombar-width{
+    width: 68%;
+    padding: 5px 15px;
+  }
+  .bg{
+
+    background-color: rgb(255, 255, 255);
+
+    
+  }
+  .bg:hover{
+    background-color: rgb(208, 243, 232);
+  }

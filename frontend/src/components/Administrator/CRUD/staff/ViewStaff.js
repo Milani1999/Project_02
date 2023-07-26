@@ -113,7 +113,7 @@ const ViewStaff = () => {
             </th>
           </tr>
 
-          <tr>
+          <tr className="colname">
             <th style={{ textAlign: "center" }}>Profile</th>
             <th style={{ textAlign: "center" }}>Employee ID</th>
             <th style={{ textAlign: "center" }}>Full Name</th>
@@ -126,7 +126,7 @@ const ViewStaff = () => {
         </thead>
         <tbody>
           {staffList.map((staff) => (
-            <tr key={staff._id}>
+            <tr key={staff._id} >
               <td style={{ verticalAlign: "middle" }}>
                 <img
                   src={staff.picture}

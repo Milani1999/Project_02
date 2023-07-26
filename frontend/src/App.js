@@ -156,29 +156,28 @@ const excludedPaths = [
   "/Teacher/TAttendence",
   "/Teacher/VStudents",
   "/Teacher/TMarks",
-  "/Student"
 ];
 
 function HeaderRoutes() {
   const location = useLocation();
-  const excludeHeader = excludedPaths.includes(location.pathname);
+  const excludeHeader = includedPaths.includes(location.pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   });
 
-  return <React.Fragment>{!excludeHeader && <Navbar />}</React.Fragment>;
+  return <React.Fragment>{excludeHeader && <Navbar />}</React.Fragment>;
 }
 
 function FooterRoutes() {
   const location = useLocation();
-  const excludeFooter = excludedPaths.includes(location.pathname);
+  const excludeFooter = includedPaths.includes(location.pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   });
 
-  return <React.Fragment>{!excludeFooter && <Footer />}</React.Fragment>;
+  return <React.Fragment>{excludeFooter && <Footer />}</React.Fragment>;
 }
 
 export default App;

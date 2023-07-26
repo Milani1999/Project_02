@@ -2,6 +2,7 @@ import React from "react";
 import { FcCollaboration, FcBusinesswoman, FcKindle } from "react-icons/fc";
 import { Column } from "@ant-design/plots";
 import { Progress, Space } from 'antd';
+import { AiFillFacebook, AiFillYoutube } from "react-icons/ai";
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -151,7 +152,7 @@ const Dashboard = () => {
     <div>
       <h3 className="mb-4 title">Dashboard</h3>
       <div className="d-flex justify-content-between align-items-center gap-3">
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
+        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg p-3 roudned-3">
           <div>
             
             <h3 className="desc">Students</h3>
@@ -163,7 +164,7 @@ const Dashboard = () => {
             </h6>
             
         </div>
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
+        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg p-3 roudned-3">
           <div>
             <h3 className="desc">Teachers</h3>
             <h4 className="mb-0 sub-title">20</h4>
@@ -174,7 +175,7 @@ const Dashboard = () => {
             </h6>
            
         </div>
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
+        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg p-3 roudned-3">
           <div>
             <h3 className="desc">Classes</h3>
             <h4 className="mb-0 sub-title">13</h4>
@@ -208,8 +209,20 @@ const Dashboard = () => {
     </div>
   </div>
 </div>
-     
-</div>
+<div className="mt-4 custombar-width  d-flex   flex-grow-1 gap-4 roudned-3">
+          {/* YouTube Followers Card */}
+          <div className="followers-card">
+            <AiFillYoutube className="icon youtube-icon" />
+            <h3>YouTube</h3>
+            <div className="followers-count">1000+ Followers</div>
+          </div> 
+          <div className="followers-card">
+            <AiFillFacebook className="icon facebook-icon" />
+            <h3>Facebook</h3>
+            <div className="followers-count">500+ Followers</div>
+          </div>
+        </div>
+        </div>
     
   );
 };
