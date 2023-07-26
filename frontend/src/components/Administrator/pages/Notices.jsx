@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Form, Input, Button, message, Select, Modal, Upload } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
-
 import "./Notices.css";
 
 const { Option } = Select;
