@@ -41,12 +41,17 @@ import StudentMain from "./components/Student/StudentMain/StudentMain";
 import ProfilePage from "./components/Student/Pages/ProfilePage";
 import TimeTable from "./components/Student/Pages/TimeTable";
 
+
+
+import SupportAdmin from './components/SupportAssist/SupportAdmin/SuppportAssist';
+
 function App() {
   return (
     <Router>
       <div>
         <HeaderRoutes />
         <Routes>
+        <Route path="/support" element={<SupportAdmin/>} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/" element={<Home />} />
           <Route path="/About" element={<AboutUs />} />

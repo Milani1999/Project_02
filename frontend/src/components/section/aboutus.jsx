@@ -1,8 +1,10 @@
 import React from "react";
+import SupportEngine from "../SupportAssist/SupportEngine";
 
 function AboutUs() {
     return (
         <div className="container-sm-fluid">
+            <SupportEngine />
             <div className="AboutComponent" id="AboutComponent">
                 <h1 className="h1-heading">Our Vision and Mission</h1>
 
