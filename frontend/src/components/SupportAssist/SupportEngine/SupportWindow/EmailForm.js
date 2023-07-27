@@ -17,8 +17,7 @@ function getOrCreateUser(callback){
             "secret": email,
             "email": email,
         },
-        // {headers: {"Private-Key": process.env.REACT_APP_CE_PRIVATE_KEY}}
-        {headers: {"Private-Key": 'f96bd549-7c7a-4ff0-aeee-a1b0b5070614'}}
+        {headers: {"Private-Key": process.env.REACT_APP_CE_PRIVATE_KEY}}
     )
     .then(r => callback(r.data))
 }
@@ -30,8 +29,7 @@ function getOrCreateChat(callback){
             "usernames": ["Admin",email],
             "is_direct_chat": true
         },
-        // {headers: {"Private-Key": process.env.REACT_APP_CE_PRIVATE_KEY}}
-        {headers: {"Private-Key": 'f96bd549-7c7a-4ff0-aeee-a1b0b5070614'}}
+        {headers: {"Private-Key": process.env.REACT_APP_CE_PRIVATE_KEY}}
     )
     .then(r => callback(r.data))
 }

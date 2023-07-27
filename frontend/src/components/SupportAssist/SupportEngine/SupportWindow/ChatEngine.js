@@ -26,8 +26,7 @@ import React, {useState, useEffect} from "react";
                 showChat && 
                 <ChatEngineWrapper>
                     <Socket
-                        // projectID={process.env.REACT_APP_CE_PROJECT_ID}
-                        projectID='a3a0488f-19f8-413d-81bf-d1a3106cd7fa'
+                        projectID={process.env.REACT_APP_CE_PROJECT_ID}
                         userName={props.user.email}
                         userSecret={props.user.email}
                     />
