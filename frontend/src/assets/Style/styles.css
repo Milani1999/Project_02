@@ -1,34 +1,34 @@
-/* ********************************************Home Page***************************************************** */
+/* *********************************************Home Page****************************************************** */
 
 * {
-    font-family: 'Laila', sans-serif;
-}
-
-.HomeComponent {
+    font-family: "Laila", sans-serif;
+  }
+  
+  .HomeComponent {
     height: 100vh;
     text-align: center;
-}
-
-.HomeComponent .item {
+  }
+  
+  .HomeComponent .item {
     height: 100vh;
     opacity: 0.6;
-}
-
-.HomeComponent .centered {
+  }
+  
+  .HomeComponent .centered {
     position: absolute;
     top: 20%;
     padding-left: 50px;
     padding-right: 50px;
-}
-
-.HomeComponent .h1-heading {
+  }
+  
+  .HomeComponent .h1-heading {
     text-align: center;
     font-weight: bolder;
     font-size: 90px;
     color: rgb(8, 48, 8);
-}
-
-.HomeComponent .p-centered {
+  }
+  
+  .HomeComponent .p-centered {
     font-size: 40px;
     text-align: center;
     font-weight: 500;
@@ -36,104 +36,102 @@
     color: rgb(8, 48, 8);
     margin-top: 40px;
     margin-bottom: 30px;
-}
-
-.HomeComponent .btn {
+  }
+  
+  .HomeComponent .btn {
     font-size: 25px;
-}
-
-
-@media screen and (max-width: 1200px) {
-
+  }
+  
+  @media screen and (max-width: 1200px) {
     .HomeComponent .item {
-        height: 100%;
-        width: auto;
+      height: 100%;
+      width: auto;
     }
-
+  
     .HomeComponent .h1-heading {
-        font-size: 80px;
+      font-size: 80px;
     }
-
+  
     .HomeComponent .p-centered {
-        font-size: 30px;
-        padding-top: 30px;
+      font-size: 30px;
+      padding-top: 30px;
     }
-
+  
     .HomeComponent .btn {
-        font-size: 20px;
-        left: 37%;
-        margin-top: 40px;
+      font-size: 20px;
+      left: 37%;
+      margin-top: 40px;
     }
-}
-
-
-@media screen and (max-width: 992px) {
+  }
+  
+  @media screen and (max-width: 992px) {
     .HomeComponent .h1-heading {
-        font-size: 60px;
+      font-size: 60px;
     }
-
+  
     .HomeComponent .p-centered {
-        font-size: 30px;
-        padding-top: 30px;
+      font-size: 30px;
+      padding-top: 30px;
     }
-
+  
     .HomeComponent .btn {
-        font-size: 20px;
-        left: 37%;
-        margin-top: 40px;
+      font-size: 20px;
+      left: 37%;
+      margin-top: 40px;
     }
-}
-
-@media screen and (max-width: 540px) {
+  }
+  
+  @media screen and (max-width: 540px) {
     .HomeComponent .h1-heading {
-        font-size: 30px;
-        margin-top: 40px;
+      font-size: 30px;
+      margin-top: 40px;
     }
-
-    .HomeComponent .item{
-        height: 300px;
+  
+    .HomeComponent .item {
+      height: 300px;
     }
-
+  
     .HomeComponent .p-centered {
-        font-size: 20px;
-        padding-top: 50px;
+      font-size: 20px;
+      padding-top: 50px;
     }
-
+  
     .HomeComponent .btn {
-        font-size: 15px;
-        left: 37%;
-        margin-top: 35px;
+      font-size: 15px;
+      left: 37%;
+      margin-top: 35px;
     }
-} 
-
-/* ********************************************About us page***************************************************** */
-.AboutComponent {
+  }
+  
+  /* *********************************************About us page****************************************************** */
+  .AboutComponent {
     height: 100vh;
     overflow: hidden;
-}
-
-.AboutComponent .h1-heading {
+  }
+  
+  
+  .AboutComponent .h1-heading {
     text-align: center;
     font-weight: bolder;
-    font-size: 50px;
-    color: rgb(8, 48, 8);
+    font-size: 40px;
+    color: rgb(6, 68, 46);
     margin-top: 90px;
     margin-bottom: 40px;
-}
-
-*,
-*::before,
-*::after {
+  }
+  
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
-}
-
-@keyframes rotate {
+  }
+  
+  @keyframes rotate {
     100% {
-        transform: rotate(1turn);
+      transform: rotate(1turn);
     }
-}
-
-.AboutComponent .row {
+  }
+  
+  .AboutComponent .row {
     position: relative;
     border-radius: 10px;
     overflow: hidden;
@@ -141,102 +139,108 @@
     margin-left: 100px;
     margin-right: 100px;
     margin-bottom: 10px;
-
+  
     &::before {
-        content: '';
-        position: absolute;
-        z-index: -2;
-        width: 100%;
-        height: 100%;
-        background-color: #399953;
-        background-repeat: no-repeat;
-        background-size: 50% 50%, 50% 50%;
-        background-position: 0 0, 100% 0, 100% 100%, 0 100%;
-        background-image: linear-gradient(#399953, #25492f), linear-gradient(#0bf017, #fbb300), linear-gradient(#589c0a, #03411c), linear-gradient(#0fad64, #022917);
-        animation: rotate 5s linear infinite;
+      content: "";
+      position: absolute;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      background-color: #399953;
+      background-repeat: no-repeat;
+      background-size: 50% 50%, 50% 50%;
+      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+      background-image: linear-gradient(#399953, #25492f),
+        linear-gradient(#0bf017, #fbb300), linear-gradient(#589c0a, #03411c),
+        linear-gradient(#0fad64, #022917);
+      animation: rotate 8s linear infinite;
     }
-
+  
     &::after {
-        content: '';
-        position: absolute;
-        z-index: -1;
-        left: 6px;
-        top: 6px;
-        width: calc(100% - 12px);
-        height: calc(100% - 12px);
-        background: white;
-        border-radius: 5px;
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 6px;
+      top: 6px;
+      width: calc(100% - 12px);
+      height: calc(100% - 12px);
+      background: white;
+      border-radius: 5px;
     }
-}
-
-.AboutComponent .col-lg-9 {
+  }
+  
+  .AboutComponent .col-lg-9 {
     font-size: 16px;
     margin-top: 50px;
     margin-bottom: 50px;
     text-align: justify;
-}
-
-.AboutComponent .col-lg-3 {
+  }
+  
+  .AboutComponent .col-lg-3 {
     margin-top: 15px;
     text-align: center;
-}
-
-.AboutComponent .h4-heading {
+  }
+  
+  .AboutComponent .h4-heading {
     font-size: 29px;
     font-weight: bolder;
-}
-
-.AboutComponent img {
+  }
+  
+  .AboutComponent img {
     width: 130px;
     height: 100px;
-
-}
-
-@media screen and (max-width: 540px) {
-    .AboutComponent .h1-heading{
-        font-size: 30px;
-        padding-top: 5px;
+  }
+  
+  @media screen and (max-width: 540px) {
+    .AboutComponent .h1-heading {
+      font-size: 30px;
+      padding-top: 5px;
     }
-
-    .AboutComponent .row{
-        margin: 10px;
+  
+    .AboutComponent .row {
+      margin: 10px;
     }
-
-    .AboutComponent .col-xs-12{
-        font-size: 12px;
+  
+    .AboutComponent .col-xs-12 {
+      font-size: 12px;
     }
-
-    .AboutComponent{
-        height: auto;
-        text-align: center;
+  
+    .AboutComponent {
+      height: auto;
+      text-align: center;
     }
-}
-
-
-/* ********************************************Our school***************************************************** */
-
-.SchoolComponent {
-    height: 650px;
-    background-color: rgb(6, 78, 6);
-}
-
-.SchoolComponent .h1-heading {
+  }
+  
+  /* *********************************************Our school****************************************************** */
+  /* school.css */
+  
+  .SchoolComponent {
+    height: 600px;
+  
+  }
+  
+  .SchoolComponent .rounded {
+    border: #3bd58d solid 2px;
+    height: 340px;
+  
+  }
+  
+  .SchoolComponent .h1-heading {
     text-align: center;
-    color: rgb(242, 243, 242);
+    font-size: 40px;
+    color: rgb(6, 68, 46);
     font-weight: bolder;
-    font-size: 50px;
-    padding-top: 85px;
-    margin-bottom: 100px;
-}
-
-.SchoolComponent img {
+    padding-top: 5px;
+    margin-bottom: 90px;
+  }
+  
+  .SchoolComponent img {
     margin-top: -80px;
     width: 100px;
     height: 100px;
-}
-
-
-.SchoolComponent .popup-overlay {
+  }
+  
+  .SchoolComponent .popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -246,9 +250,10 @@
     justify-content: center;
     align-items: center;
     z-index: 999;
-}
-
-.SchoolComponent .popup-content {
+   
+  }
+  
+  .SchoolComponent .popup-content {
     position: relative;
     width: 90%;
     height: 50%;
@@ -258,87 +263,106 @@
     overflow-y: auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-}
-
-.SchoolComponent .popup-header {
+  }
+  
+  .SchoolComponent .popup-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-}
-
-.SchoolComponent .popup-header h1 {
-    font-size: 24px;
+  }
+  
+  .SchoolComponent .popup-header h1 {
+    font-size: 40px;
+    color: rgb(6, 68, 46);
     font-weight: bold;
     margin: 0;
-}
-
-.SchoolComponent .popup-header h1:last-child {
+  }
+  
+  .SchoolComponent .popup-header h1:last-child {
     cursor: pointer;
-}
-
-.SchoolComponent .closeButton {
-    color: rgb(104, 13, 13);
-}
-
-/* ********************************************Eevent***************************************************** */
-
-.EventComponent{
+  }
+  
+  .SchoolComponent .closeButton {
+    width: 30px;
+    height: 30px;
+    background-color: rgb(90, 10, 10);
+    border: none;
+    color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+    margin-right: 20px;
+    margin-top: 0;
+  }
+  
+  /* Card styles */
+  .col-sm-4 {
+    width: 33.33%;
+    padding: 10px;
+    transition: background-color 0.3s ease-in-out;
+  
+  }
+  
+  .col-sm-4:hover {
+    background-color: rgba(116, 228, 166, 0.1);
+  }
+  
+  
+  /* *********************************************Eevent****************************************************** */
+  
+  .EventComponent {
     height: 650px;
     overflow: hidden;
-}
-
-/* ********************************************Contact Us***************************************************** */
-
-.ContactUsComponent {
+  }
+  
+  /* *********************************************Contact Us****************************************************** */
+  
+  .ContactUsComponent {
     height: 650px;
     overflow: hidden;
-}
-
-.ContactUsComponent .h1-heading {
+  }
+  
+  .ContactUsComponent .h1-heading {
     text-align: center;
-    color: rgb(5, 49, 5);
+    font-size: 40px;
+    color: rgb(6, 68, 46);
     font-weight: bolder;
-    font-size: 50px;
     padding-top: 100px;
     margin-bottom: 30px;
-}
-
-.ContactUsComponent .col-6,
-.ContactUsComponent table {
+  }
+  
+  .ContactUsComponent .col-6,
+  .ContactUsComponent table {
     align-items: center;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-}
-
-
-.ContactUsComponent td{
+  }
+  
+  .ContactUsComponent td {
     padding: 10px;
     font-size: 18px;
-}
-
-.ContactUsComponent .Fa-Icon{
+  }
+  
+  .ContactUsComponent .Fa-Icon {
     color: #022917;
     font-size: 35px;
     margin-top: 20px;
     margin-bottom: 20px;
-}
-
-.ContactUsComponent .Fa-Icon-So{
+  }
+  
+  .ContactUsComponent .Fa-Icon-So {
     color: #022917;
     font-size: 35px;
     margin-top: 20px;
     margin-bottom: 20px;
     padding-right: 30px;
-}
-
-
-.ContactUsComponent .h4-social{
+  }
+  
+  .ContactUsComponent .h4-social {
     margin-top: 50px;
-}
-
-.ContactUsComponent iframe{
+  }
+  
+  .ContactUsComponent iframe {
     height: 400px;
     width: 600px;
-}
+  }
