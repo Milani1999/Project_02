@@ -2,10 +2,12 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookF, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import SupportEngine from "../SupportAssist/SupportEngine";
 
 function ContactUs() {
     return (
         <div className="ContactUsComponent" id="ContactUsComponent">
+            <SupportEngine />
             <div className="row">
                 <h1 className="h1-heading">Contact Us</h1>
                 <div className="col-6">
