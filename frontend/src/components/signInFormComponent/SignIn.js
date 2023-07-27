@@ -21,11 +21,9 @@ const SignInCom = () => {
       const user = JSON.parse(userInfo);
       if (user.role === "admin") {
         navigate("/administrator");
-      }
-      // else if (user.role === "student") {
-      //     navigate("/viewstudents");
-      // }
-      else if (user.role === "staff") {
+      } else if (user.role === "student") {
+        navigate("/Student");
+      } else if (user.role === "staff") {
         navigate("/Teacher");
       }
     }
@@ -109,13 +107,13 @@ const SignInCom = () => {
                             className="form-label"
                             htmlFor="form3Example97"
                           >
-                            Email Address
+                            Username
                           </label>
                           <input
                             type="text"
                             id="form3Example97"
                             className="form-control form-control-lg"
-                            placeholder="Email Address"
+                            placeholder="Username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                           />
@@ -137,7 +135,7 @@ const SignInCom = () => {
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>
-
+                        <Link to="">Forgot password?</Link>
                         <div className="d-flex justify-content-end pt-3 wel-statement">
                           <button
                             type="submit"

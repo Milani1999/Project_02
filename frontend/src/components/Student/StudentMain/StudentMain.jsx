@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
@@ -19,9 +19,9 @@ import { IoIosNotifications } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
-
 import "./StudentMain.css";
 import { Button, notification } from "antd";
+import Logo from "../../../assets/ImageResources/uni2.png"
 
 const { Header, Sider, Content } = Layout;
 const StudentMain = () => {
@@ -44,13 +44,24 @@ const StudentMain = () => {
     });
   };
 
+  const userInfo = localStorage.getItem("userInfo");
+  const user = JSON.parse(userInfo);
+
+  let LoggedIn = false;
+
+  if (userInfo) {
+    LoggedIn = true;
+  }
+
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
             <span className="sm-logo">
-              <img src="" alt="img"></img>
+              <Link to="/">
+                <img src={Logo} alt="img"></img>
+              </Link>
             </span>
           </h2>
         </div>
@@ -87,15 +98,15 @@ const StudentMain = () => {
               label: "View Notice",
             },
             {
-                key: "Marks",
-                icon: <RiCalendarCheckFill className="fs-4" />,
-                label: "View Marks",
-              },
+              key: "Marks",
+              icon: <RiCalendarCheckFill className="fs-4" />,
+              label: "View Marks",
+            },
             {
               key: "TimeTableStd",
               icon: <RiCalendarCheckFill className="fs-4" />,
               label: "View Timetable",
-                 children: [
+              children: [
                 {
                   key: "MondayTT",
                   icon: <AiOutlineUser className="fs-4" />,
@@ -109,22 +120,22 @@ const StudentMain = () => {
                 },
 
                 {
-                    key: "WednesdayTT",
-                    icon: <AiOutlineUser className="fs-4" />,
-                    label: "Wednesday",
-                  },
+                  key: "WednesdayTT",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Wednesday",
+                },
 
-                  {
-                    key: "ThursdayTT",
-                    icon: <AiOutlineUser className="fs-4" />,
-                    label: "Thursday",
-                  },
+                {
+                  key: "ThursdayTT",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Thursday",
+                },
 
-                  {
-                    key: "FridayTT",
-                    icon: <AiOutlineUser className="fs-4" />,
-                    label: "Friday",
-                  },
+                {
+                  key: "FridayTT",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Friday",
+                },
               ],
             },
 
@@ -182,12 +193,14 @@ const StudentMain = () => {
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>
-                <img
-                  width={35}
-                  height={35}
-                  src="https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg"
-                  alt="profile"
-                />
+                {LoggedIn && (
+                  <img
+                    width={35}
+                    height={35}
+                    src={user.picture}
+                    alt="profile"
+                  />
+                )}
               </div>
               <div
                 role="button"
@@ -195,18 +208,9 @@ const StudentMain = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">User name</h5>
+                {LoggedIn && <h5 className="mb-0">{user.name}</h5>}
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li>
-                  <Link
-                    className="dropdown-item py-1 mb-1"
-                    style={{ height: "auto", lineHeight: "20px" }}
-                    to="/"
-                  >
-                    View Profile
-                  </Link>
-                </li>
                 <li>
                   <Link
                     className="dropdown-item py-1 mb-1"

@@ -10,6 +10,7 @@ import {
   RiCalendar2Line,
   RiMoonLine,
   RiMoneyDollarCircleLine,
+  RiMessage2Line,
 } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,6 +22,7 @@ import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import { Button, notification } from "antd";
+import Logo from "../../../assets/ImageResources/uni2.png"
 
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
@@ -43,13 +45,24 @@ const MainLayout = () => {
     });
   };
 
+  const userInfo = localStorage.getItem("userInfo");
+  const user = JSON.parse(userInfo);
+
+  let LoggedIn = false;
+
+  if (userInfo) {
+    LoggedIn = true;
+  }
+
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
             <span className="sm-logo">
-              <img src="images/uni2.png" alt="img"></img>
+              <Link to="/">
+                <img src={Logo} alt="img"></img>
+              </Link>
             </span>
           </h2>
         </div>
@@ -148,6 +161,11 @@ const MainLayout = () => {
               icon: <RiMoneyDollarCircleLine className="fs-4" />,
               label: "Payments",
             },
+            {
+              key: "Support",
+              icon: <RiMessage2Line className="fs-4" />,
+              label: "Support",
+            },
           ]}
         />
       </Sider>
@@ -185,12 +203,14 @@ const MainLayout = () => {
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>
-                <img
-                  width={35}
-                  height={35}
-                  src="https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg"
-                  alt="profile"
-                />
+                {LoggedIn && (
+                  <img
+                    width={35}
+                    height={35}
+                    src={user.picture}
+                    alt="profile"
+                  />
+                )}
               </div>
               <div
                 role="button"
@@ -198,10 +218,9 @@ const MainLayout = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">User name</h5>
+                {LoggedIn && <h5 className="mb-0">{user.role}</h5>}
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-               
                 <li>
                   <Link
                     className="dropdown-item py-1 mb-1"

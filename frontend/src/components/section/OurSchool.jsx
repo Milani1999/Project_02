@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row } from "react-bootstrap";
-
+import SupportEngine from "../SupportAssist/SupportEngine";
 
 function Popup({ content, closePopup }) {
   return (
@@ -22,7 +22,7 @@ function Popup({ content, closePopup }) {
 
 function Card({ title, content, imageUrl }) {
   const [showPopup, setShowPopup] = useState(false);
-  const shortContent = content.substring(0, 315) + "...";
+  const shortContent = content.substring(0, 325) + "...";
 
   const handleClickOpen = () => {
     setShowPopup(true);
@@ -34,6 +34,7 @@ function Card({ title, content, imageUrl }) {
 
   return (
     <div className="col-sm-4">
+      <SupportEngine />
       <div className="rounded shadow-sm py-4 px-4">
         <img
           src={imageUrl}
@@ -43,7 +44,7 @@ function Card({ title, content, imageUrl }) {
         />
         <h3 className="mb-0">{title}</h3>
         <br />
-        <p>{showPopup ? content : shortContent}</p>
+        <p>{showPopup ? "" : shortContent}</p>
         {content.length > 400 && !showPopup && (
           <button className="btn btn-success" onClick={handleClickOpen}>
             Read More
