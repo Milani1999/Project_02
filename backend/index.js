@@ -9,7 +9,7 @@ const gradeRoutes=require('./routes/gradeROutes')
 const subjectRoutes=require('./routes/subjectRoutes')
 const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
 const attendanceRoutes=require('./routes/attendanceRoutes')
-
+const noticesRoutes=require('./routes/noticesRoutes');
 
 const app = express();
 dotenv.config();
@@ -35,6 +35,7 @@ app.use("/api/marks", markRoutes);
 app.use("/api/grades", gradeRoutes);
 
 app.use('/api/attendance',attendanceRoutes);
+app.use('/api/notices',noticesRoutes);
 app.use(notFound)
 app.use(errorHandler)
 
