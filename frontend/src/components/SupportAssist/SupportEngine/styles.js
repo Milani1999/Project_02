@@ -35,7 +35,7 @@ export const styles = {
         right: '24px',
         // Size
         width: '420px',
-        height: '520px',
+        height: '494px',
         maxWidth: 'calc(100% - 48px)',
         maxHeight: 'calc(100% - 48px)',
         backgroundColor: 'white',
@@ -45,6 +45,8 @@ export const styles = {
         overflow: 'hidden',
         // Shadow
         boxShadow: '0px 0px 16px 6px rgba(0, 0, 0, 0.33)',
+        //Layering
+        zIndex: '10000',
     },
     emailFormWindow: { 
         width: '100%',  
