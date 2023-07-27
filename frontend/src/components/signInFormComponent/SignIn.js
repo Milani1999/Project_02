@@ -135,7 +135,7 @@ const SignInCom = () => {
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>
-                            <a href="#">Forgot password?</a>
+                        <Link to="">Forgot password?</Link>
                         <div className="d-flex justify-content-end pt-3 wel-statement">
                           <button
                             type="submit"
