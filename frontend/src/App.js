@@ -40,10 +40,10 @@ import TTimetable from "./components/Teacher/Pages/TTimetable";
 import StudentMain from "./components/Student/StudentMain/StudentMain";
 import ProfilePage from "./components/Student/Pages/ProfilePage";
 import TimeTable from "./components/Student/Pages/TimeTable";
+import Support from "./components/Administrator/pages/Support";
 
 
 
-import SupportAdmin from './components/SupportAssist/SupportAdmin/SuppportAssist';
 
 function App() {
   return (
@@ -51,7 +51,6 @@ function App() {
       <div>
         <HeaderRoutes />
         <Routes>
-        <Route path="/support" element={<SupportAdmin/>} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/" element={<Home />} />
           <Route path="/About" element={<AboutUs />} />
@@ -118,6 +117,7 @@ function App() {
             <Route path="Grade" element={<Grade />} />
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
+            <Route path="Support" element={<Support/>} />
           </Route>
 
           <Route

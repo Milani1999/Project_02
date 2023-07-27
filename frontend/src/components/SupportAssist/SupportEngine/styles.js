@@ -8,7 +8,7 @@ export const styles = {
         backgroundImage: `url(https://thumbs.dreamstime.com/b/robot-icon-chat-bot-sign-support-service-concept-chatbot-character-flat-style-robot-icon-chat-bot-sign-support-service-121644324.jpg)`, 
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundSize: '74px',
+        backgroundSize: '72px',
         // Size
         width: '72px',
         height: '72px',
@@ -35,7 +35,7 @@ export const styles = {
         right: '24px',
         // Size
         width: '420px',
-        height: '520px',
+        height: '475px',
         maxWidth: 'calc(100% - 48px)',
         maxHeight: 'calc(100% - 48px)',
         backgroundColor: 'white',
@@ -45,6 +45,8 @@ export const styles = {
         overflow: 'hidden',
         // Shadow
         boxShadow: '0px 0px 16px 6px rgba(0, 0, 0, 0.33)',
+        //layering
+        zIndex: '10000',
     },
     emailFormWindow: { 
         width: '100%',  

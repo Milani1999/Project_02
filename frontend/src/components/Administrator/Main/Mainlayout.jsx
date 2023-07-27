@@ -10,6 +10,7 @@ import {
   RiCalendar2Line,
   RiMoonLine,
   RiMoneyDollarCircleLine,
+  RiMessage2Line,
 } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -147,6 +148,11 @@ const MainLayout = () => {
               key: "payments",
               icon: <RiMoneyDollarCircleLine className="fs-4" />,
               label: "Payments",
+            },
+            {
+              key: "Support",
+              icon: <RiMessage2Line className="fs-4" />,
+              label: "Support",
             },
           ]}
         />
