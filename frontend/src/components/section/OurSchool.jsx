@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Row } from "react-bootstrap";
-import SupportEngine from "../SupportAssist/SupportEngine";
 
 
 function Popup({ content, closePopup }) {
@@ -35,7 +34,6 @@ function Card({ title, content, imageUrl }) {
 
   return (
     <div className="col-sm-4">
-      <SupportEngine/>
       <div className="rounded shadow-sm py-4 px-4">
         <img
           src={imageUrl}

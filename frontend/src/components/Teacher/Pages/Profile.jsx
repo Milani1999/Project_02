@@ -1,50 +1,92 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { fetchStaffData } from "../../Count/Data";
 import './Profile.css';
+const StaffProfile = () => {
+  const [staffData, setStaffData] = useState(null);
+  const userInfo = localStorage.getItem("userInfo");
+  const user = JSON.parse(userInfo);
+  const staffId = user?.id;
 
+  useEffect(() => {
+    const fetchStaffDetails = async () => {
+      try {
+        const data = await fetchStaffData(staffId);
+        setStaffData(data);
+      } catch (error) {
+        alert("Error fetching staff details:", error);
+      }
+    };
 
-function StaffProfile({ staff }) {
+    fetchStaffDetails();
+  }, [staffId]);
+
+  if (!staffData) {
+    return <div>Loading...</div>;
+  }
+
+  const {
+    fullname,
+    employee_id,
+    dateOfBirth,
+    phone,
+    address,
+    gender,
+    email,
+    epf_No,
+    subjects_taught,
+    picture,
+  } = staffData;
+
   return (
     <div className="profile-container">
       <div className="profile-image">
-        <img src={staff.picture} alt="Profile" />
+        <img src={picture} alt="Profile" />
       </div>
+      <div className="profile-divider"></div>
+      <div className="profile-container-2">
+      <h1>Staff Member</h1>
       <div className="profile-details">
-        <h2>{staff.fullname}</h2>
-        <p>Employee ID: {staff.employee_id}</p>
-        <p>Date of Birth: {staff.dateOfBirth}</p>
-        <p>Phone: {staff.phone}</p>
-        <p>Gender: {staff.gender}</p>
-        <p>Email: {staff.email}</p>
-        <p>EPF No: {staff.epf_No}</p>
-        <p>Subjects Taught: {staff.subjects_taught}</p>
-       
+    
+        <h2>{fullname}</h2>
+        <table className="detail-table">
+          <tbody>
+            <tr>
+              <td>Employee ID  :</td>
+              <td>{employee_id}</td>
+            </tr>
+            <tr>
+              <td>Date of Birth  :</td>
+              <td>{dateOfBirth}</td>
+            </tr>
+            <tr>
+              <td>Address  :</td>
+              <td>{address}</td>
+            </tr>
+            <tr>
+              <td>Phone  :</td>
+              <td>{phone}</td>
+            </tr>
+            <tr>
+              <td>Gender  :</td>
+              <td>{gender}</td>
+            </tr>
+            <tr>
+              <td>Email  :</td>
+              <td>{email}</td>
+            </tr>
+            <tr>
+              <td>EPF No  :</td>
+              <td>{epf_No}</td>
+            </tr>
+            <tr>
+              <td>Subjects Taught  :</td>
+              <td>{subjects_taught}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
+    </div></div>
   );
-}
+};
 
-
-
-function App() {
-  
-  const staffData = {
-    employee_id: "EMP123",
-    fullname: "John Doe",
-    dateOfBirth: "1990-01-01",
-    phone: "1234567890",
-    gender: "Male",
-    email: "john.doe@example.com",
-    epf_No: "EPF123",
-    subjects_taught: "Science,English,History",
-    picture: "" ,
-  };
-
-  return (
-    <div className="App">
-      <h1>Staff Profile</h1>
-      <StaffProfile staff={staffData} />
-    </div>
-  );
-}
-
-export default App;
+export default StaffProfile;

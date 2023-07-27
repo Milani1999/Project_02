@@ -32,6 +32,7 @@ const authUser = asyncHandler(async (req, res) => {
 
   if (student && (await student.matchPassword(password))) {
     res.json({
+      id:student._id,
       name: student.fullname,
       role: student.role,
       token: generateToken(student._id),

@@ -37,6 +37,9 @@ import VStudents from "./components/Teacher/Pages/VStudents";
 import TeacherMainlayout from "./components/Teacher/Main/TeacherMainlayout";
 import TCalendar from "./components/Teacher/Pages/TCalendar";
 import TTimetable from "./components/Teacher/Pages/TTimetable";
+import StudentMain from "./components/Student/StudentMain/StudentMain";
+import ProfilePage from "./components/Student/Pages/ProfilePage";
+import TimeTable from "./components/Student/Pages/TimeTable";
 
 
 
@@ -80,6 +83,7 @@ function App() {
             path="/Teacher"
             element={
               <Auth expectedRoles={["staff"]}>
+                {" "}
                 <TeacherMainlayout />
               </Auth>
             }
@@ -93,6 +97,7 @@ function App() {
             <Route path="VStudents" element={<VStudents />} />
             <Route path="TCalendar" element={<TCalendar />} />
           </Route>
+
           <Route
             path="/administrator"
             element={
@@ -114,59 +119,65 @@ function App() {
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
           </Route>
+
+          <Route
+            path="/Student"
+            element={
+              <Auth expectedRoles={["student"]}>
+                <StudentMain />
+              </Auth>
+            }
+          >
+            <Route index element={<Dashboard />} />
+            <Route path="ProfilePage" element={<ProfilePage />} />
+            <Route path="TimeTableStd" element={<TimeTable />} />
+
+            {/* <Route path="EditTeacher" element={<EditTeacher />} />
+                <Route path="EditStudent" element={<EditStudent />} />
+
+                <Route path="Subject" element={<Subject />} />
+                <Route path="calender" element={<Calender />} />
+                <Route path="Timetable" element={<Timetable />} />
+                <Route path="Attendence" element={<Attendence />} />
+                <Route path="Grade" element={<Grade />} />
+                <Route path="Notices" element={<Notices />} />
+                <Route path="Performance" element={<Performance />} />  */}
+          </Route>
         </Routes>
         <FooterRoutes />
       </div>
     </Router>
   );
 }
-
-const excludedPaths = [
-  "/administrator",
-  "/Login",
-  "/viewstudents",
-  "/viewstudents/create",
-  "/subjects",
-  "/addstudents",
-  "/addstaff",
-  "/viewstaff",
-  "/administrator/EditTeacher",
-  "/administrator/EditStudent",
-  "/administrator/Timetable",
-  "/administrator/Subject",
-  "/administrator/Grade",
-  "/administrator/Attendence",
-  "/Teacher",
-  "/Teacher/TNotices",
-  "/Teacher/TCalendar",
-  "/Teacher/TTimetable",
-  "/Teacher/Profile",
-  "/Teacher/TAttendence",
-  "/Teacher/VStudents",
-  "/Teacher/TMarks",
-  
+const includedPaths = [
+  "/",
+  "/About",
+  "/School",
+  "/Events",
+  "/Contact",
+  "/Students",
 ];
 
 function HeaderRoutes() {
   const location = useLocation();
-  const excludeHeader = excludedPaths.includes(location.pathname);
+  const excludeHeader = includedPaths.includes(location.pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   });
 
-  return <React.Fragment>{!excludeHeader && <Navbar />}</React.Fragment>;
+  return <React.Fragment>{excludeHeader && <Navbar />}</React.Fragment>;
 }
 
 function FooterRoutes() {
   const location = useLocation();
-  const excludeFooter = excludedPaths.includes(location.pathname);
+  const excludeFooter = includedPaths.includes(location.pathname);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   });
 
-  return <React.Fragment>{!excludeFooter && <Footer />}</React.Fragment>;
+  return <React.Fragment>{excludeFooter && <Footer />}</React.Fragment>;
 }
 
 export default App;
