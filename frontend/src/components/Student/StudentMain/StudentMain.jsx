@@ -19,10 +19,9 @@ import { IoIosNotifications } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
-import { fetchStudentData } from "../../Count/Data";
-
 import "./StudentMain.css";
 import { Button, notification } from "antd";
+import Logo from "../../../assets/ImageResources/uni2.png"
 
 const { Header, Sider, Content } = Layout;
 const StudentMain = () => {
@@ -45,34 +44,14 @@ const StudentMain = () => {
     });
   };
 
-  const [studentData, setStudentData] = useState(null);
   const userInfo = localStorage.getItem("userInfo");
   const user = JSON.parse(userInfo);
-  const studentId = user?.id;
 
-  useEffect(() => {
-    const fetchStudentDetails = async () => {
-      try {
-        const data = await fetchStudentData(studentId);
-        setStudentData(data);
-      } catch (error) {
-        alert("Error fetching student details:", error);
-      }
-    };
+  let LoggedIn = false;
 
-    fetchStudentDetails();
-  }, [studentId]);
-
-  if (!studentData) {
-    return <div>Loading...</div>;
+  if (userInfo) {
+    LoggedIn = true;
   }
-
-  const {
-    fullname,
-    picture,
-  } = studentData;
-
-
 
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
@@ -80,7 +59,9 @@ const StudentMain = () => {
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
             <span className="sm-logo">
-              <img src="" alt="img"></img>
+              <Link to="/">
+                <img src={Logo} alt="img"></img>
+              </Link>
             </span>
           </h2>
         </div>
@@ -212,12 +193,14 @@ const StudentMain = () => {
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>
-                <img
-                  width={35}
-                  height={35}
-                  src={picture}
-                  alt="profile"
-                />
+                {LoggedIn && (
+                  <img
+                    width={35}
+                    height={35}
+                    src={user.picture}
+                    alt="profile"
+                  />
+                )}
               </div>
               <div
                 role="button"
@@ -225,7 +208,7 @@ const StudentMain = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">{fullname}</h5>
+                {LoggedIn && <h5 className="mb-0">{user.name}</h5>}
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>

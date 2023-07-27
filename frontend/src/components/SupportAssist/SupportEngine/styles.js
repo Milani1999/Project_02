@@ -87,6 +87,7 @@ export const styles = {
         fontSize: '24px', 
         fontWeight: '600' 
     },
+    
     loadingDiv: { 
         position: 'absolute', 
         height: '100%', 
