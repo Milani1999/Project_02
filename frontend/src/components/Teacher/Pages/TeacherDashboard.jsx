@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { FcCollaboration, FcBusinesswoman, FcKindle } from "react-icons/fc";
 import { Column } from "@ant-design/plots";
-import { Progress, Space } from "antd";
 import "./TeachDashboard.css";
 import { Calendar, theme } from "antd";
 import {
