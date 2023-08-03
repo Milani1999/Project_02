@@ -7,7 +7,7 @@ import NewsCard from "../../components/NewsCard/NewsCard";
 import img01 from "../../assets/ImageResources/im01.jpg";
 import img02 from "../../assets/ImageResources/im02.jpg";
 import img03 from "../../assets/ImageResources/im03.jpg";
-import img04 from "../../assets/ImageResources/im04.jpg";
+import img04 from "../../assets/ImageResources/im04.jpg";0
 
 const Item = styled(Paper)(({ theme }) => ({
   // backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

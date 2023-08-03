@@ -50,26 +50,26 @@ const ProfilePage = () => {
           <img src="##" alt="Profile" />
         </div>
         <div className="profile-details">
-          <h2>Sara Antony Louis</h2>
+          <h2 className='student-head'>Sara Antony Louis</h2>
           <p>Grade 11</p>
         </div>
       </div>
 
       <div className="profile-columns">
         <div className="mothers-details">
-          <h3>Student Details</h3>
+          <h3 className='student-head'>Student Details</h3>
 
             <table style={{ borderCollapse: 'collapse' }}>
             <tbody>
                 {rows.map((row, index) => (
                 <tr key={index}>
-                    <td style={{ padding: '8px', textAlign: 'left' }}>{row.label}</td>
-                    <td style={{ padding: '8px', textAlign: 'left' }}>{row.value}</td>
+                    <td style={{ padding: '2px', textAlign: 'left' }}>{row.label}</td>
+                    <td style={{ padding: '2px', textAlign: 'left' }}>{row.value}</td>
                 </tr>
                 ))}
                 <tr>
-                <td style={{ padding: '8px', textAlign: 'left' }}>Extra-Curricular Activities:</td>
-                <td style={{ padding: '8px', textAlign: 'left' }}>
+                <td style={{ padding: '2px', textAlign: 'left' }}>Extra-Curricular Activities:</td>
+                <td style={{ padding: '2px', textAlign: 'left' }}>
                     <select>
                     {extraCurricularActivities.map((activity, index) => (
                         <option key={index} value={activity}>
