@@ -14,7 +14,7 @@ const Marks = () => {
   useEffect(() => {
     fetchStudents();
     fetchSubjects();
-  }, []);
+  }, [selectedGrade]);
 
   const fetchStudents = async () => {
     try {
@@ -28,12 +28,28 @@ const Marks = () => {
   const fetchSubjects = async () => {
     try {
       const response = await axios.get("/api/subjects");
-      setSubjects(response.data.map((grade) => grade.subject_name));
+      const allSubjects = response.data.map((grade) => grade.subject_name);
+  
+      // Check if marks exist for the selected year, term, and grade
+      const marksExist = await axios.get("/api/marks", {
+        params: {
+          year: parseInt(selectedYear),
+          term: selectedTerm,
+          grade: parseInt(selectedGrade),
+        },
+      });
+  
+      // Get subjects that don't have marks for the selected year, term, and grade
+      const filteredSubjects = allSubjects.filter((subject) => {
+        return !marksExist.data.some((mark) => mark.subject === subject);
+      });
+  
+      setSubjects(filteredSubjects);
     } catch (error) {
       alert(error);
     }
   };
-
+  
   const handleYearChange = (event) => {
     setSelectedYear(event.target.value);
   };
@@ -54,13 +70,13 @@ const Marks = () => {
       const updatedMarks = [...marks];
       updatedMarks[studentIndex] = {
         ...updatedMarks[studentIndex],
-        score: parseInt(value) || 0,
+        score: parseFloat(value) || 0,
       };
       setMarks(updatedMarks);
     } else {
       setMarks((prevMarks) => [
         ...prevMarks,
-        { student: studentId, score: parseInt(value) || 0 },
+        { student: studentId, score: parseFloat(value) || 0 },
       ]);
     }
   };
@@ -74,16 +90,16 @@ const Marks = () => {
         grade: parseInt(selectedGrade),
         students: marks.map((item) => ({
           student: item.student,
-          score: parseInt(item.score),
+          score: item.score,
         })),
       };
 
       await axios.post("/api/marks/create", marksData);
-
+      console.log(marksData);
       setMarks([]);
       alert("Marks saved successfully!");
     } catch (error) {
-      alert(error);
+      alert("Error saving marks. Please try again.");
     }
   };
 
@@ -103,7 +119,7 @@ const Marks = () => {
           value={selectedYear}
           onChange={handleYearChange}
         >
-          {/* <option value="">All Years</option> */}
+          <option value="">Select Year</option>
           {Array.from({ length: 10 }, (_, i) => (
             <option key={i} value={i + 2023}>
               {i + 2023}
@@ -118,7 +134,7 @@ const Marks = () => {
           value={selectedTerm}
           onChange={handleTermChange}
         >
-          {/* <option value="">All Terms</option> */}
+          <option value="">Select Term</option>
           <option value="1">Term 1</option>
           <option value="2">Term 2</option>
           <option value="3">Term 3</option>
@@ -131,7 +147,7 @@ const Marks = () => {
           value={selectedGrade}
           onChange={handleGradeChange}
         >
-          {/* <option value="">All Grades</option> */}
+          <option value="">Select Grade</option>
           {Array.from({ length: 11 }, (_, i) => (
             <option key={i} value={i + 1}>
               Grade {i + 1}
@@ -146,7 +162,7 @@ const Marks = () => {
           value={selectedSubject}
           onChange={(e) => setSelectedSubject(e.target.value)}
         >
-          {/* <option value="">All Subjects</option> */}
+          <option value="">Select Subject</option>
           {subjects.map((subject) => (
             <option key={subject} value={subject}>
               {subject}
@@ -178,11 +194,10 @@ const Marks = () => {
                 <td style={{ verticalAlign: "middle" }}>{student.fullname}</td>
                 <td>
                   <input
-                    type="number"
-                    min={0}
-                    max={100}
+                    type="text"
                     value={studentMark.score}
                     onChange={(event) => handleMarksChange(event, student._id)}
+                    style={{ width: "50px" }}
                   />
                 </td>
               </tr>

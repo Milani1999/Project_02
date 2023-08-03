@@ -52,12 +52,12 @@
   display: none;
 }
 
-a {
+.teacher-notices-container a {
   color: #1890ff;
   margin-top: 10px;
   display: block;
 }
 
-a:hover {
+.teacher-notices-container a:hover {
   text-decoration: underline;
 }

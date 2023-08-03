@@ -20,7 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Events() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <h1 className='h1-heading' style={{fontFamily: 'Roboto'}}>News And Events</h1>
+      <h1 className='h1-heading'>News and Events</h1>
       <Grid container spacing={2}>
         <Grid item xs={6} md={4} lg={3}>
           <Item>
