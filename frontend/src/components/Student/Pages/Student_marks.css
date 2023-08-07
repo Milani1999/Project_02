@@ -1,0 +1,20 @@
+.marks-view-student {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.marks-table-student th,
+td {
+  padding: 15px 50px;
+}
+
+.marks-table-student {
+  border-style: solid;
+  border-color: #cff1d4;
+}
+
+.marks-table-student th {
+  background-color: #cff1d4;
+}

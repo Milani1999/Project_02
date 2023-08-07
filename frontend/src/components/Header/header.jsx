@@ -23,9 +23,9 @@ class Navbar extends Component {
   render() {
     return (
       <nav>
-        <a href="#home" className="logo-link">
+        <Link to="/" className="logo-link">
           <img src="images/uni2.png" alt="logo" />
-        </a>
+        </Link>
 
         <div>
           <ul
@@ -54,11 +54,13 @@ class Navbar extends Component {
               <Link to="/Contact">Contact us</Link>
             </li>
             {LoggedIn ? (
-                <Link to="/login">
-                  <img src={user.picture} 
+              <Link to="/login">
+                <img
+                  src={user.picture}
                   className="Header-pro-pic"
-                  alt="profile_image" />
-                </Link>
+                  alt="profile_image"
+                />
+              </Link>
             ) : (
               <li>
                 <Link to="/login">Login</Link>

@@ -41,9 +41,7 @@ import StudentMain from "./components/Student/StudentMain/StudentMain";
 import ProfilePage from "./components/Student/Pages/ProfilePage";
 import TimeTable from "./components/Student/Pages/TimeTable";
 import Support from "./components/Administrator/pages/Support";
-
-
-
+import Marks from "./components/Student/Pages/Student_marks";
 
 function App() {
   return (
@@ -77,6 +75,7 @@ function App() {
               </Auth>
             }
           /> */}
+            {/* <Route path="/add-marks" element={<AddMarks />} /> */}
 
           <Route
             path="/Teacher"
@@ -117,7 +116,7 @@ function App() {
             <Route path="Grade" element={<Grade />} />
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
-            <Route path="Support" element={<Support/>} />
+            <Route path="Support" element={<Support />} />
           </Route>
 
           <Route
@@ -131,6 +130,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="ProfilePage" element={<ProfilePage />} />
             <Route path="TimeTableStd" element={<TimeTable />} />
+            <Route path="Marks" element={<Marks />} />
 
             {/* <Route path="EditTeacher" element={<EditTeacher />} />
                 <Route path="EditStudent" element={<EditStudent />} />
