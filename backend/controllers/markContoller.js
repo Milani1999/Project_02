@@ -9,10 +9,14 @@ const getMarks = asyncHandler(async (req, res) => {
 
 const getStudentMarksByID = async (req, res) => {
   try {
+    const { year, term, id } = req.params;
+
     const mark = await Mark.aggregate([
       {
         $match: {
-          students: { $elemMatch: { student: req.params.id } },
+          year: parseInt(year),
+          term: parseInt(term),
+          students: { $elemMatch: { student: id } },
         },
       },
       {
@@ -20,15 +24,13 @@ const getStudentMarksByID = async (req, res) => {
       },
       {
         $match: {
-          "students.student": req.params.id,
+          "students.student": id,
         },
       },
       {
         $addFields: {
           subject: "$subject",
           score: "$students.score",
-          term: "$term",
-          year: "$year",
         },
       },
       {
@@ -36,8 +38,6 @@ const getStudentMarksByID = async (req, res) => {
           _id: 0,
           score: 1,
           subject: 1,
-          term: 1,
-          year: 1,
         },
       },
     ]);
@@ -47,6 +47,7 @@ const getStudentMarksByID = async (req, res) => {
     res.status(500).json({ message: "Error fetching student marks", error });
   }
 };
+
 
 const getStudentMarksByParams = asyncHandler(async (req, res) => {
   const year = req.params.year;

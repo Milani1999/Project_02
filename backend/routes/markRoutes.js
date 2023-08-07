@@ -10,7 +10,7 @@ const {
 
 router.route("/").get(getMarks);
 router.route("/:year/:term/:subject/:grade/create").post(saveMarks);
-router.route("/:id").get(getStudentMarksByID);
+router.route("/:year/:term/:id").get(getStudentMarksByID);
 router.route("/viewmarks/:year/:term/:subject/:grade").get(getStudentMarksByParams).put(editMarks);
 
 module.exports = router;

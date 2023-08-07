@@ -1,41 +1,75 @@
 import React, { useEffect, useState } from "react";
-import { fetchMarksData } from "../../Count/Data";
+import axios from "axios";
+import './Student_marks.css'
 
 function Marks() {
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedTerm, setSelectedTerm] = useState("");
+  const [marksData, setMarksData] = useState([]);
 
-  const [marksData, setMarksData] = useState(null);
   const userInfo = localStorage.getItem("userInfo");
   const user = JSON.parse(userInfo);
-  const studentId = user?.id;
+  const student_id = user?.id;
 
   useEffect(() => {
-    const fetchMarksDetails = async () => {
-      try {
-        const data = await fetchMarksData(studentId);
-        setMarksData(data);
-        console.log(data);
-      } catch (error) {
-        alert("Error fetching student details:", error);
-      }
-    };
-
-    fetchMarksDetails();
-  }, [studentId]);
-
-  if (!marksData) {
-    return <div>Loading...</div>;
-  }
-
-  const { year, term, subject, score } = marksData;
-  console.log(studentId);
-  console.log(score)
-  console.log(year)
+    if (selectedYear && selectedTerm) {
+      axios
+        .get(`/api/marks/${selectedYear}/${selectedTerm}/${student_id}`)
+        .then((response) => {
+          setMarksData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching marks:", error);
+        });
+    }
+  }, [selectedYear, selectedTerm, student_id]);
 
   return (
     <div>
-      <p>Year</p>
-      <p>{score}</p>
+      <div className="filterMarks">
+        <div className="filter">
+          <label>Select Year:</label>
+          <select
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+          >
+            <option value="">Select Year</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+          </select>
+        </div>
+        <div className="filter">
+          <label>Select Term:</label>
+          <select
+            value={selectedTerm}
+            onChange={(e) => setSelectedTerm(e.target.value)}
+          >
+            <option value="">Select Term</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+      </div>
 
+      <div className="marks-view-student">
+        <table className="marks-table-student">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Marks</th>
+            </tr>
+          </thead>
+          <tbody>
+            {marksData.map((mark, index) => (
+              <tr key={index}>
+                <td>{mark.subject}</td>
+                <td>{mark.score}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
