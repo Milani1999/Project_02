@@ -167,10 +167,21 @@ const deleteStudent = asyncHandler(async (req, res) => {
   }
 });
 
+const getStudentsByGrade = asyncHandler(async (req, res) => {
+  const students = await Student.find({ grade: req.params.grade });
+
+  if (students.length > 0) {
+    res.json(students);
+  } else {
+    res.status(404).json({ message: "No Students Found for this grade" });
+  }
+});
+
 module.exports = {
   getStudents,
   createStudents,
   getStudentById,
   updateStudent,
   deleteStudent,
+  getStudentsByGrade,
 };
