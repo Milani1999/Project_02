@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EditPopup from "./EditMarks";
 import "./marks.css";
+import LoadingSpinner from "../../Loading/Loading";
 
 const ViewMarks = () => {
   const [selectedYear, setSelectedYear] = useState("");
@@ -18,6 +19,7 @@ const ViewMarks = () => {
   const [popupScores, setPopupScores] = useState({});
   const [isSaving, setIsSaving] = useState(false);
   const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchSubjects();
@@ -55,17 +57,19 @@ const ViewMarks = () => {
   const handleFetchMarks = async () => {
     try {
       if (selectedYear && selectedTerm && selectedSubject && selectedGrade) {
+        setIsLoading(true);
+  
         const response = await axios.get(
           `/api/marks/viewmarks/${selectedYear}/${selectedTerm}/${selectedSubject}/${selectedGrade}`
         );
-
+  
         const updatedMarks = await Promise.all(
           response.data.students.map(async (student) => {
             const studentData = await fetchStudentDetails(student.student);
             return { ...student, ...studentData };
           })
         );
-
+  
         setMarks(updatedMarks);
         setShowAddButton(false);
       } else {
@@ -76,9 +80,11 @@ const ViewMarks = () => {
     } catch (error) {
       console.error(error);
       setMarks([]);
+    } finally {
+      setIsLoading(false);
     }
   };
-
+  
   const handleEditClick = (studentId, score) => {
     setEditStudentId(studentId);
     setEditScore(score);
@@ -105,30 +111,40 @@ const ViewMarks = () => {
             student: studentId,
             score: parseFloat(score),
           });
+        } else if (isNaN(score)) {
+          validScores.push({
+            student: studentId,
+            score: "AB",
+          });
         }
       });
 
-      const newObject = {
-        year: selectedYear,
-        term: selectedTerm,
-        subject: selectedSubject,
-        grade: selectedGrade,
-        students: validScores,
-      };
+      if (validScores.length === studentsForGrade.length) {
+        const newObject = {
+          year: selectedYear,
+          term: selectedTerm,
+          subject: selectedSubject,
+          grade: selectedGrade,
+          students: validScores,
+        };
 
-      setIsSaving(true);
-      await axios.post(
-        `/api/marks/${selectedYear}/${selectedTerm}/${selectedSubject}/${selectedGrade}/create`,
-        newObject
-      );
+        setIsSaving(true);
 
-      setIsSaving(false);
-      setPopupScores({});
-      setStudentsForGrade([]);
-      setEditPopupOpen(false);
-      handleFetchMarks();
+        await axios.post(
+          `/api/marks/${selectedYear}/${selectedTerm}/${selectedSubject}/${selectedGrade}/create`,
+          newObject
+        );
 
-      alert("New scores added successfully!");
+        setIsSaving(false);
+        setPopupScores({});
+        setStudentsForGrade([]);
+        setEditPopupOpen(false);
+        handleFetchMarks();
+
+        alert("New scores added successfully!");
+      } else {
+        alert("Please fill all the fields");
+      }
     } catch (error) {
       console.error(error);
       setIsSaving(false);
@@ -138,12 +154,18 @@ const ViewMarks = () => {
 
   const handleSaveEdit = async () => {
     try {
-      if (editStudentId && editScore && !isNaN(editScore)) {
+      if (editStudentId && editScore !== undefined) {
+        let updatedScore = parseFloat(editScore);
+        if (isNaN(updatedScore)) {
+          updatedScore = "AB";
+        }
+
         const updatedMarks = marks.map((student) =>
           student.student === editStudentId
-            ? { ...student, score: parseFloat(editScore) }
+            ? { ...student, score: updatedScore }
             : student
         );
+
         setMarks(updatedMarks);
 
         await axios.put(
@@ -181,7 +203,7 @@ const ViewMarks = () => {
   const handleScoreChange = (studentId, newScore) => {
     setPopupScores((prevScores) => ({
       ...prevScores,
-      [studentId]: parseFloat(newScore),
+      [studentId]: newScore,
     }));
   };
 
@@ -277,51 +299,57 @@ const ViewMarks = () => {
           </button>
         )}
       </div>
-      {studentsForGrade.length > 0 && isAddPopupOpen && (
-        <div className="marks-popup-container">
-          <div className="marks-popup">
-            <h3>
-              Year : {selectedYear} | Term : {selectedTerm} | Grade :{" "}
-              {selectedGrade} | Subject : {selectedSubject}
-            </h3>
-            <div className="AddTable">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Admission No</th>
-                    <th>Student Name</th>
-                    <th>Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {studentsForGrade.map((student) => (
-                    <tr key={student._id}>
-                      <td>{student.admission_no}</td>
-                      <td>{student.fullname}</td>
-                      <td>
-                        <input
-                          type="text"
-                          value={popupScores[student._id] || ""}
-                          onChange={(e) =>
-                            handleScoreChange(student._id, e.target.value)
-                          }
-                        />
-                      </td>
+        {studentsForGrade.length > 0 &&
+        isAddPopupOpen && (
+          <div className="marks-popup-container">
+            <div className="marks-popup">
+              <h3>
+                Year : {selectedYear} | Term : {selectedTerm} | Grade :{" "}
+                {selectedGrade} | Subject : {selectedSubject}
+              </h3>
+              <div className="AddTable">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Admission No</th>
+                      <th>Student Name</th>
+                      <th>Score</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {studentsForGrade.map((student) => (
+                      <tr key={student._id}>
+                        <td>{student.admission_no}</td>
+                        <td>{student.fullname}</td>
+                        <td>
+                          <input
+                            type="text"
+                            value={popupScores[student._id] || " "}
+                            onChange={(e) =>
+                              handleScoreChange(student._id, e.target.value)
+                            }
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <button
+                className="btn btn-success"
+                onClick={handleSavePopupScores}
+              >
+                Add
+              </button>
+              <button className="btn btn-danger" onClick={handleCancelAddMarks}>
+                Cancel
+              </button>
             </div>
-            <button className="btn btn-success" onClick={handleSavePopupScores}>
-              Add
-            </button>
-            <button className="btn btn-danger" onClick={handleCancelAddMarks}>
-              Cancel
-            </button>
           </div>
-        </div>
       )}
-      {marks.length > 0 ? (
+      {isLoading ? (
+        <LoadingSpinner/>
+      ) : marks.length > 0 ? (
         <div className="view-marks-table">
           <table>
             <thead>
