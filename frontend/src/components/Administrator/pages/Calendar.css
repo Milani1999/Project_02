@@ -3,7 +3,9 @@
     width: 90%;
     padding: 0rem 5rem;
     max-width: 1100px;
-    border-color: black;
+    border-color: black 2px;
+   
+    
 }
 .fc-event{
     background: rgb(234, 172, 130)!important;
@@ -36,17 +38,16 @@ td{
     font-weight: bold;
     text-align: left;
     width: 20px;
-    margin-top: 10px;
   }
   .success {
-    background-color: #4caf50; /* Green background for success */
-    color: white;
+    background: #4caf50; /* Green background for success */
+    color: rgb(9, 9, 9);
    
    
   }
   
   .error {
     background-color: #f44336; /* Red background for error */
-    color: white;
-    
+    color: rgb(7, 7, 7);
   }
+  
