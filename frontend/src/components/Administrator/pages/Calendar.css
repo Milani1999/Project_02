@@ -24,3 +24,29 @@ td{
     margin: 0px 2px;
     color: black;
 }
+
+/* src/components/Calendar.css */
+
+  .popup {
+    position: fixed;
+    top: 8%;
+    left: 95%;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: left;
+    width: 20px;
+    margin-top: 10px;
+  }
+  .success {
+    background-color: #4caf50; /* Green background for success */
+    color: white;
+   
+   
+  }
+  
+  .error {
+    background-color: #f44336; /* Red background for error */
+    color: white;
+    
+  }
