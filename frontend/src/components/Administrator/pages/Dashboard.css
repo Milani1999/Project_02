@@ -19,14 +19,29 @@
   .desc{
     margin-bottom: 20px;
     color: rgb(57, 26, 100);
+    padding-left: 15px;
+   
   }
+   .count{
+    padding-left: 15px;
+   }
+  
   .bg{
 
     background-color: rgb(255, 255, 255);
-   
-
-    
+  
   }
+   .red{
+margin-right: 15px;
+   }
+   .green{
+    margin-right: 15px;
+       }
+  .stu{
+        margin-right: 15px;
+           }
+    
+  
   .bg:hover{
     background-color: rgb(208, 243, 232);
    
