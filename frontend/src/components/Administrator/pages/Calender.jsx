@@ -115,10 +115,14 @@ const Calendar = () => {
 
       {/* Popup box */}
       {popupStatus && (
-        <div className={`popup ${popupStatus} popbox`}>
-          {popupMessage}
-        </div>
-      )}
+  <div>
+    <div className='calenderpop'></div>
+    <div className={`popup ${popupStatus} `}>
+      {popupMessage}
+    </div>
+  </div>
+)}
+
 
       <div>
         <FullCalendar
