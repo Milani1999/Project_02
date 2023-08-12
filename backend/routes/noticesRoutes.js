@@ -4,6 +4,6 @@ const noticesController = require("../controllers/noticesController");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
-router.post("/api/notices", upload.single("file"), noticesController.createNotice);
+router.post("/create", upload.single("file"), noticesController.createNotice);
 
 module.exports = router;

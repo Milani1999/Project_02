@@ -168,7 +168,7 @@ const Dashboard = () => {
         <div className="d-flex justify-content-between align-items-end flex-grow-1 bg p-3 roudned-3">
           <div>
             <h3 className="desc">Students</h3>
-            <h4 className="mb-0 sub-title">{studentCount}</h4>
+            <h4 className="count">{studentCount}</h4>
           </div>
 
           <h6 className="stu">
@@ -178,7 +178,7 @@ const Dashboard = () => {
         <div className="d-flex justify-content-between align-items-end flex-grow-1 bg p-3 roudned-3">
           <div>
             <h3 className="desc">Teachers</h3>
-            <h4 className="mb-0 sub-title">{staffCount}</h4>
+            <h4 className="count">{staffCount}</h4>
           </div>
 
           <h6 className="red">
@@ -188,7 +188,7 @@ const Dashboard = () => {
         <div className="d-flex justify-content-between align-items-end flex-grow-1 bg p-3 roudned-3">
           <div>
             <h3 className="desc">Classes</h3>
-            <h4 className="mb-0 sub-title">11</h4>
+            <h4 className="count">11</h4>
           </div>
 
           <h6 className="green">
