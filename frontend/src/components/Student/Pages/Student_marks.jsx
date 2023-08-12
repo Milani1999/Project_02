@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import './Student_marks.css'
+import "./Student_marks.css";
 
 function Marks() {
   const [selectedYear, setSelectedYear] = useState("");
@@ -24,10 +24,26 @@ function Marks() {
     }
   }, [selectedYear, selectedTerm, student_id]);
 
+  const totalAndCount = marksData.reduce(
+    (result, mark) => {
+      if (mark.score !== "AB") {
+        result.total += parseFloat(mark.score);
+        result.count++;
+      }
+      return result;
+    },
+    { total: 0, count: 0 }
+  );
+
+  const totalMarks = totalAndCount.total;
+  const Count = totalAndCount.count;
+
+  const average = totalMarks / Count;
+
   return (
     <div>
-      <div className="filterMarks">
-        <div className="filter">
+      <div className="filterMarksStu">
+        <div className="filterStu">
           <label>Select Year:</label>
           <select
             value={selectedYear}
@@ -38,7 +54,7 @@ function Marks() {
             <option value="2024">2024</option>
           </select>
         </div>
-        <div className="filter">
+        <div className="filterStu">
           <label>Select Term:</label>
           <select
             value={selectedTerm}
@@ -53,22 +69,34 @@ function Marks() {
       </div>
 
       <div className="marks-view-student">
-        <table className="marks-table-student">
-          <thead>
-            <tr>
-              <th>Subject</th>
-              <th>Marks</th>
-            </tr>
-          </thead>
-          <tbody>
-            {marksData.map((mark, index) => (
-              <tr key={index}>
-                <td>{mark.subject}</td>
-                <td>{mark.score}</td>
+        {marksData.length > 0 ? (
+          <table className="marks-table-student">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Marks</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {marksData.map((mark, index) => (
+                <tr key={index}>
+                  <td>{mark.subject}</td>
+                  <td>{mark.score}</td>
+                </tr>
+              ))}
+              <tr className="total">
+                <td>Total</td>
+                <td>{totalMarks}</td>
+              </tr>
+              <tr className="average">
+                <td>Average</td>
+                <td>{average}</td>
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <h1 className="p-error">No student marks found.</h1>
+        )}
       </div>
     </div>
   );

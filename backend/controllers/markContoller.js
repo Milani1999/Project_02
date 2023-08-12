@@ -48,6 +48,42 @@ const getStudentMarksByID = async (req, res) => {
   }
 };
 
+const getStudentMarksByGrade = async (req, res) => {
+  const year = req.params.year;
+  const term = req.params.term;
+  const grade = req.params.grade;
+
+  if (!year || !term || !grade) {
+    return res
+      .status(400)
+      .json({ error: "Please provide all three parameters in the URL." });
+  }
+
+  try {
+    const marksData = await Mark.find({
+      year: year,
+      term: term,
+      grade: grade,
+    });
+
+    if (!marksData || marksData.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No records found for the provided parameters." });
+    }
+
+    const response = marksData.map((mark) => ({
+      subject: mark.subject,
+      students: mark.students,
+    }));
+
+    res.json(response);
+  } catch (err) {
+    console.error("Error fetching marks:", err);
+    return res.status(500).json({ error: "Error fetching data." });
+  }
+};
+
 
 const getStudentMarksByParams = asyncHandler(async (req, res) => {
   const year = req.params.year;
@@ -118,7 +154,16 @@ const saveMarks = asyncHandler(async (req, res) => {
 
     studentUpdates.forEach((update) => {
       const { studentId, score } = update;
-      const parsedScore = score === "AB" ? "AB" : parseFloat(score);
+      let parsedScore;
+
+      if (!isNaN(score)) {
+        parsedScore = parseFloat(score);
+      } else if (score === "AB") {
+        parsedScore = "AB";
+      } else {
+        parsedScore = 0; // Set your desired default value here
+      }
+
       const studentIndex = mark.students.findIndex(
         (student) => student.student === studentId
       );
@@ -144,7 +189,6 @@ const saveMarks = asyncHandler(async (req, res) => {
     return res.status(500).json({ error: "Error fetching data." });
   }
 });
-
 
 const editMarks = asyncHandler(async (req, res) => {
   const year = req.params.year;
@@ -176,15 +220,15 @@ const editMarks = asyncHandler(async (req, res) => {
 
     studentUpdates.forEach((update) => {
       const { studentId, score } = update;
+      const parsedScore = score === "AB" ? "AB" : parseFloat(score);
       const studentIndex = mark.students.findIndex(
         (student) => student.student === studentId
       );
 
       if (studentIndex !== -1) {
-        mark.students[studentIndex].score = parseFloat(score) || 0;
+        mark.students[studentIndex].score = parsedScore;
       }
     });
-
     mark.students = studentUpdates;
 
     try {
@@ -204,6 +248,7 @@ module.exports = {
   getMarks,
   saveMarks,
   getStudentMarksByID,
+  getStudentMarksByGrade,
   getStudentMarksByParams,
   editMarks,
 };
