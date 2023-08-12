@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "antd";
 import "./TNotices.css";
-
+import { FcAbout,FcComments } from "react-icons/fc";
 const TeacherNotices = () => {
   const [notices, setNotices] = useState([]);
   const [selectedNotice, setSelectedNotice] = useState(null);
@@ -14,7 +14,14 @@ const TeacherNotices = () => {
   const fetchTeacherNotices = async () => {
     try {
       const response = await axios.get("/api/notices/get"); 
-      setNotices(response.data);
+      console.log(response.data);
+      const sortedNotices = response.data.sort((a, b) => {
+        if (a.isNew && !b.isNew) return -1;
+        if (!a.isNew && b.isNew) return 1; 
+        return 0;
+      });
+      
+      setNotices(sortedNotices);
     } catch (error) {
       console.error("Error fetching teacher notices:", error);
     }
@@ -32,8 +39,21 @@ const TeacherNotices = () => {
     <div className="teacher-notices-container">
       <h1>Teacher Notices</h1>
       {notices.map((notice) => (
-        <div key={notice._id} className="notice-card" onClick={() => handleNoticeClick(notice)}>
-          <h2>{notice.title}</h2>
+       <div
+       key={notice._id}
+       className={`notice-card ${notice.isNew ? "new-notice" : ""} ${selectedNotice === notice ? "selected" : ""}`}
+       onClick={() => handleNoticeClick(notice)}
+     >
+     
+            <div className="notice-card-header">
+            {selectedNotice === notice ? (
+              <FcComments className="close-icon" onClick={handleCloseModal} />
+            ) : (
+              <FcAbout className="file-icon" />
+            )}
+           
+          </div>
+           <h2>{notice.title}</h2>
           <p>{notice.message}</p>
         </div>
       ))}

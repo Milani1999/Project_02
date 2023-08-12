@@ -65,3 +65,17 @@
 .teacher-notices-container a:hover {
   text-decoration: underline;
 }
+.close-icon{
+  font-size: 25px;
+}
+.file-icon{
+  font-size: 25px;
+}
+
+.new-notice {
+  background-color: #ffeeba; 
+}
+
+.selected {
+  background-color: #f0f0f0; 
+}
