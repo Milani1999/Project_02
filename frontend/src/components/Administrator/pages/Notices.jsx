@@ -20,10 +20,11 @@ const Notices = () => {
       formData.append("title", values.title);
       formData.append("message", values.message);
       formData.append("file", values.file?.fileList[0]?.originFileObj);
-
-      await axios.post("/api/notices", formData, {
+      
+      const response = await axios.post("/api/notices/create", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      console.log(response);
 
       setIsNoticeSent(true);
       showConfirmationModal();
