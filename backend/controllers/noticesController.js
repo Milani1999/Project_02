@@ -21,4 +21,14 @@ const createNotice = async (req, res) => {
   }
 };
 
-module.exports = { createNotice };
+const getTeacherNotices = async (req, res) => {
+  try {
+    const teacherNotices = await Notice.find({ recipientType: "Teacher" });
+    res.status(200).json(teacherNotices);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch teacher notices." });
+  }
+};
+
+module.exports = { createNotice, getTeacherNotices };

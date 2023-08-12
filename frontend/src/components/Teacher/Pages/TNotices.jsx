@@ -8,15 +8,15 @@ const TeacherNotices = () => {
   const [selectedNotice, setSelectedNotice] = useState(null);
 
   useEffect(() => {
-    fetchNotices();
+    fetchTeacherNotices();
   }, []);
 
-  const fetchNotices = async () => {
+  const fetchTeacherNotices = async () => {
     try {
-      const response = await axios.get("/api/notices?recipientType=teacher");
+      const response = await axios.get("/api/notices/get"); 
       setNotices(response.data);
     } catch (error) {
-      console.error("Error fetching notices:", error);
+      console.error("Error fetching teacher notices:", error);
     }
   };
 
@@ -28,20 +28,9 @@ const TeacherNotices = () => {
     setSelectedNotice(null);
   };
 
-  const exampleNotice = {
-    _id: "example_id",
-    title: "Example Notice Title",
-    message: "example notice message.",
-    attachment: "#",
-  };
-
   return (
     <div className="teacher-notices-container">
       <h1>Teacher Notices</h1>
-      <div className="notice-card" onClick={() => handleNoticeClick(exampleNotice)}>
-        <h2>{exampleNotice.title}</h2>
-        <p>{exampleNotice.message}</p>
-      </div>
       {notices.map((notice) => (
         <div key={notice._id} className="notice-card" onClick={() => handleNoticeClick(notice)}>
           <h2>{notice.title}</h2>

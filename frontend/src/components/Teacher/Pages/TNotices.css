@@ -10,19 +10,23 @@
   border-radius: 5px;
   padding: 16px;
   margin-bottom: 20px;
-  transition: box-shadow 0.3s, background-color 0.4s; 
+  transition: box-shadow 0.3s, background-color 0.4s;
+  height: fit-content;
+  background-color: #e9e6e6;
  
 }
 
+
 .notice-card h2 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 10px;
 }
 
 .notice-card p {
   color: #333333;
-  font-size: 1rem;
+  font-size: 1.3rem;
   line-height: 1.5;
+  font-family:'Times New Roman', Times, serif ;
 }
 
 .notice-card:hover {
