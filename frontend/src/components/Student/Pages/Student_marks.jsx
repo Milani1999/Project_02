@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Student_marks.css";
+import LoadingSpinner from "../../Loading/Loading";
 
 function Marks() {
   const [selectedYear, setSelectedYear] = useState("");
   const [selectedTerm, setSelectedTerm] = useState("");
   const [marksData, setMarksData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const userInfo = localStorage.getItem("userInfo");
   const user = JSON.parse(userInfo);
@@ -13,6 +15,8 @@ function Marks() {
 
   useEffect(() => {
     if (selectedYear && selectedTerm) {
+      setLoading(true);
+
       axios
         .get(`/api/marks/${selectedYear}/${selectedTerm}/${student_id}`)
         .then((response) => {
@@ -20,6 +24,9 @@ function Marks() {
         })
         .catch((error) => {
           console.error("Error fetching marks:", error);
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   }, [selectedYear, selectedTerm, student_id]);
@@ -69,7 +76,9 @@ function Marks() {
       </div>
 
       <div className="marks-view-student">
-        {marksData.length > 0 ? (
+        {loading ? (
+          <LoadingSpinner />
+        ) : marksData.length > 0 ? (
           <table className="marks-table-student">
             <thead>
               <tr>

@@ -8,6 +8,7 @@
 .marks-table-student th,
 .marks-table-student td {
   padding: 15px 50px;
+  text-align: center;
 }
 
 .marks-table-student {
@@ -30,6 +31,9 @@
   margin: 5px;
 }
 
-.marks-table-student .total{
-  border: 2px solid #cff1d4;
+.marks-table-student .total,
+.marks-table-student .average {
+  border: 2px solid #0f2212;
+  font-weight: bolder;
+  color: #0f2212;
 }
