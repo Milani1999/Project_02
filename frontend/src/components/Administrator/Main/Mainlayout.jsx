@@ -135,12 +135,6 @@ const MainLayout = () => {
               icon: <RiCalendarCheckFill className="fs-4" />,
               label: "Timetable",
             },
-
-            {
-              key: "Performance",
-              icon: <AiOutlineFund className="fs-4" />,
-              label: "Performance",
-            },
             {
               key: "Events",
               icon: <RiCalendar2Line className="fs-4" />,
