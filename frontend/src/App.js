@@ -19,7 +19,7 @@ import Dashboard from "./components/Administrator/pages/Dashboard";
 import EditTeacher from "./components/Administrator/pages/EditTeacher";
 import EditStudent from "./components/Administrator/pages/EditStudent";
 import Subject from "./components/Administrator/pages/Subject";
-import "./assets/Style/styles.css";
+import './assets/Style/styles.css'
 import Calender from "./components/Administrator/pages/Calender";
 import Timetable from "./components/Administrator/pages/Timetable";
 import Attendence from "./components/Administrator/pages/Attendence";
@@ -27,7 +27,7 @@ import Grade from "./components/Administrator/pages/Grade";
 import Notices from "./components/Administrator/pages/Notices";
 import SignIn from "./view/Signin/SignIn";
 import Auth from "./view/Signin/ProtectedRoute";
-import Performance from "./components/Administrator/pages/Performance";
+import Performance from "./components/Teacher/Pages/Performance";
 import TeacherDashboard from "./components/Teacher/Pages/TeacherDashboard";
 import TeacherProfile from "./components/Teacher/Pages/Profile";
 import TAttendence from "./components/Teacher/Pages/TAttendence";
@@ -44,6 +44,9 @@ import Support from "./components/Administrator/pages/Support";
 import Marks from "./components/Student/Pages/Student_marks";
 import TClassMarks from "./components/Teacher/Pages/TClassMarks";
 import SNotices from "./components/Student/Pages/SNotices";
+import StaffAttendance from "./components/Administrator/pages/StaffAttendance";
+import StudentAttendance from "./components/Administrator/pages/StudentAttendance";
+
 function App() {
   return (
     <Router>
@@ -77,6 +80,7 @@ function App() {
             <Route path="VStudents" element={<VStudents />} />
             <Route path="TCalendar" element={<TCalendar />} />
             <Route path="TClassMarks" element={<TClassMarks />} />
+            <Route path="Performance" element={<Performance />} />
           </Route>
 
           <Route
@@ -100,6 +104,9 @@ function App() {
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
             <Route path="Support" element={<Support />} />
+            <Route path="StaffAttendance" element={<StaffAttendance/>}/>
+            <Route path="StudentAttendance" element={<StudentAttendance/>}/>
+            <Route path="ViewNotice" element={<SNotices />} />
           </Route>
 
           <Route
@@ -114,7 +121,7 @@ function App() {
             <Route path="ProfilePage" element={<ProfilePage />} />
             <Route path="TimeTableStd" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
-            <Route path="ViewNotice" element={<SNotices />} />
+
             {/* <Route path="EditTeacher" element={<EditTeacher />} />
                 <Route path="EditStudent" element={<EditStudent />} />
 

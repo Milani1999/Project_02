@@ -114,6 +114,11 @@ const TeacherMainLayout = () => {
                   icon: <AiOutlineFund className="fs-4" />,
                   label: "Classwise Marks",
                 },
+                {
+                  key: "Performance",
+                  icon: <AiOutlineFund className="fs-4" />,
+                  label: "Performance",
+                },
               ],
             },
 
