@@ -1,4 +1,8 @@
-import React from "react";
+import './home.css'
+import image1 from '../../assets/ImageResources/im01.jpg'
+import image2 from '../../assets/ImageResources/im02.jpg'
+import image3 from '../../assets/ImageResources/im03.jpg'
+import image4 from '../../assets/ImageResources/im04.jpg'
 
 function Home() {
   return (
@@ -16,19 +20,19 @@ function Home() {
 
           <div className="carousel-inner">
             <div className="item active">
-              <img src="images/im01.jpg" alt="Los Angeles" className="img_carousel" />
+              <img src={image1} alt="Los Angeles" className="img_carousel" />
             </div>
 
             <div className="item">
-              <img src="images/im02.jpg" alt="Chicago" className="img_carousel"/>
+              <img src={image2} alt="Chicago" className="img_carousel"/>
             </div>
 
             <div className="item">
-              <img src="images/im03.jpg" alt="New york" className="img_carousel"/>
+              <img src={image3} alt="New york" className="img_carousel"/>
             </div>
 
             <div className="item">
-              <img src="images/im04.jpg" alt="New york" className="img_carousel"/>
+              <img src={image4} alt="New york" className="img_carousel"/>
             </div>
           </div>
 

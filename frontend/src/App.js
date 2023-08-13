@@ -19,7 +19,7 @@ import Dashboard from "./components/Administrator/pages/Dashboard";
 import EditTeacher from "./components/Administrator/pages/EditTeacher";
 import EditStudent from "./components/Administrator/pages/EditStudent";
 import Subject from "./components/Administrator/pages/Subject";
-import "./assets/Style/styles.css";
+import './assets/Style/styles.css'
 import Calender from "./components/Administrator/pages/Calender";
 import Timetable from "./components/Administrator/pages/Timetable";
 import Attendence from "./components/Administrator/pages/Attendence";
@@ -43,6 +43,9 @@ import TimeTable from "./components/Student/Pages/TimeTable";
 import Support from "./components/Administrator/pages/Support";
 import Marks from "./components/Student/Pages/Student_marks";
 import TClassMarks from "./components/Teacher/Pages/TClassMarks";
+
+import StaffAttendance from "./components/Administrator/pages/StaffAttendance";
+import StudentAttendance from "./components/Administrator/pages/StudentAttendance";
 
 function App() {
   return (
@@ -100,6 +103,8 @@ function App() {
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
             <Route path="Support" element={<Support />} />
+            <Route path="StaffAttendance" element={<StaffAttendance/>}/>
+            <Route path="StudentAttendance" element={<StudentAttendance/>}/>
           </Route>
 
           <Route

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { fetchStaffData } from "../../Count/Data";
 import './Profile.css';
+import LoadingSpinner from '../../Loading/Loading'
+
 const StaffProfile = () => {
   const [staffData, setStaffData] = useState(null);
   const userInfo = localStorage.getItem("userInfo");
@@ -21,7 +23,7 @@ const StaffProfile = () => {
   }, [staffId]);
 
   if (!staffData) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner/>;
   }
 
   const {

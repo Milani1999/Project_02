@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
+import Logo from '../../assets/ImageResources/uni2.png'
 
 const userInfo = localStorage.getItem("userInfo");
 const user = JSON.parse(userInfo);
@@ -24,7 +25,7 @@ class Navbar extends Component {
     return (
       <nav>
         <Link to="/" className="logo-link">
-          <img src="images/uni2.png" alt="logo" />
+          <img src={Logo} alt="logo" />
         </Link>
 
         <div>
@@ -45,9 +46,8 @@ class Navbar extends Component {
               </Link>
               <div className="dropdown-content">
                 <Link to="/Events">News and Event</Link>
-                <a href="#gallery">Gallery</a>
-                <a href="#notice">Notices</a>
-                <a href="#career">Careers</a>
+                {/* <a href="#notice">Notices</a> */}
+                {/* <a href="#career">Careers</a> */}
               </div>
             </li>
             <li>
