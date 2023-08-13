@@ -58,18 +58,18 @@ const ViewMarks = () => {
     try {
       if (selectedYear && selectedTerm && selectedSubject && selectedGrade) {
         setIsLoading(true);
-  
+
         const response = await axios.get(
           `/api/marks/viewmarks/${selectedYear}/${selectedTerm}/${selectedSubject}/${selectedGrade}`
         );
-  
+
         const updatedMarks = await Promise.all(
           response.data.students.map(async (student) => {
             const studentData = await fetchStudentDetails(student.student);
             return { ...student, ...studentData };
           })
         );
-  
+
         setMarks(updatedMarks);
         setShowAddButton(false);
       } else {
@@ -84,7 +84,7 @@ const ViewMarks = () => {
       setIsLoading(false);
     }
   };
-  
+
   const handleEditClick = (studentId, score) => {
     setEditStudentId(studentId);
     setEditScore(score);
@@ -299,56 +299,52 @@ const ViewMarks = () => {
           </button>
         )}
       </div>
-        {studentsForGrade.length > 0 &&
-        isAddPopupOpen && (
-          <div className="marks-popup-container">
-            <div className="marks-popup">
-              <h3>
-                Year : {selectedYear} | Term : {selectedTerm} | Grade :{" "}
-                {selectedGrade} | Subject : {selectedSubject}
-              </h3>
-              <div className="AddTable">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Admission No</th>
-                      <th>Student Name</th>
-                      <th>Score</th>
+      {studentsForGrade.length > 0 && isAddPopupOpen && (
+        <div className="marks-popup-container">
+          <div className="marks-popup">
+            <h3>
+              Year : {selectedYear} | Term : {selectedTerm} | Grade :{" "}
+              {selectedGrade} | Subject : {selectedSubject}
+            </h3>
+            <div className="AddTable">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Admission No</th>
+                    <th>Student Name</th>
+                    <th>Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {studentsForGrade.map((student) => (
+                    <tr key={student._id}>
+                      <td>{student.admission_no}</td>
+                      <td>{student.fullname}</td>
+                      <td>
+                        <input
+                          type="text"
+                          value={popupScores[student._id] || " "}
+                          onChange={(e) =>
+                            handleScoreChange(student._id, e.target.value)
+                          }
+                        />
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {studentsForGrade.map((student) => (
-                      <tr key={student._id}>
-                        <td>{student.admission_no}</td>
-                        <td>{student.fullname}</td>
-                        <td>
-                          <input
-                            type="text"
-                            value={popupScores[student._id] || " "}
-                            onChange={(e) =>
-                              handleScoreChange(student._id, e.target.value)
-                            }
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <button
-                className="btn btn-success"
-                onClick={handleSavePopupScores}
-              >
-                Add
-              </button>
-              <button className="btn btn-danger" onClick={handleCancelAddMarks}>
-                Cancel
-              </button>
+                  ))}
+                </tbody>
+              </table>
             </div>
+            <button className="btn btn-success" onClick={handleSavePopupScores}>
+              Add
+            </button>
+            <button className="btn btn-danger" onClick={handleCancelAddMarks}>
+              Cancel
+            </button>
           </div>
+        </div>
       )}
       {isLoading ? (
-        <LoadingSpinner/>
+        <LoadingSpinner />
       ) : marks.length > 0 ? (
         <div className="view-marks-table">
           <table>

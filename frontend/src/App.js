@@ -19,6 +19,7 @@ import Dashboard from "./components/Administrator/pages/Dashboard";
 import EditTeacher from "./components/Administrator/pages/EditTeacher";
 import EditStudent from "./components/Administrator/pages/EditStudent";
 import Subject from "./components/Administrator/pages/Subject";
+import './assets/Style/styles.css'
 import Calender from "./components/Administrator/pages/Calender";
 import Timetable from "./components/Administrator/pages/Timetable";
 import Attendence from "./components/Administrator/pages/Attendence";
