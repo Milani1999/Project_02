@@ -19,4 +19,12 @@ export const fetchStaffData = async (staffId) => {
     }
   };
   
+  export const fetchMarksData = async (studentId) => {
+    try {
+      const response = await axios.get(`/api/marks/${studentId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching student marks");
+    }
+  };
   

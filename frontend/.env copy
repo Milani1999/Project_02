@@ -1,0 +1,9 @@
+MONGO_URI=mongodb+srv://edu_track:EduTrack%40123456@cluster0.wj4c01m.mongodb.net/edu_track?retryWrites=true&w=majority
+
+NODE_ENV=developemnt
+
+JWT_SECRET=EduTrack@12345
+
+ADMIN_USERNAME=Admin
+ADMIN_PASSWORD=Admin@123456
+ADMIN_ROLE=admin

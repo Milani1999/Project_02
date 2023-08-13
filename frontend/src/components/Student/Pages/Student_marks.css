@@ -1,0 +1,35 @@
+.marks-view-student {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.marks-table-student th,
+.marks-table-student td {
+  padding: 15px 50px;
+}
+
+.marks-table-student {
+  border-style: solid;
+  border-color: #cff1d4;
+}
+
+.marks-table-student th {
+  background-color: #cff1d4;
+}
+
+.filterMarksStu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filterMarksStu .filterStu {
+  padding: 10px;
+  margin: 5px;
+}
+
+.marks-table-student .total{
+  border: 2px solid #cff1d4;
+}

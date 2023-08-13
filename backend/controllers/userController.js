@@ -14,6 +14,7 @@ const authUser = asyncHandler(async (req, res) => {
       const defaultAdmin = new Admin({
         username: process.env.ADMIN_USERNAME,
         password: process.env.ADMIN_PASSWORD,
+        picture:"https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg",
         role: process.env.ADMIN_ROLE,
       });
 
@@ -22,6 +23,7 @@ const authUser = asyncHandler(async (req, res) => {
 
     res.json({
       role: process.env.ADMIN_ROLE,
+      picture:"https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg",
       token: generateToken("admin"),
     });
     return;
@@ -34,6 +36,7 @@ const authUser = asyncHandler(async (req, res) => {
     res.json({
       id:student._id,
       name: student.fullname,
+      picture:student.picture,
       role: student.role,
       token: generateToken(student._id),
     });
@@ -41,6 +44,7 @@ const authUser = asyncHandler(async (req, res) => {
     res.json({
       id:staff._id,
       name: staff.fullname,
+      picture:staff.picture,
       role: staff.role,
       token: generateToken(staff._id),
     });

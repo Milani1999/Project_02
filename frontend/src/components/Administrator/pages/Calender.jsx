@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import './Calender.css';
-import useCalendar from '../store/Cal';
+import './Calendar.css';
+import axios from 'axios';
+
 import { createEventId } from '../data/index';
+import useCalendar from '../store/Cal';
 
 const DeleteConfirmationModal = ({ onConfirm, onCancel }) => {
   return (
@@ -23,9 +25,29 @@ const Calendar = () => {
   const { currentEvents, setCurrentEvents } = useCalendar();
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [eventToDelete, setEventToDelete] = useState(null);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [popupStatus, setPopupStatus] = useState(null);
 
-  const handleEvents = async (events) => {
-    await Promise.resolve(setCurrentEvents(events));
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const response = await axios.get('/api/events'); // Fetch events from backend
+        setCurrentEvents(response.data);
+      } catch (error) {
+        console.error('Failed to fetch events:', error);
+      }
+    }
+
+    fetchEvents();
+  }, []);
+
+  const showPopup = (message, status) => {
+    setPopupMessage(message);
+    setPopupStatus(status);
+    setTimeout(() => {
+      setPopupMessage('');
+      setPopupStatus(null);
+    }, 3000); // Popup disappears after 3 seconds
   };
 
   const handleDateSelect = (selectInfo) => {
@@ -35,13 +57,24 @@ const Calendar = () => {
     calendarApi.unselect();
 
     if (title) {
-      calendarApi.addEvent({
+      const newEvent = {
         id: createEventId(),
         title,
         start: selectInfo.start,
         end: selectInfo.end,
         allDay: selectInfo.allDay,
-      });
+      };
+
+      calendarApi.addEvent(newEvent);
+
+      try {
+        axios.post('/api/events/create', newEvent); // Create event on backend
+        setCurrentEvents([...currentEvents, newEvent]);
+        showPopup('Event added successfully', 'success');
+      } catch (error) {
+        console.error('Failed to create event:', error);
+        showPopup('Failed to add event', 'error');
+      }
     }
   };
 
@@ -50,19 +83,27 @@ const Calendar = () => {
     setShowDeleteConfirmation(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (eventToDelete) {
-      eventToDelete.remove();
-      setEventToDelete(null);
+      const eventIdToDelete = eventToDelete.id; // Assuming eventToDelete.id is the correct event ID
+  
+      try {
+        await axios.delete(`/api/events/${eventIdToDelete}`); // Delete event on backend
+        setEventToDelete(null);
+        setShowDeleteConfirmation(false);
+        setCurrentEvents(currentEvents.filter(event => event.id !== eventToDelete.id));
+        showPopup('Event deleted successfully', 'success');
+      } catch (error) {
+        console.error('Failed to delete event:', error);
+        showPopup('Failed to delete event', 'error');
+      }
     }
-    setShowDeleteConfirmation(false);
   };
 
   const handleCancelDelete = () => {
     setEventToDelete(null);
     setShowDeleteConfirmation(false);
   };
-
   return (
     <div className="calendar-container">
       {showDeleteConfirmation && (
@@ -71,6 +112,18 @@ const Calendar = () => {
           onCancel={handleCancelDelete}
         />
       )}
+
+      {/* Popup box */}
+      {popupStatus && (
+  <div>
+    <div className='calenderpop'></div>
+    <div className={`popup ${popupStatus} `}>
+      {popupMessage}
+    </div>
+  </div>
+)}
+
+
       <div>
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
@@ -89,7 +142,7 @@ const Calendar = () => {
           weekends={true}
           nowIndicator={true}
           initialEvents={currentEvents}
-          eventsSet={handleEvents}
+        
           select={handleDateSelect}
           eventClick={handleEventClick}
         />

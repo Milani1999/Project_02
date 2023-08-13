@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import { Row } from "react-bootstrap";
 import SupportEngine from "../SupportAssist/SupportEngine";
-
-
 function Popup({ content, closePopup }) {
   return (
     <div className="popup-overlay" onClick={closePopup}>
       <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-        <div className="popup-header"></div>
+        <div className="popup-header">
+          <button onClick={closePopup} className="closeButton">
+            X
+          </button>
+        </div>
         <div>
-          <Row className="justify-content-end">
-            <button onClick={closePopup} className="closeButton">
-              X
-            </button>
-          </Row>
           <p>{content}</p>
         </div>
       </div>
@@ -23,7 +20,7 @@ function Popup({ content, closePopup }) {
 
 function Card({ title, content, imageUrl }) {
   const [showPopup, setShowPopup] = useState(false);
-  const shortContent = content.substring(0, 315) + "...";
+  const shortContent = content.substring(0, 325) + "...";
 
   const handleClickOpen = () => {
     setShowPopup(true);
@@ -45,11 +42,15 @@ function Card({ title, content, imageUrl }) {
         />
         <h3 className="mb-0">{title}</h3>
         <br />
-        <p>{showPopup ? content : shortContent}</p>
-        {content.length > 400 && !showPopup && (
-          <button className="btn btn-success" onClick={handleClickOpen}>
-            Read More
-          </button>
+        {!showPopup && (
+          <>
+            <p>{shortContent}</p>
+            {content.length > 400 && (
+              <button className="btn btn-success" onClick={handleClickOpen}>
+                Read More
+              </button>
+            )}
+          </>
         )}
       </div>
       {showPopup && <Popup content={content} closePopup={closePopup} />}
@@ -78,6 +79,7 @@ function School() {
       imageUrl: "https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg",
     },
   ];
+  
 
   return (
     <div className="SchoolComponent" id="SchoolComponent">
@@ -91,6 +93,7 @@ function School() {
               title={message.title}
               content={message.content}
               imageUrl={message.imageUrl}
+              
             />
           ))}
         </div>

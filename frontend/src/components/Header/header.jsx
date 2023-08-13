@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
 
+const userInfo = localStorage.getItem("userInfo");
+const user = JSON.parse(userInfo);
 
+let LoggedIn = false;
+
+if (userInfo) {
+  LoggedIn = true;
+}
 
 class Navbar extends Component {
   state = {
@@ -16,12 +23,9 @@ class Navbar extends Component {
   render() {
     return (
       <nav>
-        <a href="#home" className="logo-link">
+        <Link to="/" className="logo-link">
           <img src="images/uni2.png" alt="logo" />
-        </a>
-
-
-
+        </Link>
 
         <div>
           <ul
@@ -49,12 +53,26 @@ class Navbar extends Component {
             <li>
               <Link to="/Contact">Contact us</Link>
             </li>
-            <li><Link to="/login">Login</Link></li>
+            {LoggedIn ? (
+              <Link to="/login">
+                <img
+                  src={user.picture}
+                  className="Header-pro-pic"
+                  alt="profile_image"
+                />
+              </Link>
+            ) : (
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            )}
           </ul>
         </div>
 
         <div id="mobile" onClick={this.handleClick}>
-          <i className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
+          <i
+            className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}
+          ></i>
         </div>
       </nav>
     );

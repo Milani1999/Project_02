@@ -215,7 +215,7 @@
 /* school.css */
 
 .SchoolComponent {
-  height: 600px;
+  height: 625px;
 
 }
 
@@ -230,8 +230,8 @@
   font-size: 40px;
   color: rgb(6, 68, 46);
   font-weight: bolder;
-  padding-top: 5px;
-  margin-bottom: 90px;
+  padding-top: 90px;
+  margin-bottom: 70px;
 }
 
 .SchoolComponent img {
@@ -302,8 +302,21 @@
 
 }
 
+
 .col-sm-4:hover {
-  background-color: rgba(116, 228, 166, 0.1);
+  background-color: rgb(191, 238, 198);
+
+}
+
+/* Additional CSS for mobile responsiveness */
+@media (max-width: 576px) {
+  .col-sm-4 {
+    width: 100%;
+  }
+
+  .SchoolComponent .rounded {
+    height: auto;
+  }
 }
 
 

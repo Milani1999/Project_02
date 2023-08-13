@@ -16,7 +16,7 @@ import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import { Button, notification } from "antd";
-import { fetchStaffData } from "../../Count/Data";
+import Logo from "../../../assets/ImageResources/uni2.png";
 
 const { Header, Sider, Content } = Layout;
 const TeacherMainLayout = () => {
@@ -39,33 +39,14 @@ const TeacherMainLayout = () => {
     });
   };
 
-
-  const [staffData, setStaffData] = useState(null);
   const userInfo = localStorage.getItem("userInfo");
   const user = JSON.parse(userInfo);
-  const staffId = user?.id;
 
-  useEffect(() => {
-    const fetchStaffDetails = async () => {
-      try {
-        const data = await fetchStaffData(staffId);
-        setStaffData(data);
-      } catch (error) {
-        alert("Error fetching staff details:", error);
-      }
-    };
+  let LoggedIn = false;
 
-    fetchStaffDetails();
-  }, [staffId]);
-
-  if (!staffData) {
-    return <div>Loading...</div>;
+  if (userInfo) {
+    LoggedIn = true;
   }
-
-  const {
-    fullname,
-    picture,
-  } = staffData;
 
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
@@ -73,7 +54,9 @@ const TeacherMainLayout = () => {
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
             <span className="sm-logo">
-              <img src="images/uni2.png" alt="img"></img>
+              <Link to="/">
+                <img src={Logo} alt="img"></img>
+              </Link>
             </span>
           </h2>
         </div>
@@ -120,6 +103,18 @@ const TeacherMainLayout = () => {
               key: "TMarks",
               icon: <AiOutlineFund className="fs-4" />,
               label: "Marks",
+              children: [
+                {
+                  key: "TMarks",
+                  icon: <AiOutlineFund className="fs-4" />,
+                  label: "Add, Edit Marks",
+                },
+                {
+                  key: "TClassMarks",
+                  icon: <AiOutlineFund className="fs-4" />,
+                  label: "Classwise Marks",
+                },
+              ],
             },
 
             {
@@ -169,12 +164,14 @@ const TeacherMainLayout = () => {
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>
-                <img
-                  width={35}
-                  height={35}
-                  src={picture}
-                  alt="profile"
-                />
+                {LoggedIn && (
+                  <img
+                    width={35}
+                    height={35}
+                    src={user.picture}
+                    alt="profile"
+                  />
+                )}
               </div>
               <div
                 role="button"
@@ -182,10 +179,9 @@ const TeacherMainLayout = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">{fullname}</h5>
+                {LoggedIn && <h5 className="mb-0">{user.name}</h5>}{" "}
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                
                 <li>
                   <Link
                     className="dropdown-item py-1 mb-1"
