@@ -19,7 +19,7 @@ import Dashboard from "./components/Administrator/pages/Dashboard";
 import EditTeacher from "./components/Administrator/pages/EditTeacher";
 import EditStudent from "./components/Administrator/pages/EditStudent";
 import Subject from "./components/Administrator/pages/Subject";
-import "./assets/Style/styles.css";
+import './assets/Style/styles.css'
 import Calender from "./components/Administrator/pages/Calender";
 import Timetable from "./components/Administrator/pages/Timetable";
 import Attendence from "./components/Administrator/pages/Attendence";
@@ -27,7 +27,7 @@ import Grade from "./components/Administrator/pages/Grade";
 import Notices from "./components/Administrator/pages/Notices";
 import SignIn from "./view/Signin/SignIn";
 import Auth from "./view/Signin/ProtectedRoute";
-import Performance from "./components/Administrator/pages/Performance";
+import Performance from "./components/Teacher/Pages/Performance";
 import TeacherDashboard from "./components/Teacher/Pages/TeacherDashboard";
 import TeacherProfile from "./components/Teacher/Pages/Profile";
 import TAttendence from "./components/Teacher/Pages/TAttendence";
@@ -104,8 +104,8 @@ function App() {
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
             <Route path="Support" element={<Support />} />
-            <Route path="StaffAttendance" element={<StaffAttendance />} />
-            <Route path="StudentAttendance" element={<StudentAttendance />} />
+            <Route path="StaffAttendance" element={<StaffAttendance/>}/>
+            <Route path="StudentAttendance" element={<StudentAttendance/>}/>
             <Route path="ViewNotice" element={<SNotices />} />
           </Route>
 
