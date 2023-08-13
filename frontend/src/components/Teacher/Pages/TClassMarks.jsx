@@ -187,7 +187,24 @@ const TClassMarks = () => {
                       )
                     ).total}
                   </td>
-            
+                  <td>
+                    {calculateAverage(
+                      calculateTotal(
+                        marks.map((subject) =>
+                          subject.students.find(
+                            (s) => s.student === student.student
+                          )?.score || "-"
+                        )
+                      ).total,
+                      calculateTotal(
+                        marks.map((subject) =>
+                          subject.students.find(
+                            (s) => s.student === student.student
+                          )?.score || "-"
+                        )
+                      ).validCount
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
