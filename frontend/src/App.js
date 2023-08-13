@@ -43,6 +43,7 @@ import TimeTable from "./components/Student/Pages/TimeTable";
 import Support from "./components/Administrator/pages/Support";
 import Marks from "./components/Student/Pages/Student_marks";
 import TClassMarks from "./components/Teacher/Pages/TClassMarks";
+
 import StaffAttendance from "./components/Administrator/pages/StaffAttendance";
 import StudentAttendance from "./components/Administrator/pages/StudentAttendance";
 
