@@ -1,0 +1,51 @@
+.ContactUsComponent {
+    height: 650px;
+    overflow: hidden;
+  }
+  
+  .ContactUsComponent .h1-heading {
+    text-align: center;
+    font-size: 40px;
+    color: rgb(6, 68, 46);
+    font-weight: bolder;
+    padding-top: 100px;
+    margin-bottom: 30px;
+  }
+  
+  .ContactUsComponent .col-6,
+  .ContactUsComponent table {
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  
+  .ContactUsComponent td {
+    padding: 10px;
+    font-size: 18px;
+  }
+  
+  .ContactUsComponent .Fa-Icon {
+    color: #022917;
+    font-size: 35px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .ContactUsComponent .Fa-Icon-So {
+    color: #022917;
+    font-size: 35px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-right: 30px;
+  }
+  
+  .ContactUsComponent .h4-social {
+    margin-top: 50px;
+  }
+  
+  .ContactUsComponent iframe {
+    height: 400px;
+    width: 600px;
+  }
+  

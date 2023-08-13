@@ -1,8 +1,8 @@
-import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faGlobe, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faFacebookF, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import SupportEngine from "../SupportAssist/SupportEngine";
+import './Contactus.css'
 
 function ContactUs() {
     return (

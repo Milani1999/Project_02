@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { Row } from "react-bootstrap";
+import { useState } from "react";
 import SupportEngine from "../SupportAssist/SupportEngine";
+import './School.css';
+
 function Popup({ content, closePopup }) {
   return (
     <div className="popup-overlay" onClick={closePopup}>
