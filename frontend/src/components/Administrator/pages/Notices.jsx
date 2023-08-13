@@ -9,7 +9,7 @@ const { Dragger } = Upload;
 
 const Notices = () => {
   const [form] = Form.useForm();
-  const [recipientType, setRecipientType] = useState("teacher");
+  const [recipientType, setRecipientType] = useState("Teacher");
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
   const [isNoticeSent, setIsNoticeSent] = useState(false);
 
@@ -19,7 +19,8 @@ const Notices = () => {
       formData.append("recipientType", recipientType);
       formData.append("title", values.title);
       formData.append("message", values.message);
-      formData.append("file", values.file?.fileList[0]?.originFileObj);
+      formData.append("file", values.fileList?.[0]?.originFileObj);
+
       
       const response = await axios.post("/api/notices/create", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -59,8 +60,8 @@ const Notices = () => {
           rules={[{ required: true, message: "Please select the recipient type" }]}
         >
           <Select onChange={handleRecipientTypeChange}>
-            <Option value="teacher">Teacher</Option>
-            <Option value="student">Student</Option>
+            <Option value="Teacher">Teacher</Option>
+            <Option value="Student">Student</Option>
           </Select>
         </Form.Item>
         <Form.Item
@@ -97,20 +98,28 @@ const Notices = () => {
         </Form.Item>
       </Form>
       <Modal
-        visible={isConfirmationModalVisible}
-        onCancel={handleConfirmationModalClose}
-        onOk={handleConfirmationModalClose}
-        centered
-        title={isNoticeSent ? "Notice Sent" : "Notice Sending Failed"}
-      >
-        {isNoticeSent ? (
-          <p>The notice has been successfully sent.</p>
-        ) : (
-          <p>Failed to send the notice. Please try again.</p>
-        )}
-      </Modal>
+  visible={isConfirmationModalVisible}
+  onCancel={handleConfirmationModalClose}
+  onOk={handleConfirmationModalClose}
+  centered
+  title={isNoticeSent ? "Notice Sent" : "Notice Sending Failed"}
+  afterClose={handleConfirmationModalClose}
+>
+  {isNoticeSent ? (
+    <p className="confirmation-modal notice-sent">
+      The notice has been successfully sent.
+    </p>
+  ) : (
+    <p className="confirmation-modal notice-failed">
+      Failed to send the notice. Please try again.
+    </p>
+  )}
+</Modal>
+
+      
     </div>
   );
 };
+
 
 export default Notices;

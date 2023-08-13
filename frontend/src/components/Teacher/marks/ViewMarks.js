@@ -129,7 +129,7 @@ const ViewMarks = () => {
         };
 
         setIsSaving(true);
-
+        console.log(isSaving);
         await axios.post(
           `/api/marks/${selectedYear}/${selectedTerm}/${selectedSubject}/${selectedGrade}/create`,
           newObject

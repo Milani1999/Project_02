@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const noticeSchema = new mongoose.Schema({
   recipientType: {
     type: String,
-    enum: ["teacher", "student"],
+    enum: ["Teacher", "Student"],
     required: true,
   },
   title: {

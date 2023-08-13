@@ -14,11 +14,21 @@ const createNotice = async (req, res) => {
     });
 
     await newNotice.save();
-    res.status(201).json({ message: "Notice sent successfully" });
+    res.status(201).json({ message: "The notice has been successfully sent." });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to send notice" });
+    res.status(500).json({ error: " Failed to send the notice. Please try again." });
   }
 };
 
-module.exports = { createNotice };
+const getTeacherNotices = async (req, res) => {
+  try {
+    const teacherNotices = await Notice.find({ recipientType: "Teacher" });
+    res.status(200).json(teacherNotices);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch teacher notices." });
+  }
+};
+
+module.exports = { createNotice, getTeacherNotices };

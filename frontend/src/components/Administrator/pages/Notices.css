@@ -47,3 +47,23 @@
 .ant-btn-primary:not(:disabled):not(.ant-btn-disabled) {
   background-color: rgb(19, 147, 57);
 }
+.confirmation-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 8px;
+  width: 300px;
+  margin: 20px auto;
+}
+
+.notice-sent {
+  background-color: #4caf50; 
+  color: #fff;
+}
+
+.notice-failed {
+  background-color: #f44336; 
+  color: #fff;
+}
