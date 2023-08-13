@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
-import { Form, Input, Button, message, Select, Modal, Upload } from "antd";
+import { Form, Input, Button, message, Select, Modal, Upload,Popconfirm } from "antd";
 import { InboxOutlined } from "@ant-design/icons";
 import "./Notices.css";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 const { Dragger } = Upload;
@@ -12,7 +13,42 @@ const Notices = () => {
   const [recipientType, setRecipientType] = useState("Teacher");
   const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
   const [isNoticeSent, setIsNoticeSent] = useState(false);
-
+  const [isSentNoticesVisible, setIsSentNoticesVisible] = useState(false);
+  const [sentNotices, setSentNotices] = useState([]);
+  //sent notices
+  const handleViewSentNotices = async () => {
+    try {
+      const response = await axios.get("/api/notices/sent");
+      setSentNotices(response.data);
+      setIsSentNoticesVisible(true);
+    } catch (error) {
+      console.error(error);
+      message.error("Failed to fetch sent notices");
+    }
+  };
+ // Load sent notices on component mount
+ useEffect(() => {
+  fetchSentNotices();
+}, []);
+const fetchSentNotices = async () => {
+  try {
+    const response = await axios.get("/api/notices/sent");
+    setSentNotices(response.data);
+  } catch (error) {
+    console.error(error);
+    message.error("Failed to fetch sent notices");
+  }
+};
+const handleDeleteSentNotice = async (noticeId) => {
+  try {
+    await axios.delete(`/api/notices/${noticeId}`);
+    // Refresh the list of sent notices
+    await fetchSentNotices();
+  } catch (error) {
+    console.error(error);
+    message.error("Failed to delete the notice");
+  }
+};
   const handleSubmit = async (values) => {
     try {
       const formData = new FormData();
@@ -51,7 +87,43 @@ const Notices = () => {
 
   return (
     <div className="notice-page">
-      <h1 >Send Notice</h1>
+      <div> <h1 className="notice-sending">Send Notices</h1>
+        {/* Button to navigate to Sent Notices pane */}
+        <Button className="viewbtn" type="primary" onClick={handleViewSentNotices}>
+        View Sent Notices
+      </Button></div>
+     
+      {isSentNoticesVisible && (
+      <div className="sent-notices">
+        <h2>Sent Notices</h2>
+        <Modal
+          title="Sent Notices"
+          visible={isSentNoticesVisible}
+          onCancel={() => setIsSentNoticesVisible(false)}
+          footer={null}
+          width={800} // Adjust the width as needed
+          bodyStyle={{ maxHeight: '60vh', overflowY: 'auto' }} // Limit the height and add scroll if needed
+        >
+          {sentNotices.map((notice) => (
+            <div key={notice._id} className="sent-notice">
+              <p>{notice.title}</p>
+              <p>{notice.message}</p>
+              <Popconfirm
+                title="Are you sure you want to delete this notice?"
+                onConfirm={() => handleDeleteSentNotice(notice._id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <DeleteOutlined className="delete-icon" />
+              </Popconfirm>
+            </div>
+          ))}
+     
+      </Modal>
+       
+  </div>
+)}
+
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         <Form.Item
           label="Recipient Type"
@@ -98,7 +170,7 @@ const Notices = () => {
         </Form.Item>
       </Form>
       <Modal
-  visible={isConfirmationModalVisible}
+   visible={isConfirmationModalVisible}
   onCancel={handleConfirmationModalClose}
   onOk={handleConfirmationModalClose}
   centered
@@ -114,6 +186,29 @@ const Notices = () => {
       Failed to send the notice. Please try again.
     </p>
   )}
+</Modal>
+<Modal
+  title="Sent Notices"
+  visible={isSentNoticesVisible}
+  onCancel={() => setIsSentNoticesVisible(false)}
+  footer={null}
+  width={800} 
+  bodyStyle={{ maxHeight: '60vh', overflowY: 'auto' }} 
+>
+  {sentNotices.map((notice) => (
+    <div key={notice._id} className="sent-notice">
+      <p>{notice.title}</p>
+      <p>{notice.message}</p>
+      <Popconfirm
+        title="Are you sure you want to delete this notice?"
+        onConfirm={() => handleDeleteSentNotice(notice._id)}
+        okText="Yes"
+        cancelText="No"
+      >
+        <DeleteOutlined className="delete-icon" />
+      </Popconfirm>
+    </div>
+  ))}
 </Modal>
 
       

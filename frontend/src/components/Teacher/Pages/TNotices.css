@@ -2,36 +2,57 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  background-color: rgb(20, 120, 60);
+  border-radius: 8px;
+
+
 }
 
 .notice-card {
   cursor: pointer;
   border: 2px solid #dedddd;
   border-radius: 5px;
-  padding: 16px;
-  margin-bottom: 20px;
+ padding: 3px;
+  margin-bottom: 10px;
   transition: box-shadow 0.3s, background-color 0.4s;
   height: fit-content;
   background-color: #e9e6e6;
+  font-weight: 10px;
+  transform: translateZ(0);
+   backdrop-filter: blur(10px);
+
+  
  
 }
-
+.notice-title {
+  font-size: 30px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: rgb(11, 97, 67);
+  font-weight: 3px;
+  margin: 10px;
+  background-color: #d8f4d9;
+  padding: 10px;
+  border-radius: 12px;
+}
 
 .notice-card h2 {
   font-size: 1.8rem;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+  color: #073c14;
+  
 }
 
 .notice-card p {
   color: #333333;
-  font-size: 1.3rem;
-  line-height: 1.5;
+  font-size: 1.4rem;
+  line-height: 1.4rem;
   font-family:'Times New Roman', Times, serif ;
 }
 
 .notice-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: rgb(180, 241, 208);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgb(178, 225, 198);
+  transform: scale(1.02) translateZ(0); /* Apply the scale and depth transformation on hover */
 }
 
 .notice-card.selected {
@@ -66,16 +87,22 @@
   text-decoration: underline;
 }
 .close-icon{
-  font-size: 25px;
+  font-size: 28px;
 }
 .file-icon{
-  font-size: 25px;
+  font-size: 28px;
+
 }
 
 .new-notice {
-  background-color: #ffeeba; 
+  background-color: #d69090; 
 }
 
 .selected {
   background-color: #f0f0f0; 
+}
+.file-adv{
+  font-size: 70px;
+margin-left: 90px;
+
 }

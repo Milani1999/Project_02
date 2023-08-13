@@ -11,6 +11,7 @@ const createNotice = async (req, res) => {
       title,
       message,
       file,
+      isNew: true,
     });
 
     await newNotice.save();
@@ -31,4 +32,14 @@ const getTeacherNotices = async (req, res) => {
   }
 };
 
-module.exports = { createNotice, getTeacherNotices };
+const getSentNotices = async (req, res) => {
+  try {
+    const sentNotices = await Notice.find({ isSent: true });
+    res.status(200).json(sentNotices);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch sent notices." });
+  }
+};
+
+module.exports = { createNotice, getTeacherNotices, getSentNotices };

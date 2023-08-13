@@ -8,6 +8,8 @@ const upload = multer({ dest: "uploads/" });
 router.post("/create", upload.single("file"), noticesController.createNotice);
 
 
+
 // Route to get teacher notices
 router.get("/get", noticesController.getTeacherNotices);
+router.get("/sent", noticesController.getSentNotices);
 module.exports = router;
