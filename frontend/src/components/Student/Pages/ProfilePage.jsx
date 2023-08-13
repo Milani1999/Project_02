@@ -96,7 +96,7 @@ const ProfilePage = () => {
 
       <div className="profile-columns">
         <div className="mothers-details">
-          <h3>Student Details</h3>
+          <h3 className='student-head'>Student Details</h3>
 
           <table style={{ borderCollapse: "collapse" }}>
             <tbody>
