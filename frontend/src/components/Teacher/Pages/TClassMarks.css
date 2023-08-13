@@ -1,0 +1,21 @@
+.view-mclass-table {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+
+.view-mclass-tabletable {
+  border-style: solid;
+  border-color: #cff1d4;
+}
+
+.view-mclass-table th {
+  background-color: #cff1d4;
+  text-align: center;
+  padding: 15px;
+}
+
+.view-mclass-table td {
+  padding: 12px 30px;
+}

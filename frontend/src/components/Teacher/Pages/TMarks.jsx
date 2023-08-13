@@ -1,9 +1,9 @@
-import Marks from "../marks/Marks";
+import ViewMarks from "../marks/ViewMarks";
 
 function TMarks() {
   return (
     <div>
-      <Marks />
+      <ViewMarks />
     </div>
   );
 }

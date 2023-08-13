@@ -16,7 +16,7 @@ import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import { Button, notification } from "antd";
-import Logo from "../../../assets/ImageResources/uni2.png"
+import Logo from "../../../assets/ImageResources/uni2.png";
 
 const { Header, Sider, Content } = Layout;
 const TeacherMainLayout = () => {
@@ -103,6 +103,18 @@ const TeacherMainLayout = () => {
               key: "TMarks",
               icon: <AiOutlineFund className="fs-4" />,
               label: "Marks",
+              children: [
+                {
+                  key: "TMarks",
+                  icon: <AiOutlineFund className="fs-4" />,
+                  label: "Add, Edit Marks",
+                },
+                {
+                  key: "TClassMarks",
+                  icon: <AiOutlineFund className="fs-4" />,
+                  label: "Classwise Marks",
+                },
+              ],
             },
 
             {
@@ -152,7 +164,14 @@ const TeacherMainLayout = () => {
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>
-                {LoggedIn && <img width={35} height={35} src={user.picture} alt="profile" />}
+                {LoggedIn && (
+                  <img
+                    width={35}
+                    height={35}
+                    src={user.picture}
+                    alt="profile"
+                  />
+                )}
               </div>
               <div
                 role="button"

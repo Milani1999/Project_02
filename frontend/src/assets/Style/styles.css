@@ -302,8 +302,21 @@
 
 }
 
+
 .col-sm-4:hover {
-  background-color: rgba(116, 228, 166, 0.1);
+  background-color: rgb(191, 238, 198);
+
+}
+
+/* Additional CSS for mobile responsiveness */
+@media (max-width: 576px) {
+  .col-sm-4 {
+    width: 100%;
+  }
+
+  .SchoolComponent .rounded {
+    height: auto;
+  }
 }
 
 

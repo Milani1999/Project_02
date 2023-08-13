@@ -1,0 +1,88 @@
+.marks-popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(3, 46, 13, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.marks-popup {
+  background-color: white;
+  border: 2px solid green;
+  padding: 25px;
+}
+
+.AddTable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.AddTable table {
+  border-style: solid;
+  border-color: #cff1d4;
+  margin: 10px;
+}
+
+.AddTable th {
+  background-color: #cff1d4;
+}
+
+.AddTable td,
+.AddTable th {
+  padding: 10px;
+  text-align: center;
+}
+
+.marks-buttons {
+  text-align: center;
+}
+
+.marks-popup .btn,
+.marks-buttons .btn {
+  width: 100px;
+  margin-right: 5px;
+  margin-top: 20px;
+}
+
+.filterMarks {
+  display: flex;
+}
+
+.filterMarks .filter {
+  flex: 1;
+  padding: 10px;
+  margin: 5px;
+}
+
+.view-marks-table {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+}
+
+.view-marks-table table {
+  border-style: solid;
+  border-color: #cff1d4;
+}
+
+.view-marks-table th {
+  background-color: #cff1d4;
+}
+
+.view-marks-table td{
+  padding: 12px 30px;
+}
+
+.p-error{
+    text-align: center;
+    color: red;
+    background-color: rgb(230, 174, 174);
+}

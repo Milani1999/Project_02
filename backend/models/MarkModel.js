@@ -6,7 +6,7 @@ const MarkSchema = new mongoose.Schema({
     required: true
   },
   term: {
-    type: String,
+    type: Number,
     required: true
   },
   subject: {
