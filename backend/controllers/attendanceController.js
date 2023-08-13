@@ -22,7 +22,7 @@ const takeAttendance = asyncHandler(async (req, res) => {
 
   const date = `${year}-${month}-${day}`;
 
-  const localTime = new Date(); e
+  const localTime = new Date(); 
 
   const onTimeLate = localTime.getHours() < 8 || (localTime.getHours() === 8 && localTime.getMinutes() <= 45)
     ? "On-Time"
