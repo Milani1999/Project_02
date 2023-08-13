@@ -68,7 +68,6 @@ const QRScanner = (props) => {
                   if (!!result) {
                     const data = result?.text;
                     handleScan(data);
-                    console.log(data);
                   }
 
                   if (!!error) {
