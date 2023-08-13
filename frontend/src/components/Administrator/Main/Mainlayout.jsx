@@ -116,11 +116,6 @@ const MainLayout = () => {
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Subject",
                 },
-                {
-                  key: "Grade",
-                  icon: <RiCalendarCheckFill className="fs-4" />,
-                  label: "Grade",
-                },
               ],
             },
             {
