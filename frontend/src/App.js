@@ -43,7 +43,7 @@ import TimeTable from "./components/Student/Pages/TimeTable";
 import Support from "./components/Administrator/pages/Support";
 import Marks from "./components/Student/Pages/Student_marks";
 import TClassMarks from "./components/Teacher/Pages/TClassMarks";
-
+import SNotices from "./components/Student/Pages/SNotices";
 function App() {
   return (
     <Router>
@@ -114,7 +114,7 @@ function App() {
             <Route path="ProfilePage" element={<ProfilePage />} />
             <Route path="TimeTableStd" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
-
+            <Route path="ViewNotice" element={<SNotices />} />
             {/* <Route path="EditTeacher" element={<EditTeacher />} />
                 <Route path="EditStudent" element={<EditStudent />} />
 

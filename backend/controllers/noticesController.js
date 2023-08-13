@@ -32,6 +32,16 @@ const getTeacherNotices = async (req, res) => {
   }
 };
 
+const getStudentNotices = async (req, res) => {
+  try {
+    const studentNotices = await Notice.find({ recipientType: "Student" });
+    res.status(200).json(studentNotices);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to fetch student notices." });
+  }
+};
+
 const getSentNotices = async (req, res) => {
   try {
     const sentNotices = await Notice.find({ isSent: true });
@@ -42,4 +52,4 @@ const getSentNotices = async (req, res) => {
   }
 };
 
-module.exports = { createNotice, getTeacherNotices, getSentNotices };
+module.exports = { createNotice, getTeacherNotices, getSentNotices,getStudentNotices};
