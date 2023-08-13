@@ -178,29 +178,34 @@ const TClassMarks = () => {
                       )?.score || "-"}
                     </td>
                   ))}
-                  <td>
-                    {calculateTotal(
-                      marks.map((subject) =>
-                        subject.students.find(
-                          (s) => s.student === student.student
-                        )?.score || "-"
-                      )
-                    ).total}
+                  <td className="classwiseTotal">
+                    {
+                      calculateTotal(
+                        marks.map(
+                          (subject) =>
+                            subject.students.find(
+                              (s) => s.student === student.student
+                            )?.score || "-"
+                        )
+                      ).total
+                    }
                   </td>
-                  <td>
+                  <td className="classwiseAverage">
                     {calculateAverage(
                       calculateTotal(
-                        marks.map((subject) =>
-                          subject.students.find(
-                            (s) => s.student === student.student
-                          )?.score || "-"
+                        marks.map(
+                          (subject) =>
+                            subject.students.find(
+                              (s) => s.student === student.student
+                            )?.score || "-"
                         )
                       ).total,
                       calculateTotal(
-                        marks.map((subject) =>
-                          subject.students.find(
-                            (s) => s.student === student.student
-                          )?.score || "-"
+                        marks.map(
+                          (subject) =>
+                            subject.students.find(
+                              (s) => s.student === student.student
+                            )?.score || "-"
                         )
                       ).validCount
                     )}
@@ -218,4 +223,3 @@ const TClassMarks = () => {
 };
 
 export default TClassMarks;
-    
