@@ -26,6 +26,7 @@ const SupportWindow = props => {
             />
 
             <ChatEngine 
+                offset={-4}
                 visible ={user !== null && chat !== null}
                 chat = {chat}
                 user={user}
