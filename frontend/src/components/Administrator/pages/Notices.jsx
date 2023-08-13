@@ -122,15 +122,53 @@ const Notices = () => {
             ))}
           </Modal>
         </div>
-      ) : recipientType === "Teacher" ? (
-        <TNotices />
       ) : (
-        <SNotices />
+        <Form form={form} onFinish={handleSubmit} layout="vertical">
+          <Form.Item
+            label="Recipient Type"
+            name="recipientType"
+            initialValue={recipientType}
+            rules={[{ required: true, message: "Please select the recipient type" }]}
+          >
+            <Select onChange={handleRecipientTypeChange}>
+              <Option value="Teacher">Teacher</Option>
+              <Option value="Student">Student</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Title"
+            name="title"
+            rules={[{ required: true, message: "Please enter the title" }]}
+          >
+            <Input placeholder="Enter the title" />
+          </Form.Item>
+          <Form.Item
+            label="Message"
+            name="message"
+            rules={[{ required: true, message: "Please enter the message" }]}
+          >
+            <Input.TextArea placeholder="Enter the message" rows={4} />
+          </Form.Item>
+          <Form.Item
+            label="Attachment"
+            name="file"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => e && e.fileList}
+          >
+            <Dragger name="file" multiple={false}>
+              <p className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </p>
+              <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            </Dragger>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Send
+            </Button>
+          </Form.Item>
+        </Form>
       )}
-
-      <Form form={form} onFinish={handleSubmit} layout="vertical">
-        {/* ... Form items ... */}
-      </Form>
 
       <Modal
         visible={isConfirmationModalVisible}
