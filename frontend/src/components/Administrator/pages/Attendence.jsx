@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import QRScanner from "../../QrCode/QRScanner";
+import "reactjs-popup/dist/index.css";
+import Chart from "chart.js/auto";
+import Clock from "../../Clock/Clock";
+import "./Attendence.css";
 
 const Attendance = () => {
   const [attendanceData, setAttendanceData] = useState([]);
@@ -78,12 +82,72 @@ const Attendance = () => {
     }
   };
 
+  const PieChart = ({ data, width, height }) => {
+    const chartRef = useRef();
+
+    useEffect(() => {
+      if (chartRef.current) {
+        new Chart(chartRef.current, {
+          type: "pie",
+          data: data,
+        });
+      }
+    }, [data]);
+
+    return <canvas ref={chartRef} width={width} height={height} />;
+  };
+
+  const calculateAttendancePercentage = () => {
+    const totalStudents = attendanceData.length;
+    let presentCount = 0;
+    attendanceData.forEach((entry) => {
+      if (entry.attendance && entry.attendance.present) {
+        presentCount++;
+      }
+    });
+
+    const absentCount = totalStudents - presentCount;
+    const presentPercentage = ((presentCount / totalStudents) * 100).toFixed(2);
+    const absentPercentage = ((absentCount / totalStudents) * 100).toFixed(2);
+
+    return {
+      presentPercentage,
+      absentPercentage,
+    };
+  };
+
+  const calculateOnTimeLatePercentage = () => {
+    let onTimeCount = 0;
+    let lateCount = 0;
+
+    attendanceData.forEach((entry) => {
+      if (entry.attendance && entry.attendance.onTimeLate) {
+        if (entry.attendance.onTimeLate === "On-Time") {
+          onTimeCount++;
+        } else {
+          lateCount++;
+        }
+      }
+    });
+
+    const totalStudents = onTimeCount + lateCount;
+    const onTimePercentage = ((onTimeCount / totalStudents) * 100).toFixed(2);
+    const latePercentage = ((lateCount / totalStudents) * 100).toFixed(2);
+
+    return {
+      onTimePercentage,
+      latePercentage,
+    };
+  };
+
+  const attendancePercentage = calculateAttendancePercentage();
+  const onTimeLatePercentage = calculateOnTimeLatePercentage();
+
   return (
     <Container>
-      <h1>Student Attendance Dashboard</h1>
+      <h1>Student Attendance</h1>
       <Row className="mb-3">
-        <Col md={4}>
-          <h3>Filter Options</h3>
+        <Col md={5}>
           <label htmlFor="datePicker">Select Date: </label>
           <input
             type="date"
@@ -91,7 +155,10 @@ const Attendance = () => {
             value={selectedDate.toISOString().substr(0, 10)}
             onChange={(e) => setSelectedDate(new Date(e.target.value))}
           />
-          <br />
+        </Col>
+        <br />
+
+        <Col md={3}>
           <label htmlFor="gradeSelect">Select Grade: </label>
           <select
             id="gradeSelect"
@@ -105,11 +172,52 @@ const Attendance = () => {
             ))}
           </select>
         </Col>
-        <Col md={8}>
+        <Col md={4}>
           <QRScanner fetchStudentAttendance={fetchStudentAttendance} />
         </Col>
       </Row>
-      <h3>Attendance Records</h3>
+      <Row>
+        <Col md={3}>
+          <PieChart
+            data={{
+              labels: ["Present", "Absent"],
+              datasets: [
+                {
+                  data: [
+                    parseFloat(attendancePercentage.presentPercentage),
+                    parseFloat(attendancePercentage.absentPercentage),
+                  ],
+                  backgroundColor: ["#36A2EB", "#d9534f"],
+                },
+              ],
+            }}
+            width={100} // Adjust the width as needed
+            height={100} // Adjust the height as needed
+          />
+        </Col>
+        <Col md={6}>
+          <Clock />
+        </Col>
+        <Col md={3}>
+          {/* Display the on-time/late pie chart */}
+          <PieChart
+            data={{
+              labels: ["On-Time", "Late"],
+              datasets: [
+                {
+                  data: [
+                    parseFloat(onTimeLatePercentage.onTimePercentage),
+                    parseFloat(onTimeLatePercentage.latePercentage),
+                  ],
+                  backgroundColor: ["#5cb85c", "#d9534f"],
+                },
+              ],
+            }}
+            width={100} // Adjust the width as needed
+            height={100} // Adjust the height as needed
+          />
+        </Col>
+      </Row>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -149,7 +257,8 @@ const Attendance = () => {
                     </span>
                   ) : attendance ? (
                     <span className="label label-danger">
-                      {attendance.onTimeLate}{" "}
+                      &nbsp;&nbsp;&nbsp;&nbsp;{attendance.onTimeLate}
+                      &nbsp;&nbsp;&nbsp;&nbsp;
                     </span>
                   ) : (
                     <span>-</span>
