@@ -84,7 +84,26 @@
     width: 130px;
     height: 100px;
   }
+
+  @media screen and (max-width: 120px) {
+    .AboutComponent{
+      height: auto;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .AboutComponent{
+      height: auto;
+    }
+  }
+
+  @media screen and (max-width: 760px) {
+    .AboutComponent{
+      height: auto;
+    }
+  }
   
+
   @media screen and (max-width: 540px) {
     .AboutComponent .h1-heading {
       font-size: 30px;

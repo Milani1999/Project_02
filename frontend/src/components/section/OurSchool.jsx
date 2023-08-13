@@ -21,7 +21,7 @@ function Popup({ content, closePopup }) {
 
 function Card({ title, content, imageUrl }) {
   const [showPopup, setShowPopup] = useState(false);
-  const shortContent = content.substring(0, 325) + "...";
+  const shortContent = content.substring(0, 365) + "...";
 
   const handleClickOpen = () => {
     setShowPopup(true);

@@ -49,3 +49,16 @@
     width: 600px;
   }
   
+  @media (max-width: 576px) {
+    .ContactUsComponent{
+      height: auto;
+    }
+
+    .ContactUsComponent .col-6{
+      width: 100%;
+    }
+
+    .ContactUsComponent .Maps{
+      padding: 30px;
+    }
+  }

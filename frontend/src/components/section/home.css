@@ -1,103 +1,130 @@
 * {
-    font-family: "Laila", sans-serif;
-  }
-  
-  .HomeComponent {
-    height: 100vh;
-    text-align: center;
-  }
-  
+  font-family: "Laila", sans-serif;
+}
+
+.HomeComponent {
+  height: 100vh;
+  text-align: center;
+}
+
+.HomeComponent .item {
+  height: 100vh;
+  opacity: 0.6;
+}
+
+.HomeComponent .centered {
+  position: absolute;
+  top: 20%;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.HomeComponent .h1-heading {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 90px;
+  color: rgb(8, 48, 8);
+}
+
+.HomeComponent .p-centered {
+  font-size: 40px;
+  text-align: center;
+  font-weight: 500;
+  font-weight: bold;
+  color: rgb(8, 48, 8);
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.HomeComponent .btn {
+  font-size: 25px;
+}
+
+@media screen and (max-width: 1200px) {
   .HomeComponent .item {
-    height: 100vh;
-    opacity: 0.6;
+    height: 100%;
+    width: auto;
   }
-  
-  .HomeComponent .centered {
-    position: absolute;
-    top: 20%;
-    padding-left: 50px;
-    padding-right: 50px;
-  }
-  
+
   .HomeComponent .h1-heading {
-    text-align: center;
-    font-weight: bolder;
-    font-size: 90px;
-    color: rgb(8, 48, 8);
+    font-size: 80px;
   }
-  
+
   .HomeComponent .p-centered {
-    font-size: 40px;
-    text-align: center;
-    font-weight: 500;
-    font-weight: bold;
-    color: rgb(8, 48, 8);
-    margin-top: 40px;
-    margin-bottom: 30px;
+    font-size: 30px;
+    padding-top: 30px;
   }
-  
+
   .HomeComponent .btn {
-    font-size: 25px;
+    font-size: 20px;
+    left: 37%;
+    margin-top: 40px;
   }
-  
-  @media screen and (max-width: 1200px) {
-    .HomeComponent .item {
-      height: 100%;
-      width: auto;
-    }
-  
-    .HomeComponent .h1-heading {
-      font-size: 80px;
-    }
-  
-    .HomeComponent .p-centered {
-      font-size: 30px;
-      padding-top: 30px;
-    }
-  
-    .HomeComponent .btn {
-      font-size: 20px;
-      left: 37%;
-      margin-top: 40px;
-    }
+}
+
+@media screen and (max-width: 992px) {
+  .HomeComponent .carousel-inner {
+    height: 100vh;
   }
-  
-  @media screen and (max-width: 992px) {
-    .HomeComponent .h1-heading {
-      font-size: 60px;
-    }
-  
-    .HomeComponent .p-centered {
-      font-size: 30px;
-      padding-top: 30px;
-    }
-  
-    .HomeComponent .btn {
-      font-size: 20px;
-      left: 37%;
-      margin-top: 40px;
-    }
+
+  .HomeComponent img {
+    border-radius: 0;
   }
-  
-  @media screen and (max-width: 540px) {
-    .HomeComponent .h1-heading {
-      font-size: 30px;
-      margin-top: 40px;
-    }
-  
-    .HomeComponent .item {
-      height: 300px;
-    }
-  
-    .HomeComponent .p-centered {
-      font-size: 20px;
-      padding-top: 50px;
-    }
-  
-    .HomeComponent .btn {
-      font-size: 15px;
-      left: 37%;
-      margin-top: 35px;
-    }
+
+  .HomeComponent .h1-heading {
+    font-size: 60px;
+    margin-top: 10px;
   }
-  
+
+  .HomeComponent .p-centered {
+    font-size: 35px;
+    padding-top: 20px;
+  }
+
+  .HomeComponent .btn {
+    font-size: 15px;
+  }
+}
+
+@media screen and (min-width:540px) and (max-width: 760px) {
+ 
+  .HomeComponent .carousel-inner{
+    height: 450px;
+  }
+
+  .HomeComponent .img_carousel {
+    height: 550px;
+  }
+
+  .HomeComponent .p-centered{
+    font-size: 20px;
+  }
+
+}
+
+
+@media screen and (max-width: 560px) {
+
+  .HomeComponent .carousel-inner {
+    height: 550px;
+  }
+
+  .HomeComponent .img_carousel {
+    height: 300px;
+  }
+
+  .HomeComponent .h1-heading {
+    font-size: 40px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .HomeComponent .p-centered {
+    font-size: 20px;
+    padding-top: 30px;
+  }
+
+  .HomeComponent .btn{
+    margin-top: 0;
+  }
+}
