@@ -146,9 +146,9 @@ const MainLayout = () => {
                   label: "Event Calendar",
                 },
                 {
-                  key: "Grade",
+                  key: "News",
                   icon: <RiCalendarCheckFill className="fs-4" />,
-                  label: "Edit Events",
+                  label: "News and Events",
                 },
               ],
             },

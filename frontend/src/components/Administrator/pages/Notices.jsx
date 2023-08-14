@@ -125,13 +125,13 @@ const Notices = () => {
     <div className="notice-page">
       <div>
         <h1 className="notice-sending">Send Notices</h1>
-        <Button
+        {/* <Button
           className="viewbtn"
           type="primary"
           onClick={handleViewSentNotices}
         >
           View Sent Notices
-        </Button>
+        </Button> */}
       </div>
 
       {isSentNoticesVisible ? (

@@ -23,7 +23,7 @@ import './assets/Style/styles.css'
 import Calender from "./components/Administrator/pages/Calender";
 import Timetable from "./components/Administrator/pages/Timetable";
 import Attendence from "./components/Administrator/pages/Attendence";
-import Grade from "./components/Administrator/pages/Grade";
+import News from "./components/Administrator/pages/News";
 import Notices from "./components/Administrator/pages/Notices";
 import SignIn from "./view/Signin/SignIn";
 import Auth from "./view/Signin/ProtectedRoute";
@@ -101,7 +101,7 @@ function App() {
             <Route path="calender" element={<Calender />} />
             <Route path="Timetable" element={<Timetable />} />
             <Route path="Attendence" element={<Attendence />} />
-            <Route path="Grade" element={<Grade />} />
+            <Route path="News" element={<News />} />
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
             <Route path="Support" element={<Support />} />
