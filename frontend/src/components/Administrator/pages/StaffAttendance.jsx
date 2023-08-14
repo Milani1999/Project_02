@@ -1,7 +1,7 @@
 function StaffAttendance(){
     return(
         <div>
-            attendance
+            Staff attendance
         </div>
     )
 }

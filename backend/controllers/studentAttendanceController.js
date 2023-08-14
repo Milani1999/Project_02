@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const Attendance = require("../models/attendanceModel");
+const Attendance = require("../models/studentAttendanceModel");
 const Student = require("../models/studentModel");
 
 const takeAttendance = asyncHandler(async (req, res) => {
@@ -34,7 +34,7 @@ const takeAttendance = asyncHandler(async (req, res) => {
     date,
   });
   if (existingAttendance) {
-    res.status(400).json({ message: "Your record already entered. Next student please." });
+    res.status(400).json({ message: "Record exists. Next student please." });
     return;
   }
 
