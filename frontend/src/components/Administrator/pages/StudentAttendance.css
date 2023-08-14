@@ -30,22 +30,22 @@
 
 
 
-[type="date"] {
+.datepicker_attendance {
     background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
   }
-  [type="date"]::-webkit-inner-spin-button {
+  .datepicker_attendance::-webkit-inner-spin-button {
     display: none;
   }
-  [type="date"]::-webkit-calendar-picker-indicator {
+  .datepicker_attendance::-webkit-calendar-picker-indicator {
     opacity: 0;
   }
   
   /* custom styles */
   
-  label {
+  .label_selectdate, .label_selectgrade {
     display: block;
   }
-  select, #datePicker {
+  #gradeSelect, #datePicker {
     border: 1px solid #c4c4c4;
     border-radius: 5px;
     background-color: #fff;
