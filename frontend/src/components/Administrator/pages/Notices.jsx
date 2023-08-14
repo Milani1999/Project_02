@@ -131,7 +131,7 @@ const Notices = () => {
           onClick={handleViewSentNotices}
         >
           View Sent Notices
-        </Button>    */}
+        </Button> */}
       </div>
 
       {isSentNoticesVisible ? (
@@ -242,4 +242,3 @@ const Notices = () => {
 };
 
 export default Notices;
-
