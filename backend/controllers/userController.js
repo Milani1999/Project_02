@@ -38,6 +38,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: student.fullname,
       picture:student.picture,
       role: student.role,
+      admissionNo: student.admission_no,
       token: generateToken(student._id),
     });
   } else if (staff && (await staff.matchPassword(password))) {
