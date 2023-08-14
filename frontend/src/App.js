@@ -122,6 +122,7 @@ function App() {
             <Route path="TimeTableStd" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
             <Route path="ViewNotice" element={<SNotices />} />
+           <Route path="Scalender" element={<TCalendar />} />
             {/* <Route path="EditTeacher" element={<EditTeacher />} />
                 <Route path="EditStudent" element={<EditStudent />} />
 

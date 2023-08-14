@@ -145,7 +145,7 @@ const StudentMain = () => {
               label: "Events",
               children: [
                 {
-                  key: "calender",
+                  key: "Scalender",
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Event Calendar",
                 },

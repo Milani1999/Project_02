@@ -3,8 +3,7 @@ import axios from "axios";
 import { Form, Input, Button, message, Select, Modal, Upload, Popconfirm, Card } from "antd";
 import { InboxOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./Notices.css";
-import TNotices from "../../Teacher/Pages/TNotices"; 
-import SNotices from "../../Student/Pages/SNotices";  
+  
 
 const { Option } = Select;
 const { Dragger } = Upload;
