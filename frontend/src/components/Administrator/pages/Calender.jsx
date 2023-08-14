@@ -9,18 +9,6 @@ import axios from 'axios';
 import { createEventId } from '../data/index';
 import useCalendar from '../store/Cal';
 
-const DeleteConfirmationModal = ({ onConfirm, onCancel }) => {
-  return (
-    <div className="modal">
-      <div className="modal-content">
-        <p>Are you sure you want to delete this event?</p>
-        <button onClick={onConfirm}>Confirm</button>
-        <button onClick={onCancel}>Cancel</button>
-      </div>
-    </div>
-  );
-};
-
 const Calendar = () => {
   const { currentEvents, setCurrentEvents } = useCalendar();
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -29,17 +17,19 @@ const Calendar = () => {
   const [popupStatus, setPopupStatus] = useState(null);
 
   useEffect(() => {
+    // Function to fetch events from backend and set them in state
     async function fetchEvents() {
       try {
-        const response = await axios.get('/api/events'); // Fetch events from backend
+        const response = await axios.get('/api/events');
         setCurrentEvents(response.data);
       } catch (error) {
         console.error('Failed to fetch events:', error);
       }
     }
 
+   
     fetchEvents();
-  }, []);
+  }, []); // Empty dependency array ensures the effect runs only once
 
   const showPopup = (message, status) => {
     setPopupMessage(message);
@@ -47,7 +37,7 @@ const Calendar = () => {
     setTimeout(() => {
       setPopupMessage('');
       setPopupStatus(null);
-    }, 3000); // Popup disappears after 3 seconds
+    }, 3000);
   };
 
   const handleDateSelect = (selectInfo) => {
@@ -60,15 +50,15 @@ const Calendar = () => {
       const newEvent = {
         id: createEventId(),
         title,
-        start: selectInfo.start,
-        end: selectInfo.end,
+        start: selectInfo.startStr,
+        end: selectInfo.endStr,
         allDay: selectInfo.allDay,
       };
 
       calendarApi.addEvent(newEvent);
 
       try {
-        axios.post('/api/events/create', newEvent); // Create event on backend
+       axios.post('/api/events/create', newEvent);
         setCurrentEvents([...currentEvents, newEvent]);
         showPopup('Event added successfully', 'success');
       } catch (error) {
@@ -83,20 +73,21 @@ const Calendar = () => {
     setShowDeleteConfirmation(true);
   };
 
-  const handleConfirmDelete = async () => {
+  const handleConfirmDelete = (clickInfo) => {
     if (eventToDelete) {
-      const eventIdToDelete = eventToDelete.id; // Assuming eventToDelete.id is the correct event ID
-  
-      try {
-        await axios.delete(`/api/events/${eventIdToDelete}`); // Delete event on backend
-        setEventToDelete(null);
-        setShowDeleteConfirmation(false);
-        setCurrentEvents(currentEvents.filter(event => event.id !== eventToDelete.id));
-        showPopup('Event deleted successfully', 'success');
-      } catch (error) {
-        console.error('Failed to delete event:', error);
-        showPopup('Failed to delete event', 'error');
-      }
+      const eventIdToDelete = eventToDelete.id;
+
+      axios.delete(`/api/events/delete/${eventIdToDelete}`)
+        .then(() => {
+          setEventToDelete(null);
+          setShowDeleteConfirmation(false);
+          setCurrentEvents(currentEvents.filter(event => event.id !== eventToDelete.id));
+          showPopup('Event deleted successfully', 'success');
+        })
+        .catch(error => {
+          console.error('Failed to delete event:', error);
+          showPopup('Failed to delete event', 'error');
+        });
     }
   };
 
@@ -104,6 +95,19 @@ const Calendar = () => {
     setEventToDelete(null);
     setShowDeleteConfirmation(false);
   };
+
+  const DeleteConfirmationModal = ({ onConfirm, onCancel }) => {
+    return (
+      <div className="modal">
+        <div className="modal-content">
+          <p>Are you sure you want to delete this event?</p>
+          <button onClick={onConfirm}>Confirm</button>
+          <button onClick={onCancel}>Cancel</button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="calendar-container">
       {showDeleteConfirmation && (
@@ -113,16 +117,14 @@ const Calendar = () => {
         />
       )}
 
-      {/* Popup box */}
       {popupStatus && (
-  <div>
-    <div className='calenderpop'></div>
-    <div className={`popup ${popupStatus} `}>
-      {popupMessage}
-    </div>
-  </div>
-)}
-
+        <div className={`calenderpop popup ${popupStatus}`}>
+          <div className='calenderpop'></div>
+          <div className={`popup ${popupStatus} `}>
+            {popupMessage}
+          </div>
+        </div>
+      )}
 
       <div>
         <FullCalendar
@@ -141,8 +143,7 @@ const Calendar = () => {
           dayMaxEvents={true}
           weekends={true}
           nowIndicator={true}
-          initialEvents={currentEvents}
-        
+          events={currentEvents} // Use currentEvents for all calendar views
           select={handleDateSelect}
           eventClick={handleEventClick}
         />
