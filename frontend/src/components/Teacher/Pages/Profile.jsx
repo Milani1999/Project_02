@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { fetchStaffData } from "../../Count/Data";
 import './Profile.css';
 import LoadingSpinner from '../../Loading/Loading'
+import { Card } from 'antd';
+import { AiOutlineUser } from "react-icons/ai";
+const { Meta } = Card;
 
 const StaffProfile = () => {
   const [staffData, setStaffData] = useState(null);
@@ -40,20 +43,28 @@ const StaffProfile = () => {
   } = staffData;
 
   return (
-    <div className="profile-container">
-      <div className="profile-image">
-        <img src={picture} alt="Profile" />
-      </div>
+    
+    <div className="profile-container-teacher">
+
+<Card
+    hoverable
+    style={{
+      width: 300,
+    }}
+    cover={  <img src={picture} alt="Profile" />}
+  >
+    <Meta title={fullname} description="Staff member" />
+  </Card>
+  
       <div className="profile-divider"></div>
       <div className="profile-container-2">
-      <h1>Staff Member</h1>
       <div className="profile-details">
-    
-        <h2>{fullname}</h2>
+     <AiOutlineUser  className="proficon"  />
+        <h2 className="stffname">{fullname}</h2>
         <table className="detail-table">
           <tbody>
             <tr>
-              <td>Employee ID  :</td>
+              <td>Employee ID     :</td>
               <td>{employee_id}</td>
             </tr>
             <tr>
@@ -81,7 +92,7 @@ const StaffProfile = () => {
               <td>{epf_No}</td>
             </tr>
             <tr>
-              <td>Subjects Taught  :</td>
+              <td>Subjects Taught:</td>
               <td>{subjects_taught}</td>
             </tr>
           </tbody>
