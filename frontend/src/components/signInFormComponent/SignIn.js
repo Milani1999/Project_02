@@ -3,8 +3,9 @@ import "./SignIn.css";
 import img from "../../assets/ImageResources/imgClassmates.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import Loading from "../../view/Loading";
+import LoadingSpinner from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import ForgotPassword from "./ForgotPassword";
 
 const SignInCom = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const SignInCom = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [forgotPassword, setForgotPassword] = useState(false);
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
@@ -55,6 +57,13 @@ const SignInCom = () => {
       setError(error.response.data.message);
       setLoading(false);
     }
+  };
+  const openForgotPasswordPopup = () => {
+    setForgotPassword(true);
+  };
+
+  const closeForgotPasswordPopup = () => {
+    setForgotPassword(false);
   };
 
   return (
@@ -100,7 +109,7 @@ const SignInCom = () => {
                         <div className="acc-des text-uppercase text-center mb-5 acc-des-sub wel-statement">
                           Welcome To The UIS Family
                           <br />
-                          {loading && <Loading />}
+                          {loading && <LoadingSpinner/>}
                         </div>
                         <div className="form-outline mb-4 wel-statement">
                           <label
@@ -135,7 +144,17 @@ const SignInCom = () => {
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>
-                        <Link to="">Forgot password?</Link>
+                        <div>
+                          <Link onClick={openForgotPasswordPopup}>
+                            Forgot password?
+                          </Link>
+
+                          {forgotPassword && (
+                            <ForgotPassword
+                              onClose={closeForgotPasswordPopup}
+                            />
+                          )}
+                        </div>
                         <div className="d-flex justify-content-end pt-3 wel-statement">
                           <button
                             type="submit"
@@ -144,16 +163,6 @@ const SignInCom = () => {
                             Login
                           </button>
                         </div>
-
-                        {/* <p className="text-center text-muted mt-5 mb-0">New to RoadSign?
-                                                    <Link to="/createAccount"
-                                                          className="fw-bold text-body">Register</Link>
-                                                </p>
-
-                                                <p className="text-center text-muted mt-2 mb-0">
-                                                    <Link to="/forgetPassword"
-                                                          className="fw-bold text-body">Forget Your Password ? </Link>
-                                                </p> */}
                       </div>
                     </div>
                   </div>

@@ -31,7 +31,7 @@ img {
 
 .viewTableStaff td{
     text-align: left;
-    padding: 6px;
+    padding: 3px;
     padding-left: 20px;
 }
 .table-striped>tbody>tr:nth-of-type(odd) {
