@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Button } from "react-bootstrap";
 import { QrReader } from "react-qr-reader";
 import Popup from "reactjs-popup";
-import './QrScanner.css';
+import "./QrScanner.css";
 
 const QRScanner = (props) => {
   const { fetchStudentAttendance } = props;
@@ -16,8 +16,8 @@ const QRScanner = (props) => {
     setShowDeletePopup(true);
   };
   const handleCloseDeletePopup = () => {
-    setMessage("Ready to Scan")
-    setIsScanning(false)
+    setMessage("Ready to Scan");
+    setIsScanning(false);
     setShowDeletePopup(false);
   };
 
@@ -44,7 +44,7 @@ const QRScanner = (props) => {
 
   const markAttendance = async (admissionNo) => {
     try {
-      const response = await fetch("/api/attendance/take", {
+      const response = await fetch("/api/studentattendance/take", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +60,6 @@ const QRScanner = (props) => {
       throw error;
     }
   };
-
 
   return (
     <div>
@@ -99,7 +98,17 @@ const QRScanner = (props) => {
                   </div>
 
                   <div className="card-footer text-center rounded m-2">
-                    {message}
+                    <h3
+                      style={{
+                        color: message.startsWith("Welcome")
+                          ? "green"
+                          : message === "Ready to Scan"
+                          ? "blue"
+                          : "red",
+                      }}
+                    >
+                      {message}
+                    </h3>
                   </div>
                 </div>
               </div>

@@ -115,13 +115,13 @@ const MainLayout = () => {
                 {
                   key: "StudentAttendance",
                   icon: <AiOutlineUser className="fs-4" />,
-                  label: "Staff",
+                  label: "Student",
                 },
 
                 {
                   key: "StaffAttendance",
                   icon: <AiOutlineUser className="fs-4" />,
-                  label: "Student",
+                  label: "Staff",
                 },
               ],
             },
