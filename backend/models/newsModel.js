@@ -9,7 +9,7 @@ const newsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  Image: {
+  image: {
     type: String,
   },
   createdAt: {
@@ -18,6 +18,6 @@ const newsSchema = new mongoose.Schema({
   },
 });
 
-const Notice = mongoose.model("News", newsSchema);
+const News = mongoose.model("News", newsSchema);
 
-module.exports = Notice;
+module.exports = News;
