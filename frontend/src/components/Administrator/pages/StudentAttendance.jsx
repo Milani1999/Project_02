@@ -6,6 +6,7 @@ import "reactjs-popup/dist/index.css";
 import Chart from "chart.js/auto";
 import Clock from "../../Clock/Clock";
 import "./StudentAttendance.css";
+import LoadingSpinner from "../../Loading/Loading";
 
 const StudentAttendance = () => {
   const [attendanceData, setAttendanceData] = useState([]);
@@ -14,6 +15,7 @@ const StudentAttendance = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [deleteID, setDeleteID] = useState("");
   const [deleteName, setDeleteName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = () => {
     setShowDeletePopup(true);
@@ -38,15 +40,18 @@ const StudentAttendance = () => {
 
   const fetchStudentAttendance = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `/api/studentattendance/getByDate?date=${selectedDate.toISOString()}&grade=${selectedGrade}`
       );
       const attendanceData = await response.json();
 
       setAttendanceData(attendanceData);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching student attendance:", error);
     }
+
   };
 
   useEffect(() => {
@@ -182,6 +187,10 @@ const StudentAttendance = () => {
           <QRScanner fetchStudentAttendance={fetchStudentAttendance} />
         </Col>
       </Row>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) :(
+      <div>
       <Row>
         <Col md={3}>
           <PieChart
@@ -284,6 +293,9 @@ const StudentAttendance = () => {
           })}
         </tbody>
       </Table>
+      
+      </div>
+      )}
       <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
         <div className="popup-background">
           <div className="popup-container-delete">
