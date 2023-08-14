@@ -46,6 +46,7 @@ import TClassMarks from "./components/Teacher/Pages/TClassMarks";
 import SNotices from "./components/Student/Pages/SNotices";
 import StaffAttendance from "./components/Administrator/pages/StaffAttendance";
 import StudentAttendance from "./components/Administrator/pages/StudentAttendance";
+import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttendance";
 
 function App() {
   return (
@@ -121,6 +122,7 @@ function App() {
             <Route path="ProfilePage" element={<ProfilePage />} />
             <Route path="TimeTableStd" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
+            <Route path="ViewStudentAttendance" element={<ViewStudentAttendance />} />
             <Route path="ViewNotice" element={<SNotices />} />
             {/* <Route path="EditTeacher" element={<EditTeacher />} />
                 <Route path="EditStudent" element={<EditStudent />} />
