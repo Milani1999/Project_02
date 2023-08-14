@@ -84,11 +84,15 @@ const StudentNotices = () => {
           footer={null}
         >
           <p>{selectedNotice.message}</p>
-          {selectedNotice.attachment && (
-            <a href={selectedNotice.attachment} target="_blank" rel="noopener noreferrer">
-              Download Attachment
-            </a>
-          )}
+          {selectedNotice.file && (
+              <a
+                href={selectedNotice.file}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Attachment
+              </a>
+            )}
         </Modal>
       )}
     </div></div>
