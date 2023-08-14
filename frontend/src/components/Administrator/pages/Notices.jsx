@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Input, Button, message, Select, Modal, Upload, Popconfirm, Card } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  message,
+  Select,
+  Modal,
+  Upload,
+  Popconfirm,
+} from "antd";
 import { InboxOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./Notices.css";
-import TNotices from "../../Teacher/Pages/TNotices"; 
-import SNotices from "../../Student/Pages/SNotices";  
 
 const { Option } = Select;
 const { Dragger } = Upload;
@@ -12,7 +19,8 @@ const { Dragger } = Upload;
 const Notices = () => {
   const [form] = Form.useForm();
   const [recipientType, setRecipientType] = useState("Teacher");
-  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
+    useState(false);
   const [isNoticeSent, setIsNoticeSent] = useState(false);
   const [isSentNoticesVisible, setIsSentNoticesVisible] = useState(false);
   const [sentNotices, setSentNotices] = useState([]);
@@ -52,17 +60,37 @@ const Notices = () => {
     }
   };
 
+  const postDetails = async (formData) => {
+    try {
+      await axios.post("/api/notices/create", formData);
+    } catch (error) {
+      console.error(error);
+      message.error("Failed to save notice details");
+    }
+  };
+
   const handleSubmit = async (values) => {
     try {
       const formData = new FormData();
       formData.append("recipientType", recipientType);
       formData.append("title", values.title);
       formData.append("message", values.message);
-      formData.append("file", values.fileList?.[0]?.originFileObj);
 
-      const response = await axios.post("/api/notices/create", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      if (values.fileList?.[0]?.originFileObj) {
+        const imageFormData = new FormData();
+        imageFormData.append("file", values.fileList[0].originFileObj);
+        imageFormData.append("upload_preset", "edutrack");
+        imageFormData.append("cloud_name", "dprnxaqxi");
+
+        const imageResponse = await axios.post(
+          "https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload",
+          imageFormData
+        );
+
+        formData.append("file", imageResponse.data.url);
+      }
+
+      await postDetails(formData);
 
       setIsNoticeSent(true);
       showConfirmationModal();
@@ -86,11 +114,22 @@ const Notices = () => {
     setIsNoticeSent(false);
   };
 
+  const handleChange = async (info) => {
+    if (info.file.status === "done") {
+      const imageUrl = info.file.response.secure_url;
+      form.setFieldsValue({ fileList: [{ ...info.file, thumbUrl: imageUrl }] });
+    }
+  };
+
   return (
     <div className="notice-page">
       <div>
         <h1 className="notice-sending">Send Notices</h1>
-        <Button className="viewbtn" type="primary" onClick={handleViewSentNotices}>
+        <Button
+          className="viewbtn"
+          type="primary"
+          onClick={handleViewSentNotices}
+        >
           View Sent Notices
         </Button>
       </div>
@@ -104,7 +143,7 @@ const Notices = () => {
             onCancel={() => setIsSentNoticesVisible(false)}
             footer={null}
             width={800}
-            bodyStyle={{ maxHeight: '60vh', overflowY: 'auto' }}
+            bodyStyle={{ maxHeight: "60vh", overflowY: "auto" }}
           >
             {sentNotices.map((notice) => (
               <div key={notice._id} className="sent-notice">
@@ -128,7 +167,9 @@ const Notices = () => {
             label="Recipient Type"
             name="recipientType"
             initialValue={recipientType}
-            rules={[{ required: true, message: "Please select the recipient type" }]}
+            rules={[
+              { required: true, message: "Please select the recipient type" },
+            ]}
           >
             <Select onChange={handleRecipientTypeChange}>
               <Option value="Teacher">Teacher</Option>
@@ -151,15 +192,23 @@ const Notices = () => {
           </Form.Item>
           <Form.Item
             label="Attachment"
-            name="file"
+            name="fileList"
             valuePropName="fileList"
             getValueFromEvent={(e) => e && e.fileList}
           >
-            <Dragger name="file" multiple={false}>
+            <Dragger
+              name="file"
+              multiple={false}
+              action="https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload"
+              data={{ upload_preset: "edutrack" }}
+              onChange={handleChange}
+            >
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
-              <p className="ant-upload-text">Click or drag file to this area to upload</p>
+              <p className="ant-upload-text">
+                Click or drag file to this area to upload
+              </p>
             </Dragger>
           </Form.Item>
           <Form.Item>
@@ -179,9 +228,13 @@ const Notices = () => {
         afterClose={handleConfirmationModalClose}
       >
         {isNoticeSent ? (
-          <p className="confirmation-modal notice-sent">The notice has been successfully sent.</p>
+          <p className="confirmation-modal notice-sent">
+            The notice has been successfully sent.
+          </p>
         ) : (
-          <p className="confirmation-modal notice-failed">Failed to send the notice. Please try again.</p>
+          <p className="confirmation-modal notice-failed">
+            Failed to send the notice. Please try again.
+          </p>
         )}
       </Modal>
     </div>
