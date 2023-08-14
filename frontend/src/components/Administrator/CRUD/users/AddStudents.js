@@ -313,6 +313,8 @@ function AddStudents() {
                     <Form.Label>Grade</Form.Label>
                     <Form.Control
                       type="number"
+                      min={1}
+                      max={11}
                       name="grade"
                       value={formData.grade}
                       placeholder="Enter Grade"

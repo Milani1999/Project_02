@@ -107,7 +107,7 @@ function App() {
             <Route path="Support" element={<Support />} />
             <Route path="StaffAttendance" element={<StaffAttendance/>}/>
             <Route path="StudentAttendance" element={<StudentAttendance/>}/>
-            <Route path="ViewNotice" element={<SNotices />} />
+        
           </Route>
 
           <Route
@@ -123,7 +123,7 @@ function App() {
             <Route path="TimeTableStd" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
             <Route path="ViewStudentAttendance" element={<ViewStudentAttendance />} />
-
+            <Route path="ViewNotice" element={<SNotices />} />
             {/* <Route path="EditTeacher" element={<EditTeacher />} />
                 <Route path="EditStudent" element={<EditStudent />} />
 
