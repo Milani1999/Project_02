@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "antd";
-import "./TNotices.css";
+import "./SNotices.css";
 import { FcAbout,FcComments,FcAdvertising} from "react-icons/fc";
-const TeacherNotices = () => {
+const StudentNotices = () => {
   const [notices, setNotices] = useState([]);
   const [selectedNotice, setSelectedNotice] = useState(null);
 
   useEffect(() => {
-    fetchTeacherNotices();
+    fetchStudentNotices();
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [])
 
-  const fetchTeacherNotices = async () => {
+  const fetchStudentNotices = async () => {
     try {
-      const response = await axios.get("/api/notices/get");
+      const response = await axios.get("/api/notices/studentNotice");
       console.log(response.data);
       const sortedNotices = response.data.sort((a, b) => {
         if (a.isNew && !b.isNew) return -1; // Sort new notices to the top
@@ -27,7 +27,7 @@ const TeacherNotices = () => {
       
       setNotices(sortedNotices);
     } catch (error) {
-      console.error("Error fetching teacher notices:", error);
+      console.error("Error fetching Student notices:", error);
     }
   };
 
@@ -51,9 +51,9 @@ const TeacherNotices = () => {
   };
   return (
     <div><FcAdvertising className="file-adv" />
-    <div className="teacher-notices-container">
+    <div className="Student-notices-container">
      
-    <h1 className="notice-title">Staff Notices</h1>
+    <h1 className="notice-title">Student Notices</h1>
       {notices.map((notice) => (
        <div
        key={notice._id}
@@ -95,4 +95,4 @@ const TeacherNotices = () => {
   );
 };
 
-export default TeacherNotices;
+export default StudentNotices;

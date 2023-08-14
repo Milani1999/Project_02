@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
 import './footer.css';
+import Logo from '../../assets/ImageResources/universal.jpg'
 
 function Footer() {
   return (
@@ -15,7 +16,7 @@ function Footer() {
                 <span className="light">About Us </span>
                 <br></br><br></br>
                 <a href="#home" className="logo-link-small">
-              <img src="images/universal.jpg" alt="logo" />
+              <img src={Logo} alt="logo" />
             </a>
                 </h6>
                 <div className="textwidget">

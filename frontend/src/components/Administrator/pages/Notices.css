@@ -1,24 +1,27 @@
 .notice-page {
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 3px;
+    border-radius: 8px;
   }
   .notices-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    
   }
-  
+  .notice-sending{
+    color: #0d4e1e;
+    background-color: #dce1dd;
+    border-radius: 8px;
+  }
  
   
-  .notice-page h1 {
-    margin-bottom: 20px;
-    align-items: center;
-  }
+
   
   .notice-page .ant-form-item {
-    margin-bottom: 16px;
+    margin-bottom: 6px;
   }
   
   .notice-page .ant-form-item-label {
@@ -26,7 +29,7 @@
   }
   
   .notice-page .ant-btn {
-    margin-top: 10px;
+    margin-top: 3px;
   }
   .ant-form {
     box-sizing: border-box;
@@ -38,7 +41,7 @@
     list-style: none;
     font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
     background-color: rgb(215, 226, 203);
-    padding: 15px 30px;
+    padding: 15px 25px;
 }
 .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
     color: #fff;
@@ -66,4 +69,32 @@
 .notice-failed {
   background-color: #f44336; 
   color: #fff;
+}
+.sent-notice {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.sent-notice p {
+  margin: 5px 0;
+}
+
+.delete-icon {
+  color: #ff4d4f;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+/* Optional: Hover effect for delete icon */
+.delete-icon:hover {
+  color: #d4380d;
+}
+.viewbtn{
+  align-items: end;
+  margin-bottom: 15px;
+  margin-left: 550px;
 }

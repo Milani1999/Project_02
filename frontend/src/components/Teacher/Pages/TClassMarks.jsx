@@ -81,6 +81,27 @@ const TClassMarks = () => {
     );
   }
 
+  const calculateTotal = (studentMarks) => {
+    let total = 0;
+    let validCount = 0;
+
+    studentMarks.forEach((mark) => {
+      if (mark !== "AB") {
+        total += parseFloat(mark);
+        validCount++;
+      }
+    });
+
+    return { total, validCount };
+  };
+
+  const calculateAverage = (total, validCount) => {
+    if (validCount === 0) {
+      return "-";
+    }
+    return (total / validCount).toFixed(2);
+  };
+
   return (
     <div>
       <div className="filterMarks">
@@ -141,6 +162,8 @@ const TClassMarks = () => {
                 {marks.map((subject) => (
                   <th key={subject.subject}>{subject.subject}</th>
                 ))}
+                <th>Total</th>
+                <th>Average</th>
               </tr>
             </thead>
             <tbody>
@@ -155,6 +178,38 @@ const TClassMarks = () => {
                       )?.score || "-"}
                     </td>
                   ))}
+                  <td className="classwiseTotal">
+                    {
+                      calculateTotal(
+                        marks.map(
+                          (subject) =>
+                            subject.students.find(
+                              (s) => s.student === student.student
+                            )?.score || "-"
+                        )
+                      ).total
+                    }
+                  </td>
+                  <td className="classwiseAverage">
+                    {calculateAverage(
+                      calculateTotal(
+                        marks.map(
+                          (subject) =>
+                            subject.students.find(
+                              (s) => s.student === student.student
+                            )?.score || "-"
+                        )
+                      ).total,
+                      calculateTotal(
+                        marks.map(
+                          (subject) =>
+                            subject.students.find(
+                              (s) => s.student === student.student
+                            )?.score || "-"
+                        )
+                      ).validCount
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

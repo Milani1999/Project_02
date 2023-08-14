@@ -22,7 +22,7 @@ import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import { Button, notification } from "antd";
-import Logo from "../../../assets/ImageResources/uni2.png"
+import Logo from "../../../assets/ImageResources/uni2.png";
 
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
@@ -104,30 +104,36 @@ const MainLayout = () => {
             {
               key: "Attendence",
               icon: <FaClipboardList className="fs-4" />,
-              label: "Attendence",
-            },
-            {
-              key: "Curriculum",
-              icon: <RiCalendarCheckFill className="fs-4" />,
-              label: "Curriculum",
+              label: "Attendance",
               children: [
                 {
-                  key: "Subject",
-                  icon: <RiCalendarCheckFill className="fs-4" />,
-                  label: "Subject",
+                  key: "Attendence",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Dashboard",
+                },
+
+                {
+                  key: "StudentAttendance",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Student",
+                },
+
+                {
+                  key: "StaffAttendance",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Staff",
                 },
               ],
+            },
+            {
+              key: "Subject",
+              icon: <RiCalendarCheckFill className="fs-4" />,
+              label: "Subjects",
             },
             {
               key: "Timetable",
               icon: <RiCalendarCheckFill className="fs-4" />,
               label: "Timetable",
-            },
-
-            {
-              key: "Performance",
-              icon: <AiOutlineFund className="fs-4" />,
-              label: "Performance",
             },
             {
               key: "Events",

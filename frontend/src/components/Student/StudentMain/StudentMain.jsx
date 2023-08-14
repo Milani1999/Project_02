@@ -93,7 +93,7 @@ const StudentMain = () => {
               label: "View Attendence",
             },
             {
-              key: "Notice",
+              key: "ViewNotice",
               icon: <RiCalendarCheckFill className="fs-4" />,
               label: "View Notice",
             },

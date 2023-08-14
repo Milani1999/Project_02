@@ -3,7 +3,7 @@ const {
     takeAttendance,
   getAttendanceByDate,
   deleteAttendance,
-} = require("../controllers/attendanceController");
+} = require("../controllers/studentAttendanceController");
 const router = express.Router();
 
 router.route("/take").post(takeAttendance );

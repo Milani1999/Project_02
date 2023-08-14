@@ -1,5 +1,7 @@
-import React from "react";
 import SupportEngine from "../SupportAssist/SupportEngine";
+import './Aboutus.css'
+import vision from '../../assets/ImageResources/vision.png'
+import  mission from '../../assets/ImageResources/mission.png'
 
 function AboutUs() {
     return (
@@ -11,7 +13,7 @@ function AboutUs() {
                 <div className="row">
                     <div className="col-xs-12 col-lg-3">
                         <h4 className="h4-heading">Vision</h4>
-                        <img src="images/vision.png" alt="vision" />
+                        <img src={vision} alt="vision" />
                     </div>
                     <div className="col-xs-12 col-lg-9">
                         <p className="card-text">All the students who join Universal International School,
@@ -34,7 +36,7 @@ function AboutUs() {
                     </div>
                     <div className="col-xs-12 col-lg-3">
                         <h4 className="h4-heading">Mission</h4>
-                        <img src="images/mission.png" alt="mission" />
+                        <img src={mission} alt="mission" />
                     </div>
                 </div>
             </div>
