@@ -88,7 +88,7 @@ const StudentMain = () => {
               label: "View Profile",
             },
             {
-              key: "Attendence",
+              key: "ViewStudentAttendance",
               icon: <FaClipboardList className="fs-4" />,
               label: "View Attendence",
             },

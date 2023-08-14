@@ -91,8 +91,52 @@ const deleteAttendance = asyncHandler(async (req, res) => {
 });
 
 
+const getAttendanceByDateAndAdmissionNo = asyncHandler(async (req, res) => {
+  const { admission_no, date } = req.query;
+
+  try {
+    const student = await Student.findOne({ admission_no });
+
+    if (!student) {
+      res.status(400).json({ message: "Student not found." });
+      return;
+    }
+
+    const selectedDate = new Date(date);
+    const selectedYear = selectedDate.getUTCFullYear();
+    const selectedMonth = selectedDate.getUTCMonth();
+
+    const startDate = new Date(selectedYear, selectedMonth, 1);
+    const endDate = new Date(selectedYear, selectedMonth + 1, 0);
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    const attendance = await Attendance.findOne({
+      admission_no,
+      date: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    });
+
+    if (!attendance) {
+      res.status(404).json({ message: "Attendance not found." });
+      return;
+    }
+
+    res.json(attendance);
+  } catch (error) {
+    console.error("Error fetching student attendance:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
+
+
+
 module.exports = {
   takeAttendance,
   getAttendanceByDate,
   deleteAttendance,
+  getAttendanceByDateAndAdmissionNo, // Add this line
 };
