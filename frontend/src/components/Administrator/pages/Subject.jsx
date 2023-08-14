@@ -1,7 +1,4 @@
-import SubjectList from '../CRUD/subjects/SubjectList';
+import SubjectList from "../CRUD/subjects/SubjectList";
 
-
-const App = () => (
-<SubjectList/>
-);
+const App = () => <SubjectList />;
 export default App;
