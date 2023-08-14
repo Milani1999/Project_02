@@ -4,6 +4,7 @@ import { Form, Button, Table, Col, Row } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import AddStaff from "./AddStaff";
 import "./staff.css";
+import QrGenerator from "../../../QrCode/QrGenerator";
 
 const ViewStaff = () => {
   const [staffList, setStaffList] = useState([]);
@@ -247,12 +248,25 @@ const ViewStaff = () => {
                                 <td>Assigned Classes</td>
                                 <td>{selectedStaff.assigned_classes}</td>
                             </tr> */}
+                {/*--------Start--------QR Generator for each staffs according to their Employee ID */}
+                <tr>
+                  <td colSpan={2}>
+                    <div>
+                      {
+                        <QrGenerator
+                        userID={selectedStaff.employee_id}
+                        />
+                      }
+                    </div>
+                  </td>
+                </tr>
+                {/*--------End--------QR Generator */}
                 <tr>
                   <td colSpan={2} style={{ textAlign: "center" }}>
                     <Button
                       variant="secondary"
                       onClick={handleCloseViewPopup}
-                      className="mt-3"
+                      className="mt-0"
                     >
                       Close
                     </Button>

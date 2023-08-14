@@ -292,7 +292,7 @@ const ViewStudents = () => {
                     <div>
                       {
                         <QrGenerator
-                          student_ad={selectedStudent.admission_no}
+                        userID={selectedStudent.admission_no}
                         />
                       }
                     </div>
@@ -304,7 +304,7 @@ const ViewStudents = () => {
                     <Button
                       variant="secondary"
                       onClick={handleCloseViewPopup}
-                      className="mt-3"
+                      className="mt-2"
                     >
                       Close
                     </Button>
