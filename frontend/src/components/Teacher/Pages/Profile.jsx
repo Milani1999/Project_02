@@ -58,7 +58,7 @@ const StaffProfile = () => {
             </tr>
             <tr>
               <td>Date of Birth  :</td>
-              <td>{dateOfBirth}</td>
+              <td>{new Date(dateOfBirth).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' })}</td>
             </tr>
             <tr>
               <td>Address  :</td>
