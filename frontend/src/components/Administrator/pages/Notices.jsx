@@ -89,9 +89,7 @@ const Notices = () => {
     <div className="notice-page">
       <div>
         <h1 className="notice-sending">Send Notices</h1>
-        <Button className="viewbtn" type="primary" onClick={handleViewSentNotices}>
-          View Sent Notices
-        </Button>
+        
       </div>
 
       {isSentNoticesVisible ? (
@@ -183,6 +181,11 @@ const Notices = () => {
           <p className="confirmation-modal notice-failed">Failed to send the notice. Please try again.</p>
         )}
       </Modal>
+   
+      {/* <Button className="viewbtn" type="primary" onClick={handleViewSentNotices}>
+  View Sent Notices
+</Button> */}
+
     </div>
   );
 };
