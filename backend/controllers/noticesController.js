@@ -3,8 +3,7 @@ const Notice = require("../models/noticesModel");
 // Create and save a new notice
 const createNotice = async (req, res) => {
   try {
-    const { recipientType, title, message } = req.body;
-    const file = req.file ? req.file.path : null;
+    const { recipientType, title, message, file } = req.body;
 
     const newNotice = new Notice({
       recipientType,
