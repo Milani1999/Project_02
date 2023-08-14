@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
@@ -21,7 +21,7 @@ import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./StudentMain.css";
 import { Button, notification } from "antd";
-import Logo from "../../../assets/ImageResources/uni2.png"
+import Logo from "../../../assets/ImageResources/uni2.png";
 
 const { Header, Sider, Content } = Layout;
 const StudentMain = () => {
@@ -102,54 +102,11 @@ const StudentMain = () => {
               icon: <RiCalendarCheckFill className="fs-4" />,
               label: "View Marks",
             },
+
             {
-              key: "TimeTableStd",
+              key: "calender",
               icon: <RiCalendarCheckFill className="fs-4" />,
-              label: "View Timetable",
-              children: [
-                {
-                  key: "MondayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Monday",
-                },
-
-                {
-                  key: "TuesdayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Tuesday",
-                },
-
-                {
-                  key: "WednesdayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Wednesday",
-                },
-
-                {
-                  key: "ThursdayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Thursday",
-                },
-
-                {
-                  key: "FridayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Friday",
-                },
-              ],
-            },
-
-            {
-              key: "Events",
-              icon: <RiCalendar2Line className="fs-4" />,
-              label: "Events",
-              children: [
-                {
-                  key: "calender",
-                  icon: <RiCalendarCheckFill className="fs-4" />,
-                  label: "Event Calendar",
-                },
-              ],
+              label: "Event Calendar",
             },
             {
               key: "payments",
