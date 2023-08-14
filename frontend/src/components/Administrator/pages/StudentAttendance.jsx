@@ -159,8 +159,9 @@ const StudentAttendance = () => {
       </div>
       <Row className="mb-3">
         <Col md={5}>
-          <label htmlFor="datePicker">Select Date: </label>
+          <label className="label_selectdate" htmlFor="datePicker">Select Date: </label>
           <input
+          className="datepicker_attendance"
             type="date"
             id="datePicker"
             value={selectedDate.toISOString().substr(0, 10)}
@@ -170,7 +171,7 @@ const StudentAttendance = () => {
         <br />
 
         <Col md={3}>
-          <label htmlFor="gradeSelect">Select Grade: </label>
+          <label className="label_selectgrade" htmlFor="gradeSelect">Select Grade: </label>
           <select
             id="gradeSelect"
             value={selectedGrade}
