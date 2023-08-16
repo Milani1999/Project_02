@@ -97,7 +97,7 @@ const Performance = () => {
 
   return (
     <div>
-      <h1>Student Performance</h1>
+      <h1 className="h1-marks-stats">Student Performance</h1>
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12} md={8}>
           <Card>
