@@ -83,8 +83,6 @@ const Performance = () => {
         .finally(() => {
           setLoading(false);
         });
-    } else {
-      alert("Error: Please select year, grade, and subject.");
     }
   }, [selectedYear, selectedGrade, selectedSubject]);
 
@@ -143,7 +141,7 @@ const Performance = () => {
       </Row>
       <Row>
         <Col xs={24} md={24}>
-          <Card className="chart">
+          <Card className="chart-bar-marks">
             <h3 className="chart-heading-h1">
               Student Performance for {selectedYear} - Grade {selectedGrade} -{" "}
               {selectedSubject}
@@ -151,13 +149,18 @@ const Performance = () => {
             {loading ? (
               <LoadingSpinner />
             ) : chartData.length > 0 ? (
-              <BarChart width={800} height={400} data={chartData}>
+              <BarChart
+                width={800}
+                height={400}
+                data={chartData}
+                className="BarChart-Marks"
+              >
                 <XAxis
                   dataKey="range"
                   label={{
                     value: "Marks Range",
                     position: "insideBottom",
-                    offset: -10,
+                    offset: -5,
                   }}
                 />
                 <YAxis
@@ -169,10 +172,7 @@ const Performance = () => {
                   }}
                 />
                 <Tooltip />
-                <Legend
-                  verticalAlign="top"
-                  align="right"
-                />{" "}
+                <Legend verticalAlign="top" align="right" />{" "}
                 <Bar dataKey="term1" fill="#0088FE" name="Term 1" />
                 <Bar dataKey="term2" fill="#00C49F" name="Term 2" />
                 <Bar dataKey="term3" fill="#FFBB28" name="Term 3" />

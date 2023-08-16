@@ -1,83 +1,12 @@
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  /*  cards */
-  .ant-card {
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* select dropdowns */
-  .ant-select-selector {
-    border-radius: 8px;
-  }
-  
-  /*  charts */
-  .chart-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  /* Styles for the pie chart */
-  .pie-chart {
-    width: 50%;
-  }
-  
-  
-  /* the bar chart */
-  .bar-chart {
-    width: 50%;
-  }
-  
-  /*pie legend */
-  .pie-legend {
-    list-style: none;
-    padding-left: 0;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .pie-legend-item {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-  }
-  
-  .pie-legend-color {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-right: 8px;
-  }
-  
-  /* class details card */
-  .class-details-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .class-details-card p {
-    margin: 8px 0;
-  }
-  
-  /* Styles for the cards container */
-  .cards-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-
-  .container {
-    padding: 20px;
-  }
-.chart{
-    margin: 10px 10px;
+.chart-heading-h1 {
+  text-align: center;
+  margin-bottom: 50px;
 }
 
+.BarChart-Marks {
+  margin: auto;
+}
+
+.chart-bar-marks {
+  margin-top: 30px;
+}
