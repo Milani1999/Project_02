@@ -1,195 +1,188 @@
-import React, { useState } from 'react';
-import { Select, Row, Col, Card } from 'antd';
-import { PieChart, Pie, Cell, Legend, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
-import './Performance.css';
+import React, { useState, useEffect } from "react";
+import { Select, Row, Col, Card } from "antd";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import "./Performance.css";
+import { fetchSubjects } from "../../Administrator/CRUD/subjects/FetchSubjects";
+import axios from "axios";
+import LoadingSpinner from "../../Loading/Loading";
 const { Option } = Select;
 
 const Performance = () => {
-  const classes = ['Class 1', 'Class 2', 'Class 3'];
-  const subjects = ['Mathematics', 'Science', 'History'];
+  const [subjects, setSubjects] = useState([]);
+  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedGrade, setSelectedGrade] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  
-  
-  const marksData = {
-    'Class 1': {
-      Mathematics: [80, 92, 74, 45, 50, 60, 78, 88, 92, 100],
-      Science: [85, 78, 92, 40, 60, 88, 72, 65, 95, 50],
-      History: [55, 68, 80, 30, 75, 92, 60, 85, 48, 58],
-    },
-    'Class 2': {
-      Mathematics: [75, 88, 92, 60, 55, 75, 85, 78, 90, 70],
-      Science: [80, 75, 88, 60, 40, 58, 68, 72, 82, 55],
-      History: [70, 82, 65, 30, 88, 78, 92, 60, 55, 75],
-    },
-    'Class 3': {
-      Mathematics: [60, 72, 65, 30, 85, 78, 92, 60, 55, 75],
-      Science: [70, 82, 65, 30, 88, 78, 92, 60, 55, 75],
-      History: [75, 88, 92, 60, 55, 75, 85, 78, 90, 70],
-    },
+  useEffect(() => {
+    fetchSubjects()
+      .then((data) => {
+        setSubjects(data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, []);
+
+  const filterScoresByRange = (scores, range) => {
+    const [min, max] = range.split("-").map(Number);
+    return scores.filter((score) => {
+      const numericScore = score === "AB" ? 0 : Number(score);
+      return numericScore >= min && numericScore <= max;
+    });
   };
 
-  const [selectedClass, setSelectedClass] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState('');
+  useEffect(() => {
+    if (selectedYear && selectedGrade && selectedSubject) {
+      setLoading(true);
 
-  const handleClassChange = (value) => {
-    setSelectedClass(value);
-  };
-
-  const handleSubjectChange = (value) => {
-    setSelectedSubject(value);
-  };
-
-  const getMarkRangeDistribution = (subjectMarks) => {
-    const markRanges = [0, 35, 45, 55, 65, 75, 100];
-    const distribution = markRanges.map((range, index) => {
-      const nextRange = markRanges[index + 1];
-      const studentsInRange = subjectMarks.filter((mark) => mark >= range && mark < nextRange).length;
-  
-      //  greater than or equal to the last range's lower bound
-      if (index === markRanges.length - 2) {
-        const lastRange = `${markRanges[index]} - ${markRanges[index + 1] - 1}`;
-        const studentsInLastRange = subjectMarks.filter((mark) => mark >= markRanges[index]).length;
-        return {
-          range: lastRange,
-          students: studentsInLastRange,
-        };
-      }
-  
-      //  upper bound is 100
-      if (index === markRanges.length - 1) {
-        const lastRange = `${markRanges[index]} - ${markRanges[index + 1] - 1}`;
-        const studentsInLastRange = subjectMarks.filter((mark) => mark >= markRanges[index]).length;
-        return {
-          range: lastRange,
-          students: studentsInLastRange,
-        };
-      }
-  
-      return {
-        range: `${range} - ${nextRange - 1}`,
-        students: studentsInRange,
+      const fetchChartData = async (year, grade, subject) => {
+        try {
+          const response = await axios.get(
+            `/api/marks/terms/${year}/${grade}/${subject}`
+          );
+          return response.data;
+        } catch (error) {
+          throw new Error("Error fetching chart data");
+        }
       };
-    });
-    return distribution;
-  };
-  
-  
 
-  const isDataSelected = selectedClass && selectedSubject;
+      fetchChartData(selectedYear, selectedGrade, selectedSubject)
+        .then((data) => {
+          const term1Data = data.find((term) => term.term === 1);
+          const term2Data = data.find((term) => term.term === 2);
+          const term3Data = data.find((term) => term.term === 3);
 
-  let pieChartData = [];
-  let barChartData = [];
-  let totalStudents = 0;
-  let totalMarks = 0;
+          if (term1Data || term2Data || term3Data) {
+            const scoreRanges = ["0-34", "35-49", "50-64", "65-74", "75-100"];
+            const processedData = scoreRanges.map((range) => {
+              const term1Scores = term1Data ? term1Data.scores : [];
+              const term2Scores = term2Data ? term2Data.scores : [];
+              const term3Scores = term3Data ? term3Data.scores : [];
 
-  if (selectedClass && selectedSubject) {
-    const subjectMarks = marksData[selectedClass][selectedSubject];
-    const markRangeDistribution = getMarkRangeDistribution(subjectMarks);
+              const term1Count = filterScoresByRange(term1Scores, range).length;
+              const term2Count = filterScoresByRange(term2Scores, range).length;
+              const term3Count = filterScoresByRange(term3Scores, range).length;
 
-    // Calculate the total number of students and the total marks for the selected subject
-    markRangeDistribution.forEach((item) => {
-      totalStudents += item.students;
-      totalMarks += item.students * (parseInt(item.range.split(' ')[2]) + parseInt(item.range.split(' ')[0])) / 2;
-    });
+              return {
+                range,
+                term1: term1Count,
+                term2: term2Count,
+                term3: term3Count,
+              };
+            });
+            setChartData(processedData);
+          } else {
+            setChartData([]);
+          }
+        })
+        .catch((error) => {
+          setChartData([]);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      alert("Error: Please select year, grade, and subject.");
+    }
+  }, [selectedYear, selectedGrade, selectedSubject]);
 
-    // Create data for both pie chart and bar chart
-    pieChartData = markRangeDistribution.map((item) => ({
-      name: item.range,
-      value: item.students,
-      percentage: ((item.students / totalStudents) * 100).toFixed(2),
-    }));
-
-    barChartData = markRangeDistribution.map((item) => ({
-      range: item.range,
-      students: item.students,
-      percentage: ((item.students / totalStudents) * 100).toFixed(2),
-    }));
+  const grades = [];
+  for (let i = 1; i <= 11; i++) {
+    grades.push(
+      <Option key={i} value={i}>
+        Grade {i}
+      </Option>
+    );
   }
-
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF6384', '#36A2EB', '#9966FF', '#FF9F40'];
 
   return (
     <div>
       <h1>Student Performance</h1>
       <Row gutter={[16, 16]}>
-      <Col xs={24} sm={12} md={8}>
+        <Col xs={24} sm={12} md={8}>
           <Card>
-            <h3>Select Class</h3>
-            <Select style={{ width: '100%' }} onChange={handleClassChange}>
-              {classes.map((className) => (
-                <Option key={className} value={className}>
-                  {className}
-                </Option>
-              ))}
+            <h3>Select Year</h3>
+            <Select
+              style={{ width: "100%" }}
+              onChange={(value) => setSelectedYear(value)}
+            >
+              <Option value="2023">2023</Option>
+              <Option value="2024">2024</Option>
+              <Option value="2025">2025</Option>
+            </Select>
+          </Card>
+        </Col>
+        <Col xs={24} sm={12} md={8}>
+          <Card>
+            <h3>Select Grade</h3>
+            <Select
+              style={{ width: "100%" }}
+              onChange={(value) => setSelectedGrade(value)}
+            >
+              {grades}
             </Select>
           </Card>
         </Col>
         <Col xs={24} sm={12} md={8}>
           <Card>
             <h3>Select Subject</h3>
-            <Select style={{ width: '100%' }} onChange={handleSubjectChange}>
+            <Select
+              style={{ width: "100%" }}
+              onChange={(value) => setSelectedSubject(value)}
+            >
               {subjects.map((subject) => (
-                <Option key={subject} value={subject}>
-                  {subject}
+                <Option key={subject.subject_id} value={subject.subject_name}>
+                  {subject.subject_name}
                 </Option>
               ))}
             </Select>
           </Card>
         </Col>
       </Row>
-      {isDataSelected && (
-        <Row>
-        <Col xs={24} md={12}>
-            <Card className='chart'>
-              <h2>{selectedClass} - {selectedSubject}</h2>
-              <PieChart width={500} height={400}>
-                <Pie
-                  data={pieChartData}
-                  cx={200}
-                  cy={200}
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                  label={({ cx, cy, midAngle, innerRadius, outerRadius, value, index }) => {
-                    const RADIAN = Math.PI / 180;
-                    const radius = 25 + innerRadius + (outerRadius - innerRadius);
-                    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                    const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-                    return (
-                      <text
-                        x={x}
-                        y={y}
-                        fill="#000"
-                        textAnchor={x > cx ? 'start' : 'end'}
-                        dominantBaseline="central"
-                      >
-                        {pieChartData[index].value !== 0 ? `${pieChartData[index].name} (${pieChartData[index].percentage}%)` : ''}
-                      </text>
-                    );
+      <Row>
+        <Col xs={24} md={24}>
+          <Card className="chart">
+            <h3 className="chart-heading-h1">
+              Student Performance for {selectedYear} - Grade {selectedGrade} -{" "}
+              {selectedSubject}
+            </h3>
+            {loading ? (
+              <LoadingSpinner />
+            ) : chartData.length > 0 ? (
+              <BarChart width={800} height={400} data={chartData}>
+                <XAxis
+                  dataKey="range"
+                  label={{
+                    value: "Marks Range",
+                    position: "insideBottom",
+                    offset: -10,
                   }}
-                >
-                  {pieChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Legend verticalAlign="bottom" height={36} />
-              </PieChart>
-            </Card>
-          </Col>
-          <Col xs={24} md={12}>
-            <Card className='chart'>
-              <h3>Number of Students in Each Range for {selectedSubject}</h3>
-              <BarChart width={520} height={400} data={barChartData}>
-                <XAxis dataKey="range" interval={0} />
-                <YAxis />
+                />
+                <YAxis
+                  label={{
+                    value: "Number of Students",
+                    angle: -90,
+                    position: "insideLeft",
+                    offset: 10,
+                  }}
+                />
                 <Tooltip />
-                <Bar dataKey="students" fill="#8884d8" />
+                <Legend
+                  verticalAlign="top"
+                  align="right"
+                />{" "}
+                <Bar dataKey="term1" fill="#0088FE" name="Term 1" />
+                <Bar dataKey="term2" fill="#00C49F" name="Term 2" />
+                <Bar dataKey="term3" fill="#FFBB28" name="Term 3" />
               </BarChart>
-            </Card>
-          </Col>
-        </Row>
-      )}
+            ) : (
+              <div>No Data Available</div>
+            )}
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };
