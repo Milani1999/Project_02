@@ -62,7 +62,7 @@ export default function Events() {
                   title={news.title}
                   description={
                     news.content.length > 200
-                      ? `${news.content.substring(0, 177)}...`
+                      ? `${news.content.substring(0, 150)}...`
                       : news.content
                   }
                   btnText="Read More"

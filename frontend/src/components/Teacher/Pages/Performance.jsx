@@ -5,6 +5,7 @@ import "./Performance.css";
 import { fetchSubjects } from "../../Administrator/CRUD/subjects/FetchSubjects";
 import axios from "axios";
 import LoadingSpinner from "../../Loading/Loading";
+import { PieChartTable } from "./PieChart";
 const { Option } = Select;
 
 const Performance = () => {
@@ -183,6 +184,14 @@ const Performance = () => {
           </Card>
         </Col>
       </Row>
+      <PieChartTable
+        selectedYear={selectedYear}
+        setSelectedYear={setSelectedYear} // Pass the functions as props
+        selectedGrade={selectedGrade}
+        setSelectedGrade={setSelectedGrade}
+        selectedSubject={selectedSubject}
+        setSelectedSubject={setSelectedSubject}
+      />
     </div>
   );
 };
