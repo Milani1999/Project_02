@@ -88,7 +88,7 @@ const StudentMain = () => {
               label: "View Profile",
             },
             {
-              key: "Attendence",
+              key: "ViewStudentAttendance",
               icon: <FaClipboardList className="fs-4" />,
               label: "View Attendence",
             },
@@ -145,7 +145,7 @@ const StudentMain = () => {
               label: "Events",
               children: [
                 {
-                  key: "calender",
+                  key: "Scalender",
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Event Calendar",
                 },

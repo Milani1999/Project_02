@@ -23,7 +23,7 @@ import './assets/Style/styles.css'
 import Calender from "./components/Administrator/pages/Calender";
 import Timetable from "./components/Administrator/pages/Timetable";
 import Attendence from "./components/Administrator/pages/Attendence";
-import Grade from "./components/Administrator/pages/Grade";
+import News from "./components/Administrator/pages/News";
 import Notices from "./components/Administrator/pages/Notices";
 import SignIn from "./view/Signin/SignIn";
 import Auth from "./view/Signin/ProtectedRoute";
@@ -46,6 +46,7 @@ import TClassMarks from "./components/Teacher/Pages/TClassMarks";
 import SNotices from "./components/Student/Pages/SNotices";
 import StaffAttendance from "./components/Administrator/pages/StaffAttendance";
 import StudentAttendance from "./components/Administrator/pages/StudentAttendance";
+import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttendance";
 
 function App() {
   return (
@@ -100,13 +101,13 @@ function App() {
             <Route path="calender" element={<Calender />} />
             <Route path="Timetable" element={<Timetable />} />
             <Route path="Attendence" element={<Attendence />} />
-            <Route path="Grade" element={<Grade />} />
+            <Route path="News" element={<News />} />
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
             <Route path="Support" element={<Support />} />
             <Route path="StaffAttendance" element={<StaffAttendance/>}/>
             <Route path="StudentAttendance" element={<StudentAttendance/>}/>
-            <Route path="ViewNotice" element={<SNotices />} />
+        
           </Route>
 
           <Route
@@ -121,7 +122,9 @@ function App() {
             <Route path="ProfilePage" element={<ProfilePage />} />
             <Route path="TimeTableStd" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
-
+            <Route path="ViewStudentAttendance" element={<ViewStudentAttendance />} />
+            <Route path="ViewNotice" element={<SNotices />} />
+           <Route path="Scalender" element={<TCalendar />} />
             {/* <Route path="EditTeacher" element={<EditTeacher />} />
                 <Route path="EditStudent" element={<EditStudent />} />
 

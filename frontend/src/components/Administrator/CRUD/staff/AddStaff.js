@@ -78,7 +78,6 @@ function AddStaff() {
     }
   };
 
-
   const submitHandler = async (e) => {
     e.preventDefault();
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ProfilePage.css";
 import { fetchStudentData } from "../../Count/Data";
+import LoadingSpinner from "../../Loading/Loading";
 
 const ProfilePage = () => {
   const [studentData, setStudentData] = useState(null);
@@ -22,18 +23,18 @@ const ProfilePage = () => {
   }, [studentId]);
 
   if (!studentData) {
-    return <div>Loading...</div>;
+    return <div><LoadingSpinner/></div>;
   }
 
   const {
     admission_no,
     fullname,
-    first_name,
-    last_name,
+    // first_name,
+    // last_name,
     dateOfBirth,
     phone,
     address,
-    gender,
+    // gender,
     picture,
     parent_Name,
     parent_occupation,
@@ -44,43 +45,42 @@ const ProfilePage = () => {
 
   const rows = [
     { label: "Name In Full", value: fullname },
-    { label: "Date Of Birth", value: dateOfBirth },
+    { label: "Date Of Birth", value: dateOfBirth},
     { label: "Address", value: address },
     { label: "Admission Number", value: admission_no },
     { label: "Class of Admission", value: "Grade 1" },
     { label: "Current Grade", value: grade },
   ];
 
-  // Sample data for the Extra-Curricular Activities dropdown
-  const extraCurricularActivities = [
-    "Football",
-    "Basketball",
-    "Chess",
-    "Music",
-    "Dance",
-    "Art",
+  const extraCurricularActivities = [extra_activities
+    // "Football",
+    // "Basketball",
+    // "Chess",
+    // "Music",
+    // "Dance",
+    // "Art",
   ];
 
   const parentDetails = [
     { label: "Father's name", value: parent_Name },
     { label: "Occupation", value: parent_occupation },
     { label: "Address", value: address },
-    { label: "NIC Number", value: "123456789" },
+    // { label: "NIC Number", value: "123456789" },
     { label: "Telephone Number", value: phone },
-    { label: "Mother's name", value: parent_Name },
-    { label: "Occupation", value: parent_occupation },
+    // { label: "Mother's name", value: parent_Name },
+    // { label: "Occupation", value: parent_occupation },
     { label: "Telephone Number", value: phone },
   ];
 
-  const emergencyRight = [
-    { label: "Guardian's Name", value: "Mrs. Ivans" },
-    { label: "Telephone Number", value: "0772332020" },
-  ];
+  // const emergencyRight = [
+  //   { label: "Guardian's Name", value: "Mrs. Ivans" },
+  //   { label: "Telephone Number", value: "0772332020" },
+  // ];
 
-  const emergencyLeft = [
-    { label: "Relationship To Student", value: "Aunt" },
-    { label: "Occupation", value: "Data Analyst" },
-  ];
+  // const emergencyLeft = [
+  //   { label: "Relationship To Student", value: "Aunt" },
+  //   { label: "Occupation", value: "Data Analyst" },
+  // ];
 
   return (
     <div className="profile-container">

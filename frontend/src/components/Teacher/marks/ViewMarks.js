@@ -279,7 +279,7 @@ const ViewMarks = () => {
         <div className="filter">
           <label htmlFor="gradeSelect">Select Grade: </label>
           <select
-            id="gradeSelect"
+            id="grade_Select"
             value={selectedGrade}
             onChange={(e) => setSelectedGrade(e.target.value)}
           >

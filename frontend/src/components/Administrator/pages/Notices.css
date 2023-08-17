@@ -9,12 +9,14 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+  
     
   }
   .notice-sending{
     color: #0d4e1e;
     background-color: #dce1dd;
     border-radius: 8px;
+    padding: 2px;
   }
  
   
@@ -34,7 +36,7 @@
   .ant-form {
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding: 10px;
     color: rgba(0, 0, 0, 0.88);
     font-size: 14px;
     line-height: 1.5714285714285714;
