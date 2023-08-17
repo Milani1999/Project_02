@@ -178,7 +178,7 @@ const Performance = () => {
                 <Bar dataKey="term3" fill="#FFBB28" name="Term 3" />
               </BarChart>
             ) : (
-              <div>No Data Available</div>
+              <div className="no-data">No Data Available</div>
             )}
           </Card>
         </Col>

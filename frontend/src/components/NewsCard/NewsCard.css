@@ -14,6 +14,17 @@
   background-color: white;
   height: 450px;
   margin: auto;
+  overflow: hidden;
+}
+
+.card-container .card-title{
+  height: 50px;
+  text-align: center;
+}
+
+.card-container .card-desc {
+  height: 100px;
+  text-align: center;
 }
 
 .css-887cpn-MuiPaper-root {

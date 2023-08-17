@@ -11,5 +11,12 @@
   margin-top: 30px;
 }
 
-.h1-marks-stats{
-text-align: center;}
+.h1-marks-stats {
+  text-align: center;
+}
+
+.no-data {
+  text-align: center;
+  font-size: 30px;
+  color: red;
+}
