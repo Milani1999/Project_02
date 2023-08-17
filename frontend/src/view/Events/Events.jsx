@@ -1,114 +1,109 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 import NewsCard from "../../components/NewsCard/NewsCard";
-import img01 from "../../assets/ImageResources/im01.jpg";
-import img02 from "../../assets/ImageResources/im02.jpg";
-import img03 from "../../assets/ImageResources/im03.jpg";
-import img04 from "../../assets/ImageResources/im04.jpg";
+import "./Events.css";
 
-const Item = styled(Paper)(({ theme }) => ({
-  // backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  // ...theme.typography.body2,
-  // padding: theme.spacing(1),
-  // textAlign: 'center',
-  // color: theme.palette.text.secondary,
-}));
+const Item = styled(Paper)(({ theme }) => ({}));
 
 export default function Events() {
+  const [newsData, setNewsData] = React.useState([]);
+  const itemsPerPage = 4;
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [selectedNews, setSelectedNews] = React.useState(null);
+  const [showPopup, setShowPopup] = React.useState(false);
+
+  React.useEffect(() => {
+    async function fetchNewsData() {
+      try {
+        const response = await fetch("/api/news");
+        const data = await response.json();
+        setNewsData(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchNewsData();
+  }, []);
+
+  const totalPages = Math.ceil(newsData.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, newsData.length);
+  const visibleNews = newsData.slice(startIndex, endIndex);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleCardClick = (news) => {
+    setSelectedNews(news);
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <h1 className='h1-heading'>News and Events</h1>
-      <Grid container spacing={2}>
-        <Grid item xs={6} md={4} lg={3}>
-          <Item>
-            <NewsCard 
-            ImgSrc={img01}
-            ImgAlt="English Day Celebration"
-            title="English Day Celebration"
-            description="English Day Celebration happened on the 10th of September 2023, at the Zarina Hall Universal International School."
-            btnText="Learn More"
-            link="EngDay"
-            /></Item>
+    <div className="eventComponent">
+      <Box sx={{ flexGrow: 1 }}>
+        <h1 className="h1-heading">News and Events</h1>
+        <Grid container spacing={2}>
+          {visibleNews.map((news, index) => (
+            <Grid item xs={6} md={4} lg={3} key={index}>
+              <Item>
+                <NewsCard
+                  ImgSrc={news.image}
+                  ImgAlt={news.title}
+                  title={news.title}
+                  description={
+                    news.content.length > 200
+                      ? `${news.content.substring(0, 150)}...`
+                      : news.content
+                  }
+                  btnText="Read More"
+                  onClick={() => handleCardClick(news)}
+                />
+              </Item>
+            </Grid>
+          ))}
         </Grid>
-        <Grid item xs={6} md={4} lg={3}>
-          <Item><NewsCard 
-          ImgSrc={img01}
-          ImgAlt="Inter-College Sports Competition"
-          title="College Sports"
-          description="Inter-College Sports Competition happened on the 10th of September 2023, at the Balangoda Municipal Grounds."
-          btnText="Learn More"
-          link="SportsDay"
-          /></Item>
-        </Grid>
-        <Grid item xs={6} md={4} lg={3}>
-          <Item><NewsCard 
-          ImgSrc={img03}
-          ImgAlt="AISL Speech Contest"
-          title="AISL Speech"
-          description="Inter-College Sports Competition happened on the 10th of September 2023, at the Balangoda Municipal Grounds."
-          btnText="Learn More"
-          link="AISL Speech Contest"
-          /></Item>
-        </Grid>
-        <Grid item xs={6} md={4} lg={3}>
-          <Item><NewsCard 
-          ImgSrc={img04}
-          ImgAlt="Water Day"
-          title="World Water Day"
-          description="Inter-College Sports Competition happened on the 10th of September 2023, at the Balangoda Municipal Grounds."
-          btnText="Read More"
-          link="Water Day"
-          /></Item>
-        </Grid>
-        <Grid item xs={6} md={4} lg={3}>
-          <Item><NewsCard 
-          ImgSrc={img01}
-          ImgAlt="World Rose Day"
-          title="Rose Day"
-          description="The primary, pre-primary students of Universal International Schools celebrated the Rose Day on the 2nd of February 2018."
-          btnText="Read More"
-          link="RoseDay"
-          /></Item>
-        </Grid>
-        <Grid item xs={6} md={4} lg={3}>
-          <Item><NewsCard 
-          ImgSrc={img02}
-          ImgAlt="End Examination"
-          title="End Examination"
-          description="The end examination of Universal International School was conducted on the 20th of August, with the staff and students."
-          btnText="Read More"
-          link="EndExam"
-          /></Item>
-        </Grid>
-        <Grid item xs={6} md={4} lg={3}>
-          <Item><NewsCard 
-          ImgSrc={img02}
-          ImgAlt="End Examination"
-          title="End Examination"
-          description="The end examination of Universal International School was conducted on the 20th of August, with the staff and students."
-          btnText="Read More"
-          link="EndExam"
-          /></Item>
-        </Grid>
-        <Grid item xs={6} md={4} lg={3}>
-          <Item><NewsCard 
-          ImgSrc={img02}
-          ImgAlt="End Examination"
-          title="End Examination"
-          description="The end examination of Universal International School was conducted on the 20th of August, with the staff and students."
-          btnText="Read More"
-          link="EndExam"
-          /></Item>
-        </Grid>
-      </Grid>
-    </Box>
+        <div className="pagination-div">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              className="pagination"
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+              style={{
+                marginRight: "5px",
+                fontWeight: currentPage === index + 1 ? "bold" : "normal",
+              }}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+      </Box>
+      {showPopup && selectedNews && (
+        <div className="popup-news">
+          <div className="popup-inner-news">
+            <h2>{selectedNews.title}</h2>
+            <img
+              src={selectedNews.image}
+              alt={selectedNews.title}
+              className="popup-image"
+            />
+            <p>{selectedNews.content}</p>
+            <button className="btn btn-danger" onClick={closePopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
-
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,300;1,500&display=swap');
-</style>

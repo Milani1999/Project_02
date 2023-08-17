@@ -1,63 +1,59 @@
 .Popup,
 .popup-container {
-    background-color: white;
-    border: 2px solid green;
-    width: 1200px;
-    height: 95vh;
-    padding: 25px;
+  background-color: white;
+  border: 2px solid green;
+  width: 1200px;
+  height: 95vh;
+  padding: 25px;
 }
 
 .popup-container-view {
-    background-color: white;
-    border: 2px solid green;
-    padding: 5px 50px;
-    align-items: center;
+  background-color: white;
+  border: 2px solid green;
+  padding: 5px 50px;
+  align-items: center;
 }
 
 img {
-    border-radius: 100px;
+  border-radius: 100px;
 }
 
 .popup-container-delete {
-    background-color: white;
-    border: 2px solid green;
-    padding: 30px;
-    text-align: center;
+  background-color: white;
+  border: 2px solid green;
+  padding: 30px;
+  text-align: center;
 }
 
 .imgEdit {
-    margin-left: 220px;
+  margin-left: 220px;
 }
 
-.viewTableStaff td{
-    text-align: left;
-    padding: 3px;
-    padding-left: 20px;
+.viewTableStaff td {
+  text-align: left;
+  padding: 3px;
+  padding-left: 20px;
 }
-.table-striped>tbody>tr:nth-of-type(odd) {
-    background-color: #f9f9f9;
-    height: 5px;
-
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+  height: 5px;
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #198f1b;
-    border-color:
-     #46a42e;
+  color: #fff;
+  background-color: #198f1b;
+  border-color: #46a42e;
 }
-.colname{
-    background-color: #cff1d4;
+.colname {
+  background-color: #cff1d4;
 }
 .table {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 20px;
-   
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
 }
 .btn-danger {
-    color: #fff;
-    background-color: #d9534f;
-    border-color: #d43f3a;
-    
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
 }

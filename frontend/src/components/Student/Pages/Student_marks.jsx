@@ -45,7 +45,7 @@ function Marks() {
   const totalMarks = totalAndCount.total;
   const Count = totalAndCount.count;
 
-  const average = totalMarks / Count;
+  const average = (totalMarks / Count).toFixed(2);
 
   return (
     <div>
