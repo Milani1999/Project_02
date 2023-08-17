@@ -84,6 +84,42 @@ const getStudentMarksByGrade = async (req, res) => {
   }
 };
 
+const getStudentMarksByTerm = async (req, res) => {
+  const year = req.params.year;
+  const grade = req.params.grade;
+  const subject = req.params.subject;
+
+  if (!year || !grade || !subject) {
+    return res
+      .status(400)
+      .json({ error: "Please provide all three parameters in the URL." });
+  }
+
+  try {
+    const marksData = await Mark.find({
+      year: year,
+      grade: grade,
+      subject: subject,
+    });
+
+    if (!marksData || marksData.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No records found for the provided parameters." });
+    }
+
+    const response = marksData.map((mark) => ({
+      term: mark.term,
+      scores: mark.students.map(student => student.score),
+    }));
+
+    res.json(response);
+  } catch (err) {
+    console.error("Error fetching marks:", err);
+    return res.status(500).json({ error: "Error fetching data." });
+  }
+};
+
 
 const getStudentMarksByParams = asyncHandler(async (req, res) => {
   const year = req.params.year;
@@ -161,7 +197,7 @@ const saveMarks = asyncHandler(async (req, res) => {
       } else if (score === "AB") {
         parsedScore = "AB";
       } else {
-        parsedScore = 0; // Set your desired default value here
+        parsedScore = 0;
       }
 
       const studentIndex = mark.students.findIndex(
@@ -249,6 +285,7 @@ module.exports = {
   saveMarks,
   getStudentMarksByID,
   getStudentMarksByGrade,
+  getStudentMarksByTerm,
   getStudentMarksByParams,
   editMarks,
 };

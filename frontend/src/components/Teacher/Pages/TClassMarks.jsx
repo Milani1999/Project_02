@@ -132,9 +132,9 @@ const TClassMarks = () => {
         </div>
 
         <div className="filter">
-          <label htmlFor="gradeSelect">Select Grade: </label>
+          <label htmlFor="gradesSelect">Select Grade: </label>
           <select
-            id="gradeSelect"
+            id="gradesSelect"
             value={selectedGrade}
             onChange={(e) => setSelectedGrade(e.target.value)}
           >

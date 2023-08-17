@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Table, Col, Row } from "react-bootstrap";
+import { Form, Button, Table } from "react-bootstrap";
 import axios from "axios";
 import Popup from "reactjs-popup";
+import "./News.css";
+import AddNews from "./AddNews";
 
 const News = () => {
   const [newsList, setNewsList] = useState([]);
@@ -59,7 +61,7 @@ const News = () => {
       await axios.put(`/api/news/${_id}`, newsData);
       setShowEditPopup(false);
       fetchNewsData();
-      alert("News member updated successfully.");
+      alert("News updated successfully.");
     } catch (error) {
       console.error(error);
       alert("Please fill all the fields");
@@ -82,25 +84,25 @@ const News = () => {
       await axios.delete(`/api/news/${_id}`);
       setShowDeletePopup(false);
       fetchNewsData();
-      alert("News member deleted successfully.");
+      alert("News deleted successfully.");
     } catch (error) {
       console.error(error);
-      alert("Failed to delete news member.");
+      alert("Failed to delete news.");
     }
   };
 
   return (
     <div>
-      <Table striped hover className="mt-5">
+      <Table striped hover className="mt-4">
         <thead>
           <tr>
-            <th colSpan={7}></th>
+            <th colSpan={3}></th>
             <th style={{ textAlign: "center", width: "100px" }}>
-              {/* <AddNews /> */}
+              <AddNews/>
             </th>
           </tr>
 
-          <tr className="colname">
+          <tr className="colname-news">
             <th style={{ textAlign: "center" }}>Image</th>
             <th style={{ textAlign: "center" }}>Title</th>
             <th style={{ textAlign: "center" }}>Content</th>
@@ -141,9 +143,9 @@ const News = () => {
       </Table>
 
       <Popup open={showEditPopup} onClose={handleCloseEditPopup}>
-        <div className="popup-background">
+        <div className="popup-background-news">
           {selectedNews && (
-            <div className="popup-container">
+            <div className="popup-container-news">
               <form onSubmit={handleEditSubmit}>
                 <div>
                   <div
@@ -222,10 +224,8 @@ const News = () => {
         <div className="popup-background">
           {selectedNews && (
             <div className="popup-container-delete">
-              <h5>Are you sure you want to delete this news member?</h5>
-              Employee ID : {selectedNews.employee_id}
-              <br />
-              Full Name : {selectedNews.fullname}
+              <h5>Are you sure you want to delete this News ?</h5>
+              Title : {selectedNews.title}
               <br />
               <Button
                 variant="danger"
