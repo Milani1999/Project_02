@@ -1,13 +1,10 @@
-*{
+* {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
-  font-family: Arial, Helvetica, sans-serif;
-  
-  
 }
 
-.card-container{
+.card-container {
   width: 950x;
   border-radius: 1rem;
   box-shadow: 0px 5px 4px #d3d1d1;
@@ -15,34 +12,32 @@
   flex-direction: column;
   margin: 0.5rem;
   background-color: white;
-  height: fit-content;
-  margin-left: 20px;
-  margin-right: 5px;
-
- 
-  /* box-shadow: none !important; */
+  height: 450px;
+  margin: auto;
 }
 
-.css-887cpn-MuiPaper-root{
+.css-887cpn-MuiPaper-root {
   box-shadow: none !important;
 }
-.card-container:hover{
-  box-shadow: rgba(183, 235, 181, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+.card-container:hover {
+  box-shadow: rgba(183, 235, 181, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
-.card-img{
+.card-img {
   height: 250px;
   width: auto;
   border-radius: 1rem 1rem 0 0;
 }
 
 .card-title,
-.card-desc{
+.card-desc {
   margin: 0.5rem 5%;
   padding: 2px;
 }
 
-.card-btn{
+.card-btn {
   text-align: center;
   width: 90%;
   border-radius: 5px;
@@ -52,8 +47,14 @@
   text-decoration: none;
   margin: 0.5rem auto;
   padding: 5px 5px;
-  
-}.card-btn:hover{
+}
+.card-btn:hover {
   text-decoration: none !important;
   color: #c0ecc4;
+}
+
+.card-img {
+  height: 250px;
+  width: 280px;
+  margin: auto;
 }
