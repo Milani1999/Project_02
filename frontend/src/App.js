@@ -48,7 +48,7 @@ import StaffAttendance from "./components/Administrator/pages/StaffAttendance";
 import StudentAttendance from "./components/Administrator/pages/StudentAttendance";
 import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttendance";
 import Gallery from "./components/section/Gallery";
-
+import EditGallery from "./components/Administrator/pages/EditGallery";
 function App() {
   return (
     <Router>
@@ -108,7 +108,7 @@ function App() {
             <Route path="Support" element={<Support />} />
             <Route path="StaffAttendance" element={<StaffAttendance/>}/>
             <Route path="StudentAttendance" element={<StudentAttendance/>}/>
-        
+            <Route path="EditGallery" element={<EditGallery/>}/>
           </Route>
 
           <Route
