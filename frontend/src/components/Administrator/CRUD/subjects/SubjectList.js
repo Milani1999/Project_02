@@ -73,8 +73,10 @@ const SubjectList = () => {
       <Table striped hover className="mt-4">
         <thead>
           <tr>
+            <th colSpan={2}>
+            </th>
             <th>
-              <AddSubjects setSubjectList={setSubjectList} />
+            <AddSubjects setSubjectList={setSubjectList} />
             </th>
           </tr>
           <tr>

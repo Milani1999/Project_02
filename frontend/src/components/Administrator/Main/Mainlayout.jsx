@@ -125,15 +125,28 @@ const MainLayout = () => {
                 },
               ],
             },
-            {
-              key: "Subject",
-              icon: <RiCalendarCheckFill className="fs-4" />,
-              label: "Subjects",
-            },
+
             {
               key: "Timetable",
               icon: <RiCalendarCheckFill className="fs-4" />,
               label: "Timetable",
+              children: [
+                {
+                  key: "Subject",
+                  icon: <RiCalendarCheckFill className="fs-4" />,
+                  label: "Subjects",
+                },
+                {
+                  key: "AssignStaff",
+                  icon: <RiCalendarCheckFill className="fs-4" />,
+                  label: "Assign Staff",
+                },
+                {
+                  key: "Timetable",
+                  icon: <RiCalendarCheckFill className="fs-4" />,
+                  label: "Timetable",
+                },
+              ],
             },
             {
               key: "Events",

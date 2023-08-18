@@ -61,6 +61,10 @@
   margin: 5px;
 }
 
+.filterMarks .filter label{
+  margin-right: 10px;
+}
+
 .view-marks-table {
   display: flex;
   align-items: center;
@@ -75,6 +79,8 @@
 
 .view-marks-table th {
   background-color: #cff1d4;
+  text-align: center;
+  padding: 10px;
 }
 
 .view-marks-table td{
