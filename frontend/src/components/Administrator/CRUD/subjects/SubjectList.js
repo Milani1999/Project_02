@@ -94,19 +94,8 @@ const SubjectList = () => {
     }
   };
 
-  const handleAddToSelected = (e) => {
-    const selectedStaff = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setFormData({
-      ...formData,
-      staff_name: selectedStaff,
-    });
-  };
-
   return (
-    <div>
+    <div className="subject-view">
       <Table striped hover className="mt-4">
         <thead>
           <tr>
@@ -204,31 +193,36 @@ const SubjectList = () => {
                   />
                 </div>
                 <Form.Control
-  as="select"
-  multiple
-  name="staff_name"
-  value={selectedSubject.staff_name}
-  onChange={(e) => {
-    const selectedStaffNames = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
-    setSelectedSubject((prevSelectedSubject) => ({
-      ...prevSelectedSubject,
-      staff_name: [...prevSelectedSubject.staff_name, ...selectedStaffNames],
-    }));
-  }}
->
-  {staffOptions.map((staff) => (
-    <option
-      key={staff.value}
-      value={staff.fullname}
-      disabled={selectedSubject.staff_name.includes(staff.fullname)}
-    >
-      {staff.employee_id} - {staff.fullname}
-    </option>
-  ))}
-</Form.Control>
+                  as="select"
+                  multiple
+                  name="staff_name"
+                  value={selectedSubject.staff_name}
+                  onChange={(e) => {
+                    const selectedStaffNames = Array.from(
+                      e.target.selectedOptions,
+                      (option) => option.value
+                    );
+                    setSelectedSubject((prevSelectedSubject) => ({
+                      ...prevSelectedSubject,
+                      staff_name: [
+                        ...prevSelectedSubject.staff_name,
+                        ...selectedStaffNames,
+                      ],
+                    }));
+                  }}
+                >
+                  {staffOptions.map((staff) => (
+                    <option
+                      key={staff.value}
+                      value={staff.fullname}
+                      disabled={selectedSubject.staff_name.includes(
+                        staff.fullname
+                      )}
+                    >
+                      {staff.employee_id} - {staff.fullname}
+                    </option>
+                  ))}
+                </Form.Control>
 
                 <div>
                   <Form.Label>Existing Assigned Staff</Form.Label>

@@ -1,9 +1,9 @@
-.mt-4 th,
-td {
+.subject-view .mt-4 th,
+.subject-view .mt-4 td{
     text-align: center;
-}
-
-td{
     vertical-align: middle;
 }
 
+.subject-view .mt-4 th{
+    padding: 10px;
+}
