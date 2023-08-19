@@ -47,7 +47,6 @@ import SNotices from "./components/Student/Pages/SNotices";
 import StaffAttendance from "./components/Administrator/pages/StaffAttendance";
 import StudentAttendance from "./components/Administrator/pages/StudentAttendance";
 import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttendance";
-import AssignStaff from "./components/Administrator/pages/AssignStaff";
 
 function App() {
   return (
@@ -108,7 +107,6 @@ function App() {
             <Route path="Support" element={<Support />} />
             <Route path="StaffAttendance" element={<StaffAttendance />} />
             <Route path="StudentAttendance" element={<StudentAttendance />} />
-            <Route path="AssignStaff" element={<AssignStaff />} />
           </Route>
 
           <Route

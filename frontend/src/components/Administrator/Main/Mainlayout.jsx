@@ -137,11 +137,6 @@ const MainLayout = () => {
                   label: "Subjects",
                 },
                 {
-                  key: "AssignStaff",
-                  icon: <RiCalendarCheckFill className="fs-4" />,
-                  label: "Assign Staff",
-                },
-                {
                   key: "Timetable",
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Timetable",

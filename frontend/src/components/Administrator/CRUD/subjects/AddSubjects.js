@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import Popup from "reactjs-popup";
 import { fetchSubjects } from "./FetchSubjects";
+import "./subject.css";
 
 function AddSubjects({ setSubjectList }) {
   const [formData, setFormData] = useState({
@@ -89,7 +90,7 @@ function AddSubjects({ setSubjectList }) {
   };
 
   return (
-    <div>
+    <div className="add-subject-list">
       <Button variant="primary" onClick={() => setIsPopupOpen(true)}>
         Add Subject
       </Button>
@@ -106,7 +107,7 @@ function AddSubjects({ setSubjectList }) {
           >
             <Form onSubmit={submitHandler}>
               <Form.Group controlId="subject_id">
-                <Form.Label>Subject ID</Form.Label>
+                <Form.Label className="label-subject">Subject ID</Form.Label>
                 <Form.Control
                   type="text"
                   name="subject_id"
@@ -117,7 +118,7 @@ function AddSubjects({ setSubjectList }) {
               </Form.Group>
 
               <Form.Group controlId="subject_name">
-                <Form.Label>Subject Name</Form.Label>
+                <Form.Label className="label-subject">Subject Name</Form.Label>
                 <Form.Control
                   type="text"
                   name="subject_name"
@@ -128,7 +129,7 @@ function AddSubjects({ setSubjectList }) {
               </Form.Group>
 
               <Form.Group controlId="staff_name">
-                <Form.Label>Assign Staff</Form.Label>
+                <Form.Label className="label-subject">List of Staff</Form.Label>
                 <Form.Control
                   as="select"
                   multiple
@@ -145,7 +146,9 @@ function AddSubjects({ setSubjectList }) {
               </Form.Group>
 
               <Form.Group controlId="selected_staff">
-                <Form.Label>Selected Staff</Form.Label>
+                <Form.Label className="label-subject">
+                  Assigned Staff
+                </Form.Label>
                 <div>
                   {formData.staff_name.map((name) => (
                     <span key={name}>

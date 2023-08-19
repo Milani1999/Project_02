@@ -163,7 +163,7 @@ const SubjectList = () => {
             >
               <form onSubmit={handleEditSubmit}>
                 <div>
-                  <Form.Label>Subject ID</Form.Label>
+                  <Form.Label className="label-subject">Subject ID</Form.Label>
                   <Form.Control
                     type="text"
                     id="subject_id"
@@ -178,7 +178,9 @@ const SubjectList = () => {
                   />
                 </div>
                 <div>
-                  <Form.Label>Subject Name</Form.Label>
+                  <Form.Label className="label-subject">
+                    Subject Name
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     id="subject_name"
@@ -192,40 +194,46 @@ const SubjectList = () => {
                     }
                   />
                 </div>
-                <Form.Control
-                  as="select"
-                  multiple
-                  name="staff_name"
-                  value={selectedSubject.staff_name}
-                  onChange={(e) => {
-                    const selectedStaffNames = Array.from(
-                      e.target.selectedOptions,
-                      (option) => option.value
-                    );
-                    setSelectedSubject((prevSelectedSubject) => ({
-                      ...prevSelectedSubject,
-                      staff_name: [
-                        ...prevSelectedSubject.staff_name,
-                        ...selectedStaffNames,
-                      ],
-                    }));
-                  }}
-                >
-                  {staffOptions.map((staff) => (
-                    <option
-                      key={staff.value}
-                      value={staff.fullname}
-                      disabled={selectedSubject.staff_name.includes(
-                        staff.fullname
-                      )}
-                    >
-                      {staff.employee_id} - {staff.fullname}
-                    </option>
-                  ))}
-                </Form.Control>
-
                 <div>
-                  <Form.Label>Existing Assigned Staff</Form.Label>
+                  <Form.Label className="label-subject">
+                    List of Staff
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    multiple
+                    name="staff_name"
+                    value={selectedSubject.staff_name}
+                    onChange={(e) => {
+                      const selectedStaffNames = Array.from(
+                        e.target.selectedOptions,
+                        (option) => option.value
+                      );
+                      setSelectedSubject((prevSelectedSubject) => ({
+                        ...prevSelectedSubject,
+                        staff_name: [
+                          ...prevSelectedSubject.staff_name,
+                          ...selectedStaffNames,
+                        ],
+                      }));
+                    }}
+                  >
+                    {staffOptions.map((staff) => (
+                      <option
+                        key={staff.value}
+                        value={staff.fullname}
+                        disabled={selectedSubject.staff_name.includes(
+                          staff.fullname
+                        )}
+                      >
+                        {staff.employee_id} - {staff.fullname}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </div>
+                <div>
+                  <Form.Label className="label-subject">
+                    Assigned Staff
+                  </Form.Label>
                   {selectedSubject.staff_name &&
                     selectedSubject.staff_name.map((staff, index) => (
                       <div key={index}>
