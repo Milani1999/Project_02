@@ -138,7 +138,7 @@ function AddSubjects({ setSubjectList }) {
                 >
                   {staffOptions.map((staff) => (
                     <option key={staff.value} value={staff.fullname}>
-                      {staff.fullname}
+                      {staff.employee_id} - {staff.fullname}
                     </option>
                   ))}
                 </Form.Control>
