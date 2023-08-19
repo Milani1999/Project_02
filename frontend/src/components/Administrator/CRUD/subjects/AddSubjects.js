@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import Popup from "reactjs-popup";
@@ -8,13 +8,49 @@ function AddSubjects({ setSubjectList }) {
   const [formData, setFormData] = useState({
     subject_id: "",
     subject_name: "",
+    staff_name: [],
   });
 
+  const [staffOptions, setStaffOptions] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  useEffect(() => {
+    async function fetchStaff() {
+      try {
+        const response = await axios.get("/api/staff");
+        setStaffOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching staff data:", error);
+      }
+    }
+
+    fetchStaff();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handleAddToSelected = (e) => {
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      staff_name: [
+        ...new Set([...prevFormData.staff_name, ...selectedOptions]),
+      ],
+    }));
+  };
+
+  const handleRemoveStaff = (staffName) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      staff_name: prevFormData.staff_name.filter((name) => name !== staffName),
+    }));
   };
 
   const submitHandler = async (e) => {
@@ -33,6 +69,7 @@ function AddSubjects({ setSubjectList }) {
       setFormData({
         subject_id: "",
         subject_name: "",
+        staff_name: [],
       });
       setIsPopupOpen(false);
       const updatedSubjects = await fetchSubjects();
@@ -43,6 +80,11 @@ function AddSubjects({ setSubjectList }) {
   };
 
   const handleCancel = () => {
+    setFormData({
+      subject_id: "",
+      subject_name: "",
+      staff_name: [],
+    });
     setIsPopupOpen(false);
   };
 
@@ -83,6 +125,42 @@ function AddSubjects({ setSubjectList }) {
                   placeholder="Enter Subject Name"
                   onChange={handleChange}
                 />
+              </Form.Group>
+
+              <Form.Group controlId="staff_name">
+                <Form.Label>Assign Staff</Form.Label>
+                <Form.Control
+                  as="select"
+                  multiple
+                  name="staff_name"
+                  value={formData.staff_name}
+                  onChange={handleAddToSelected}
+                >
+                  {staffOptions.map((staff) => (
+                    <option key={staff.value} value={staff.fullname}>
+                      {staff.fullname}
+                    </option>
+                  ))}
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId="selected_staff">
+                <Form.Label>Selected Staff</Form.Label>
+                <div>
+                  {formData.staff_name.map((name) => (
+                    <span key={name}>
+                      {name}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveStaff(name)}
+                        className="remove-button"
+                      >
+                        -
+                      </button>
+                      <br />
+                    </span>
+                  ))}
+                </div>
               </Form.Group>
 
               <Button variant="primary" type="submit" className="mt-5 mx-3">
