@@ -1,29 +1,24 @@
-.time-table {
+.time-table-admin {
   width: 100%;
+  height: 80%;
 }
 
-table {
+.timeTable-admin {
+  margin-top: 30px;
   width: 100%;
-  border-collapse: collapse;
-  border: 1px solid #ccc;
+  height: 100%;
 }
 
-th,
-td {
+.timeTable-admin th,
+.timeTable-admin td {
   padding: 8px;
   text-align: center;
   border: 1px solid black;
+  width: 16%;
 }
 
-tr {
+.timeTable-admin tr{
+  height: 11%;
   border: 1px solid black;
 }
 
-
-td{
-  border-right: 1px solid black;
-}
-
-th {
-  background-color: #f2f2f2;
-}
