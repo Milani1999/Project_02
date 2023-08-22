@@ -4,7 +4,6 @@ import "./Timetable.css";
 import LoadingSpinner from "../../Loading/Loading";
 
 const TimeTable = () => {
-  const periods = 8;
   const weekdays = 5;
 
   const [timetableData, setTimetableData] = useState([]);
@@ -122,7 +121,7 @@ const TimeTable = () => {
       setSelectedStaff("");
       setSelectedSubject("");
     } catch (error) {
-      console.error("Error while saving:", error);
+      alert("Particular staff has another period in this time");
     }
   };
 
@@ -175,6 +174,17 @@ const TimeTable = () => {
     setShowDeletePopup(false);
   };
 
+  const times = [
+    "07:45 am",
+    "08:25 am",
+    "09:10 am",
+    "09:50 am",
+    "10:45 am",
+    "11:25 am",
+    "12:10 pm",
+    "12:50 pm",
+  ];
+
   return (
     <div className="time-table-admin">
       <div>
@@ -194,7 +204,7 @@ const TimeTable = () => {
         <table className="timeTable-admin">
           <thead>
             <tr>
-              <th></th>
+              <th>Time</th>
               <th>Monday</th>
               <th>Tuesday</th>
               <th>Wednesday</th>
@@ -203,9 +213,9 @@ const TimeTable = () => {
             </tr>
           </thead>
           <tbody>
-            {Array.from({ length: periods }).map((_, period) => (
+            {times.map((time, period) => (
               <tr key={period}>
-                <td>Period : {period + 1}</td>
+                <td>{time}</td>
                 {Array.from({ length: weekdays }).map((_, weekday) => (
                   <td key={weekday}>{getCellData(weekday + 1, period + 1)}</td>
                 ))}
