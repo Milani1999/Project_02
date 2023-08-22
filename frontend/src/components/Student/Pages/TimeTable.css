@@ -1,90 +1,36 @@
-.time-table-admin {
+.time-table-student {
   width: 100%;
   height: 80%;
 }
 
-.timeTable-admin {
+.timeTable-student {
   margin-top: 30px;
   width: 100%;
   height: 100%;
 }
 
-.time-table-admin th{
+.time-table-student th{
   background-color: #cff1d4;
 }
 
-.timeTable-admin th,
-.timeTable-admin td {
+.timeTable-student th,
+.timeTable-student td {
   padding: 8px;
   text-align: center;
   border: 1px solid #19441f;
   width: 16%;
 }
 
-.timeTable-admin tr {
+.timeTable-student tr {
   height: 11%;
   border: 1px solid #19441f;
 }
 
-.add-period {
-  padding: 5% 40%;
-  background-color: #cff1d4;
-  border: none;
-  font-weight: bolder;
-}
 
-.add-period-popup {
-  background-color: white;
-  border: 2px solid green;
-  padding: 30px;
-  text-align: center;
-}
-
-.select-staff-add-popup,
-.select-subject-add-popup {
-  padding: 10px;
-}
-
-.select-staff-add-popup label,
-.select-subject-add-popup label {
-  width: 150px;
-}
-
-.select-staff-add-popup select,
-.select-subject-add-popup select {
-  width: 150px;
-}
-
-.add-period-popup .btn {
-  width: 100px;
-}
-
-.cell-data-time-table {
+.cell-data-time-table-student {
   background-color: none;
   border: none;
   padding: 0% 7%;
 }
 
-.cell-data-time-table:hover {
-  background-color: #cff1d4;
-  color: #cff1d4;
-}
 
-.disabled {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
-.popup-background-timetable{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(3, 46, 13, 0.3);
-  backdrop-filter: blur(8px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}

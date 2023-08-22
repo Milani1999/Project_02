@@ -2,126 +2,41 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./TimeTable.css";
 import LoadingSpinner from "../../Loading/Loading";
+import { fetchStudentData } from "../../Count/Data";
 
 const TimeTable = () => {
   const weekdays = 5;
 
   const [timetableData, setTimetableData] = useState([]);
-  const [grade, setGrade] = useState("");
   const [loading, setLoading] = useState(false);
-  const [popupVisible, setPopupVisible] = useState(false);
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [selectedStaff, setSelectedStaff] = useState("");
-  const [selectedWeekday, setSelectedWeekday] = useState(1);
-  const [selectedPeriod, setSelectedPeriod] = useState(1);
-  const [subjects, setSubjects] = useState([]);
-  const [subjectStaffMap, setSubjectStaffMap] = useState({});
-  const [staffIdMap, setStaffIdMap] = useState({});
-  const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [selectedID, setSelectedID] = useState("");
+
+  const userInfo = localStorage.getItem("userInfo");
+  const user = JSON.parse(userInfo);
+  const studentId = user?.id;
 
   useEffect(() => {
-    fetchSubjects();
-    fetchStaff();
-  }, []);
+    const fetchStudentDetails = async () => {
+      try {
+        const data = await fetchStudentData(studentId);
+        const grade = data.grade;
+        const timetableData = await fetchStaffTimeTableData(grade);
+        setTimetableData(timetableData);
+      } catch (error) {
+        alert("Error fetching student details:", error);
+      }
+    };
 
-  useEffect(() => {
-    if (grade !== "") {
-      const fetchData = async () => {
-        const data = await fetchTimetableData(grade);
-        setTimetableData(data);
-      };
-      fetchData();
-    }
-  }, [grade]);
+    fetchStudentDetails();
+  }, [studentId]);
 
-  const fetchTimetableData = async (grade) => {
+  const fetchStaffTimeTableData = async (grade) => {
     try {
       setLoading(true);
-
-      const response = await fetch(`/api/timetable/grade/${grade}`);
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching timetable data:", error);
-      return [];
-    } finally {
+      const response = await axios.get(`/api/timetable/grade/${grade}`);
       setLoading(false);
-    }
-  };
-
-  const fetchSubjects = async () => {
-    try {
-      const response = await axios.get("/api/subjects");
-      const subjectMap = {};
-      response.data.forEach((subject) => {
-        subjectMap[subject.subject_name] = subject.staff_name;
-      });
-      setSubjects(response.data);
-      setSubjectStaffMap(subjectMap);
+      return response.data;
     } catch (error) {
-      console.error("Error fetching subjects:", error);
-    }
-  };
-
-  const handleGradeChange = (event) => {
-    setGrade(event.target.value);
-  };
-
-  const handleAddClick = (weekday, period) => {
-    setSelectedWeekday(weekday);
-    setSelectedPeriod(period);
-    setPopupVisible(true);
-  };
-
-  const handlePopupClose = () => {
-    setPopupVisible(false);
-    setSelectedStaff("");
-    setSelectedSubject("");
-  };
-
-  const fetchStaff = async () => {
-    try {
-      const response = await axios.get("/api/staff");
-      const staffData = response.data;
-      const idMap = {};
-      staffData.forEach((staff) => {
-        idMap[staff.fullname] = staff._id;
-      });
-      setStaffIdMap(idMap);
-    } catch (error) {
-      console.error("Error fetching staff data:", error);
-    }
-  };
-
-  const handlePopupSave = async () => {
-    try {
-      const selectedStaffId = staffIdMap[selectedStaff];
-      await axios.post(
-        `/api/timetable/create/${selectedWeekday}/${selectedPeriod}/${grade}`,
-        {
-          subject: selectedSubject,
-          staff: [
-            {
-              staff_id: selectedStaffId,
-              staff_name: selectedStaff,
-            },
-          ],
-        }
-      );
-      const updatedData = await fetchTimetableData(grade);
-      setTimetableData(updatedData);
-      alert("Saved successfully!");
-      setPopupVisible(false);
-      setSelectedStaff("");
-      setSelectedSubject("");
-    } catch (error) {
-      alert("Particular staff has another period in this time");
+      throw new Error("Error fetching timetable details");
     }
   };
 
@@ -132,46 +47,14 @@ const TimeTable = () => {
 
     if (matchingCell) {
       return (
-        <button
-          className="cell-data-time-table"
-          onClick={() => handleCellClick(matchingCell._id)}
-        >
+        <div className="cell-data-time-table-student">
           {matchingCell.subject}
           <br />({matchingCell.staff_name})
-        </button>
+        </div>
       );
     } else {
-      return (
-        <button
-          className="add-period"
-          onClick={() => handleAddClick(weekday, period)}
-        >
-          +
-        </button>
-      );
+      return "-";
     }
-  };
-
-  const handleCellClick = (_id) => {
-    setSelectedID(_id);
-    setShowDeletePopup(true);
-  };
-
-  const confirmDelete = async () => {
-    try {
-      await axios.delete(`/api/timetable/${selectedID}`);
-      setShowDeletePopup(false);
-      alert("Item deleted successfully.");
-      const updatedData = await fetchTimetableData(grade);
-      setTimetableData(updatedData);
-    } catch (error) {
-      alert("Failed to delete item.");
-    }
-  };
-
-  const handleCancelDelete = () => {
-    setSelectedID("");
-    setShowDeletePopup(false);
   };
 
   const times = [
@@ -186,22 +69,11 @@ const TimeTable = () => {
   ];
 
   return (
-    <div className="time-table-admin">
-      <div>
-        <label>Select Grade:</label>
-        <select value={grade} onChange={handleGradeChange}>
-          <option value="">Select Grade</option>
-          {Array.from({ length: 11 }, (_, index) => (
-            <option key={index} value={index + 1}>
-              Grade {index + 1}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className="time-table-student">
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <table className="timeTable-admin">
+        <table className="timeTable-student">
           <thead>
             <tr>
               <th>Time</th>
@@ -223,68 +95,6 @@ const TimeTable = () => {
             ))}
           </tbody>
         </table>
-      )}
-
-      {popupVisible && (
-        <div className="popup-background-timetable">
-          <div className="add-period-popup">
-            <h2>Create Time Table</h2>
-            <div className="select-staff-add-popup">
-              <label>Select Subject : </label>
-              <select
-                value={selectedSubject}
-                onChange={(e) => {
-                  setSelectedSubject(e.target.value);
-                  setSelectedStaff("");
-                }}
-              >
-                <option value="">Select a subject</option>
-                {subjects.map((subject) => (
-                  <option key={subject._id} value={subject.subject_name}>
-                    {subject.subject_name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="select-subject-add-popup">
-              <label>Select Staff : </label>
-              <select
-                value={selectedStaff}
-                onChange={(e) => setSelectedStaff(e.target.value)}
-              >
-                <option value="">Select a staff</option>
-                {subjectStaffMap[selectedSubject]?.map((staffName) => (
-                  <option key={staffName} value={staffName}>
-                    {staffName}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <br />
-            <button className="btn btn-success m-2" onClick={handlePopupSave}>
-              Save
-            </button>
-            <button className="btn btn-danger" onClick={handlePopupClose}>
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
-
-      {showDeletePopup && selectedID && (
-        <div className="popup-background-timetable">
-          <div className="popup-container-delete">
-            <h2>Confirm Deletion</h2>
-            <p>Are you sure you want to delete this item?</p>
-            <button className="btn btn-danger m-3" onClick={confirmDelete}>
-              Delete
-            </button>
-            <button className="btn btn-secondary" onClick={handleCancelDelete}>
-              Cancel
-            </button>
-          </div>
-        </div>
       )}
     </div>
   );

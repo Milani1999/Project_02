@@ -117,7 +117,7 @@ const StudentMain = () => {
             },
             {
               key: "TimeTable",
-              icon: <RiMoneyDollarCircleLine className="fs-4" />,
+              icon: <RiCalendarCheckFill className="fs-4" />,
               label: "Time Table",
             },
             {
