@@ -24,6 +24,7 @@ const getByGrade = asyncHandler(async (req, res) => {
     }
 
     const response = tableData.map((timeTable) => ({
+      _id:timeTable._id,
       weekday: timeTable.weekday,
       period: timeTable.period,
       subject: timeTable.subject,
@@ -88,8 +89,32 @@ const createTimeTable = asyncHandler(async (req, res) => {
   }
 });
 
+const getTimeTableById = asyncHandler(async (req, res) => {
+  const timeTable = await TimeTable.findById(req.params.id);
+
+  if (timeTable) {
+    res.json(timeTable);
+  } else {
+    res.status(404).json({ message: "Time table Not Found" });
+  }
+});
+
+const deleteTimeTable = asyncHandler(async (req, res) => {
+  const timeTable = await TimeTable.findById(req.params.id);
+
+  if (timeTable) {
+    await timeTable.deleteOne();
+    res.json({ message: "Period Removed Successfully" });
+  } else {
+    res.status(404);
+    throw new Error("Period not found");
+  }
+});
+
 module.exports = {
   getTimeTable,
   getByGrade,
   createTimeTable,
+  getTimeTableById,
+  deleteTimeTable,
 };

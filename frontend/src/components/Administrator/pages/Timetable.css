@@ -54,3 +54,33 @@
 .add-period-popup .btn {
   width: 100px;
 }
+
+.cell-data-time-table {
+  background-color: none;
+  border: none;
+  padding: 0% 7%;
+}
+
+.cell-data-time-table:hover {
+  background-color: #cff1d4;
+  color: #cff1d4;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.popup-background-timetable{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(3, 46, 13, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}

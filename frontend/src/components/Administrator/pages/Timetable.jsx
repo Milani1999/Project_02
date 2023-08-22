@@ -18,6 +18,8 @@ const TimeTable = () => {
   const [subjects, setSubjects] = useState([]);
   const [subjectStaffMap, setSubjectStaffMap] = useState({});
   const [staffIdMap, setStaffIdMap] = useState({});
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [selectedID, setSelectedID] = useState("");
 
   useEffect(() => {
     fetchSubjects();
@@ -128,12 +130,16 @@ const TimeTable = () => {
     const matchingCell = timetableData.find(
       (data) => data.weekday === weekday && data.period === period
     );
+
     if (matchingCell) {
       return (
-        <span>
+        <button
+          className="cell-data-time-table"
+          onClick={() => handleCellClick(matchingCell._id)}
+        >
           {matchingCell.subject}
           <br />({matchingCell.staff_name})
-        </span>
+        </button>
       );
     } else {
       return (
@@ -145,6 +151,28 @@ const TimeTable = () => {
         </button>
       );
     }
+  };
+
+  const handleCellClick = (_id) => {
+    setSelectedID(_id);
+    setShowDeletePopup(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      await axios.delete(`/api/timetable/${selectedID}`);
+      setShowDeletePopup(false);
+      alert("Item deleted successfully.");
+      const updatedData = await fetchTimetableData(grade);
+      setTimetableData(updatedData);
+    } catch (error) {
+      alert("Failed to delete item.");
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setSelectedID("");
+    setShowDeletePopup(false);
   };
 
   return (
@@ -179,12 +207,7 @@ const TimeTable = () => {
               <tr key={period}>
                 <td>Period : {period + 1}</td>
                 {Array.from({ length: weekdays }).map((_, weekday) => (
-                  <td
-                    key={weekday}
-                    onClick={() => handleAddClick(weekday + 1, period + 1)}
-                  >
-                    {getCellData(weekday + 1, period + 1)}
-                  </td>
+                  <td key={weekday}>{getCellData(weekday + 1, period + 1)}</td>
                 ))}
               </tr>
             ))}
@@ -193,8 +216,9 @@ const TimeTable = () => {
       )}
 
       {popupVisible && (
-        <div className="popup-background">
+        <div className="popup-background-timetable">
           <div className="add-period-popup">
+            <h2>Create Time Table</h2>
             <div className="select-staff-add-popup">
               <label>Select Subject : </label>
               <select
@@ -232,6 +256,21 @@ const TimeTable = () => {
               Save
             </button>
             <button className="btn btn-danger" onClick={handlePopupClose}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showDeletePopup && selectedID && (
+        <div className="popup-background-timetable">
+          <div className="popup-container-delete">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this item?</p>
+            <button className="btn btn-danger m-3" onClick={confirmDelete}>
+              Delete
+            </button>
+            <button className="btn btn-secondary" onClick={handleCancelDelete}>
               Cancel
             </button>
           </div>
