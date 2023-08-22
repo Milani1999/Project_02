@@ -1,72 +1,101 @@
-import React from 'react';
-import './TimeTable.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./TimeTable.css";
+import LoadingSpinner from "../../Loading/Loading";
+import { fetchStudentData } from "../../Count/Data";
 
 const TimeTable = () => {
+  const weekdays = 5;
+
+  const [timetableData, setTimetableData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const userInfo = localStorage.getItem("userInfo");
+  const user = JSON.parse(userInfo);
+  const studentId = user?.id;
+
+  useEffect(() => {
+    const fetchStudentDetails = async () => {
+      try {
+        const data = await fetchStudentData(studentId);
+        const grade = data.grade;
+        const timetableData = await fetchStaffTimeTableData(grade);
+        setTimetableData(timetableData);
+      } catch (error) {
+        alert("Error fetching student details:", error);
+      }
+    };
+
+    fetchStudentDetails();
+  }, [studentId]);
+
+  const fetchStaffTimeTableData = async (grade) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`/api/timetable/grade/${grade}`);
+      setLoading(false);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching timetable details");
+    }
+  };
+
+  const getCellData = (weekday, period) => {
+    const matchingCell = timetableData.find(
+      (data) => data.weekday === weekday && data.period === period
+    );
+
+    if (matchingCell) {
+      return (
+        <div className="cell-data-time-table-student">
+          {matchingCell.subject}
+          <br />({matchingCell.staff_name})
+        </div>
+      );
+    } else {
+      return "-";
+    }
+  };
+
+  const times = [
+    "07:45 am",
+    "08:25 am",
+    "09:10 am",
+    "09:50 am",
+    "10:45 am",
+    "11:25 am",
+    "12:10 pm",
+    "12:50 pm",
+  ];
+
   return (
-    <div className="timetable-container">
-      <div className="grade">Grade: 9</div>
-      <div className="day">Day: Monday</div>
-      <table className="timetable">
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Subject</th>
-            <th>Subject Teacher</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>08.00-08.30 AM</td>
-            <td>Mathematics</td>
-            <td>Ms. Jeewa Iddamalgoda</td>
-          </tr>
-          <tr>
-            <td>08.30-09.00 AM</td>
-            <td>Science</td>
-            <td>Ms.Umeshi Gonakumbura</td>
-          </tr>
-          <tr>
-            <td>09.30-10.00 AM</td>
-            <td>English</td>
-            <td>Mr.Sujeewa Pushpakumara</td>
-          </tr>
-          <tr>
-            <td>10.00-10.30 AM</td>
-            <td>History</td>
-            <td>Ms.Renuka Donald</td>
-          </tr>
-          <tr>
-            <td>10.30-11.00 AM</td>
-            <td>INTERVAL</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>11.00-11.30 AM</td>
-            <td>Sinhala</td>
-            <td>Ms.Kosala Lekamge</td>
-          </tr>
-          <tr>
-            <td>11.30-12.00 AM</td>
-            <td>English Literature</td>
-            <td>Ms. Anoma Rathnayake</td>
-          </tr>
-          <tr>
-            <td>12.00-12.30 AM</td>
-            <td>Physical Education</td>
-            <td>Mr.Ajith Gunathilake</td>
-          </tr>
-          <tr>
-            <td>12.30-01.00 AM</td>
-            <td>Art</td>
-            <td>Ms.Dilmi Menik</td>
-          </tr>
-          <tr>
-            <td>01.00-01.30 AM</td>
-            <td>Science</td>
-            <td>Ms.Umeshi Gonakumbura</td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="time-table-student">
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <table className="timeTable-student">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+            </tr>
+          </thead>
+          <tbody>
+            {times.map((time, period) => (
+              <tr key={period}>
+                <td>{time}</td>
+                {Array.from({ length: weekdays }).map((_, weekday) => (
+                  <td key={weekday}>{getCellData(weekday + 1, period + 1)}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

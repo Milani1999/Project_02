@@ -9,17 +9,21 @@
   height: 100%;
 }
 
+.time-table-admin th{
+  background-color: #cff1d4;
+}
+
 .timeTable-admin th,
 .timeTable-admin td {
   padding: 8px;
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid #19441f;
   width: 16%;
 }
 
 .timeTable-admin tr {
   height: 11%;
-  border: 1px solid black;
+  border: 1px solid #19441f;
 }
 
 .add-period {
@@ -53,4 +57,34 @@
 
 .add-period-popup .btn {
   width: 100px;
+}
+
+.cell-data-time-table {
+  background-color: none;
+  border: none;
+  padding: 0% 7%;
+}
+
+.cell-data-time-table:hover {
+  background-color: #cff1d4;
+  color: #cff1d4;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.popup-background-timetable{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(3, 46, 13, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }

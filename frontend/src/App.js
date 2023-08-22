@@ -119,7 +119,7 @@ function App() {
           >
             <Route index element={<Dashboard />} />
             <Route path="ProfilePage" element={<ProfilePage />} />
-            <Route path="TimeTableStd" element={<TimeTable />} />
+            <Route path="TimeTable" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
             <Route
               path="ViewStudentAttendance"

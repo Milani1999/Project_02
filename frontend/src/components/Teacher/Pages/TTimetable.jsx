@@ -1,114 +1,96 @@
-import React, { useState } from 'react';
-import './TTimetable.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./TTimetable.css";
+import LoadingSpinner from "../../Loading/Loading";
 
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+const TimeTable = () => {
+  const [timetableData, setTimetableData] = useState([]);
+  const userInfo = localStorage.getItem("userInfo");
+  const user = JSON.parse(userInfo);
+  const staffId = user?.id;
 
-const availableSubjects = [
-    'Math',
-    'Science',
-    'English',
-    'History',
-    'Art',
-    'Music',
-    'Physical Education',
-  ];
-  
-  const availableTeachers = [
-    'Mr. Perera',
-    'Ms. Kamali',
-    'Mrs. Amali',
-    'Mr. Sara',
-    'Ms. Dayana',
-    'Mr. Dias',
-    'Mrs. Roshini',
-  ];
-  
-  const grades = [
-    
-    {
-      name: 'Grade 1',
-      
-      timetable: [
-        
-        ['8:00 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: 'Science', teacher: 'Ms. Kamali' }, { subject: 'English', teacher: 'Mrs. Amali' }, { subject: 'History', teacher: 'Mr. Sara' }, { subject: 'Art', teacher: 'Ms. Dayana' }],
-        ['8:30 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['9:00 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['9:30 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['10:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['11:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['11:30 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['12:00 AM', { subject: 'Math', teacher: 'Mr. Perera' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-       
-      ],
-    },
-    {
-      name: 'Grade 2',
-      timetable: [
-        ['8:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: 'Math', teacher: 'Mrs. Roshini' }, { subject: 'English', teacher: 'Ms. Kamali' }, { subject: 'Art', teacher: 'Mr. Dias' }, { subject: 'Physical Education', teacher: 'Ms. Dayana' }],
-        ['8:30 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['9:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['9:30 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['9:30 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['10:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['10:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-        ['10:00 AM', { subject: 'Science', teacher: 'Mr. Dias' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }, { subject: '', teacher: '' }],
-      ],
-    },
-  ];
-  
+  const weekdays = 5;
 
-const Timetable = () => {
-  const [selectedGrade, setSelectedGrade] = useState(grades[0]);
-  const [timetableData, setTimetableData] = useState(selectedGrade.timetable);
-
-  const handleGradeSelect = (e) => {
-    const selectedGradeName = e.target.value;
-    const grade = grades.find((grade) => grade.name === selectedGradeName);
-    setSelectedGrade(grade);
-    setTimetableData(grade.timetable);
+  const fetchStaffTimeTableData = async (staffId) => {
+    try {
+      const response = await axios.get(`/api/timetable/staff/${staffId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error("Error fetching timetable details");
+    }
   };
 
-  return (
-    <div className="timetable-container">
-      <h1>
-        <center>Timetable</center>
-      </h1>
-      <div className="grade-selection">
-        <label htmlFor="grade">Select Grade:</label>
-        <select id="grade" value={selectedGrade.name} onChange={handleGradeSelect}>
-          {grades.map((grade) => (
-            <option key={grade.name} value={grade.name}>
-              {grade.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="timetable-header">
-        <div className="timetable-cell empty">Time</div>
-        {daysOfWeek.map((day) => (
-          <div key={day} className="timetable-cell header">
-            {day}
-          </div>
-        ))}
-      </div>
-      {timetableData.map((rowData, rowIndex) => (
-        <div key={rowIndex} className="timetable-row">
-          <div className="timetable-cell time">{rowData[0]}</div>
-          {rowData.map((cellData, colIndex) =>
-            colIndex !== 0 ? (
-              <div key={colIndex} className="timetable-cell">
-                <div className="cell-content">
-                  <div className="subject">{cellData.subject}</div>
-                  <div className="teacher">{cellData.teacher}</div>
-                </div>
-              </div>
-            ) : null
-          )}
+  useEffect(() => {
+    const fetchStaffDetails = async () => {
+      try {
+        const data = await fetchStaffTimeTableData(staffId);
+        setTimetableData(data);
+      } catch (error) {
+        alert("Error fetching staff details:", error);
+      }
+    };
+
+    fetchStaffDetails();
+  }, [staffId]);
+
+  if (!timetableData) {
+    return <LoadingSpinner />;
+  }
+
+  const getCellData = (weekday, period) => {
+    const matchingCell = timetableData.find(
+      (data) => data.weekday === weekday && data.period === period
+    );
+
+    if (matchingCell) {
+      return (
+        <div className="cell-data-time-table-staff">
+          <span className="staff-subject">{matchingCell.subject}</span>
+          <br />Grade {matchingCell.grade}
         </div>
-      ))}
+      );
+    } else {
+      return "-";
+    }
+  };
+
+  const times = [
+    "07:45 am",
+    "08:25 am",
+    "09:10 am",
+    "09:50 am",
+    "10:45 am",
+    "11:25 am",
+    "12:10 pm",
+    "12:50 pm",
+  ];
+
+  return (
+    <div className="time-table-staff">
+      <table className="timeTable-staff">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+          </tr>
+        </thead>
+        <tbody>
+          {times.map((time, period) => (
+            <tr key={period}>
+              <td>{time}</td>
+              {Array.from({ length: weekdays }).map((_, weekday) => (
+                <td key={weekday}>{getCellData(weekday + 1, period + 1)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default Timetable;
-
+export default TimeTable;
