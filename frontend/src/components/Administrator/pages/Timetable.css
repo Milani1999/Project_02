@@ -9,17 +9,21 @@
   height: 100%;
 }
 
+.time-table-admin th{
+  background-color: #cff1d4;
+}
+
 .timeTable-admin th,
 .timeTable-admin td {
   padding: 8px;
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid #19441f;
   width: 16%;
 }
 
 .timeTable-admin tr {
   height: 11%;
-  border: 1px solid black;
+  border: 1px solid #19441f;
 }
 
 .add-period {

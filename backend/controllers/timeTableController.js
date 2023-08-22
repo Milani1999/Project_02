@@ -56,7 +56,7 @@ const createTimeTable = asyncHandler(async (req, res) => {
     const existingTimeTable = await TimeTable.findOne({
       weekday: weekday,
       period: period,
-      // subject: subject,
+      "staff.staff_id": { $in: staffData.map((staff) => staff.staff_id) },
     });
 
     if (existingTimeTable) {
