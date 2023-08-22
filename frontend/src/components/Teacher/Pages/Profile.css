@@ -1,23 +1,26 @@
-.profile-container {
+.profile-container-teacher {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 20px;
-  background-color: #ecf7e6;
+  padding: 20px 25px;
+  background-color: #dfe2e1;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 50px;
   min-height: 80vh;
+  margin-left: 20px;
+
 }
 .profile-details {
   flex-grow: 1;
 }
 
-.profile-details h2 {
-  margin-bottom: 30px;
+.stffname {
+  margin-bottom: 25px;
   color: #2b9b0f;
+margin-left: 50px;
 }
-h1{
+.staffhead{
   color: rgb(13, 145, 112);
 }
 .profile-image img {
@@ -74,12 +77,15 @@ h1{
 }
 .profile-container-2 {
   
-  background-color: #ceecbe;
+  background-color: #f8faf6;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 30px;
+  /* margin-top: 30px; */
   min-height: 70vh;
   padding-left: 50px;
   padding-top: 30px;
-  width: 80%;
+  width: 90%;
+}
+.proficon{
+  font-size: 50px;
 }

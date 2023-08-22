@@ -235,7 +235,7 @@ const ViewMarks = () => {
     <div>
       <div className="filterMarks">
         <div className="filter">
-          <label htmlFor="yearSelect">Select Year: </label>
+          <label htmlFor="yearSelect">Year: </label>
           <select
             id="yearSelect"
             value={selectedYear}
@@ -247,7 +247,7 @@ const ViewMarks = () => {
         </div>
 
         <div className="filter">
-          <label htmlFor="termSelect">Select Term: </label>
+          <label htmlFor="termSelect">Term: </label>
           <select
             id="termSelect"
             value={selectedTerm}
@@ -261,7 +261,7 @@ const ViewMarks = () => {
         </div>
 
         <div className="filter">
-          <label htmlFor="subjectSelect">Select Subject: </label>
+          <label htmlFor="subjectSelect">Subject: </label>
           <select
             id="subjectSelect"
             value={selectedSubject}
@@ -277,9 +277,9 @@ const ViewMarks = () => {
         </div>
 
         <div className="filter">
-          <label htmlFor="gradeSelect">Select Grade: </label>
+          <label htmlFor="gradeSelect">Grade:</label>
           <select
-            id="gradeSelect"
+            id="grade_Select"
             value={selectedGrade}
             onChange={(e) => setSelectedGrade(e.target.value)}
           >

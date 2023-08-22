@@ -102,57 +102,21 @@ const StudentMain = () => {
               icon: <RiCalendarCheckFill className="fs-4" />,
               label: "View Marks",
             },
-            {
-              key: "TimeTableStd",
-              icon: <RiCalendarCheckFill className="fs-4" />,
-              label: "View Timetable",
-              children: [
-                {
-                  key: "MondayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Monday",
-                },
-
-                {
-                  key: "TuesdayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Tuesday",
-                },
-
-                {
-                  key: "WednesdayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Wednesday",
-                },
-
-                {
-                  key: "ThursdayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Thursday",
-                },
-
-                {
-                  key: "FridayTT",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Friday",
-                },
-              ],
-            },
-
+        
             {
               key: "Events",
               icon: <RiCalendar2Line className="fs-4" />,
               label: "Events",
               children: [
                 {
-                  key: "calender",
+                  key: "Scalender",
                   icon: <RiCalendarCheckFill className="fs-4" />,
                   label: "Event Calendar",
                 },
               ],
             },
             {
-              key: "payments",
+              key: "Payment",
               icon: <RiMoneyDollarCircleLine className="fs-4" />,
               label: "Payment Handling",
             },
