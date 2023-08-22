@@ -17,8 +17,40 @@
   width: 16%;
 }
 
-.timeTable-admin tr{
+.timeTable-admin tr {
   height: 11%;
   border: 1px solid black;
 }
 
+.add-period {
+  padding: 5% 40%;
+  background-color: #cff1d4;
+  border: none;
+  font-weight: bolder;
+}
+
+.add-period-popup {
+  background-color: white;
+  border: 2px solid green;
+  padding: 30px;
+  text-align: center;
+}
+
+.select-staff-add-popup,
+.select-subject-add-popup {
+  padding: 10px;
+}
+
+.select-staff-add-popup label,
+.select-subject-add-popup label {
+  width: 150px;
+}
+
+.select-staff-add-popup select,
+.select-subject-add-popup select {
+  width: 150px;
+}
+
+.add-period-popup .btn {
+  width: 100px;
+}
