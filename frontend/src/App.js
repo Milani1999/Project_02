@@ -19,7 +19,7 @@ import Dashboard from "./components/Administrator/pages/Dashboard";
 import EditTeacher from "./components/Administrator/pages/EditTeacher";
 import EditStudent from "./components/Administrator/pages/EditStudent";
 import Subject from "./components/Administrator/pages/Subject";
-import './assets/Style/styles.css'
+import "./assets/Style/styles.css";
 import Calender from "./components/Administrator/pages/Calender";
 import Timetable from "./components/Administrator/pages/Timetable";
 import Attendence from "./components/Administrator/pages/Attendence";
@@ -105,9 +105,8 @@ function App() {
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
             <Route path="Support" element={<Support />} />
-            <Route path="StaffAttendance" element={<StaffAttendance/>}/>
-            <Route path="StudentAttendance" element={<StudentAttendance/>}/>
-        
+            <Route path="StaffAttendance" element={<StaffAttendance />} />
+            <Route path="StudentAttendance" element={<StudentAttendance />} />
           </Route>
 
           <Route
@@ -122,19 +121,12 @@ function App() {
             <Route path="ProfilePage" element={<ProfilePage />} />
             <Route path="TimeTableStd" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
-            <Route path="ViewStudentAttendance" element={<ViewStudentAttendance />} />
+            <Route
+              path="ViewStudentAttendance"
+              element={<ViewStudentAttendance />}
+            />
             <Route path="ViewNotice" element={<SNotices />} />
-           <Route path="Scalender" element={<TCalendar />} />
-            {/* <Route path="EditTeacher" element={<EditTeacher />} />
-                <Route path="EditStudent" element={<EditStudent />} />
-
-                <Route path="Subject" element={<Subject />} />
-                <Route path="calender" element={<Calender />} />
-                <Route path="Timetable" element={<Timetable />} />
-                <Route path="Attendence" element={<Attendence />} />
-                <Route path="Grade" element={<Grade />} />
-                <Route path="Notices" element={<Notices />} />
-                <Route path="Performance" element={<Performance />} />  */}
+            <Route path="Scalender" element={<TCalendar />} />
           </Route>
         </Routes>
         <FooterRoutes />
