@@ -4,6 +4,7 @@ import AboutUs from "../../components/section/aboutus";
 import School from "../../components/section/OurSchool";
 import ContactUs from "../../components/section/ContactUs";
 import Events from "../Events/Events";
+import Gallery from "../../components/section/Gallery";
 
 
 function LandingPage() {
@@ -13,6 +14,7 @@ function LandingPage() {
             <AboutUs />
             <School />
             <Events />
+            <Gallery/>
             <ContactUs />
         </div>
     );

@@ -4,6 +4,7 @@ import {
   AiOutlineDashboard,
   AiOutlineUser,
   AiOutlineFund,
+  AiOutlineFileImage,
 } from "react-icons/ai";
 import {
   RiCalendarCheckFill,
@@ -159,6 +160,11 @@ const MainLayout = () => {
                   label: "News and Events",
                 },
               ],
+            },
+            {
+              key: "EditGallery",
+              icon: <AiOutlineFileImage className="fs-4" />,
+              label: "Gallery",
             },
             {
               key: "Notices",

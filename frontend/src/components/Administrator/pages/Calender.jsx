@@ -39,13 +39,13 @@ const Calendar = () => {
       setPopupStatus(null);
     }, 3000);
   };
-
-  const handleDateSelect = (selectInfo) => {
+//date select create event
+  const handleDateSelect = async (selectInfo) => {
     let title = prompt('Please enter a title for the event');
     let calendarApi = selectInfo.view.calendar;
-
+  
     calendarApi.unselect();
-
+  
     if (title) {
       const newEvent = {
         id: createEventId(),
@@ -54,12 +54,12 @@ const Calendar = () => {
         end: selectInfo.endStr,
         allDay: selectInfo.allDay,
       };
-
+  
       calendarApi.addEvent(newEvent);
-
+  
       try {
-       axios.post('/api/events/create', newEvent);
-        setCurrentEvents([...currentEvents, newEvent]);
+        await axios.post('/api/events/create', newEvent);
+        setCurrentEvents([...currentEvents, newEvent]); 
         showPopup('Event added successfully', 'success');
       } catch (error) {
         console.error('Failed to create event:', error);
@@ -67,21 +67,24 @@ const Calendar = () => {
       }
     }
   };
+  
 
   const handleEventClick = (clickInfo) => {
     setEventToDelete(clickInfo.event);
     setShowDeleteConfirmation(true);
   };
-
+//delete confirm
   const handleConfirmDelete = (clickInfo) => {
     if (eventToDelete) {
       const eventIdToDelete = eventToDelete.id;
-
+  
       axios.delete(`/api/events/delete/${eventIdToDelete}`)
         .then(() => {
           setEventToDelete(null);
           setShowDeleteConfirmation(false);
+          
           setCurrentEvents(currentEvents.filter(event => event.id !== eventToDelete.id));
+          
           showPopup('Event deleted successfully', 'success');
         })
         .catch(error => {
@@ -90,6 +93,7 @@ const Calendar = () => {
         });
     }
   };
+  
 
   const handleCancelDelete = () => {
     setEventToDelete(null);
