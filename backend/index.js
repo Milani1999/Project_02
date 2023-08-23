@@ -12,6 +12,7 @@ const studentAttendanceRoutes=require('./routes/studentAttendanceRoutes')
 const noticesRoutes=require('./routes/noticesRoutes');
 const eventRoutes = require('./routes/EventRoutes');
 const newsRoutes=require('./routes/newsRoutes');
+const ImageRoutes = require('./routes/ImageRoutes');
 const app = express();
 dotenv.config();
 connectDB();
@@ -39,7 +40,7 @@ app.use('/api/studentattendance',studentAttendanceRoutes);
 app.use('/api/notices',noticesRoutes);
 app.use('/api/events', eventRoutes);
 app.use("/api/news", newsRoutes);
-
+app.use('/api/gallery', ImageRoutes);
 app.use(notFound)
 app.use(errorHandler)
 
