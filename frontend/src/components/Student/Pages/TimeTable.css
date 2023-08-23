@@ -1,39 +1,36 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
-
-.timetable-container {
-  font-family: "Roboto", sans-serif;
-}
-
-.timetable {
-  border-collapse: collapse;
+.time-table-student {
   width: 100%;
-  border: 2px solid grey;
+  height: 80%;
 }
 
-.timetable th,
-.timetable td {
-  border: 2px solid grey;
-  padding: 10px;
+.timeTable-student {
+  margin-top: 30px;
+  width: 100%;
+  height: 100%;
+}
+
+.time-table-student th{
+  background-color: #cff1d4;
+}
+
+.timeTable-student th,
+.timeTable-student td {
+  padding: 8px;
   text-align: center;
-  transition: box-shadow 0.2s ease-in-out;
+  border: 1px solid #19441f;
+  width: 16%;
 }
 
-.timetable th {
-  background-color: #c0e9c5; /* Light green tone for header */
+.timeTable-student tr {
+  height: 11%;
+  border: 1px solid #19441f;
 }
 
-.timetable tbody tr:nth-child(even) {
-  background-color: #d6f7d9; /* Light green tone for even rows */
+
+.cell-data-time-table-student {
+  background-color: none;
+  border: none;
+  padding: 0% 7%;
 }
 
-.grade,
-.day {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
 
-/* Hover effect */
-.timetable th:hover,
-.timetable td:hover {
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-}
