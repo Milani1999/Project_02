@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import Popup from "reactjs-popup";
 
-function AddGallery() {
+function AddGallery({ refreshGallery }) {
   const [error, setError] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -16,14 +16,6 @@ function AddGallery() {
   };
 
   const postDetails = (pics) => {
-    if (
-      pics ===
-      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-    ) {
-      setError("Please Select an Image");
-      return;
-    }
-    setError("");
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
@@ -66,6 +58,7 @@ function AddGallery() {
         image: "",
       });
       setIsPopupOpen(false);
+      refreshGallery();
       setError("");
     } catch (error) {
       setError(error.response.data.message);

@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import Popup from "reactjs-popup";
 
-function AddNews() {
+function AddNews({ fetchNewsData }) {
   const [error, setError] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -70,6 +70,7 @@ function AddNews() {
         image: "",
       });
       setIsPopupOpen(false);
+      fetchNewsData();
       setError();
     } catch (error) {
       setError(error.response.data.message);

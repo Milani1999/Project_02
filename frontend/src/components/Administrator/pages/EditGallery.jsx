@@ -70,7 +70,7 @@ const EditGallery = () => {
             <tr key={image._id}>
               <td style={{ verticalAlign: "middle" }}>
                 <img
-                  src={image.url} 
+                  src={image.image} 
                   alt="Gallery"
                   width="100"
                   height="100"
@@ -97,7 +97,7 @@ const EditGallery = () => {
             <div className="popup-container-delete">
               <h5>Are you sure you want to delete this image?</h5>
               <img
-                src={selectedImage.url} 
+                src={selectedImage.image} 
                 alt="Selected"
                 width="100"
                 height="100"
