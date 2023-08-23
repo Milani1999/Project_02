@@ -13,6 +13,7 @@ const noticesRoutes=require('./routes/noticesRoutes');
 const eventRoutes = require('./routes/EventRoutes');
 const newsRoutes=require('./routes/newsRoutes');
 const timeTableRoute=require('./routes/timeTableRoute');
+const ImageRoutes = require('./routes/ImageRoutes');
 const oldStudentRoutes=require('./routes/oldStudentRoutes');
 const app = express();
 dotenv.config();
@@ -42,6 +43,7 @@ app.use('/api/notices',noticesRoutes);
 app.use('/api/events', eventRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/timetable",timeTableRoute);
+app.use('/api/gallery', ImageRoutes);
 app.use("/api/oldStudents",oldStudentRoutes);
 
 app.use(notFound)
