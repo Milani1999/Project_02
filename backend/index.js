@@ -12,7 +12,6 @@ const studentAttendanceRoutes=require('./routes/studentAttendanceRoutes')
 const noticesRoutes=require('./routes/noticesRoutes');
 const eventRoutes = require('./routes/EventRoutes');
 const newsRoutes=require('./routes/newsRoutes');
-const ImageRoutes = require('./routes/ImageRoutes');
 const app = express();
 dotenv.config();
 connectDB();
