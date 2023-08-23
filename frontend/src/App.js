@@ -47,8 +47,6 @@ import SNotices from "./components/Student/Pages/SNotices";
 import StaffAttendance from "./components/Administrator/pages/StaffAttendance";
 import StudentAttendance from "./components/Administrator/pages/StudentAttendance";
 import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttendance";
-import Gallery from "./components/section/Gallery";
-import EditGallery from "./components/Administrator/pages/EditGallery";
 
 function App() {
   return (
@@ -64,7 +62,7 @@ function App() {
           <Route path="/Contact" element={<ContactUs />} />
           <Route path="/Students" element={<StudentDetails />} />
           <Route path="/login" element={<SignIn />} />
-          <Route path="/Gallery" element={<Gallery />} />
+
           <Route
             path="/Teacher"
             element={
@@ -109,7 +107,6 @@ function App() {
             <Route path="Support" element={<Support />} />
             <Route path="StaffAttendance" element={<StaffAttendance />} />
             <Route path="StudentAttendance" element={<StudentAttendance />} />
-            <Route path="EditGallery" element={<EditGallery/>}/>
           </Route>
 
           <Route

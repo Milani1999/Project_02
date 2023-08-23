@@ -40,7 +40,6 @@ app.use('/api/studentattendance',studentAttendanceRoutes);
 app.use('/api/notices',noticesRoutes);
 app.use('/api/events', eventRoutes);
 app.use("/api/news", newsRoutes);
-app.use('/api/gallery', ImageRoutes);
 app.use(notFound)
 app.use(errorHandler)
 
