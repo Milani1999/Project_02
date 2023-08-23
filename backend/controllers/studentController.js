@@ -1,6 +1,4 @@
 const Student = require("../models/studentModel");
-// const User = require("../models/userModel");
-
 const asyncHandler = require("express-async-handler");
 
 const getStudents = asyncHandler(async (req, res) => {
@@ -53,22 +51,21 @@ const createStudents = asyncHandler(async (req, res) => {
   }
 
   const userAdmissionExists = await Student.findOne({
-    admission_no: { $regex: new RegExp(`^${admission_no}$`, 'i') },
+    admission_no: { $regex: new RegExp(`^${admission_no}$`, "i") },
   });
   if (userAdmissionExists) {
     res.status(400);
     throw new Error("Admission number already exists");
   }
 
- const usernameExists = await Student.findOne({
-  username: { $regex: new RegExp(`^${username}$`, 'i') },
-});
+  const usernameExists = await Student.findOne({
+    username: { $regex: new RegExp(`^${username}$`, "i") },
+  });
 
   if (usernameExists) {
     res.status(400);
     throw new Error("Username already exists");
   }
-
 
   const student = new Student({
     fullname,
@@ -156,7 +153,7 @@ const updateStudent = asyncHandler(async (req, res) => {
 });
 
 const deleteStudent = asyncHandler(async (req, res) => {
-  const student = await Student.findById(req.params.id);;
+  const student = await Student.findById(req.params.id);
 
   if (student) {
     await student.deleteOne();

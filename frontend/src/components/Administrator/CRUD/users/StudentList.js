@@ -15,7 +15,6 @@ const ViewStudents = () => {
   const [selectedGrade, setSelectedGrade] = useState("");
   const [imageFile, setImageFile] = useState(null);
 
-    
   useEffect(() => {
     fetchStudents();
   }, []);
@@ -92,6 +91,19 @@ const ViewStudents = () => {
     setShowDeletePopup(false);
   };
 
+  const confirmLeave = async () => {
+    try {
+      const { _id } = selectedStudent;
+      await axios.delete(`/api/oldstudents/${_id}`);
+      setShowDeletePopup(false);
+      fetchStudents();
+      alert("Student moved to old students' list successfully.");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to move student");
+    }
+  };
+
   const confirmDelete = async () => {
     try {
       const { _id } = selectedStudent;
@@ -117,7 +129,7 @@ const ViewStudents = () => {
     <div>
       <Table striped hover className="mt-5" responsive="sm">
         <thead>
-          <tr >
+          <tr>
             <th colSpan={6}>
               <div>
                 <label htmlFor="gradeSelect">Select Grade: </label>
@@ -194,7 +206,7 @@ const ViewStudents = () => {
                   className="m-1"
                   style={{ width: "100px" }}
                 >
-                  Delete
+                  Remove
                 </Button>
               </td>
             </tr>
@@ -290,11 +302,7 @@ const ViewStudents = () => {
                 <tr>
                   <td colSpan={2}>
                     <div>
-                      {
-                        <QrGenerator
-                        userID={selectedStudent.admission_no}
-                        />
-                      }
+                      {<QrGenerator userID={selectedStudent.admission_no} />}
                     </div>
                   </td>
                 </tr>
@@ -632,6 +640,9 @@ const ViewStudents = () => {
                 <p>Full Name: {selectedStudent.fullname}</p>
               </div>
             )}
+            <Button variant="primary" onClick={confirmLeave} className="mx-2">
+              Leave
+            </Button>
             <Button variant="danger" onClick={confirmDelete} className="mx-2">
               Delete
             </Button>

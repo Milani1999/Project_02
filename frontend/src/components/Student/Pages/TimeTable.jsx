@@ -48,7 +48,7 @@ const TimeTable = () => {
     if (matchingCell) {
       return (
         <div className="cell-data-time-table-student">
-          {matchingCell.subject}
+         <span style={{fontWeight:"bolder"}}>{matchingCell.subject}</span> 
           <br />({matchingCell.staff_name})
         </div>
       );
