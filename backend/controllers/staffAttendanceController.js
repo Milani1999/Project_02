@@ -79,8 +79,69 @@ const deleteStaffAttendance = asyncHandler(async (req, res) => {
   }
 });
 
+const getAttendanceByMonthYearAndEmployeeId = asyncHandler(async (req, res) => {
+  // const { employee_id, month, year } = req.query;
+
+  // try {
+  //   const startDate = new Date(year, month, 1);
+  //   const endDate = new Date(year, month + 1, 0);
+  //   endDate.setUTCHours(23, 59, 59, 999);
+
+  //   const attendanceRecords = await StaffAttendance.find({
+  //     employee_id,
+  //     date: {
+  //       $gte: startDate,
+  //       $lte: endDate,
+  //     },
+  //   });
+
+  //   res.json(attendanceRecords);
+  // } catch (error) {
+  //   console.error("Error fetching staff attendance:", error);
+  //   res.status(500).json({ message: "Internal Server Error" });
+  // }
+  const { employee_id, date } = req.query;
+
+  try {
+    const staff = await Staff.findOne({ employee_id });
+
+    if (!staff) {
+      res.status(400).json({ message: "Staff not found." });
+      return;
+    }
+
+    const selectedDate = new Date(date);
+    const selectedYear = selectedDate.getUTCFullYear();
+    const selectedMonth = selectedDate.getUTCMonth();
+
+    const startDate = new Date(selectedYear, selectedMonth, 1);
+    const endDate = new Date(selectedYear, selectedMonth + 1, 0);
+    endDate.setUTCHours(23, 59, 59, 999);
+
+    const attendance = await StaffAttendance.find({
+      employee_id,
+      date: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    });
+
+    if (!attendance) {
+      res.status(404).json({ message: "Attendance not found." });
+      return;
+    }
+
+    res.json(attendance);
+  } catch (error) {
+    console.error("Error fetching staff attendance:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 module.exports = {
   takeStaffAttendance,
   getStaffAttendanceByDate,
   deleteStaffAttendance,
+  getAttendanceByMonthYearAndEmployeeId
 };
