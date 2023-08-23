@@ -110,7 +110,7 @@ const ViewStaff = () => {
           <tr>
             <th colSpan={7}></th>
             <th style={{ textAlign: "center", width: "100px" }}>
-              <AddStaff />
+              <AddStaff fetchStaffData={fetchStaffData} />
             </th>
           </tr>
 
@@ -127,7 +127,7 @@ const ViewStaff = () => {
         </thead>
         <tbody>
           {staffList.map((staff) => (
-            <tr key={staff._id} >
+            <tr key={staff._id}>
               <td style={{ verticalAlign: "middle" }}>
                 <img
                   src={staff.picture}
@@ -244,19 +244,11 @@ const ViewStaff = () => {
                   <td>Subjects Taught</td>
                   <td>{selectedStaff.subjects_taught}</td>
                 </tr>
-                {/* <tr>
-                                <td>Assigned Classes</td>
-                                <td>{selectedStaff.assigned_classes}</td>
-                            </tr> */}
                 {/*--------Start--------QR Generator for each staffs according to their Employee ID */}
                 <tr>
                   <td colSpan={2}>
                     <div>
-                      {
-                        <QrGenerator
-                        userID={selectedStaff.employee_id}
-                        />
-                      }
+                      {<QrGenerator userID={selectedStaff.employee_id} />}
                     </div>
                   </td>
                 </tr>
@@ -537,16 +529,6 @@ const ViewStaff = () => {
                         }
                       />
                     </div>
-                    {/* <div>
-                                        <Form.Label>Assigned Classes</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            id="assigned_classes"
-                                            name="assigned_classes"
-                                            value={selectedStaff.assigned_classes}
-                                            onChange={(e) => setSelectedStaff({ ...selectedStaff, assigned_classes: e.target.value })}
-                                        />
-                                    </div> */}
 
                     <Button variant="primary" type="submit" className="mt-5">
                       Update

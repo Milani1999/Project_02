@@ -3,7 +3,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Popup from "reactjs-popup";
 
-function AddStudents() {
+function AddStudents({ fetchStudents }) {
   const [formData, setFormData] = useState({
     fullname: "",
     first_name: "",
@@ -110,7 +110,7 @@ function AddStudents() {
         extra_activities: "",
       });
       setError();
-      window.location.reload();
+      fetchStudents();
     } catch (error) {
       setError(error.response.data.message);
     }
