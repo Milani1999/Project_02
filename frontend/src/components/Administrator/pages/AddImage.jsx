@@ -61,13 +61,12 @@ function AddGallery() {
 
       await axios.post("/api/gallery/create", formData, config);
 
-      alert("News added successfully!");
+      alert("Image added successfully!");
       setFormData({
-      
         image: "",
       });
       setIsPopupOpen(false);
-      setError();
+      setError("");
     } catch (error) {
       setError(error.response.data.message);
     }
@@ -85,7 +84,7 @@ function AddGallery() {
         onClick={() => setIsPopupOpen(true)}
         style={{ textAlign: "center" }}
       >
-        Add News
+        Add Image
       </Button>
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
@@ -94,8 +93,6 @@ function AddGallery() {
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <Form onSubmit={submitHandler}>
-              
-
               <Form.Group controlId="image">
                 <Form.Label>Image</Form.Label>
                 <Form.Control

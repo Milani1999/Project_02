@@ -12,7 +12,7 @@ const EditGallery = () => {
 
   const fetchImageData = async () => {
     try {
-      const response = await axios.get("/api/gallery"); 
+      const response = await axios.get("/api/gallery/get"); 
       setImageList(response.data);
     } catch (error) {
       console.error(error);
@@ -46,6 +46,10 @@ const EditGallery = () => {
     }
   };
 
+  const refreshGallery = () => {
+    fetchImageData();
+  };
+
   return (
     <div>
       <Table striped hover className="mt-4">
@@ -53,7 +57,7 @@ const EditGallery = () => {
           <tr>
             <th colSpan={2}></th>
             <th style={{ textAlign: "center", width: "100px" }}>
-              <AddImage /> 
+              <AddImage refreshGallery={refreshGallery} /> 
             </th>
           </tr>
           <tr className="colname-gallery">

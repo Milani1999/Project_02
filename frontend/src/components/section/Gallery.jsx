@@ -15,7 +15,7 @@ function Gallery() {
 
   const fetchImages = async () => {
     try {
-      const response = await axios.get("/api/gallery"); 
+      const response = await axios.get("/api/gallery/get"); 
       setImageList(response.data);
     } catch (error) {
       console.error(error);
@@ -70,7 +70,7 @@ function Gallery() {
               className="img-fluid"
               width={500}
               src={image.url} 
-              alt="galimg"
+              alt="Gallery"
             />
           </div>
         ))}
