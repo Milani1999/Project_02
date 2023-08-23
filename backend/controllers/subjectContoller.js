@@ -8,22 +8,15 @@ const getSubjects = asyncHandler(async (req, res) => {
 });
 
 const createSubjects = asyncHandler(async (req, res) => {
-  const {
-    admission_no,
-    subject_id,
-    subject_name,
-  } = req.body;
+  const { subject_id, subject_name, staff_name } = req.body;
 
-  if (
-    !subject_id ||
-    !subject_name
-  ) {
+  if (!subject_id || !subject_name || !staff_name) {
     res.status(400);
     throw new Error("Please fill all the fields");
   }
 
   const subjectIdExits = await Subject.findOne({
-    subject_id: { $regex: new RegExp(`^${subject_id}$`, 'i') },
+    subject_id: { $regex: new RegExp(`^${subject_id}$`, "i") },
   });
   if (subjectIdExits) {
     res.status(400);
@@ -33,6 +26,7 @@ const createSubjects = asyncHandler(async (req, res) => {
   const subject = new Subject({
     subject_id,
     subject_name,
+    staff_name,
   });
 
   const createdSubject = await subject.save();
@@ -51,16 +45,14 @@ const getSubjectById = asyncHandler(async (req, res) => {
 });
 
 const updateSubject = asyncHandler(async (req, res) => {
-  const {
-    subject_id,
-    subject_name,
-  } = req.body;
+  const { subject_id, subject_name, staff_name } = req.body;
 
   const subject = await Subject.findById(req.params.id);
 
   if (subject) {
     subject.subject_id = subject_id;
     subject.subject_name = subject_name;
+    subject.staff_name = staff_name;
 
     const updatedSubject = await subject.save();
     res.json(updatedSubject);
@@ -71,7 +63,7 @@ const updateSubject = asyncHandler(async (req, res) => {
 });
 
 const deleteSubject = asyncHandler(async (req, res) => {
-  const subject = await Subject.findById(req.params.id);;
+  const subject = await Subject.findById(req.params.id);
 
   if (subject) {
     await subject.deleteOne();

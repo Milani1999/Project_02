@@ -1,9 +1,22 @@
-.mt-4 th,
-td {
-    text-align: center;
+.subject-view .mt-4 th,
+.subject-view .mt-4 td {
+  text-align: center;
+  vertical-align: middle;
 }
 
-td{
-    vertical-align: middle;
+.subject-view .mt-4 th {
+  padding: 10px;
 }
 
+.label-subject{
+  padding-top: 20px;
+}
+
+.remove-button {
+  padding: 0px 5px;
+  color: red;
+  border-radius: 100px;
+  border: none;
+  font-weight: bolder;
+  font-size: 20px;
+    }
