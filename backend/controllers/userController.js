@@ -47,6 +47,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: staff.fullname,
       picture:staff.picture,
       role: staff.role,
+      employee_id: staff.employee_id,
       token: generateToken(staff._id),
     });
   } else {
