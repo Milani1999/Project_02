@@ -24,7 +24,11 @@ const createStudents = asyncHandler(async (req, res) => {
     parent_occupation,
     admission_year,
     grade,
+    admitted_grade,
     extra_activities,
+    conduct,
+    special_aptitudes,
+    remark,
   } = req.body;
 
   if (
@@ -44,7 +48,7 @@ const createStudents = asyncHandler(async (req, res) => {
     !parent_occupation ||
     !admission_year ||
     !grade ||
-    !extra_activities
+    !admitted_grade
   ) {
     res.status(400);
     throw new Error("Please fill all the fields");
@@ -84,7 +88,11 @@ const createStudents = asyncHandler(async (req, res) => {
     parent_occupation,
     admission_year,
     grade,
+    admitted_grade,
     extra_activities,
+    conduct,
+    special_aptitudes,
+    remark,
   });
 
   const createdStudent = await student.save();
@@ -120,7 +128,11 @@ const updateStudent = asyncHandler(async (req, res) => {
     parent_occupation,
     admission_year,
     grade,
+    admitted_grade,
     extra_activities,
+    conduct,
+    special_aptitudes,
+    remark,
   } = req.body;
 
   const student = await Student.findById(req.params.id);
@@ -142,7 +154,11 @@ const updateStudent = asyncHandler(async (req, res) => {
     student.parent_occupation = parent_occupation;
     student.admission_year = admission_year;
     student.grade = grade;
+    student.admitted_grade = admitted_grade;
     student.extra_activities = extra_activities;
+    student.conduct = conduct;
+    student.special_aptitudes = special_aptitudes;
+    student.remark = remark;
 
     const updatedStudent = await student.save();
     res.json(updatedStudent);
