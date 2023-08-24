@@ -3,13 +3,11 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
   AiOutlineUser,
-  AiOutlineFund,
-  AiOutlineFileImage,
+  AiOutlineFileImage
 } from "react-icons/ai";
 import {
   RiCalendarCheckFill,
   RiCalendar2Line,
-  RiMoonLine,
   RiMoneyDollarCircleLine,
   RiMessage2Line,
 } from "react-icons/ri";
@@ -24,7 +22,7 @@ import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import { Button, notification } from "antd";
 import Logo from "../../../assets/ImageResources/uni2.png";
-
+import DarkMode from "../../DarkMode/DarkMode";
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -107,12 +105,6 @@ const MainLayout = () => {
               icon: <FaClipboardList className="fs-4" />,
               label: "Attendance",
               children: [
-                {
-                  key: "Attendence",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Dashboard",
-                },
-
                 {
                   key: "StudentAttendance",
                   icon: <AiOutlineUser className="fs-4" />,
@@ -207,8 +199,9 @@ const MainLayout = () => {
 
           <div className="d-flex gap-4 align-items-center">
             <div className="position-relative">
-              {" "}
-              <RiMoonLine className="fs-4" />
+              {/* {" "}
+              <RiMoonLine className="fs-4" /> */}
+              <DarkMode />
             </div>
             <div className="position-relative">
               {contextHolder}

@@ -110,7 +110,7 @@ const getAttendanceByDateAndAdmissionNo = asyncHandler(async (req, res) => {
     const endDate = new Date(selectedYear, selectedMonth + 1, 0);
     endDate.setUTCHours(23, 59, 59, 999);
 
-    const attendance = await Attendance.findOne({
+    const attendance = await Attendance.find({
       admission_no,
       date: {
         $gte: startDate,
@@ -129,7 +129,6 @@ const getAttendanceByDateAndAdmissionNo = asyncHandler(async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
 
 
 
