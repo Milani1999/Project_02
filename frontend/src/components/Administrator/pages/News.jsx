@@ -98,7 +98,7 @@ const News = () => {
           <tr>
             <th colSpan={3}></th>
             <th style={{ textAlign: "center", width: "100px" }}>
-              <AddNews/>
+              <AddNews fetchNewsData={fetchNewsData}/>
             </th>
           </tr>
 

@@ -3,12 +3,10 @@ import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import Popup from "reactjs-popup";
 
-function AddNews({ fetchNewsData }) {
+function AddGallery({ refreshGallery }) {
   const [error, setError] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [formData, setFormData] = useState({
-    title: "",
-    content: "",
     image: "",
   });
 
@@ -18,14 +16,6 @@ function AddNews({ fetchNewsData }) {
   };
 
   const postDetails = (pics) => {
-    if (
-      pics ===
-      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-    ) {
-      setError("Please Select an Image");
-      return;
-    }
-    setError("");
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
@@ -61,17 +51,15 @@ function AddNews({ fetchNewsData }) {
         },
       };
 
-      await axios.post("/api/news/create", formData, config);
+      await axios.post("/api/gallery/create", formData, config);
 
-      alert("News added successfully!");
+      alert("Image added successfully!");
       setFormData({
-        title: "",
-        content: "",
         image: "",
       });
       setIsPopupOpen(false);
-      fetchNewsData();
-      setError();
+      refreshGallery();
+      setError("");
     } catch (error) {
       setError(error.response.data.message);
     }
@@ -89,7 +77,7 @@ function AddNews({ fetchNewsData }) {
         onClick={() => setIsPopupOpen(true)}
         style={{ textAlign: "center" }}
       >
-        Add News
+        Add Image
       </Button>
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
@@ -98,27 +86,6 @@ function AddNews({ fetchNewsData }) {
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <Form onSubmit={submitHandler}>
-              <Form.Group controlId="title">
-                <Form.Label>Title</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="title"
-                  value={formData.title}
-                  placeholder="Enter Title"
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="content">
-                <Form.Label>Content</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="content"
-                  value={formData.content}
-                  placeholder="Enter Content"
-                  onChange={handleChange}
-                />
-              </Form.Group>
-
               <Form.Group controlId="image">
                 <Form.Label>Image</Form.Label>
                 <Form.Control
@@ -146,4 +113,4 @@ function AddNews({ fetchNewsData }) {
   );
 }
 
-export default AddNews;
+export default AddGallery;

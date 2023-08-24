@@ -153,6 +153,11 @@ const MainLayout = () => {
               ],
             },
             {
+              key: "EditGallery",
+              icon: <AiOutlineFileImage className="fs-4" />,
+              label: "Gallery",
+            },
+            {
               key: "Notices",
               icon: <FaClipboardList className="fs-4" />,
               label: "Notices",
