@@ -49,14 +49,20 @@ const studentSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["student"],
-      required: true,
+      default: "student",
     },
 
     admission_no: {
       type: String,
       required: true,
     },
+
+    details: {
+      type: String,
+      enum: ["father", "mother", "guardian"],
+      required: true,
+    },
+
     parent_Name: {
       type: String,
     },
@@ -77,15 +83,19 @@ const studentSchema = new mongoose.Schema(
     },
     extra_activities: {
       type: String,
+      default: "-",
     },
     conduct: {
       type: String,
+      default: "-",
     },
     special_aptitudes: {
       type: String,
+      default: "-",
     },
     remark: {
       type: String,
+      default: "-",
     },
   },
   {

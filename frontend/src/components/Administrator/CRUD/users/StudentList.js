@@ -125,6 +125,48 @@ const ViewStudents = () => {
     ? students.filter((student) => student.grade.toString() === selectedGrade)
     : students;
 
+  let view_std_1 = [];
+  let view_std_2 = [];
+  let view_std_3 = [];
+
+  if (selectedStudent) {
+    view_std_1 = [
+      { label: "Full Name", value: selectedStudent.fullname },
+      { label: "First Name", value: selectedStudent.first_name },
+      { label: "Last Name", value: selectedStudent.last_name },
+      { label: "Address", value: selectedStudent.address },
+      {
+        label: "Date of Birth",
+        value: new Date(selectedStudent.dateOfBirth).toLocaleDateString(),
+      },
+      { label: "Gender", value: selectedStudent.gender },
+    ];
+    view_std_2 = [
+      { label: "Admission No", value: selectedStudent.admission_no },
+      { label: "Username", value: selectedStudent.username },
+      { label: "Current Grade", value: selectedStudent.grade },
+      {
+        label: "Admission Year",
+        value: new Date(selectedStudent.admission_year).toLocaleDateString(),
+      },
+      { label: "Admitted Grade", value: selectedStudent.admitted_grade },
+      {
+        label: "Extra curricular activities",
+        value: selectedStudent.extra_activities,
+      },
+      { label: "Conduct", value: selectedStudent.conduct },
+      { label: "Special aptitudes", value: selectedStudent.special_aptitudes },
+      { label: "Remark", value: selectedStudent.remark },
+    ];
+    view_std_3 = [
+      { label: "Parent/Guardian Name", value: selectedStudent.parent_Name },
+      {
+        label: "Parent/Guardian Occupation",
+        value: selectedStudent.parent_occupation,
+      },
+      { label: "Parent/Guardian Phone", value: selectedStudent.phone },
+    ];
+  }
   return (
     <div>
       <Table striped hover className="mt-5" responsive="sm">
@@ -218,10 +260,7 @@ const ViewStudents = () => {
         <div className="popup-background">
           {selectedStudent && (
             <div className="popup-container-view">
-              <table
-                style={{ textAlign: "right" }}
-                className="viewTableStudents"
-              >
+              <table className="viewTableStudents">
                 <tr>
                   <td colSpan={2} style={{ textAlign: "center" }}>
                     <img
@@ -232,72 +271,35 @@ const ViewStudents = () => {
                     />
                   </td>
                 </tr>
-                <tr>
-                  <td>Admission No</td>
-                  <td>{selectedStudent.admission_no}</td>
-                </tr>
-                <tr>
-                  <td>Full Name</td>
-                  <td>{selectedStudent.fullname}</td>
-                </tr>
-                <tr>
-                  <td>First Name</td>
-                  <td>{selectedStudent.first_name}</td>
-                </tr>
-                <tr>
-                  <td>Last Name</td>
-                  <td>{selectedStudent.last_name}</td>
-                </tr>
-                <tr>
-                  <td>Address</td>
-                  <td>{selectedStudent.address}</td>
-                </tr>
-                <tr>
-                  <td>Date of Birth</td>
-                  <td>
-                    {new Date(selectedStudent.dateOfBirth).toLocaleDateString()}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Phone</td>
-                  <td>{selectedStudent.phone}</td>
-                </tr>
-                <tr>
-                  <td>Gender</td>
-                  <td>{selectedStudent.gender}</td>
-                </tr>
-                <tr>
-                  <td>Username</td>
-                  <td>{selectedStudent.username}</td>
-                </tr>
-                <tr>
-                  <td>Role</td>
-                  <td>{selectedStudent.role}</td>
-                </tr>
-                <tr>
-                  <td>Parent Name</td>
-                  <td>{selectedStudent.parent_Name}</td>
-                </tr>
-                <tr>
-                  <td>Parent Occupation</td>
-                  <td>{selectedStudent.parent_occupation}</td>
-                </tr>
-                <tr>
-                  <td>Admission Date</td>
-                  <td>
-                    {new Date(
-                      selectedStudent.admission_year
-                    ).toLocaleDateString()}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Grade</td>
-                  <td>{selectedStudent.grade}</td>
-                </tr>
-                <tr>
-                  <td>Extra Activities</td>
-                  <td>{selectedStudent.extra_activities}</td>
-                </tr>
+                <Row>
+                  <Col md={4}>
+                    <h3>Personal Details</h3>
+                    {view_std_1.map((std, index) => (
+                      <tr key={index}>
+                        <td>{std.label}</td>
+                        <td>{std.value}</td>
+                      </tr>
+                    ))}
+                  </Col>
+                  <Col md={4}>
+                    <h3>Academic Details</h3>
+                    {view_std_2.map((std, index) => (
+                      <tr key={index}>
+                        <td>{std.label}</td>
+                        <td>{std.value}</td>
+                      </tr>
+                    ))}
+                  </Col>
+                  <Col md={4}>
+                    <h3>Parent/Guardian details</h3>
+                    {view_std_3.map((std, index) => (
+                      <tr key={index}>
+                        <td>{std.label}</td>
+                        <td>{std.value}</td>
+                      </tr>
+                    ))}
+                  </Col>
+                </Row>
                 {/*--------Start--------QR Generator for each students according to their Ad_No */}
                 <tr>
                   <td colSpan={2}>

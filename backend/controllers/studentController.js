@@ -20,6 +20,7 @@ const createStudents = asyncHandler(async (req, res) => {
     username,
     password,
     role,
+    details,
     parent_Name,
     parent_occupation,
     admission_year,
@@ -44,6 +45,7 @@ const createStudents = asyncHandler(async (req, res) => {
     !username ||
     !password ||
     !role ||
+    !details ||
     !parent_Name ||
     !parent_occupation ||
     !admission_year ||
@@ -84,6 +86,7 @@ const createStudents = asyncHandler(async (req, res) => {
     password,
     role,
     admission_no,
+    details,
     parent_Name,
     parent_occupation,
     admission_year,
@@ -124,6 +127,7 @@ const updateStudent = asyncHandler(async (req, res) => {
     username,
     password,
     role,
+    details,
     parent_Name,
     parent_occupation,
     admission_year,
@@ -150,6 +154,7 @@ const updateStudent = asyncHandler(async (req, res) => {
     student.username = username;
     student.password = password;
     student.role = role;
+    student.details = details;
     student.parent_Name = parent_Name;
     student.parent_occupation = parent_occupation;
     student.admission_year = admission_year;

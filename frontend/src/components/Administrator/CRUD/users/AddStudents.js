@@ -10,19 +10,20 @@ function AddStudents({ fetchStudents }) {
     last_name: "",
     address: "",
     dateOfBirth: null,
-    phone: "",
     gender: "",
     picture:
-      "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
+      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    admission_no: "",
     username: "",
     password: "",
-    role: "",
-    admission_no: "",
+    role: "student",
+    grade: "",
+    admission_year: null,
+    admitted_grade: "",
+    details: "",
     parent_Name: "",
     parent_occupation: "",
-    admission_year: null,
-    grade: "",
-    extra_activities: "",
+    phone: "",
   });
 
   const [error, setError] = useState("");
@@ -47,7 +48,7 @@ function AddStudents({ fetchStudents }) {
       pics ===
       "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
     ) {
-      setError("Please Select an Image");
+      alert("Please Select an Image");
       return;
     }
     setError("");
@@ -89,30 +90,32 @@ function AddStudents({ fetchStudents }) {
       await axios.post("/api/students/create", formData, config);
 
       alert("Student added successfully!");
+      setIsPopupOpen(false);
       setFormData({
         fullname: "",
         first_name: "",
         last_name: "",
         address: "",
         dateOfBirth: null,
-        phone: "",
         gender: "",
         picture:
           "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+        admission_no: "",
         username: "",
         password: "",
         role: "",
-        admission_no: "",
+        grade: "",
+        admission_year: null,
+        admitted_grade: "",
+        details: "",
         parent_Name: "",
         parent_occupation: "",
-        admission_year: null,
-        grade: "",
-        extra_activities: "",
+        phone: "",
       });
       setError();
       fetchStudents();
     } catch (error) {
-      setError(error.response.data.message);
+      alert(error.response.data.message);
     }
   };
 
@@ -121,11 +124,91 @@ function AddStudents({ fetchStudents }) {
     setError("");
   };
 
-  const handleKeyPress = (e) => {
-    if (e.target.name === "phone" && e.target.value.length >= 10) {
-      e.preventDefault();
-    }
-  };
+  const firstCol = [
+    {
+      label: "Full name",
+      type: "text",
+      name: "fullname",
+      value: formData.fullname,
+      placeholder: "Enter full name",
+    },
+    {
+      label: "First name",
+      type: "text",
+      name: "first_name",
+      value: formData.first_name,
+      placeholder: "Enter first name",
+    },
+    {
+      label: "Last name",
+      type: "text",
+      name: "last_name",
+      value: formData.last_name,
+      placeholder: "Enter last name",
+    },
+    {
+      label: "Address",
+      type: "text",
+      name: "address",
+      value: formData.address,
+      placeholder: "Enter home address",
+    },
+  ];
+
+  const secondCol = [
+    {
+      label: "Admission No",
+      type: "text",
+      name: "admission_no",
+      value: formData.admission_no,
+      placeholder: "Enter admission number",
+    },
+    {
+      label: "Username",
+      type: "text",
+      name: "username",
+      value: formData.username,
+      placeholder: "Enter username",
+    },
+    {
+      label: "Password",
+      type: "password",
+      name: "password",
+      value: formData.password,
+      placeholder: "Enter password",
+    },
+    {
+      label: "Role",
+      type: "text",
+      name: "role",
+      value: formData.role,
+      placeholder: "Enter role",
+    },
+  ];
+
+  const thirdCol = [
+    {
+      label: "Parent/Guardian Name",
+      type: "text",
+      name: "parent_Name",
+      value: formData.parent_Name,
+      placeholder: "Enter Parent Name",
+    },
+    {
+      label: "Parent/Guardian Occupation",
+      type: "text",
+      name: "parent_occupation",
+      value: formData.parent_occupation,
+      placeholder: "Enter paren occupation",
+    },
+    {
+      label: "Phone No",
+      type: "text",
+      name: "phone",
+      value: formData.phone,
+      placeholder: "Enter Phone No",
+    },
+  ];
 
   return (
     <div>
@@ -136,7 +219,6 @@ function AddStudents({ fetchStudents }) {
       >
         Add Student
       </Button>
-      {/* {message && <p style={{ color: "green" }}>{message}</p>} */}
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
         <div className="popup-background">
@@ -145,83 +227,43 @@ function AddStudents({ fetchStudents }) {
 
             <Form onSubmit={submitHandler}>
               <Row>
-                <Col md={6}>
-                  <Form.Group controlId="admission_no">
-                    <Form.Label>Admission No</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="admission_no"
-                      value={formData.admission_no}
-                      placeholder="Enter Admission No"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="fullname">
-                    <Form.Label>Full Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="fullname"
-                      value={formData.fullname}
-                      placeholder="Enter Full Name"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="first_name">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="first_name"
-                      value={formData.first_name}
-                      placeholder="Enter First Name"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="last_name">
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="last_name"
-                      value={formData.last_name}
-                      placeholder="Enter Last Name"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="address">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      placeholder="Enter Address"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                <Col md={4}>
+                  <h3>Personal Details</h3>
+
+                  {firstCol.map((std) => (
+                    <Form.Group controlId={std.name}>
+                      <Form.Label className="label-add-students">
+                        {std.label}
+                      </Form.Label>
+                      <Form.Control
+                        type={std.type}
+                        name={std.name}
+                        value={std.value}
+                        placeholder={std.placeholder}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  ))}
+
                   <Form.Group controlId="dateOfBirth">
-                    <Form.Label>Date of Birth</Form.Label>
+                    <Form.Label className="label-add-students">
+                      Date of Birth
+                    </Form.Label>
                     <br />
                     <Form.Control
                       type="date"
                       name="dateOfBirth"
                       value={formData.dateOfBirth}
-                      placeholder="Enter date of birth"
                       onChange={(e) =>
                         handleDateChange(e.target.value, "dateOfBirth")
                       }
                     />
                   </Form.Group>
-                  <Form.Group controlId="phone">
-                    <Form.Label>Phone</Form.Label>
-                    <Form.Control
-                      type="number"
-                      name="phone"
-                      value={formData.phone}
-                      placeholder="Enter Phone"
-                      onChange={handleChange}
-                      onKeyDown={handleKeyPress}
-                    />
-                  </Form.Group>
+
                   <Form.Group controlId="gender">
-                    <Form.Label>Gender</Form.Label>
+                    <Form.Label className="label-add-students">
+                      Gender
+                    </Form.Label>
                     <Form.Control
                       as="select"
                       name="gender"
@@ -233,8 +275,11 @@ function AddStudents({ fetchStudents }) {
                       <option value="Female">Female</option>
                     </Form.Control>
                   </Form.Group>
+
                   <Form.Group controlId="picture">
-                    <Form.Label>Picture</Form.Label>
+                    <Form.Label className="label-add-students">
+                      Picture
+                    </Form.Label>
                     <Form.Control
                       type="file"
                       accept="image/jpeg, image/png"
@@ -242,63 +287,26 @@ function AddStudents({ fetchStudents }) {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={6}>
-                  <Form.Group controlId="username">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="username"
-                      value={formData.username}
-                      placeholder="Enter Username"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      name="password"
-                      value={formData.password}
-                      placeholder="Enter Password"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-
-                  <Form.Group controlId="role">
-                    <Form.Label>Role</Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="role"
-                      value={formData.role}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select Role</option>
-                      <option value="student">student</option>
-                    </Form.Control>
-                  </Form.Group>
-
-                  <Form.Group controlId="parent_Name">
-                    <Form.Label>Parent Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="parent_Name"
-                      value={formData.parent_Name}
-                      placeholder="Enter Parent Name"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="parent_occupation">
-                    <Form.Label>Parent Occupation</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="parent_occupation"
-                      value={formData.parent_occupation}
-                      placeholder="Enter Parent Occupation"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                <Col md={4}>
+                  <h3>Academic Details</h3>
+                  {secondCol.map((std) => (
+                    <Form.Group controlId={std.name}>
+                      <Form.Label className="label-add-students">
+                        {std.label}
+                      </Form.Label>
+                      <Form.Control
+                        type={std.type}
+                        name={std.name}
+                        value={std.value}
+                        placeholder={std.placeholder}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  ))}
                   <Form.Group controlId="admission_year">
-                    <Form.Label>Admission Date</Form.Label>
+                    <Form.Label className="label-add-students">
+                      Admission Date
+                    </Form.Label>
                     <br />
                     <Form.Control
                       type="date"
@@ -309,8 +317,11 @@ function AddStudents({ fetchStudents }) {
                       }
                     />
                   </Form.Group>
+
                   <Form.Group controlId="grade">
-                    <Form.Label>Grade</Form.Label>
+                    <Form.Label className="label-add-students">
+                      Current Grade
+                    </Form.Label>
                     <Form.Control
                       type="number"
                       min={1}
@@ -322,24 +333,68 @@ function AddStudents({ fetchStudents }) {
                     />
                   </Form.Group>
 
-                  <Form.Group controlId="extra_activities">
-                    <Form.Label>Extra Activities</Form.Label>
+                  <Form.Group controlId="admitted_grade">
+                    <Form.Label className="label-add-students">
+                      Admitted Grade
+                    </Form.Label>
                     <Form.Control
-                      type="text"
-                      name="extra_activities"
-                      value={formData.extra_activities}
-                      placeholder="Enter Extra Activities with , seperated"
+                      type="number"
+                      min={1}
+                      max={11}
+                      name="admitted_grade"
+                      value={formData.admitted_grade}
+                      placeholder="Enter admitted grade"
                       onChange={handleChange}
                     />
                   </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <h3>Parent/Guardian details</h3>
+                  <Form.Group controlId="details">
+                    <Form.Label className="label-add-students">
+                      Details of{" "}
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="details"
+                      value={formData.details}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select Details</option>
+                      <option value="father">Father</option>
+                      <option value="mother">Mother</option>
+                      <option value="guardian">Guardian</option>
+                    </Form.Control>
+                  </Form.Group>
 
-                  <Button variant="primary" type="submit" className="mt-5 mx-3">
+                  {thirdCol.map((std) => (
+                    <Form.Group controlId={std.name}>
+                      <Form.Label className="label-add-students">
+                        {std.label}
+                      </Form.Label>
+                      <Form.Control
+                        type={std.type}
+                        name={std.name}
+                        value={std.value}
+                        placeholder={std.placeholder}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  ))}
+
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="mt-5"
+                    style={{ width: "100px" }}
+                  >
                     Add
                   </Button>
                   <Button
                     variant="danger"
                     className="mt-5 mx-3"
                     onClick={handleCancel}
+                    style={{ width: "100px" }}
                   >
                     Cancel
                   </Button>
