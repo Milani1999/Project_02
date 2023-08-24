@@ -3,21 +3,6 @@ import "./Loading.css";
 
 const LoadingSpinner = () => {
   return (
-    // <div className="LoadingSpinner">
-    //   <div className="spinner-grow text-success"role="status">
-    //   </div>
-    //   <div className="spinner-grow text-success" role="status">
-    //   </div>
-    //   <div className="spinner-grow text-success" role="status">
-    //   </div>
-    //   <div className="spinner-grow text-success"role="status">
-    //   </div>
-    //   <div className="spinner-grow text-success" role="status">
-    //   </div>
-    //   <div className="spinner-grow text-success" role="status">
-    //   </div>
-    // </div>
-
     <div className="container-loading">
       <div style={{ "--i": "1" }}>
         <div className="ball"></div>
