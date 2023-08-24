@@ -15,6 +15,7 @@ const newsRoutes=require('./routes/newsRoutes');
 const timeTableRoute=require('./routes/timeTableRoute');
 const ImageRoutes = require('./routes/ImageRoutes');
 const oldStudentRoutes=require('./routes/oldStudentRoutes');
+const staffAttendanceRoutes = require('./routes/staffAttendanceRoutes');
 const app = express();
 dotenv.config();
 connectDB();
@@ -45,6 +46,7 @@ app.use("/api/news", newsRoutes);
 app.use("/api/timetable",timeTableRoute);
 app.use('/api/gallery', ImageRoutes);
 app.use("/api/oldStudents",oldStudentRoutes);
+app.use("/api/staffattendance",staffAttendanceRoutes);
 
 app.use(notFound)
 app.use(errorHandler)

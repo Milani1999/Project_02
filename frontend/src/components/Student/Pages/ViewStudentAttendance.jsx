@@ -12,38 +12,39 @@ const ViewStudentAttendance = ({}) => {
   const userInfo = localStorage.getItem("userInfo");
   const user = JSON.parse(userInfo);
   const studentId = user?.admissionNo;
-
+  
   const fetchStudentAttendance = async () => {
     try {
       setIsLoading(true);
-
+  
       if (!studentId) {
         console.error("Invalid student ID.");
         setIsLoading(false);
         return;
       }
-
+  
       const formattedMonth = (selectedMonth + 1).toString().padStart(2, "0");
       const query = `/api/studentattendance/getByDateAndAdmissionNo?admission_no=${studentId}&date=${selectedYear}-${formattedMonth}`;
-
+  
       const response = await fetch(query);
-      const attendanceData = await response.json();
-
+      const attendanceRecords = await response.json();
+  
       if (
-        !attendanceData ||
-        attendanceData.message === "Attendance not found."
+        !attendanceRecords ||
+        attendanceRecords.length === 0
       ) {
-        // No attendance data found for the selected month
+        
         setAttendanceData([]);
       } else {
-        setAttendanceData([attendanceData]);
+        setAttendanceData(attendanceRecords);
       }
-
+  
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching student attendance:", error);
     }
   };
+  
 
   useEffect(() => {
     fetchStudentAttendance();
@@ -53,7 +54,6 @@ const ViewStudentAttendance = ({}) => {
     <Container>
       <h1>View Student Attendance</h1>
       <div className="mb-3">
-        {/* Month and year selection here */}
         <label htmlFor="monthSelect">Select Month: </label>
         <select
           id="monthSelect"
@@ -93,16 +93,6 @@ const ViewStudentAttendance = ({}) => {
               <th>Attendance Status</th>
             </tr>
           </thead>
-          {/* <tbody>
-            {attendanceData.map((entry, index) => (
-              <tr key={index}>
-                <td>{moment(entry.date).format("YYYY-MM-DD")}</td>
-                <td>{moment(entry.arrivedTime).format("HH:mm:ss")}</td>
-                <td>{entry.onTimeLate === "On-Time" ? "On-Time" : "Late"}</td>
-                <td>{entry.present ? "Present" : "Absent"}</td>
-              </tr>
-            ))}
-          </tbody> */}
           <tbody>
             {Array.from(
               {
@@ -163,10 +153,11 @@ const ViewStudentAttendance = ({}) => {
                   </tr>
                 );
               } else {
-                return null; // Skip rendering rows for dates after the current date
+                return null; 
               }
             })}
           </tbody>
+          
         </Table>
       )}
     </Container>
@@ -174,3 +165,4 @@ const ViewStudentAttendance = ({}) => {
 };
 
 export default ViewStudentAttendance;
+

@@ -22,7 +22,6 @@ import Subject from "./components/Administrator/pages/Subject";
 import "./assets/Style/styles.css";
 import Calender from "./components/Administrator/pages/Calender";
 import Timetable from "./components/Administrator/pages/Timetable";
-import Attendence from "./components/Administrator/pages/Attendence";
 import News from "./components/Administrator/pages/News";
 import Notices from "./components/Administrator/pages/Notices";
 import SignIn from "./view/Signin/SignIn";
@@ -103,7 +102,6 @@ function App() {
             <Route path="Subject" element={<Subject />} />
             <Route path="calender" element={<Calender />} />
             <Route path="Timetable" element={<Timetable />} />
-            <Route path="Attendence" element={<Attendence />} />
             <Route path="News" element={<News />} />
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
