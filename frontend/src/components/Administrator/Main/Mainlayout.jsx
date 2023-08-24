@@ -3,12 +3,10 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
   AiOutlineUser,
-  AiOutlineFund,
 } from "react-icons/ai";
 import {
   RiCalendarCheckFill,
   RiCalendar2Line,
-  RiMoonLine,
   RiMoneyDollarCircleLine,
   RiMessage2Line,
 } from "react-icons/ri";
@@ -106,12 +104,6 @@ const MainLayout = () => {
               icon: <FaClipboardList className="fs-4" />,
               label: "Attendance",
               children: [
-                {
-                  key: "Attendence",
-                  icon: <AiOutlineUser className="fs-4" />,
-                  label: "Dashboard",
-                },
-
                 {
                   key: "StudentAttendance",
                   icon: <AiOutlineUser className="fs-4" />,
