@@ -5,6 +5,7 @@ import Popup from "reactjs-popup";
 import AddSubjects from "./AddSubjects";
 import "./subject.css";
 import { fetchSubjects } from "./FetchSubjects";
+import LoadingSpinner from "../../../Loading/Loading";
 
 const SubjectList = () => {
   const [subjectList, setSubjectList] = useState([]);
@@ -12,6 +13,7 @@ const SubjectList = () => {
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [staffOptions, setStaffOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     subject_id: "",
     subject_name: "",
@@ -20,9 +22,12 @@ const SubjectList = () => {
 
   const fetchStaff = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get("/api/staff");
       return response.data;
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.error("Error fetching staff data:", error);
     }
   };
@@ -38,9 +43,12 @@ const SubjectList = () => {
 
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const staffResponse = await fetchStaff();
         setStaffOptions(staffResponse);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.error("Error fetching staff data:", error);
       }
     };
@@ -61,12 +69,15 @@ const SubjectList = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       await axios.put(`/api/subjects/${selectedSubject._id}`, selectedSubject);
       alert("Subject updated successfully.");
       setShowEditPopup(false);
       const updatedSubjects = await fetchSubjects();
       setSubjectList(updatedSubjects);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       alert("Failed to update Subject");
     }
   };
@@ -83,222 +94,234 @@ const SubjectList = () => {
 
   const confirmDelete = async () => {
     try {
+      setIsLoading(true);
       const { _id } = selectedSubject;
       await axios.delete(`/api/subjects/${_id}`);
       setShowDeletePopup(false);
       alert("Subject deleted successfully.");
       const updatedSubjects = await fetchSubjects();
       setSubjectList(updatedSubjects);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       alert("Failed to delete subject.");
     }
   };
 
   return (
-    <div className="subject-view">
-      <Table striped hover className="mt-4">
-        <thead>
-          <tr>
-            <th colSpan={3}></th>
-            <th>
-              <AddSubjects setSubjectList={setSubjectList} />
-            </th>
-          </tr>
-          <tr>
-            <th>Subject ID</th>
-            <th>Subject Name</th>
-            <th>Assigned Staff</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {subjectList.map((subject) => (
-            <tr key={subject._id}>
-              <td>{subject.subject_id}</td>
-              <td>{subject.subject_name}</td>
-              <td>
-                {subject.staff_name ? (
-                  subject.staff_name.map((staffName, index) => (
-                    <div key={index}>{staffName}</div>
-                  ))
-                ) : (
-                  <div>No assigned staff</div>
-                )}
-              </td>
+    <div>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="subject-view">
+          <Table striped hover className="mt-4">
+            <thead>
+              <tr>
+                <th colSpan={3}></th>
+                <th>
+                  <AddSubjects setSubjectList={setSubjectList} />
+                </th>
+              </tr>
+              <tr>
+                <th>Subject ID</th>
+                <th>Subject Name</th>
+                <th>Assigned Staff</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {subjectList.map((subject) => (
+                <tr key={subject._id}>
+                  <td>{subject.subject_id}</td>
+                  <td>{subject.subject_name}</td>
+                  <td>
+                    {subject.staff_name ? (
+                      subject.staff_name.map((staffName, index) => (
+                        <div key={index}>{staffName}</div>
+                      ))
+                    ) : (
+                      <div>No assigned staff</div>
+                    )}
+                  </td>
 
-              <td>
-                <Button
-                  variant="success"
-                  onClick={() => handleEdit(subject)}
-                  className="m-1"
-                  style={{ width: "100px" }}
-                >
-                  Edit
-                </Button>
-                <br />
-                <Button
-                  variant="danger"
-                  onClick={() => handleDelete(subject)}
-                  className="m-1"
-                  style={{ width: "100px" }}
-                >
-                  Delete
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+                  <td>
+                    <Button
+                      variant="success"
+                      onClick={() => handleEdit(subject)}
+                      className="m-1"
+                      style={{ width: "100px" }}
+                    >
+                      Edit
+                    </Button>
+                    <br />
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDelete(subject)}
+                      className="m-1"
+                      style={{ width: "100px" }}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
 
-      <Popup open={showEditPopup} onClose={handleCloseEditPopup}>
-        <div className="popup-background">
-          {selectedSubject._id && (
-            <div
-              className="popup-container-subjects"
-              style={{
-                backgroundColor: "white",
-                border: "2px solid green",
-                padding: "25px",
-              }}
-            >
-              <form onSubmit={handleEditSubmit}>
-                <div>
-                  <Form.Label className="label-subject">Subject ID</Form.Label>
-                  <Form.Control
-                    type="text"
-                    id="subject_id"
-                    name="subject_id"
-                    value={selectedSubject.subject_id}
-                    onChange={(e) =>
-                      setSelectedSubject({
-                        ...selectedSubject,
-                        subject_id: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div>
-                  <Form.Label className="label-subject">
-                    Subject Name
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    id="subject_name"
-                    name="subject_name"
-                    value={selectedSubject.subject_name}
-                    onChange={(e) =>
-                      setSelectedSubject({
-                        ...selectedSubject,
-                        subject_name: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div>
-                  <Form.Label className="label-subject">
-                    List of Staff
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    multiple
-                    name="staff_name"
-                    value={selectedSubject.staff_name}
-                    onChange={(e) => {
-                      const selectedStaffNames = Array.from(
-                        e.target.selectedOptions,
-                        (option) => option.value
-                      );
-                      setSelectedSubject((prevSelectedSubject) => ({
-                        ...prevSelectedSubject,
-                        staff_name: [
-                          ...prevSelectedSubject.staff_name,
-                          ...selectedStaffNames,
-                        ],
-                      }));
-                    }}
-                  >
-                    {staffOptions.map((staff) => (
-                      <option
-                        key={staff.value}
-                        value={staff.fullname}
-                        disabled={selectedSubject.staff_name.includes(
-                          staff.fullname
-                        )}
+          <Popup open={showEditPopup} onClose={handleCloseEditPopup}>
+            <div className="popup-background">
+              {selectedSubject._id && (
+                <div
+                  className="popup-container-subjects"
+                  style={{
+                    backgroundColor: "white",
+                    border: "2px solid green",
+                    padding: "25px",
+                  }}
+                >
+                  <form onSubmit={handleEditSubmit}>
+                    <div>
+                      <Form.Label className="label-subject">
+                        Subject ID
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        id="subject_id"
+                        name="subject_id"
+                        value={selectedSubject.subject_id}
+                        onChange={(e) =>
+                          setSelectedSubject({
+                            ...selectedSubject,
+                            subject_id: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Form.Label className="label-subject">
+                        Subject Name
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        id="subject_name"
+                        name="subject_name"
+                        value={selectedSubject.subject_name}
+                        onChange={(e) =>
+                          setSelectedSubject({
+                            ...selectedSubject,
+                            subject_name: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Form.Label className="label-subject">
+                        List of Staff
+                      </Form.Label>
+                      <Form.Control
+                        as="select"
+                        multiple
+                        name="staff_name"
+                        value={selectedSubject.staff_name}
+                        onChange={(e) => {
+                          const selectedStaffNames = Array.from(
+                            e.target.selectedOptions,
+                            (option) => option.value
+                          );
+                          setSelectedSubject((prevSelectedSubject) => ({
+                            ...prevSelectedSubject,
+                            staff_name: [
+                              ...prevSelectedSubject.staff_name,
+                              ...selectedStaffNames,
+                            ],
+                          }));
+                        }}
                       >
-                        {staff.employee_id} - {staff.fullname}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </div>
-                <div>
-                  <Form.Label className="label-subject">
-                    Assigned Staff
-                  </Form.Label>
-                  {selectedSubject.staff_name &&
-                    selectedSubject.staff_name.map((staff, index) => (
-                      <div key={index}>
-                        {staff}
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setSelectedSubject((prevSelectedSubject) => ({
-                              ...prevSelectedSubject,
-                              staff_name: prevSelectedSubject.staff_name.filter(
-                                (s) => s !== staff
-                              ),
-                            }))
-                          }
-                          className="remove-button"
-                        >
-                          -
-                        </button>
-                      </div>
-                    ))}
-                </div>
+                        {staffOptions.map((staff) => (
+                          <option
+                            key={staff.value}
+                            value={staff.fullname}
+                            disabled={selectedSubject.staff_name.includes(
+                              staff.fullname
+                            )}
+                          >
+                            {staff.employee_id} - {staff.fullname}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </div>
+                    <div>
+                      <Form.Label className="label-subject">
+                        Assigned Staff
+                      </Form.Label>
+                      {selectedSubject.staff_name &&
+                        selectedSubject.staff_name.map((staff, index) => (
+                          <div key={index}>
+                            {staff}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setSelectedSubject((prevSelectedSubject) => ({
+                                  ...prevSelectedSubject,
+                                  staff_name:
+                                    prevSelectedSubject.staff_name.filter(
+                                      (s) => s !== staff
+                                    ),
+                                }))
+                              }
+                              className="remove-button"
+                            >
+                              -
+                            </button>
+                          </div>
+                        ))}
+                    </div>
 
-                <Button variant="primary" type="submit" className="mt-5">
-                  Update
-                </Button>
-                <Button
-                  variant="secondary"
-                  onClick={handleCloseEditPopup}
-                  className="mx-3 mt-5"
-                >
-                  Cancel
-                </Button>
-              </form>
+                    <Button variant="primary" type="submit" className="mt-5">
+                      Update
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      onClick={handleCloseEditPopup}
+                      className="mx-3 mt-5"
+                    >
+                      Cancel
+                    </Button>
+                  </form>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </Popup>
+          </Popup>
 
-      <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-        <div className="popup-background">
-          {selectedSubject && (
-            <div className="popup-container-delete">
-              <h5>Are you sure you want to delete this Subject?</h5>
-              Subject ID : {selectedSubject.subject_id}
-              <br />
-              Subject Name : {selectedSubject.subject_name}
-              <br />
-              <Button
-                variant="danger"
-                onClick={confirmDelete}
-                className="mx-3 mt-3"
-              >
-                Delete
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={handleCloseDeletePopup}
-                className="ml-3 mt-3"
-              >
-                Cancel
-              </Button>
+          <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
+            <div className="popup-background">
+              {selectedSubject && (
+                <div className="popup-container-delete">
+                  <h5>Are you sure you want to delete this Subject?</h5>
+                  Subject ID : {selectedSubject.subject_id}
+                  <br />
+                  Subject Name : {selectedSubject.subject_name}
+                  <br />
+                  <Button
+                    variant="danger"
+                    onClick={confirmDelete}
+                    className="mx-3 mt-3"
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={handleCloseDeletePopup}
+                    className="ml-3 mt-3"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              )}
             </div>
-          )}
+          </Popup>
         </div>
-      </Popup>
+      )}
     </div>
   );
 };

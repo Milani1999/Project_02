@@ -50,16 +50,20 @@ const oldStudentSchema = new mongoose.Schema({
   },
   grade: {
     type: Number,
+    default: 0,
+  },
+  c_grade: {
+    type: Number,
     required: true,
   },
   extra_activities: {
     type: String,
     required: true,
   },
-  leaving:{
-    type:Boolean,
-    default:false,
-  }
+  leaving: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const OldStudent = mongoose.model("OldStudent", oldStudentSchema);

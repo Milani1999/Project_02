@@ -173,6 +173,11 @@ const MainLayout = () => {
               icon: <RiMessage2Line className="fs-4" />,
               label: "Support",
             },
+            {
+              key: "LeavingCertificate",
+              icon: <RiMessage2Line className="fs-4" />,
+              label: "Leaving",
+            },
           ]}
         />
       </Sider>

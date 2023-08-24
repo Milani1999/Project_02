@@ -4,18 +4,20 @@
   border: 2px solid green;
   width: 1200px;
   height: 95vh;
-  padding: 25px;
+  padding-top: 25px;
 }
 
 .viewTableStudents td {
   text-align: left;
-  padding-left: 20px;
+  padding-left: 10px;
+  padding-bottom: 8px;
 }
+
 .popup-container-view {
   background-color: white;
   border: 2px solid green;
-  padding: 5px 50px;
   align-items: center;
+  padding: 25px;
 }
 
 img {
@@ -46,6 +48,31 @@ img {
   justify-content: center;
   align-items: center;
 }
-.colname{
+.colname {
   background-color: #cff1d4;
+}
+
+.Popup h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.Popup .label-add-students {
+  padding-top: 10px;
+}
+
+.viewTableStudents h3 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.viewTableStudents .QR{
+  padding-top: 30px;
+}
+
+.Popup .std-msg{
+  color: red;
+  font-size: 12px;
+  font-style: italic;
+  padding-top: 20px;
 }
