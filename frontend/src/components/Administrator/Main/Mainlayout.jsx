@@ -90,7 +90,7 @@ const MainLayout = () => {
                 {
                   key: "EditTeacher",
                   icon: <AiOutlineUser className="fs-4" />,
-                  label: "Teacher",
+                  label: "Staff",
                 },
 
                 {
