@@ -148,7 +148,7 @@ const ViewStudents = () => {
               </div>
             </th>
             <th style={{ textAlign: "center", width: "100px" }}>
-              <AddStudents fetchStudents={fetchStudents}/>
+              <AddStudents fetchStudents={fetchStudents} />
             </th>
           </tr>
           <tr className="colname">
