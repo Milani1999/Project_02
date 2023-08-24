@@ -382,6 +382,11 @@ function AddStudents({ fetchStudents }) {
                     </Form.Group>
                   ))}
 
+                  <p className="std-msg">
+                    * Extra curricular activities, conduct and remarks can be
+                    added in the edit option
+                  </p>
+
                   <Button
                     variant="primary"
                     type="submit"
