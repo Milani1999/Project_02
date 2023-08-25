@@ -60,8 +60,11 @@ const Calendar = () => {
   const handleConfirmDelete = async () => {
     if (eventToDelete) {
       try {
-        await axios.delete(`/api/events/delete/${eventToDelete.id}`);
-        setCurrentEvents(currentEvents.filter((event) => event.id !== eventToDelete.id));
+        
+        const eventId = eventToDelete._def.publicId;
+  
+        await axios.delete(`/api/events/delete/${eventId}`);
+        setCurrentEvents(currentEvents.filter((event) => event._def.publicId !== eventId));
         setEventToDelete(null);
         setShowDeleteConfirmation(false);
         showPopup('Event deleted successfully');
@@ -71,6 +74,7 @@ const Calendar = () => {
       }
     }
   };
+  
 
   const handleCancelDelete = () => {
     setEventToDelete(null);
