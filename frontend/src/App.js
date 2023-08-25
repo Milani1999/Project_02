@@ -49,6 +49,7 @@ import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttenda
 import Gallery from "./components/section/Gallery";
 import EditGallery from "./components/Administrator/pages/EditGallery";
 import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
+import AdminProfile from "./components/Administrator/pages/AdminProfile";
 
 function App() {
   return (
@@ -111,6 +112,7 @@ function App() {
             <Route path="StudentAttendance" element={<StudentAttendance />} />
             <Route path="EditGallery" element={<EditGallery />} />
             <Route path="LeavingCertificate" element={<LeavingCertificate />} />
+            <Route path="admin-profile" element={<AdminProfile />} />
           </Route>
 
           <Route

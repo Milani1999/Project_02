@@ -93,6 +93,7 @@ const PieChartTable = ({ selectedYear, selectedGrade, selectedSubject }) => {
     return scoreRanges.map((range) => {
       const termScores = termData.scores || [];
       const termCount = filterScoresByRange(termScores, range).length;
+      console.log(subjects);
 
       return {
         range,

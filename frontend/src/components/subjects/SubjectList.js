@@ -14,18 +14,18 @@ const SubjectList = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [staffOptions, setStaffOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    subject_id: "",
-    subject_name: "",
-    staff_name: [],
-  });
+  // const [formData, setFormData] = useState({
+  //   subject_id: "",
+  //   subject_name: "",
+  //   staff_name: [],
+  // });
 
   const fetchStaff = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get("/api/staff");
       return response.data;
-      setIsLoading(false);
+      // setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       console.error("Error fetching staff data:", error);
