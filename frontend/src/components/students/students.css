@@ -1,0 +1,92 @@
+.popup-background-student {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(3, 46, 13, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-container-std,
+.popup-container-edit-std {
+  background-color: white;
+  border: 2px solid green;
+  height: 95vh;
+  padding: 25px;
+  width: 1200px;
+}
+
+.popup-container-view-std {
+  background-color: white;
+  border: 2px solid green;
+  width: 900px;
+  padding: 25px;
+}
+
+.viewTableStudents td {
+  text-align: left;
+  padding-left: 10px;
+  padding-bottom: 8px;
+}
+
+.label-add-students {
+  padding-top: 10px;
+}
+
+.viewTableStudents h3 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.popup-container-std {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.viewTableStudents .QR {
+  padding-top: 30px;
+}
+
+.std-msg {
+  color: red;
+  font-size: 12px;
+  font-style: italic;
+  padding-top: 20px;
+}
+
+.button-close-view-std {
+  background-color: white;
+  border: none;
+  color: maroon;
+  font-weight: bolder;
+  font-size: 30px;
+  float: right;
+}
+
+.button-close-view-std:hover {
+  color: rgb(30, 65, 3);
+}
+
+.viewTableStudents {
+  width: 100%;
+  height: 100%;
+}
+
+.viewTableStudents .col-5 {
+  text-align: center;
+  background-color: #cff1d4;
+  padding: 15px 0px;
+  border-radius: 5%;
+}
+
+.col-5 .row1{
+margin-left: 50px;
+}
+
+.col-7 .row2{
+  margin-left: 50px;
+}

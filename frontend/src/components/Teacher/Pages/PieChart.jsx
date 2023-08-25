@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Select, Row, Col, Card } from "antd";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 import "./Performance.css";
-import { fetchSubjects } from "../../Administrator/CRUD/subjects/FetchSubjects";
+import { fetchSubjects } from "../../subjects/FetchSubjects";
 import axios from "axios";
 import LoadingSpinner from "../../Loading/Loading";
 

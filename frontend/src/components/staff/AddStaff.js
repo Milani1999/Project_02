@@ -130,8 +130,8 @@ function AddStaff({ fetchStaffData }) {
       </Button>
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-        <div className="popup-background">
-          <div className="Popup">
+        <div className="popup-background-staff">
+          <div className="popup-container-add">
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <Form onSubmit={submitHandler}>
