@@ -3,8 +3,8 @@ const OldStudent = require("../models/oldStudentModel");
 const asyncHandler = require("express-async-handler");
 
 const getOldStudents = asyncHandler(async (req, res) => {
-  const students = await Student.find();
-  res.json(students);
+  const oldStudents = await OldStudent.find();
+  res.json(oldStudents);
 });
 
 const getOldStudentByID = asyncHandler(async (req, res) => {
@@ -40,7 +40,7 @@ const addToOldStudent = asyncHandler(async (req, res) => {
       parent_Name: student.parent_Name,
       parent_occupation: student.parent_occupation,
       admission_year: student.admission_year,
-      grade: student.grade,
+      c_grade: student.grade,
       extra_activities: student.extra_activities,
     });
 

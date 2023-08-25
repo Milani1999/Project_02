@@ -1,5 +1,5 @@
 import React from 'react';
-import ViewStudents from '../CRUD/users/StudentList';
+import ViewStudents from '../../students/StudentList';
 
 const App = () => {
 

@@ -3,13 +3,14 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
   AiOutlineUser,
-  AiOutlineFileImage
+  AiOutlineFileImage,
 } from "react-icons/ai";
 import {
   RiCalendarCheckFill,
   RiCalendar2Line,
   RiMoneyDollarCircleLine,
   RiMessage2Line,
+  RiHistoryLine,
 } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -172,6 +173,11 @@ const MainLayout = () => {
               key: "Support",
               icon: <RiMessage2Line className="fs-4" />,
               label: "Support",
+            },
+            {
+              key: "LeavingCertificate",
+              icon: <RiHistoryLine className="fs-4" />,
+              label: "Leaving",
             },
           ]}
         />
