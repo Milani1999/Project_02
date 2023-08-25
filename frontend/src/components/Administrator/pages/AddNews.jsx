@@ -93,8 +93,8 @@ function AddNews({ fetchNewsData }) {
       </Button>
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-        <div className="popup-background">
-          <div className="Popup">
+        <div className="popup-background-news">
+          <div className="popup-container-news">
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <Form onSubmit={submitHandler}>

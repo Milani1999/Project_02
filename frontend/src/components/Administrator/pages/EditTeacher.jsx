@@ -1,5 +1,5 @@
 import React from 'react'
-import ViewStaff from '../CRUD/staff/ViewStaff'
+import ViewStaff from '../../staff/ViewStaff'
 
 function EditTeacher() {
   return (

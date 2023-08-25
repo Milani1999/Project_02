@@ -5,7 +5,7 @@ import Popup from "reactjs-popup";
 import AddSubjects from "./AddSubjects";
 import "./subject.css";
 import { fetchSubjects } from "./FetchSubjects";
-import LoadingSpinner from "../../../Loading/Loading";
+import LoadingSpinner from "../Loading/Loading";
 
 const SubjectList = () => {
   const [subjectList, setSubjectList] = useState([]);
@@ -169,7 +169,7 @@ const SubjectList = () => {
           </Table>
 
           <Popup open={showEditPopup} onClose={handleCloseEditPopup}>
-            <div className="popup-background">
+            <div className="popup-background-subject">
               {selectedSubject._id && (
                 <div
                   className="popup-container-subjects"
@@ -294,7 +294,7 @@ const SubjectList = () => {
           </Popup>
 
           <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-            <div className="popup-background">
+            <div className="popup-background-subject">
               {selectedSubject && (
                 <div className="popup-container-delete">
                   <h5>Are you sure you want to delete this Subject?</h5>

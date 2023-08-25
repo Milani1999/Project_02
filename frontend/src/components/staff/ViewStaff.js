@@ -4,8 +4,8 @@ import { Form, Button, Table, Col, Row } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import AddStaff from "./AddStaff";
 import "./staff.css";
-import QrGenerator from "../../../QrCode/QrGenerator";
-import LoadingSpinner from "../../../Loading/Loading";
+import QrGenerator from "../QrCode/QrGenerator";
+import LoadingSpinner from "../Loading/Loading";
 
 const ViewStaff = () => {
   const [staffList, setStaffList] = useState([]);

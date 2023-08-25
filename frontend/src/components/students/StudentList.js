@@ -4,8 +4,8 @@ import { Table, Button, Row, Col, Form } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import AddStudents from "./AddStudents";
 import "./students.css";
-import QrGenerator from "../../../QrCode/QrGenerator";
-import LoadingSpinner from "../../../Loading/Loading";
+import QrGenerator from '../QrCode/QrGenerator';
+import LoadingSpinner from "../Loading/Loading";
 
 const ViewStudents = () => {
   const [students, setStudents] = useState([]);
