@@ -273,12 +273,20 @@ const ViewStudents = () => {
           </Table>
 
           <Popup open={showViewPopup} onClose={handleCloseViewPopup}>
-            <div className="popup-background">
+            <div className="popup-background-student">
               {selectedStudent && (
-                <div className="popup-container-view">
+                <div className="popup-container-view-std">
                   <table className="viewTableStudents">
-                    <Row>
-                      <Col md={6} style={{ textAlign: "center" }}>
+                    <div style={{ textAlign: "right" }}>
+                      <button
+                        onClick={handleCloseViewPopup}
+                        className="button-close-view-std"
+                      >
+                        X
+                      </button>
+                    </div>
+                    <div className="row">
+                      <div className="col-5">
                         <img
                           src={selectedStudent.picture}
                           alt="Profile"
@@ -286,28 +294,34 @@ const ViewStudents = () => {
                           height="100"
                         />
                         <h3>Personal Details</h3>
-                        {view_std_1.map((std, index) => (
-                          <tr key={index}>
-                            <td>{std.label}</td>
-                            <td>{std.value}</td>
-                          </tr>
-                        ))}
+                        <div className="row1">
+                          {view_std_1.map((std, index) => (
+                            <tr key={index}>
+                              <td>{std.label}</td>
+                              <td>{std.value}</td>
+                            </tr>
+                          ))}
+                        </div>
                         <h3>Parent/Guardian details</h3>
-                        {view_std_3.map((std, index) => (
-                          <tr key={index}>
-                            <td>{std.label}</td>
-                            <td>{std.value}</td>
-                          </tr>
-                        ))}
-                      </Col>
-                      <Col md={6} style={{ textAlign: "center" }}>
+                        <div className="row1">
+                          {view_std_3.map((std, index) => (
+                            <tr key={index}>
+                              <td>{std.label}</td>
+                              <td>{std.value}</td>
+                            </tr>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="col-7">
                         <h3>Academic Details</h3>
-                        {view_std_2.map((std, index) => (
-                          <tr key={index}>
-                            <td>{std.label}</td>
-                            <td>{std.value}</td>
-                          </tr>
-                        ))}
+                        <div className="row2">
+                          {view_std_2.map((std, index) => (
+                            <tr key={index}>
+                              <td>{std.label}</td>
+                              <td>{std.value}</td>
+                            </tr>
+                          ))}
+                        </div>
 
                         {/*--------Start--------QR Generator for each students according to their Ad_No */}
                         <div className="QR">
@@ -319,15 +333,8 @@ const ViewStudents = () => {
                         </div>
 
                         {/*--------End--------QR Generator */}
-                        <Button
-                          variant="secondary"
-                          onClick={handleCloseViewPopup}
-                          className="mt-2"
-                        >
-                          Close
-                        </Button>
-                      </Col>
-                    </Row>
+                      </div>{" "}
+                    </div>
                   </table>
                 </div>
               )}
@@ -335,9 +342,9 @@ const ViewStudents = () => {
           </Popup>
 
           <Popup open={showEditPopup} onClose={handleCloseEditPopup}>
-            <div className="popup-background">
+            <div className="popup-background-student">
               {selectedStudent && (
-                <div className="popup-container">
+                <div className="popup-container-edit-std">
                   <form onSubmit={handleEditSubmit}>
                     <Row>
                       <Col md={4}>
@@ -719,7 +726,7 @@ const ViewStudents = () => {
           </Popup>
 
           <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-            <div className="popup-background">
+            <div className="popup-background-student">
               <div className="popup-container-delete">
                 <h3>Delete Student</h3>
                 <p>Are you sure you want to delete this student?</p>

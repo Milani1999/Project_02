@@ -115,7 +115,7 @@ const ViewStaff = () => {
   return (
     <div>
       {isLoading ? (
-        <LoadingSpinner/>
+        <LoadingSpinner />
       ) : (
         <div>
           <Table striped hover className="mt-5">
@@ -193,9 +193,9 @@ const ViewStaff = () => {
           </Table>
 
           <Popup open={showViewPopup} onClose={handleCloseViewPopup}>
-            <div className="popup-background">
+            <div className="popup-background-staff">
               {selectedStaff && (
-                <div className="popup-container-view">
+                <div className="popup-container-view-staff">
                   <table className="viewTableStaff">
                     <tr>
                       <td colSpan={2} style={{ textAlign: "center" }}>
@@ -290,9 +290,9 @@ const ViewStaff = () => {
           </Popup>
 
           <Popup open={showEditPopup} onClose={handleCloseEditPopup}>
-            <div className="popup-background">
+            <div className="popup-background-staff">
               {selectedStaff && (
-                <div className="popup-container">
+                <div className="popup-container-edit-staff">
                   <form onSubmit={handleEditSubmit}>
                     <Row>
                       <Col md={6}>
@@ -572,7 +572,7 @@ const ViewStaff = () => {
           </Popup>
 
           <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-            <div className="popup-background">
+            <div className="popup-background-staff">
               {selectedStaff && (
                 <div className="popup-container-delete">
                   <h5>Are you sure you want to delete this staff member?</h5>

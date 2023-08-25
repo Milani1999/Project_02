@@ -221,8 +221,8 @@ function AddStudents({ fetchStudents }) {
       </Button>
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-        <div className="popup-background">
-          <div className="Popup">
+        <div className="popup-background-student">
+          <div className="popup-container-std">
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <Form onSubmit={submitHandler}>

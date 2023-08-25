@@ -1,32 +1,42 @@
-.Popup,
-.popup-container {
-  background-color: white;
-  border: 2px solid green;
-  width: 1200px;
-  height: 95vh;
-  padding: 25px;
-}
-
-.popup-container-view {
-  background-color: white;
-  border: 2px solid green;
-  padding: 5px 50px;
+.popup-background-staff {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(3, 46, 13, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-img {
-  border-radius: 100px;
+.popup-container-edit-staff,
+.popup-container-add {
+  background-color: white;
+  border: 2px solid green;
+  padding: 30px;
+  text-align: center;
+  width: 900px;
 }
 
-.popup-container-delete {
+.popup-container-delete{
   background-color: white;
   border: 2px solid green;
   padding: 30px;
   text-align: center;
 }
 
-.imgEdit {
-  margin-left: 220px;
+.popup-container-view-staff{
+  background-color: white;
+  border: 2px solid green;
+  padding: 30px;
+  text-align: center;
+  width: 400px;
+}
+
+img {
+  border-radius: 100px;
 }
 
 .viewTableStaff td {
@@ -34,9 +44,9 @@ img {
   padding: 3px;
   padding-left: 20px;
 }
-.table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: #f9f9f9;
-  height: 5px;
+
+.colname {
+  background-color: #cff1d4;
 }
 
 .btn-primary {
@@ -44,16 +54,18 @@ img {
   background-color: #198f1b;
   border-color: #46a42e;
 }
-.colname {
-  background-color: #cff1d4;
-}
-.table {
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 20px;
-}
+
 .btn-danger {
   color: #fff;
   background-color: #d9534f;
   border-color: #d43f3a;
+}
+
+.mt-5 td {
+  width: 12.5%;
+  text-align: center;
+}
+
+Form{
+  text-align: left;
 }
