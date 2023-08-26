@@ -56,15 +56,13 @@ const Calendar = () => {
     setEventToDelete(clickInfo.event);
     setShowDeleteConfirmation(true);
   };
-
   const handleConfirmDelete = async () => {
     if (eventToDelete) {
       try {
-        
-        const eventId = eventToDelete._def.publicId;
+        const eventId = eventToDelete.id;
   
         await axios.delete(`/api/events/delete/${eventId}`);
-        setCurrentEvents(currentEvents.filter((event) => event._def.publicId !== eventId));
+        setCurrentEvents(currentEvents.filter((event) => event.id !== eventId));
         setEventToDelete(null);
         setShowDeleteConfirmation(false);
         showPopup('Event deleted successfully');
