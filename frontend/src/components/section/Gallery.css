@@ -23,26 +23,28 @@
   /* Style for dots */
 .slick-dots {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-top: 20px;
   }
   
   .slick-dots li {
     display: inline-block;
     margin: 0 5px;
   }
-  
   .slick-dots li button {
-    font-size: 5px;
     line-height: 1;
     border: none;
-    background-color: #ccc;
-    border-radius: 50%;
-    width: 5px;
-    height: 5px;
+    background-color: transparent;
+    width: 10px; 
+    height: 10px; 
     cursor: pointer;
     outline: none;
+    border-radius: 50%;
   }
   
+
   .slick-dots li.slick-active button {
-    background-color: #edecec;
+    background-color: #323131;
+    width: 15px; 
+    height: 15px; 
   }
