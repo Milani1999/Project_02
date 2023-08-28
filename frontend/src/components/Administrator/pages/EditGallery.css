@@ -1,12 +1,12 @@
 
-.popup-container-news {
+.popup-container-gallery {
     background-color: white;
     border: 2px solid green;
     padding:50px;
     align-items: center;
   }
   
-  .popup-background-news {
+  .popup-background-gallery {
     position: fixed;
     top: 0;
     left: 0;
@@ -19,3 +19,12 @@
     align-items: center;
   }
   
+  .gallery-admin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .gallery-admin .mt-4{
+    width: 75%;
+  }

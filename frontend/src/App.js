@@ -147,6 +147,7 @@ const includedPaths = [
   "/Events",
   "/Contact",
   "/Students",
+  "/Gallery"
 ];
 
 function HeaderRoutes() {

@@ -1,18 +1,19 @@
-
-.h1-heading {
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    padding-top: 20px;
+.GalleryComponent .h1-heading {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 40px;
+  color: rgb(6, 68, 46);
+  margin-top: 120px;
+  margin-bottom: 60px;
   }
   
-  .GalleryComponent.slider-image {
+.GalleryComponent.slider-image {
     width: 100%;
     height: auto;
     
    
   }
- .img-fluid {
+.GalleryComponent .img-fluid {
     border-radius: 0px;
     height:350px;
     padding-left: 10px;
@@ -47,4 +48,9 @@
     background-color: #323131;
     width: 15px; 
     height: 15px; 
+  }
+  
+  .GalleryComponent{
+    height: 100vh;
+    overflow: hidden;
   }

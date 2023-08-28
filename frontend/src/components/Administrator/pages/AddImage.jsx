@@ -10,11 +10,6 @@ function AddGallery({ refreshGallery }) {
     image: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
-  };
-
   const postDetails = (pics) => {
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
@@ -81,8 +76,8 @@ function AddGallery({ refreshGallery }) {
       </Button>
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-        <div className="popup-background">
-          <div className="Popup">
+        <div className="popup-background-gallery">
+          <div className="popup-container-gallery">
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <Form onSubmit={submitHandler}>

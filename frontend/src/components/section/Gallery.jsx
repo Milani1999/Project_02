@@ -69,7 +69,7 @@ function Gallery() {
             <img
               className="img-fluid"
               width={500}
-              src={image.url} 
+              src={image.image} 
               alt="Gallery"
             />
           </div>

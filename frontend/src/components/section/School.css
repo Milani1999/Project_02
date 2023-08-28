@@ -1,5 +1,5 @@
 .SchoolComponent {
-  height: 625px;
+  height: 530px;
 }
 
 .SchoolComponent .rounded {
@@ -12,8 +12,8 @@
   font-size: 40px;
   color: rgb(6, 68, 46);
   font-weight: bolder;
-  padding-top: 90px;
-  margin-bottom: 70px;
+  margin-top: 120px;
+  margin-bottom: 100px;
 }
 
 .SchoolComponent img {
