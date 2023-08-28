@@ -48,6 +48,7 @@ import StudentAttendance from "./components/Administrator/pages/StudentAttendanc
 import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttendance";
 import Gallery from "./components/section/Gallery";
 import EditGallery from "./components/Administrator/pages/EditGallery";
+import Payment from "./components/Student/Pages/Payment";
 
 function App() {
   return (
@@ -126,6 +127,10 @@ function App() {
             <Route
               path="ViewStudentAttendance"
               element={<ViewStudentAttendance />}
+            />
+            <Route
+              path="Payment"
+              element={<Payment />}
             />
             <Route path="ViewNotice" element={<SNotices />} />
             <Route path="Scalender" element={<TCalendar />} />
