@@ -49,7 +49,8 @@ import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttenda
 import Gallery from "./components/section/Gallery";
 import EditGallery from "./components/Administrator/pages/EditGallery";
 import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
-import AdminProfile from "./components/Administrator/pages/AdminProfile";
+import AdminProfile from "./components/Administrator/pages/AdminProfile"
+import Payment from "./components/Student/Pages/Payment";
 
 function App() {
   return (
@@ -130,6 +131,10 @@ function App() {
             <Route
               path="ViewStudentAttendance"
               element={<ViewStudentAttendance />}
+            />
+            <Route
+              path="Payment"
+              element={<Payment />}
             />
             <Route path="ViewNotice" element={<SNotices />} />
             <Route path="Scalender" element={<TCalendar />} />
