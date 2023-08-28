@@ -93,7 +93,7 @@ const News = () => {
   };
 
   return (
-    <div>
+    <div className="News-admin">
       <Table striped hover className="mt-4">
         <thead>
           <tr>

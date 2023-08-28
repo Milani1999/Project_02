@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import { Button, notification } from "antd";
 import Logo from "../../../assets/ImageResources/uni2.png";
-import DarkMode from "../../DarkMode/DarkMode";
+// import DarkMode from "../../DarkMode/DarkMode";
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -202,7 +202,7 @@ const MainLayout = () => {
             <div className="position-relative">
               {/* {" "}
               <RiMoonLine className="fs-4" /> */}
-              <DarkMode />
+              {/* <DarkMode /> */}
             </div>
             <div className="position-relative">
               {contextHolder}
@@ -235,6 +235,15 @@ const MainLayout = () => {
                 {LoggedIn && <h5 className="mb-0">{user.role}</h5>}
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
+                    to="admin-profile"
+                  >
+                    Change Password{" "}
+                  </Link>
+                </li>
                 <li>
                   <Link
                     className="dropdown-item py-1 mb-1"

@@ -51,12 +51,11 @@ const EditGallery = () => {
   };
 
   return (
-    <div>
+    <div className="gallery-admin">
       <Table striped hover className="mt-4">
         <thead>
           <tr>
-            <th colSpan={2}></th>
-            <th style={{ textAlign: "center", width: "100px" }}>
+            <th colSpan={2} style={{ textAlign: "right", width: "100px" }}>
               <AddImage refreshGallery={refreshGallery} /> 
             </th>
           </tr>
@@ -68,7 +67,7 @@ const EditGallery = () => {
         <tbody>
           {imageList.map((image) => (
             <tr key={image._id}>
-              <td style={{ verticalAlign: "middle" }}>
+              <td style={{ verticalAlign: "middle", textAlign:"center" }}>
                 <img
                   src={image.image} 
                   alt="Gallery"
@@ -76,7 +75,7 @@ const EditGallery = () => {
                   height="100"
                 />
               </td>
-              <td style={{ verticalAlign: "middle" }}>
+              <td style={{ verticalAlign: "middle" , textAlign:"center"}}>
                 <Button
                   variant="danger"
                   onClick={() => handleDelete(image)}
@@ -92,7 +91,7 @@ const EditGallery = () => {
       </Table>
 
       <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-        <div className="popup-background">
+        <div className="popup-background-gallery">
           {selectedImage && (
             <div className="popup-container-delete">
               <h5>Are you sure you want to delete this image?</h5>
