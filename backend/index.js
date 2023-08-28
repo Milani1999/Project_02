@@ -46,7 +46,6 @@ app.use("/api/timetable", timeTableRoute);
 app.use("/api/gallery", ImageRoutes);
 app.use("/api/oldStudents", oldStudentRoutes);
 app.use("/api/staffattendance", staffAttendanceRoutes);
-app.use("/api/admin", adminRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
