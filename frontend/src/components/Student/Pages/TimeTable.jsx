@@ -22,7 +22,8 @@ const TimeTable = () => {
         const timetableData = await fetchStaffTimeTableData(grade);
         setTimetableData(timetableData);
       } catch (error) {
-        alert("Error fetching student details:", error);
+        setLoading(false)
+        setTimetableData([]);
       }
     };
 
