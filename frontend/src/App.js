@@ -48,6 +48,8 @@ import StudentAttendance from "./components/Administrator/pages/StudentAttendanc
 import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttendance";
 import Gallery from "./components/section/Gallery";
 import EditGallery from "./components/Administrator/pages/EditGallery";
+import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
+import AdminProfile from "./components/Administrator/pages/AdminProfile"
 import Payment from "./components/Student/Pages/Payment";
 
 function App() {
