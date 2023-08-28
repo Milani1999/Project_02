@@ -1,7 +1,7 @@
 function AdminProfile(){
     return(
         <div>
-            Admin
+            Change Password
         </div>
     )
 }
