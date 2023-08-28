@@ -96,7 +96,7 @@ function AddSubjects({ setSubjectList }) {
       </Button>
 
       <Popup open={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-        <div className="popup-background">
+        <div className="popup-background-subject">
           <div
             className="PopupAddSubjects"
             style={{

@@ -62,6 +62,7 @@ const News = () => {
       setShowEditPopup(false);
       fetchNewsData();
       alert("News updated successfully.");
+      setImageFile(null);
     } catch (error) {
       console.error(error);
       alert("Please fill all the fields");
@@ -92,7 +93,7 @@ const News = () => {
   };
 
   return (
-    <div>
+    <div className="News-admin">
       <Table striped hover className="mt-4">
         <thead>
           <tr>
@@ -221,7 +222,7 @@ const News = () => {
       </Popup>
 
       <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-        <div className="popup-background">
+        <div className="popup-background-news">
           {selectedNews && (
             <div className="popup-container-delete">
               <h5>Are you sure you want to delete this News ?</h5>

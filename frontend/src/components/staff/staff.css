@@ -1,0 +1,71 @@
+.popup-background-staff {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(3, 46, 13, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-container-edit-staff,
+.popup-container-add {
+  background-color: white;
+  border: 2px solid green;
+  padding: 30px;
+  text-align: center;
+  width: 900px;
+}
+
+.popup-container-delete{
+  background-color: white;
+  border: 2px solid green;
+  padding: 30px;
+  text-align: center;
+}
+
+.popup-container-view-staff{
+  background-color: white;
+  border: 2px solid green;
+  padding: 30px;
+  text-align: center;
+  width: 400px;
+}
+
+img {
+  border-radius: 100px;
+}
+
+.viewTableStaff td {
+  text-align: left;
+  padding: 3px;
+  padding-left: 20px;
+}
+
+.colname {
+  background-color: #cff1d4;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #198f1b;
+  border-color: #46a42e;
+}
+
+.btn-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+
+.mt-5 td {
+  width: 12.5%;
+  text-align: center;
+}
+
+Form{
+  text-align: left;
+}

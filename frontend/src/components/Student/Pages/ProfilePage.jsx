@@ -50,15 +50,7 @@ const ProfilePage = () => {
     { label: "Admission Number", value: admission_no },
     { label: "Class of Admission", value: "Grade 1" },
     { label: "Current Grade", value: grade },
-  ];
-
-  const extraCurricularActivities = [extra_activities
-    // "Football",
-    // "Basketball",
-    // "Chess",
-    // "Music",
-    // "Dance",
-    // "Art",
+    {label:"Extra-curricular activities",value:extra_activities},
   ];
 
   const parentDetails = [
@@ -90,7 +82,7 @@ const ProfilePage = () => {
         </div>
         <div className="profile-details">
           <h2>{fullname}</h2>
-          <p>Grade 11</p>
+          <p>Grade {grade}</p>
         </div>
       </div>
 
@@ -110,21 +102,7 @@ const ProfilePage = () => {
                   </td>
                 </tr>
               ))}
-              <tr>
-                <td style={{ padding: "8px", textAlign: "left" }}>
-                  Extra-Curricular Activities:
-                </td>
-                <td style={{ padding: "8px", textAlign: "left" }}>
-                  <select>
-                    {extraCurricularActivities.map((activity, index) => (
-                      <option key={index} value={activity}>
-                        {activity}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-            </tbody>
+              </tbody>
           </table>
         </div>
 

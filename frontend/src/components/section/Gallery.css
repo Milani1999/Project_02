@@ -1,18 +1,19 @@
-
-.h1-heading {
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    padding-top: 20px;
+.GalleryComponent .h1-heading {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 40px;
+  color: rgb(6, 68, 46);
+  margin-top: 120px;
+  margin-bottom: 60px;
   }
   
-  .GalleryComponent.slider-image {
+.GalleryComponent.slider-image {
     width: 100%;
     height: auto;
     
    
   }
- .img-fluid {
+.GalleryComponent .img-fluid {
     border-radius: 0px;
     height:350px;
     padding-left: 10px;
@@ -23,26 +24,33 @@
   /* Style for dots */
 .slick-dots {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-top: 20px;
   }
   
   .slick-dots li {
     display: inline-block;
     margin: 0 5px;
   }
-  
   .slick-dots li button {
-    font-size: 5px;
     line-height: 1;
     border: none;
-    background-color: #ccc;
-    border-radius: 50%;
-    width: 5px;
-    height: 5px;
+    background-color: transparent;
+    width: 10px; 
+    height: 10px; 
     cursor: pointer;
     outline: none;
+    border-radius: 50%;
   }
   
+
   .slick-dots li.slick-active button {
-    background-color: #edecec;
+    background-color: #323131;
+    width: 15px; 
+    height: 15px; 
+  }
+  
+  .GalleryComponent{
+    height: 100vh;
+    overflow: hidden;
   }

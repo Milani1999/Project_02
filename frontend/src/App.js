@@ -109,7 +109,9 @@ function App() {
             <Route path="Support" element={<Support />} />
             <Route path="StaffAttendance" element={<StaffAttendance />} />
             <Route path="StudentAttendance" element={<StudentAttendance />} />
-            <Route path="EditGallery" element={<EditGallery/>}/>
+            <Route path="EditGallery" element={<EditGallery />} />
+            <Route path="LeavingCertificate" element={<LeavingCertificate />} />
+            <Route path="admin-profile" element={<AdminProfile />} />
           </Route>
 
           <Route
@@ -148,6 +150,7 @@ const includedPaths = [
   "/Events",
   "/Contact",
   "/Students",
+  "/Gallery"
 ];
 
 function HeaderRoutes() {
