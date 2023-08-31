@@ -23,56 +23,54 @@ const ProfilePage = () => {
   }, [studentId]);
 
   if (!studentData) {
-    return <div><LoadingSpinner/></div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   const {
     admission_no,
     fullname,
-    // first_name,
-    // last_name,
     dateOfBirth,
     phone,
     address,
-    // gender,
+    gender,
     picture,
     parent_Name,
     parent_occupation,
     admission_year,
+    admitted_grade,
     grade,
     extra_activities,
+    conduct,
+    remark,
+    special_aptitudes,
   } = studentData;
 
   const rows = [
     { label: "Name In Full", value: fullname },
-    { label: "Date Of Birth", value: dateOfBirth},
+    { label: "Date Of Birth", value: dateOfBirth.substring(0, 10) },
     { label: "Address", value: address },
-    { label: "Admission Number", value: admission_no },
-    { label: "Class of Admission", value: "Grade 1" },
-    { label: "Current Grade", value: grade },
-    {label:"Extra-curricular activities",value:extra_activities},
+    { label: "Gender", value: gender },
   ];
 
   const parentDetails = [
-    { label: "Father's name", value: parent_Name },
+    { label: "Name", value: parent_Name },
     { label: "Occupation", value: parent_occupation },
-    { label: "Address", value: address },
-    // { label: "NIC Number", value: "123456789" },
-    { label: "Telephone Number", value: phone },
-    // { label: "Mother's name", value: parent_Name },
-    // { label: "Occupation", value: parent_occupation },
     { label: "Telephone Number", value: phone },
   ];
 
-  // const emergencyRight = [
-  //   { label: "Guardian's Name", value: "Mrs. Ivans" },
-  //   { label: "Telephone Number", value: "0772332020" },
-  // ];
-
-  // const emergencyLeft = [
-  //   { label: "Relationship To Student", value: "Aunt" },
-  //   { label: "Occupation", value: "Data Analyst" },
-  // ];
+  const academicDetails = [
+    { label: "Admission Number", value: admission_no },
+    { label: "Class of Admission", value: admitted_grade },
+    { label: "Current Grade", value: grade },
+    { label: "Extra-curricular activities", value: extra_activities },
+    { label: "Conduct", value: conduct },
+    { label: "Remark", value: remark },
+    { label: "Special Aptitudes", value: special_aptitudes },
+  ];
 
   return (
     <div className="profile-container">
@@ -88,7 +86,7 @@ const ProfilePage = () => {
 
       <div className="profile-columns">
         <div className="mothers-details">
-          <h3 className='student-head'>Student Details</h3>
+          <h3 className="student-head">Student Details</h3>
 
           <table style={{ borderCollapse: "collapse" }}>
             <tbody>
@@ -102,14 +100,10 @@ const ProfilePage = () => {
                   </td>
                 </tr>
               ))}
-              </tbody>
+            </tbody>
           </table>
-        </div>
 
-        <div className="vertical-line"></div>
-
-        <div className="students-details">
-          <h3>Parent's Details</h3>
+          <h3>Details of {studentData.details}</h3>
           <table style={{ borderCollapse: "collapse" }}>
             <tbody>
               {parentDetails.map((row, index) => (
@@ -125,33 +119,14 @@ const ProfilePage = () => {
             </tbody>
           </table>
         </div>
-      </div>
-      {/* 
-      <div>
-        <h3>In Case Of Emergency</h3>
-      </div> */}
 
-      <div className="profile-columns">
-        <div className="mothers-details">
-          {/* <table style={{ borderCollapse: "collapse" }}>
-            <tbody>
-              {emergencyRight.map((row, index) => (
-                <tr key={index}>
-                  <td style={{ padding: "8px", textAlign: "left" }}>
-                    {row.label}
-                  </td>
-                  <td style={{ padding: "8px", textAlign: "left" }}>
-                    {row.value}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table> */}
-        </div>
+        <div className="vertical-line"></div>
+
         <div className="students-details">
-          {/* <table style={{ borderCollapse: "collapse" }}>
+          <h3>Academic Details</h3>
+          <table style={{ borderCollapse: "collapse" }}>
             <tbody>
-              {emergencyRight.map((row, index) => (
+              {academicDetails.map((row, index) => (
                 <tr key={index}>
                   <td style={{ padding: "8px", textAlign: "left" }}>
                     {row.label}
@@ -162,7 +137,7 @@ const ProfilePage = () => {
                 </tr>
               ))}
             </tbody>
-          </table> */}
+          </table>
         </div>
       </div>
     </div>
