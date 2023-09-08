@@ -70,8 +70,8 @@ const StaffQRScanner = (props) => {
       </div>
 
       <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-        <div className="popup-background">
-          <div className="popup-container-delete">
+      <div className="popup-background-student">
+          <div className="popup-container-qr">
             <h3>QR Scanner</h3>
             <div className="">
               <div className="">
@@ -97,7 +97,7 @@ const StaffQRScanner = (props) => {
                     )}
                   </div>
 
-                  <div className="card-footer text-center rounded m-2">
+                  <div className="card-footer text-center rounded m-0">
                     <h3
                       style={{
                         color: message.startsWith("Welcome")

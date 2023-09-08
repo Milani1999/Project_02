@@ -299,7 +299,7 @@ const StaffAttendance = () => {
             </tbody>
           </Table>
           <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-            <div className="popup-background">
+            <div className="popup-background-staff">
               <div className="popup-container-delete">
               <h3>Delete Attendance</h3>
             <p>Are you sure you want to delete this staff attendance?</p>

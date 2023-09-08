@@ -87,3 +87,25 @@
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
 }
+
+
+/*Pop-up CSS*/
+.popup-background-student {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(3, 46, 13, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-container-delete{
+  background-color: white;
+  border: 2px solid green;
+  padding: 30px;
+  text-align: center;
+}

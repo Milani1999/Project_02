@@ -70,13 +70,13 @@ const QRScanner = (props) => {
       </div>
 
       <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-        <div className="popup-background">
-          <div className="popup-container-delete">
+        <div className="popup-background-student">
+          <div className="popup-container-qr">
             <h3>QR Scanner</h3>
             <div className="">
               <div className="">
                 <div className="card col-sm-12">
-                  <div className="card-body text-center">
+                  <div className="card-body text-center qr-con">
                     {isScanning && (
                       <QrReader
                         className="frame-size"
