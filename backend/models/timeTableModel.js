@@ -17,18 +17,16 @@ const timeTableSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  staff: [
-    {
-      staff_id: {
-        type: String,
-        required: true
-      },
-      staff_name: {
-        type: String,
-        required: true
-      }
-    }
-  ]
+  staff: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Staff",
+    required: true,
+  },
+  temp: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 const TimeTable = mongoose.model("TimeTable", timeTableSchema);
