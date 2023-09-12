@@ -64,6 +64,7 @@ const ProfilePage = () => {
 
   const academicDetails = [
     { label: "Admission Number", value: admission_no },
+    { label: "Admission Year", value: admission_year.substring(0, 10) },
     { label: "Class of Admission", value: admitted_grade },
     { label: "Current Grade", value: grade },
     { label: "Extra-curricular activities", value: extra_activities },
