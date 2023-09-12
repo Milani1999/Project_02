@@ -1,4 +1,4 @@
-const Subject = require("../models/subjectModel");
+const Relief = require("../models/reliefModel");
 const TimeTable = require("../models/timeTableModel");
 const asyncHandler = require("express-async-handler");
 
@@ -10,17 +10,22 @@ const getTimeTable = asyncHandler(async (req, res) => {
 const getByGrade = asyncHandler(async (req, res) => {
   const grade = req.params.grade;
 
-  if (!grade) {
-    return res.status(400).json({ error: "Please provide the grade" });
+  if (isNaN(grade)) {
+    return res.status(400).json({ error: "Grade should be a valid number" });
   }
 
   try {
     const tableData = await TimeTable.find({
       grade: grade,
+      temp: false,
+    });
+
+    const reliefData = await Relief.find({
+      grade: grade,
     });
 
     if (!tableData || tableData.length === 0) {
-      return res.status(404).json({ Error: "No records" });
+      return res.status(404).json({ Error: "No records in TimeTable" });
     }
 
     const response = tableData.map((timeTable) => ({
@@ -28,13 +33,25 @@ const getByGrade = asyncHandler(async (req, res) => {
       weekday: timeTable.weekday,
       period: timeTable.period,
       subject: timeTable.subject,
-      staff_name: timeTable.staff.map((staff) => staff.staff_name),
+      staff: timeTable.staff,
+      temp: timeTable.temp,
     }));
 
-    res.json(response);
+    const reliefFormatted = reliefData.map((relief) => ({
+      _id: relief._id,
+      weekday: relief.weekday,
+      period: relief.period,
+      subject: relief.subject,
+      staff: relief.staff,
+      temp: relief.temp,
+    }));
+
+    const finalTimeTable = [...response, ...reliefFormatted];
+
+    res.json(finalTimeTable);
   } catch (err) {
-    console.log("Error fetching marks");
-    return res.status(500).json({ error: "error fetching data" });
+    console.error("Error fetching data:", err);
+    return res.status(500).json({ error: "Error fetching data" });
   }
 });
 
@@ -50,17 +67,19 @@ const createTimeTable = asyncHandler(async (req, res) => {
   }
 
   const subject = req.body.subject;
-  const staffData = req.body.staff || [];
+  const staffId = req.body.staff;
 
   try {
     const existingTimeTable = await TimeTable.findOne({
       weekday: weekday,
       period: period,
-      "staff.staff_id": { $in: staffData.map((staff) => staff.staff_id) },
+      staff: staffId,
     });
 
     if (existingTimeTable) {
-      return res.status(400).json({ error: "Duplicate Entry" });
+      return res
+        .status(400)
+        .json({ error: "Particular staff has another period" });
     }
 
     const newTimeTable = new TimeTable({
@@ -68,29 +87,7 @@ const createTimeTable = asyncHandler(async (req, res) => {
       period: period,
       grade: grade,
       subject: subject,
-      staff: [],
-    });
-
-    staffData.forEach((staff) => {
-      const { staff_id, staff_name } = staff;
-
-      const isDuplicate = newTimeTable.staff.some(
-        (entry) =>
-          entry.staff_id === staff_id &&
-          entry.staff_name === staff_name &&
-          entry.weekday === weekday &&
-          entry.period === period
-      );
-
-      if (!isDuplicate) {
-        newTimeTable.staff.push({
-          staff_id: staff_id,
-          staff_name: staff_name,
-          grade: grade,
-          weekday: weekday,
-          period: period,
-        });
-      }
+      staff: staffId,
     });
 
     try {
@@ -130,46 +127,21 @@ const deleteTimeTable = asyncHandler(async (req, res) => {
 
 const getTimeTableByStaffID = asyncHandler(async (req, res) => {
   try {
-    const { id } = req.params;
+    const staff = req.params.staff;
+    const timetableEntries = await TimeTable.find({ staff: staff });
+    const reliefEntries = await Relief.find({ staff: staff });
 
-    const mark = await TimeTable.aggregate([
-      {
-        $match: {
-          staff: { $elemMatch: { staff_id: id } },
-        },
-      },
-      {
-        $unwind: "$staff",
-      },
-      {
-        $match: {
-          "staff.staff_id": id,
-        },
-      },
-      {
-        $addFields: {
-          subject: "$subject",
-          grade: "$grade",
-          period: "$period",
-          weekday: "$weekday",
-          staff_name: "$staff.saff_name",
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          staff_name: 1,
-          grade: 1,
-          subject: 1,
-          period: 1,
-          weekday: 1,
-        },
-      },
-    ]);
+    const StaffTimeTable = [...timetableEntries, ...reliefEntries];
 
-    res.json(mark);
+    if (StaffTimeTable) {
+      res.json(StaffTimeTable);
+    } else {
+      res.json({ message: "No entries for particular staff" });
+    }
   } catch (error) {
-    res.status(500).json({ message: "Error fetching student marks", error });
+    res
+      .status(500)
+      .json({ message: "Error fetching staff's timetable entries", error });
   }
 });
 

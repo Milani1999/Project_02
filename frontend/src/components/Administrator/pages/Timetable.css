@@ -9,7 +9,7 @@
   height: 100%;
 }
 
-.time-table-admin th{
+.time-table-admin th {
   background-color: #cff1d4;
 }
 
@@ -65,9 +65,31 @@
   padding: 0% 7%;
 }
 
-.cell-data-time-table:hover {
-  background-color: #cff1d4;
-  color: #cff1d4;
+.hover {
+  position: relative;
+  display: inline-block;
+}
+
+.hover .hover-text {
+  visibility: hidden;
+  width: 160px;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.hover:hover .hover-text {
+  visibility: visible;
+  opacity: 1;
 }
 
 .disabled {
@@ -75,7 +97,7 @@
   opacity: 0.5;
 }
 
-.popup-background-timetable{
+.popup-background-timetable {
   position: fixed;
   top: 0;
   left: 0;

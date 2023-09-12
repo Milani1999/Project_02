@@ -43,10 +43,20 @@ const TimeTable = () => {
     );
 
     if (matchingCell) {
-      return (
+      const Relief = matchingCell.temp;
+
+      return Relief === "Relief" ? (
+        <div className="cell-data-time-table-staff">
+          <span style={{color:"red",fontWeight:"bold"}}>Relief<br/></span>
+          <span className="staff-subject">{matchingCell.subject}</span>
+          <br />
+          Grade {matchingCell.grade}
+        </div>
+      ) : (
         <div className="cell-data-time-table-staff">
           <span className="staff-subject">{matchingCell.subject}</span>
-          <br />Grade {matchingCell.grade}
+          <br />
+          Grade {matchingCell.grade}
         </div>
       );
     } else {

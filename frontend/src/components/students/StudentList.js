@@ -4,7 +4,7 @@ import { Table, Button, Row, Col, Form } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import AddStudents from "./AddStudents";
 import "./students.css";
-import QrGenerator from '../QrCode/QrGenerator';
+import QrGenerator from "../QrCode/QrGenerator";
 import LoadingSpinner from "../Loading/Loading";
 
 const ViewStudents = () => {
@@ -56,7 +56,6 @@ const ViewStudents = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      setIsLoading(true);
       const { _id, ...updatedStudentData } = selectedStudent;
 
       if (imageFile) {
@@ -77,6 +76,7 @@ const ViewStudents = () => {
 
       await axios.put(`/api/students/${_id}`, updatedStudentData);
       setShowEditPopup(false);
+      setIsLoading(true);
       fetchStudents();
       alert("Student updated successfully.");
       setImageFile(null);
