@@ -2,8 +2,10 @@ const asyncHandler = require("express-async-handler");
 const nodemailer = require("nodemailer");
 const UserModel = require("../models/staffModel");
 const generateToken = require("../utils/generateToken");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-const forgotPasswordController = asyncHandler(async (req, res) => {
+const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -29,7 +31,7 @@ const forgotPasswordController = asyncHandler(async (req, res) => {
       from: process.env.EMAIL,
       to: user.email,
       subject: "Reset Password Link",
-      text: `http://localhost:5173/reset_password/${user._id}/${token}`,
+      text: `http://localhost:3000/reset-password/${user._id}/${token}`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -45,4 +47,24 @@ const forgotPasswordController = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { forgotPasswordController };
+const resetPassword = async (req, res) => {
+  const { id, token } = req.params;
+  const { password } = req.body;
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.json({ Status: "Error with token" });
+    } else {
+      bcrypt
+        .hash(password, 10)
+        .then((hash) => {
+          UserModel.findByIdAndUpdate({ _id: id }, { password: hash })
+            .then((u) => res.send({ Status: "Success" }))
+            .catch((err) => res.send({ Status: err }));
+        })
+        .catch((err) => res.send({ Status: err }));
+    }
+  });
+};
+
+module.exports = { forgotPassword, resetPassword };
