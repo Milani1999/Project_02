@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const nodemailer = require("nodemailer");
-const UserModel = require("../models/staffModel");
+const StaffModel = require("../models/staffModel");
+const StudentModel = require("../models/studentModel");
+const AdminModel = require("../models/adminModel");
 const generateToken = require("../utils/generateToken");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -9,7 +11,11 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
   try {
-    const user = await UserModel.findOne({ email });
+    const user = await Promise.any([
+      StaffModel.findOne({ email }),
+      StudentModel.findOne({ email }),
+      AdminModel.findOne({ email }),
+    ]);
 
     if (!user) {
       return res
