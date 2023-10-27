@@ -151,7 +151,7 @@ const ViewStudents = () => {
 
     view_std_2 = [
       { label: "Admission No", value: selectedStudent.admission_no },
-      { label: "Username", value: selectedStudent.username },
+      { label: "Email", value: selectedStudent.email },
       { label: "Current Grade", value: selectedStudent.grade },
       {
         label: "Admission Year",
@@ -501,16 +501,16 @@ const ViewStudents = () => {
                           />
                         </div>
                         <div>
-                          <label htmlFor="username">Username</label>
+                          <label htmlFor="email">Email</label>
                           <Form.Control
                             type="text"
-                            id="username"
-                            name="username"
-                            value={selectedStudent.username}
+                            id="email"
+                            name="email"
+                            value={selectedStudent.email}
                             onChange={(e) =>
                               setSelectedStudent({
                                 ...selectedStudent,
-                                username: e.target.value,
+                                email: e.target.value,
                               })
                             }
                           />

@@ -13,7 +13,6 @@ function AddStaff({ fetchStaffData }) {
     dateOfBirth: null,
     phone: "",
     gender: "",
-    username: "",
     picture:
       "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     password: "",
@@ -97,7 +96,6 @@ function AddStaff({ fetchStaffData }) {
         dateOfBirth: null,
         phone: "",
         gender: "",
-        username: "",
         picture:
           "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
         password: "",
@@ -224,17 +222,6 @@ function AddStaff({ fetchStaffData }) {
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                     </Form.Control>
-                  </Form.Group>
-
-                  <Form.Group controlId="username">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="username"
-                      value={formData.username}
-                      placeholder="Enter Username"
-                      onChange={handleChange}
-                    />
                   </Form.Group>
                 </Col>
                 <Col md={6}>

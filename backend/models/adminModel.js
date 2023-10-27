@@ -3,9 +3,9 @@ const bcrypt = require("bcrypt");
 
 const adminSchema = new mongoose.Schema(
   {
-    username: {
+    email: {
       type: String,
-      default: process.env.ADMIN_USERNAME,
+      default: process.env.ADMIN_EMAIL,
     },
     password: {
       type: String,

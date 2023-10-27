@@ -244,10 +244,6 @@ const ViewStaff = () => {
                       <td>{selectedStaff.gender}</td>
                     </tr>
                     <tr>
-                      <td>Username</td>
-                      <td>{selectedStaff.username}</td>
-                    </tr>
-                    <tr>
                       <td>Role</td>
                       <td>{selectedStaff.role}</td>
                     </tr>
@@ -455,22 +451,6 @@ const ViewStaff = () => {
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                           </Form.Control>
-                        </div>
-
-                        <div>
-                          <Form.Label>Username</Form.Label>
-                          <Form.Control
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={selectedStaff.username}
-                            onChange={(e) =>
-                              setSelectedStaff({
-                                ...selectedStaff,
-                                username: e.target.value,
-                              })
-                            }
-                          />
                         </div>
                         <div>
                           <Form.Label>Password</Form.Label>
