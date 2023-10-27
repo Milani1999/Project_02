@@ -10,7 +10,7 @@ import ForgotPassword from "./ForgotPassword";
 const SignInCom = () => {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,7 +44,7 @@ const SignInCom = () => {
       const { data } = await axios.post(
         "/api/users/login",
         {
-          username,
+          email,
           password,
         },
         config
@@ -109,22 +109,22 @@ const SignInCom = () => {
                         <div className="acc-des text-uppercase text-center mb-5 acc-des-sub wel-statement">
                           Welcome To The UIS Family
                           <br />
-                          {loading && <LoadingSpinner/>}
+                          {loading && <LoadingSpinner />}
                         </div>
                         <div className="form-outline mb-4 wel-statement">
                           <label
                             className="form-label"
                             htmlFor="form3Example97"
                           >
-                            Username
+                            Email
                           </label>
                           <input
                             type="text"
                             id="form3Example97"
                             className="form-control form-control-lg"
-                            placeholder="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </div>
 

@@ -1,22 +1,44 @@
-import './ForgotPassword.css';
+import React, { useState } from 'react';
 
-const ForgotPassword = ({ onClose }) => {
-    return (
-        <div className="forgot-passsword-popup">
-          <div className="forgot-passsword-popup-content">
-            <h2>Forgot Password</h2>
-            <div>
-            <label>Enter your username : </label>
-            <input type='text'/>
-            </div>
-            <div>
-            <label>Enter your registered phone number : </label>
-            <input type='text'/>
-            </div>
-            <button onClick={onClose}>Close</button>
-          </div>
-        </div>
-      );
+function InputAlert() {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleApiRequest = async () => {
+    try {
+      const response = await fetch('/api/users/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: inputValue }),
+      });
+
+      const data = await response.json();
+
+      // Handle the API response as needed
+      console.log(data);
+      // You can display a success message, update state, etc.
+    } catch (error) {
+      console.error('Error:', error);
+      // Handle errors, display an error message, etc.
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        placeholder="Enter email..."
+      />
+      <button onClick={handleApiRequest}>Send POST Request</button>
+    </div>
+  );
 }
 
-export default ForgotPassword;
+export default InputAlert;
