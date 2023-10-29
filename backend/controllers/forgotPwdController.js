@@ -57,20 +57,29 @@ const resetPassword = async (req, res) => {
   const { id, token } = req.params;
   const { password } = req.body;
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.json({ Status: "Error with token" });
-    } else {
-      bcrypt
-        .hash(password, 10)
-        .then((hash) => {
-          UserModel.findByIdAndUpdate({ _id: id }, { password: hash })
-            .then((u) => res.send({ Status: "Success" }))
-            .catch((err) => res.send({ Status: err }));
-        })
-        .catch((err) => res.send({ Status: err }));
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const hash = await bcrypt.hash(password, 10);
+
+    let user = await AdminModel.findByIdAndUpdate(id, { password: hash });
+    if (!user) {
+      user = await StudentModel.findByIdAndUpdate(id, { password: hash });
     }
-  });
+    if (!user) {
+      user = await StaffModel.findByIdAndUpdate(id, { password: hash });
+    }
+
+    if (!user) {
+      return res.json({ Status: "User not found" });
+    }
+
+    return res.send({ Status: "Success" });
+  } catch (err) {
+    console.error(err);
+    return res.json({ Status: "Error with token" });
+  }
 };
+
 
 module.exports = { forgotPassword, resetPassword };

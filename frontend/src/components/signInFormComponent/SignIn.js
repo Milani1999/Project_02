@@ -14,7 +14,6 @@ const SignInCom = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [forgotPassword, setForgotPassword] = useState(false);
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
@@ -51,19 +50,12 @@ const SignInCom = () => {
       );
       console.log(data.role);
       localStorage.setItem("userInfo", JSON.stringify(data));
-      setLoading(false);
+      // setLoading(false);
       window.location.reload();
     } catch (error) {
       setError(error.response.data.message);
       setLoading(false);
     }
-  };
-  const openForgotPasswordPopup = () => {
-    setForgotPassword(true);
-  };
-
-  const closeForgotPasswordPopup = () => {
-    setForgotPassword(false);
   };
 
   return (
@@ -144,17 +136,7 @@ const SignInCom = () => {
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>
-                        <div>
-                          <Link onClick={openForgotPasswordPopup}>
-                            Forgot password?
-                          </Link>
-
-                          {forgotPassword && (
-                            <ForgotPassword
-                              onClose={closeForgotPasswordPopup}
-                            />
-                          )}
-                        </div>
+                        <ForgotPassword />
                         <div className="d-flex justify-content-end pt-3 wel-statement">
                           <button
                             type="submit"

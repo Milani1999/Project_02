@@ -522,6 +522,8 @@ const ViewStudents = () => {
                             id="password"
                             name="password"
                             value={selectedStudent.password}
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                             onChange={(e) =>
                               setSelectedStudent({
                                 ...selectedStudent,

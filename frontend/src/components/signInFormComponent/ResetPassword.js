@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "./ForgotPassword.css";
 
 function ResetPassword() {
   const [password, setPassword] = useState();
@@ -15,7 +16,7 @@ function ResetPassword() {
       .post(`/api/users/reset-password/${id}/${token}`, { password })
       .then((res) => {
         if (res.data.Status === "Success") {
-          alert("Password changed. Please Login again")
+          alert("Password changed. Please Login again");
           navigate("/login");
         } else {
           alert("Reset Link Expired");
@@ -25,15 +26,16 @@ function ResetPassword() {
       .catch((err) => console.log(err));
   };
 
+  const handleClose = () => {
+    navigate("/login");
+  };
+
   return (
-    <div className="d-flex justify-content-center align-items-center bg-secondary vh-100">
-      <div className="bg-white p-3 rounded w-25">
-        <h4>Reset Password</h4>
+    <div className="reset-passsword-popup">
+      <div className="reset-passsword-popup-content">
+        <h2>Reset Password</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="email">
-              <strong>New Password</strong>
-            </label>
             <input
               type="password"
               placeholder="Enter Password"
@@ -41,10 +43,19 @@ function ResetPassword() {
               name="password"
               className="form-control rounded-0"
               onChange={(e) => setPassword(e.target.value)}
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
             />
           </div>
           <button type="submit" className="btn btn-success w-100 rounded-0">
             Update
+          </button>
+          <br/>
+          <button
+            onClick={handleClose}
+            className="btn btn-danger w-100 rounded-0 mt-3"
+          >
+            Close
           </button>
         </form>
       </div>
