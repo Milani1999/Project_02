@@ -244,10 +244,6 @@ const ViewStaff = () => {
                       <td>{selectedStaff.gender}</td>
                     </tr>
                     <tr>
-                      <td>Username</td>
-                      <td>{selectedStaff.username}</td>
-                    </tr>
-                    <tr>
                       <td>Role</td>
                       <td>{selectedStaff.role}</td>
                     </tr>
@@ -456,22 +452,6 @@ const ViewStaff = () => {
                             <option value="Female">Female</option>
                           </Form.Control>
                         </div>
-
-                        <div>
-                          <Form.Label>Username</Form.Label>
-                          <Form.Control
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={selectedStaff.username}
-                            onChange={(e) =>
-                              setSelectedStaff({
-                                ...selectedStaff,
-                                username: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
                         <div>
                           <Form.Label>Password</Form.Label>
                           <Form.Control
@@ -479,6 +459,8 @@ const ViewStaff = () => {
                             id="password"
                             name="password"
                             value={selectedStaff.password}
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                             onChange={(e) =>
                               setSelectedStaff({
                                 ...selectedStaff,

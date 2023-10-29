@@ -13,7 +13,6 @@ function AddStaff({ fetchStaffData }) {
     dateOfBirth: null,
     phone: "",
     gender: "",
-    username: "",
     picture:
       "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     password: "",
@@ -97,7 +96,6 @@ function AddStaff({ fetchStaffData }) {
         dateOfBirth: null,
         phone: "",
         gender: "",
-        username: "",
         picture:
           "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
         password: "",
@@ -225,17 +223,6 @@ function AddStaff({ fetchStaffData }) {
                       <option value="Female">Female</option>
                     </Form.Control>
                   </Form.Group>
-
-                  <Form.Group controlId="username">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="username"
-                      value={formData.username}
-                      placeholder="Enter Username"
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group controlId="picture">
@@ -255,6 +242,8 @@ function AddStaff({ fetchStaffData }) {
                       value={formData.password}
                       placeholder="Enter Password"
                       onChange={handleChange}
+                      pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                      title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                     />
                   </Form.Group>
 

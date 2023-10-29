@@ -49,8 +49,9 @@ import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttenda
 import Gallery from "./components/section/Gallery";
 import EditGallery from "./components/Administrator/pages/EditGallery";
 import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
-import AdminProfile from "./components/Administrator/pages/AdminProfile"
+import AdminProfile from "./components/Administrator/pages/AdminProfile";
 import Payment from "./components/Student/Pages/Payment";
+import ResetPassword from "./components/signInFormComponent/ResetPassword";
 
 function App() {
   return (
@@ -67,6 +68,10 @@ function App() {
           <Route path="/Students" element={<StudentDetails />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/Gallery" element={<Gallery />} />
+          <Route
+            path="/reset-password/:id/:token"
+            element={<ResetPassword />}
+          ></Route>
 
           <Route
             path="/Teacher"
@@ -132,10 +137,7 @@ function App() {
               path="ViewStudentAttendance"
               element={<ViewStudentAttendance />}
             />
-            <Route
-              path="Payment"
-              element={<Payment />}
-            />
+            <Route path="Payment" element={<Payment />} />
             <Route path="ViewNotice" element={<SNotices />} />
             <Route path="Scalender" element={<TCalendar />} />
           </Route>
@@ -152,7 +154,7 @@ const includedPaths = [
   "/Events",
   "/Contact",
   "/Students",
-  "/Gallery"
+  "/Gallery",
 ];
 
 function HeaderRoutes() {

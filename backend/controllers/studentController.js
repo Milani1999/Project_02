@@ -17,7 +17,6 @@ const createStudents = asyncHandler(async (req, res) => {
     phone,
     gender,
     picture,
-    username,
     password,
     role,
     details,
@@ -42,7 +41,6 @@ const createStudents = asyncHandler(async (req, res) => {
     !phone ||
     !gender ||
     !picture ||
-    !username ||
     !password ||
     !role ||
     !details ||
@@ -64,13 +62,13 @@ const createStudents = asyncHandler(async (req, res) => {
     throw new Error("Admission number already exists");
   }
 
-  const usernameExists = await Student.findOne({
-    username: { $regex: new RegExp(`^${username}$`, "i") },
+  const emailExists = await Student.findOne({
+    email: { $regex: new RegExp(`^${email}$`, "i") },
   });
 
-  if (usernameExists) {
+  if (emailExists) {
     res.status(400);
-    throw new Error("Username already exists");
+    throw new Error("Email already exists");
   }
 
   const student = new Student({
@@ -82,7 +80,7 @@ const createStudents = asyncHandler(async (req, res) => {
     phone,
     gender,
     picture,
-    username,
+    email,
     password,
     role,
     admission_no,
@@ -124,7 +122,7 @@ const updateStudent = asyncHandler(async (req, res) => {
     phone,
     gender,
     picture,
-    username,
+    email,
     password,
     role,
     details,
@@ -151,7 +149,7 @@ const updateStudent = asyncHandler(async (req, res) => {
     student.phone = phone;
     student.gender = gender;
     student.picture = picture;
-    student.username = username;
+    student.email = email;
     student.password = password;
     student.role = role;
     student.details = details;

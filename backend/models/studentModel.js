@@ -38,7 +38,7 @@ const studentSchema = new mongoose.Schema(
       default:
         "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg",
     },
-    username: {
+    email: {
       type: String,
       required: true,
       unique: true,
