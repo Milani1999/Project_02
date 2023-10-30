@@ -1,34 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./SignIn.css";
 import img from "../../assets/ImageResources/imgClassmates.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "../Loading/Loading";
-import { useNavigate } from "react-router-dom";
 import ForgotPassword from "./ForgotPassword";
 
 const SignInCom = () => {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const userInfo = localStorage.getItem("userInfo");
-
-    if (userInfo) {
-      const user = JSON.parse(userInfo);
-      if (user.role === "admin") {
-        navigate("/administrator");
-      } else if (user.role === "student") {
-        navigate("/Student");
-      } else if (user.role === "staff") {
-        navigate("/Teacher");
-      }
-    }
-  }, [navigate]);
+  const [error, setError] = useState("");
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -48,10 +30,16 @@ const SignInCom = () => {
         },
         config
       );
-      console.log(data.role);
+
       localStorage.setItem("userInfo", JSON.stringify(data));
-      // setLoading(false);
-      window.location.reload();
+
+      if (data.role === "admin") {
+        window.location.replace("/administrator");
+      } else if (data.role === "student") {
+        window.location.replace("/Student");
+      } else if (data.role === "staff") {
+        window.location.replace("/Teacher");
+      }
     } catch (error) {
       setError(error.response.data.message);
       setLoading(false);
