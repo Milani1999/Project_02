@@ -17,6 +17,7 @@ const createStudents = asyncHandler(async (req, res) => {
     phone,
     gender,
     picture,
+    email,
     password,
     role,
     details,
@@ -43,6 +44,7 @@ const createStudents = asyncHandler(async (req, res) => {
     !picture ||
     !password ||
     !role ||
+    !email ||
     !details ||
     !parent_Name ||
     !parent_occupation ||
@@ -163,7 +165,29 @@ const updateStudent = asyncHandler(async (req, res) => {
     student.special_aptitudes = special_aptitudes;
     student.remark = remark;
 
+    const admissionNumberExists = await Student.findOne({
+      admission_no: { $regex: new RegExp(`^${admission_no}$`, "i") },
+      _id: { $ne: student },
+    });
+
+    const emailExists = await Student.findOne({
+      email: { $regex: new RegExp(`^${email}$`, "i") },
+      _id: { $ne: student },
+    });
+
+    if (admissionNumberExists) {
+      res.status(400);
+      throw new Error("Admission number already exists");
+    }
+
+    if (emailExists) {
+      res.status(400);
+      throw new Error("Email already exists");
+    }
+
+
     const updatedStudent = await student.save();
+
     res.json(updatedStudent);
   } else {
     res.status(404);

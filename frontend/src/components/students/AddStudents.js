@@ -165,7 +165,7 @@ function AddStudents({ fetchStudents }) {
     },
     {
       label: "email",
-      type: "text",
+      type: "email",
       name: "email",
       value: formData.email,
       placeholder: "Enter email",
