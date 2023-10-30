@@ -184,6 +184,15 @@ const StudentMain = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
+                    to="change-password"
+                  >
+                    Change Password{" "}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ height: "auto", lineHeight: "20px" }}
                     onClick={() => {
                       localStorage.removeItem("userInfo");
                       navigate("/Login");

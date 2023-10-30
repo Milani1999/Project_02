@@ -15,6 +15,9 @@ const adminSchema = new mongoose.Schema(
       type: String,
       default: process.env.ADMIN_ROLE,
     },
+    picture: {
+      type: String,
+    },
   },
   {
     timestamps: true,
