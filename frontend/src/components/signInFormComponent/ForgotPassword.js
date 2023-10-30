@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import "./ForgotPassword.css";
 import { Link } from "react-router-dom";
@@ -14,19 +14,30 @@ function InputAlert() {
 
   const handleResetLink = async () => {
     try {
-      await fetch("/api/users/forgot-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: inputValue }),
-      });
+      if (!inputValue) {
+        alert("Please fill all the fields");
+      } else {
+        const response = await fetch("/api/users/forgot-password", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: inputValue }),
+        });
 
-      alert("Reset Link succeefully sent to your Email address");
-      setShowCancel(false);
-      setInputValue("");
+        if (response.ok) {
+          const data = await response.json();
+          alert(data.message);
+          setShowCancel(false);
+          setInputValue("");
+        } else {
+          const errorData = await response.json();
+          alert(errorData.message);
+          setInputValue("");
+        }
+      }
     } catch (error) {
-      alert("User not found : Incorrect email address");
+      console.error("Error occurred:", error);
       setShowCancel(false);
       setInputValue("");
     }
@@ -45,12 +56,16 @@ function InputAlert() {
         <div className="forgot-passsword-popup">
           <div className="forgot-passsword-popup-content">
             <h2>Reset your Password</h2>
-            <Form.Control
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Enter your registered Email"
-            />
+            <div className="mb-3">
+              <input
+                type="email"
+                placeholder="Enter your registered Email"
+                value={inputValue}
+                className="form-control rounded-0"
+                onChange={handleInputChange}
+                required
+              />
+            </div>
             <br />
             <Button
               onClick={() => handleResetLink()}

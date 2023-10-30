@@ -10,13 +10,16 @@ const bcrypt = require("bcrypt");
 const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
 
-  try {
-    const user = await Promise.any([
-      StaffModel.findOne({ email }),
-      StudentModel.findOne({ email }),
-      AdminModel.findOne({ email }),
-    ]);
+  if (!email) {
+    res.status(400);
+    throw new Error("Please fill all the fields");
+  }
 
+  try {
+    const user =
+      (await StaffModel.findOne({ email })) ||
+      StudentModel.findOne({ email }) ||
+      AdminModel.findOne({ email });
     if (!user) {
       return res
         .status(404)
@@ -55,11 +58,44 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
 const resetPassword = async (req, res) => {
   const { id, token } = req.params;
-  const { password } = req.body;
+  const { password, confirmPassword } = req.body;
+
+  if (password !== confirmPassword) {
+    return res.json({ message: "Passwords do not match" });
+  }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const hash = await bcrypt.hash(password, 10);
 
+    let user = await AdminModel.findByIdAndUpdate(id, { password: hash });
+    if (!user) {
+      user_student = await StudentModel.findByIdAndUpdate(id, { password: hash });
+    }
+    if (!user_student) {
+      user = await StaffModel.findByIdAndUpdate(id, { password: hash });
+    }
+
+    if (!user) {
+      return res.json({ message: "User not found" });
+    }
+
+    return res.send({ message: "Success" });
+  } catch (err) {
+    return res.json({ message: "Error with Reset Link" });
+  }
+};
+
+const changePassword = async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  const { confirmPassword } = req.body;
+
+  if (password !== confirmPassword) {
+    return res.json({ Status: "Passwords do not match" });
+  }
+
+  try {
     const hash = await bcrypt.hash(password, 10);
 
     let user = await AdminModel.findByIdAndUpdate(id, { password: hash });
@@ -74,12 +110,11 @@ const resetPassword = async (req, res) => {
       return res.json({ Status: "User not found" });
     }
 
-    return res.send({ Status: "Success" });
+    return res.send({ Status: "Password Changed Successfully" });
   } catch (err) {
     console.error(err);
-    return res.json({ Status: "Error with token" });
+    return res.json({ Status: "Error" });
   }
 };
 
-
-module.exports = { forgotPassword, resetPassword };
+module.exports = { forgotPassword, resetPassword, changePassword };

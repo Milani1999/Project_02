@@ -49,9 +49,9 @@ import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttenda
 import Gallery from "./components/section/Gallery";
 import EditGallery from "./components/Administrator/pages/EditGallery";
 import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
-import AdminProfile from "./components/Administrator/pages/AdminProfile";
 import Payment from "./components/Student/Pages/Payment";
 import ResetPassword from "./components/signInFormComponent/ResetPassword";
+import ChangePassword from "./components/signInFormComponent/ChangePwd";
 
 function App() {
   return (
@@ -92,6 +92,7 @@ function App() {
             <Route path="TCalendar" element={<TCalendar />} />
             <Route path="TClassMarks" element={<TClassMarks />} />
             <Route path="Performance" element={<Performance />} />
+            <Route path="change-password" element={<ChangePassword />} />
           </Route>
 
           <Route
@@ -118,7 +119,7 @@ function App() {
             <Route path="StudentAttendance" element={<StudentAttendance />} />
             <Route path="EditGallery" element={<EditGallery />} />
             <Route path="LeavingCertificate" element={<LeavingCertificate />} />
-            <Route path="admin-profile" element={<AdminProfile />} />
+            <Route path="change-password" element={<ChangePassword />} />
           </Route>
 
           <Route
@@ -140,6 +141,7 @@ function App() {
             <Route path="Payment" element={<Payment />} />
             <Route path="ViewNotice" element={<SNotices />} />
             <Route path="Scalender" element={<TCalendar />} />
+            <Route path="change-password" element={<ChangePassword />} />
           </Route>
         </Routes>
         <FooterRoutes />

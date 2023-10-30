@@ -50,10 +50,11 @@ const SignInCom = () => {
       );
       console.log(data.role);
       localStorage.setItem("userInfo", JSON.stringify(data));
-      // setLoading(false);
       window.location.reload();
     } catch (error) {
       setError(error.response.data.message);
+      setEmail("");
+      setPassword("");
       setLoading(false);
     }
   };
@@ -111,12 +112,13 @@ const SignInCom = () => {
                             Email
                           </label>
                           <input
-                            type="text"
+                            type="email"
                             id="form3Example97"
                             className="form-control form-control-lg"
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                           />
                         </div>
 
@@ -134,6 +136,7 @@ const SignInCom = () => {
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            required
                           />
                         </div>
                         <ForgotPassword />

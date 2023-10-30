@@ -84,7 +84,7 @@ const ViewStudents = () => {
     } catch (error) {
       setIsLoading(false);
       console.error(error);
-      alert("Please fill all the fields");
+      alert(error.response.data.message);
     }
   };
 
