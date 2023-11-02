@@ -1,93 +1,92 @@
 .card-registration .select-input.form-control[readonly]:not([disabled]) {
-    font-size: 1rem;
-    line-height: 2.15;
-    padding-left: 0.75em;
-    padding-right: 0.75em;
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
 }
 .card-registration .select-arrow {
-    top: 13px;
+  top: 13px;
 }
 
-.set-border-radius{
-    border-radius: 20px !important;
+.set-border-radius {
+  border-radius: 20px !important;
 }
 
-.train-img{
-    border-radius: .25rem;
+.train-img {
+  border-radius: 25px;
+  height: 590px;
+  margin-left: 20px;
+  margin-top: 5px;
+  width: 85%;
 }
 
-.bg-dark-col{
-    background-color: white !important;
+.bg-dark-col {
+  background-color: white !important;
 }
-.create-account-main-div{
-    padding-right: 20px;
-    border-radius: 10px;
+.create-account-main-div {
+  padding-right: 20px;
+  border-radius: 10px;
 }
-.logo-name{
-    width: 200px;
-    height: 60px;
-    font-size: 25px;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #004145;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 15px !important;
+.logo-name {
+  width: 200px;
+  height: 60px;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #004145;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 15px !important;
 }
-.sub-logo-name{
-    padding-top:20px;
+.sub-logo-name {
+  padding-top: 20px;
 }
-.btn-login{
-    color: white;
-    background-color: #004145!important;
-    width: 100%;
-    align-items: center!important;
-
+.btn-login {
+  color: white;
+  background-color: #004145 !important;
+  width: 100%;
+  align-items: center !important;
 }
 
 .logo-name-sub {
-    margin-bottom: 50px !important;
-    margin-top: 100px !important;
-
+  margin-bottom: 50px !important;
+  margin-top: 60px !important;
 }
 
-.wel-statement{
-    margin-bottom: 30px !important;
+.wel-statement {
+  margin-bottom: 12px !important;
 }
 
-.register-btn{
-    width: 100%;
+.register-btn {
+  width: 100%;
 }
-.btn:hover{
-    color: white !important;
+.btn:hover {
+  color: white !important;
 }
-.acc-des{
-    font-size: 20px;
-    color: #004145 !important;
-    font-weight: bolder;
+.acc-des {
+  font-size: 20px;
+  color: #004145 !important;
+  font-weight: bolder;
 
-    padding: 0;
+  padding: 0;
 }
-.fw-bold{
-    color: #0a58ca !important;
-    text-decoration: none;
+.fw-bold {
+  color: #0a58ca !important;
+  text-decoration: none;
 }
-.p-3{
-    padding: 0 !important;
+.p-3 {
+  padding: 0 !important;
 }
-.py-5{
-    padding-bottom: 0 !important;
-    padding-top: 2px !important;
+.py-5 {
+  padding-bottom: 0 !important;
+  padding-top: 2px !important;
 }
-.form-outline .form-label{
-    font-size: 20px;
+.form-outline .form-label {
+  font-size: 20px;
 }
-.btn-close{
-    float: right!important;
-    margin-right: 15px;
-    margin-top: 15px;
-}
-.train-img{
-    height: 100%!important;
+.btn-close {
+  float: right !important;
+  margin-right: 15px;
+  margin-top: 15px;
 }
