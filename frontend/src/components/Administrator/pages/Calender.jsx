@@ -5,6 +5,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import axios from 'axios';
 import './Calendar.css';
+
 const Calendar = () => {
   const [currentEvents, setCurrentEvents] = useState([]);
   const [popupMessage, setPopupMessage] = useState('');
@@ -42,8 +43,9 @@ const Calendar = () => {
       };
 
       try {
-        await axios.post('/api/events/create', newEvent);
-        setCurrentEvents([...currentEvents, newEvent]);
+        const response = await axios.post('/api/events/create', newEvent);
+        const createdEvent = response.data;
+        setCurrentEvents([...currentEvents, createdEvent]);
         showPopup('Event added successfully');
       } catch (error) {
         console.error('Failed to create event:', error);
@@ -56,13 +58,15 @@ const Calendar = () => {
     setEventToDelete(clickInfo.event);
     setShowDeleteConfirmation(true);
   };
+
   const handleConfirmDelete = async () => {
     if (eventToDelete) {
       try {
         const eventId = eventToDelete.id;
-  
         await axios.delete(`/api/events/delete/${eventId}`);
-        setCurrentEvents(currentEvents.filter((event) => event.id !== eventId));
+        setCurrentEvents((prevEvents) =>
+          prevEvents.filter((event) => event.id !== eventId)
+        );
         setEventToDelete(null);
         setShowDeleteConfirmation(false);
         showPopup('Event deleted successfully');
@@ -72,7 +76,6 @@ const Calendar = () => {
       }
     }
   };
-  
 
   const handleCancelDelete = () => {
     setEventToDelete(null);
