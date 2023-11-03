@@ -4,7 +4,7 @@ import { Table, Button, Row, Col, Form } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import AddStudents from "./AddStudents";
 import "./students.css";
-import QrGenerator from '../QrCode/QrGenerator';
+import QrGenerator from "../QrCode/QrGenerator";
 import LoadingSpinner from "../Loading/Loading";
 
 const ViewStudents = () => {
@@ -56,7 +56,6 @@ const ViewStudents = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      setIsLoading(true);
       const { _id, ...updatedStudentData } = selectedStudent;
 
       if (imageFile) {
@@ -77,6 +76,7 @@ const ViewStudents = () => {
 
       await axios.put(`/api/students/${_id}`, updatedStudentData);
       setShowEditPopup(false);
+      setIsLoading(true);
       fetchStudents();
       alert("Student updated successfully.");
       setImageFile(null);
@@ -84,7 +84,7 @@ const ViewStudents = () => {
     } catch (error) {
       setIsLoading(false);
       console.error(error);
-      alert("Please fill all the fields");
+      alert(error.response.data.message);
     }
   };
 
@@ -151,7 +151,7 @@ const ViewStudents = () => {
 
     view_std_2 = [
       { label: "Admission No", value: selectedStudent.admission_no },
-      { label: "Username", value: selectedStudent.username },
+      { label: "Email", value: selectedStudent.email },
       { label: "Current Grade", value: selectedStudent.grade },
       {
         label: "Admission Year",
@@ -501,16 +501,16 @@ const ViewStudents = () => {
                           />
                         </div>
                         <div>
-                          <label htmlFor="username">Username</label>
+                          <label htmlFor="email">Email</label>
                           <Form.Control
                             type="text"
-                            id="username"
-                            name="username"
-                            value={selectedStudent.username}
+                            id="email"
+                            name="email"
+                            value={selectedStudent.email}
                             onChange={(e) =>
                               setSelectedStudent({
                                 ...selectedStudent,
-                                username: e.target.value,
+                                email: e.target.value,
                               })
                             }
                           />
@@ -522,6 +522,8 @@ const ViewStudents = () => {
                             id="password"
                             name="password"
                             value={selectedStudent.password}
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                             onChange={(e) =>
                               setSelectedStudent({
                                 ...selectedStudent,

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const timeTableSchema = new mongoose.Schema({
+const reliefSchema = new mongoose.Schema({
   weekday: {
     type: Number,
     required: true,
@@ -23,12 +23,13 @@ const timeTableSchema = new mongoose.Schema({
     required: true,
   },
   temp: {
-    type: Boolean,
-    required: true,
-    default: false,
+    type: String,
+    default: "Relief",
   },
 });
 
-const TimeTable = mongoose.model("TimeTable", timeTableSchema);
+reliefSchema.index({ weekday: 1, period: 1, grade: 1 }, { unique: true });
 
-module.exports = TimeTable;
+const Relief = mongoose.model("Relief", reliefSchema);
+
+module.exports = Relief;

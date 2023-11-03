@@ -9,6 +9,7 @@ const TimeTable = () => {
 
   const [timetableData, setTimetableData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [staffData, setStaffData] = useState([]);
 
   const userInfo = localStorage.getItem("userInfo");
   const user = JSON.parse(userInfo);
@@ -22,12 +23,23 @@ const TimeTable = () => {
         const timetableData = await fetchStaffTimeTableData(grade);
         setTimetableData(timetableData);
       } catch (error) {
-        alert("Error fetching student details:", error);
+        setLoading(false);
+        setTimetableData([]);
       }
     };
 
     fetchStudentDetails();
+    fetchStaff();
   }, [studentId]);
+
+  const fetchStaff = async () => {
+    try {
+      const response = await axios.get("/api/staff");
+      setStaffData(response.data);
+    } catch (error) {
+      console.error("Error fetching staff data:", error);
+    }
+  };
 
   const fetchStaffTimeTableData = async (grade) => {
     try {
@@ -46,10 +58,13 @@ const TimeTable = () => {
     );
 
     if (matchingCell) {
+      const staffID = matchingCell.staff;
+      const staff = staffData.find((record) => record._id === staffID);
+
       return (
         <div className="cell-data-time-table-student">
-         <span style={{fontWeight:"bolder"}}>{matchingCell.subject}</span> 
-          <br />({matchingCell.staff_name})
+          <span style={{ fontWeight: "bolder" }}>{matchingCell.subject}</span>
+          <br />({staff.fullname})
         </div>
       );
     } else {

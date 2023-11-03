@@ -29,7 +29,11 @@
     "chart.js": "^4.3.3",
     "dotenv": "^16.3.1",
     "html2canvas": "^1.4.1",
+    "js-cookie": "^3.0.5",
+    "loader-utils": "^3.2.1",
     "moment": "^2.29.4",
+    "nth-check": "^2.1.1",
+    "postcss": "^8.4.31",
     "qrcode": "^1.5.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
@@ -78,6 +82,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/core": "^7.23.2",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "babel-loader": "^9.1.3"
   }
 }

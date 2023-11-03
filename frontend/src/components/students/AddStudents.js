@@ -14,7 +14,7 @@ function AddStudents({ fetchStudents }) {
     picture:
       "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     admission_no: "",
-    username: "",
+    email: "",
     password: "",
     role: "student",
     grade: "",
@@ -101,7 +101,7 @@ function AddStudents({ fetchStudents }) {
         picture:
           "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
         admission_no: "",
-        username: "",
+        email: "",
         password: "",
         role: "",
         grade: "",
@@ -164,11 +164,11 @@ function AddStudents({ fetchStudents }) {
       placeholder: "Enter admission number",
     },
     {
-      label: "Username",
-      type: "text",
-      name: "username",
-      value: formData.username,
-      placeholder: "Enter username",
+      label: "email",
+      type: "email",
+      name: "email",
+      value: formData.email,
+      placeholder: "Enter email",
     },
     {
       label: "Password",

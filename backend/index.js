@@ -2,21 +2,21 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const studentRoutes = require("./routes/studentRoutes");
-const userRoutes = require('./routes/userRoutes');
-const staffRoutes = require('./routes/staffRoutes');
-const markRoutes=require('./routes/markRoutes')
-const gradeRoutes=require('./routes/gradeROutes')
-const subjectRoutes=require('./routes/subjectRoutes')
-const { notFound, errorHandler } = require('./middlewares/errorMiddleware');
-const studentAttendanceRoutes=require('./routes/studentAttendanceRoutes')
-const noticesRoutes=require('./routes/noticesRoutes');
-const eventRoutes = require('./routes/eventRoutes');
-const newsRoutes=require('./routes/newsRoutes');
-const timeTableRoute=require('./routes/timeTableRoute');
-const ImageRoutes = require('./routes/ImageRoutes');
-const oldStudentRoutes=require('./routes/oldStudentRoutes');
-const staffAttendanceRoutes = require('./routes/staffAttendanceRoutes');
-const paymentRoutes = require("./routes/paymentRoutes");
+const userRoutes = require("./routes/userRoutes");
+const staffRoutes = require("./routes/staffRoutes");
+const markRoutes = require("./routes/markRoutes");
+const gradeRoutes = require("./routes/gradeROutes");
+const subjectRoutes = require("./routes/subjectRoutes");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
+const studentAttendanceRoutes = require("./routes/studentAttendanceRoutes");
+const noticesRoutes = require("./routes/noticesRoutes");
+const eventRoutes = require("./routes/eventRoutes");
+const newsRoutes = require("./routes/newsRoutes");
+const timeTableRoute = require("./routes/timeTableRoute");
+const ImageRoutes = require("./routes/ImageRoutes");
+const oldStudentRoutes = require("./routes/oldStudentRoutes");
+const staffAttendanceRoutes = require("./routes/staffAttendanceRoutes");
+const reliefRoutes = require("./routes/reliefRoutes");
 const app = express();
 dotenv.config();
 connectDB();
@@ -47,7 +47,7 @@ app.use("/api/timetable", timeTableRoute);
 app.use("/api/gallery", ImageRoutes);
 app.use("/api/oldStudents", oldStudentRoutes);
 app.use("/api/staffattendance", staffAttendanceRoutes);
-app.use('/api/payment', paymentRoutes);
+app.use("/api/reliefAllocation", reliefRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

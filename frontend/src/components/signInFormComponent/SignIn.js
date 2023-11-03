@@ -10,11 +10,10 @@ import ForgotPassword from "./ForgotPassword";
 const SignInCom = () => {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [forgotPassword, setForgotPassword] = useState(false);
 
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
@@ -44,26 +43,20 @@ const SignInCom = () => {
       const { data } = await axios.post(
         "/api/users/login",
         {
-          username,
+          email,
           password,
         },
         config
       );
       console.log(data.role);
       localStorage.setItem("userInfo", JSON.stringify(data));
-      setLoading(false);
       window.location.reload();
     } catch (error) {
       setError(error.response.data.message);
+      setEmail("");
+      setPassword("");
       setLoading(false);
     }
-  };
-  const openForgotPasswordPopup = () => {
-    setForgotPassword(true);
-  };
-
-  const closeForgotPasswordPopup = () => {
-    setForgotPassword(false);
   };
 
   return (
@@ -109,22 +102,23 @@ const SignInCom = () => {
                         <div className="acc-des text-uppercase text-center mb-5 acc-des-sub wel-statement">
                           Welcome To The UIS Family
                           <br />
-                          {loading && <LoadingSpinner/>}
+                          {loading && <LoadingSpinner />}
                         </div>
                         <div className="form-outline mb-4 wel-statement">
                           <label
                             className="form-label"
                             htmlFor="form3Example97"
                           >
-                            Username
+                            Email
                           </label>
                           <input
-                            type="text"
+                            type="email"
                             id="form3Example97"
                             className="form-control form-control-lg"
-                            placeholder="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
                           />
                         </div>
 
@@ -142,19 +136,10 @@ const SignInCom = () => {
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            required
                           />
                         </div>
-                        <div>
-                          <Link onClick={openForgotPasswordPopup}>
-                            Forgot password?
-                          </Link>
-
-                          {forgotPassword && (
-                            <ForgotPassword
-                              onClose={closeForgotPasswordPopup}
-                            />
-                          )}
-                        </div>
+                        <ForgotPassword />
                         <div className="d-flex justify-content-end pt-3 wel-statement">
                           <button
                             type="submit"

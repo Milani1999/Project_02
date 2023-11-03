@@ -5,17 +5,17 @@ const Admin = require("../models/adminModel");
 const generateToken = require("../utils/generateToken");
 
 const authUser = asyncHandler(async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   if (
-    username === process.env.ADMIN_USERNAME &&
+    email === process.env.ADMIN_EMAIL &&
     password === process.env.ADMIN_PASSWORD
   ) {
-    const existingAdmin = await Admin.findOne({ username });
+    const existingAdmin = await Admin.findOne({ email });
 
     if (!existingAdmin) {
       const defaultAdmin = new Admin({
-        username: process.env.ADMIN_USERNAME,
+        email: process.env.ADMIN_EMAIL,
         password: process.env.ADMIN_PASSWORD,
         picture: "https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg",
         role: process.env.ADMIN_ROLE,
@@ -32,9 +32,9 @@ const authUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  const student = await Student.findOne({ username });
-  const staff = await Staff.findOne({ username });
-  const admin = await Admin.findOne({ username });
+  const student = await Student.findOne({ email });
+  const staff = await Staff.findOne({ email });
+  const admin = await Admin.findOne({ email });
 
   if (student && (await student.matchPassword(password))) {
     res.json({
@@ -65,7 +65,7 @@ const authUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error("Invalid username or password");
+    throw new Error("Invalid Email or password");
   }
 });
 

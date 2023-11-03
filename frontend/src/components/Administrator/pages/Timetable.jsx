@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Timetable.css";
 import LoadingSpinner from "../../Loading/Loading";
+import Relief from "./Relief";
 
 const TimeTable = () => {
   const weekdays = 5;
 
   const [timetableData, setTimetableData] = useState([]);
-  const [grade, setGrade] = useState("");
+  const [grade, setGrade] = useState("1");
   const [loading, setLoading] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState("");
@@ -19,10 +20,12 @@ const TimeTable = () => {
   const [staffIdMap, setStaffIdMap] = useState({});
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [selectedID, setSelectedID] = useState("");
+  const [staffData, setStaffData] = useState([]);
 
   useEffect(() => {
     fetchSubjects();
     fetchStaff();
+    fetchTimetableData();
   }, []);
 
   useEffect(() => {
@@ -69,10 +72,6 @@ const TimeTable = () => {
     }
   };
 
-  const handleGradeChange = (event) => {
-    setGrade(event.target.value);
-  };
-
   const handleAddClick = (weekday, period) => {
     setSelectedWeekday(weekday);
     setSelectedPeriod(period);
@@ -89,6 +88,7 @@ const TimeTable = () => {
     try {
       const response = await axios.get("/api/staff");
       const staffData = response.data;
+      setStaffData(response.data);
       const idMap = {};
       staffData.forEach((staff) => {
         idMap[staff.fullname] = staff._id;
@@ -106,12 +106,7 @@ const TimeTable = () => {
         `/api/timetable/create/${selectedWeekday}/${selectedPeriod}/${grade}`,
         {
           subject: selectedSubject,
-          staff: [
-            {
-              staff_id: selectedStaffId,
-              staff_name: selectedStaff,
-            },
-          ],
+          staff: selectedStaffId,
         }
       );
       const updatedData = await fetchTimetableData(grade);
@@ -121,24 +116,53 @@ const TimeTable = () => {
       setSelectedStaff("");
       setSelectedSubject("");
     } catch (error) {
-      alert("Particular staff has another period in this time");
+      if (error.response && error.response.data && error.response.data.error) {
+        alert(error.response.data.error);
+      } else {
+        alert("An error occurred. Please try again later.");
+      }
     }
   };
-
   const getCellData = (weekday, period) => {
     const matchingCell = timetableData.find(
       (data) => data.weekday === weekday && data.period === period
     );
 
     if (matchingCell) {
+      const staffID = matchingCell.staff;
+      const staff = staffData.find((record) => record._id === staffID);
+      const Rel = matchingCell.temp;
+
       return (
-        <button
-          className="cell-data-time-table"
-          onClick={() => handleCellClick(matchingCell._id)}
-        >
-          {matchingCell.subject}
-          <br />({matchingCell.staff_name})
-        </button>
+        <div className="hover">
+          <button
+            className="cell-data-time-table"
+            onClick={() => handleCellClick(matchingCell._id)}
+          >
+            <span class="hover-text">Click to Delete</span>
+
+            {Rel === "Relief" ? (
+              <div>
+                <span style={{ fontWeight: "bold" }}>
+                  {" "}
+                  {matchingCell.subject}
+                </span>
+                <br />
+                <div style={{ color: "red" }}>Relief: {staff.fullname}</div>
+              </div>
+            ) : (
+              <div>
+                {" "}
+                <span style={{ fontWeight: "bold" }}>
+                  {" "}
+                  {matchingCell.subject}
+                </span>{" "}
+                <br />
+                {staff.fullname}
+              </div>
+            )}
+          </button>
+        </div>
       );
     } else {
       return (
@@ -161,11 +185,11 @@ const TimeTable = () => {
     try {
       await axios.delete(`/api/timetable/${selectedID}`);
       setShowDeletePopup(false);
-      alert("Item deleted successfully.");
+      alert("Deleted successfully.");
       const updatedData = await fetchTimetableData(grade);
       setTimetableData(updatedData);
     } catch (error) {
-      alert("Failed to delete item.");
+      alert("Failed to delete");
     }
   };
 
@@ -187,13 +211,14 @@ const TimeTable = () => {
 
   return (
     <div className="time-table-admin">
+      <Relief fetchTimetableData={fetchTimetableData} />
       <div>
         <label>Select Grade:</label>
-        <select value={grade} onChange={handleGradeChange}>
-          <option value="">Select Grade</option>
+        <select value={grade} onChange={(e) => setGrade(e.target.value)}>
+          <option value="1">Grade 1</option>
           {Array.from({ length: 11 }, (_, index) => (
-            <option key={index} value={index + 1}>
-              Grade {index + 1}
+            <option key={index} value={index + 2}>
+              Grade {index + 2}
             </option>
           ))}
         </select>
@@ -224,7 +249,6 @@ const TimeTable = () => {
           </tbody>
         </table>
       )}
-
       {popupVisible && (
         <div className="popup-background-timetable">
           <div className="add-period-popup">
@@ -271,7 +295,6 @@ const TimeTable = () => {
           </div>
         </div>
       )}
-
       {showDeletePopup && selectedID && (
         <div className="popup-background-timetable">
           <div className="popup-container-delete">
