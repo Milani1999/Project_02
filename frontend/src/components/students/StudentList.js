@@ -53,6 +53,9 @@ const ViewStudents = () => {
     setShowEditPopup(false);
   };
 
+  const cloudinary_url = process.env.REACT_APP_CLOUDINARY_URL;
+  const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -62,22 +65,19 @@ const ViewStudents = () => {
         const data = new FormData();
         data.append("file", imageFile);
         data.append("upload_preset", "edutrack");
-        data.append("cloud_name", "dprnxaqxi");
-        const response = await fetch(
-          "https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload",
-          {
-            method: "post",
-            body: data,
-          }
-        );
+        data.append("cloud_name", cloud_name);
+        const response = await fetch(cloudinary_url, {
+          method: "post",
+          body: data,
+        });
         const cloudinaryData = await response.json();
         updatedStudentData.picture = cloudinaryData.url.toString();
       }
 
       await axios.put(`/api/students/${_id}`, updatedStudentData);
       setShowEditPopup(false);
-      setIsLoading(true);
       fetchStudents();
+      setIsLoading(true);
       alert("Student updated successfully.");
       setImageFile(null);
       setIsLoading(false);
