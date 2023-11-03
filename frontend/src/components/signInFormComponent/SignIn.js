@@ -12,7 +12,6 @@ const SignInCom = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -52,8 +51,7 @@ const SignInCom = () => {
       localStorage.setItem("userInfo", JSON.stringify(data));
       window.location.reload();
     } catch (error) {
-      setError(error.response.data.message);
-      setEmail("");
+      alert(error.response.data.message);
       setPassword("");
       setLoading(false);
     }
@@ -68,11 +66,11 @@ const SignInCom = () => {
               <div className="col">
                 <div className="card card-registration my-4 shadow-lg p-3 mb-5 bg-white rounded set-border-radius">
                   <div className="row g-0">
-                    <div className="col-xl-6 d-none d-xl-block">
+                    <div className="col-xl-6">
                       <img
                         src={img}
                         alt="train"
-                        className="train-img img-fluid"
+                        className="train-img img-fluid rounded set-border-radius"
                       />
                     </div>
                     <div className="col-xl-6 p-5">
@@ -84,18 +82,7 @@ const SignInCom = () => {
                         ></button>
                       </Link>
                       <div className="card-body p-md-5 text-black sub-form">
-                        {error && (
-                          <p
-                            style={{
-                              color: "red",
-                              fontSize: "20px",
-                              paddingLeft: "100px",
-                            }}
-                          >
-                            {error}
-                          </p>
-                        )}
-                        <div className="logo-name shadow p-3 mb-5 bg-white rounded logo-name-sub">
+                        <div className="logo-name shadow p-3 bg-white rounded logo-name-sub">
                           <p className="sub-logo-name">Sign In Here</p>
                         </div>
 
@@ -140,7 +127,7 @@ const SignInCom = () => {
                           />
                         </div>
                         <ForgotPassword />
-                        <div className="d-flex justify-content-end pt-3 wel-statement">
+                        <div className="d-flex justify-content-end pt-5 wel-statement">
                           <button
                             type="submit"
                             className="btn  btn-lg ms-2 btn-login"

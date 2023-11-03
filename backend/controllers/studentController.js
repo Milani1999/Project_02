@@ -59,48 +59,49 @@ const createStudents = asyncHandler(async (req, res) => {
   const userAdmissionExists = await Student.findOne({
     admission_no: { $regex: new RegExp(`^${admission_no}$`, "i") },
   });
-  if (userAdmissionExists) {
-    res.status(400);
-    throw new Error("Admission number already exists");
-  }
 
   const emailExists = await Student.findOne({
     email: { $regex: new RegExp(`^${email}$`, "i") },
   });
 
-  if (emailExists) {
+  if (userAdmissionExists) {
+    res.status(400);
+    throw new Error("Admission number already exists");
+  } else if (emailExists) {
     res.status(400);
     throw new Error("Email already exists");
+  } else if (phone.length !== 10) {
+    res.status(400);
+    throw new Error("Phone number should contain only 10 digits");
+  } else {
+    const student = new Student({
+      fullname,
+      first_name,
+      last_name,
+      address,
+      dateOfBirth,
+      phone,
+      gender,
+      picture,
+      email,
+      password,
+      role,
+      admission_no,
+      details,
+      parent_Name,
+      parent_occupation,
+      admission_year,
+      grade,
+      admitted_grade,
+      extra_activities,
+      conduct,
+      special_aptitudes,
+      remark,
+    });
+    const createdStudent = await student.save();
+
+    res.status(201).json(createdStudent);
   }
-
-  const student = new Student({
-    fullname,
-    first_name,
-    last_name,
-    address,
-    dateOfBirth,
-    phone,
-    gender,
-    picture,
-    email,
-    password,
-    role,
-    admission_no,
-    details,
-    parent_Name,
-    parent_occupation,
-    admission_year,
-    grade,
-    admitted_grade,
-    extra_activities,
-    conduct,
-    special_aptitudes,
-    remark,
-  });
-
-  const createdStudent = await student.save();
-
-  res.status(201).json(createdStudent);
 });
 
 const getStudentById = asyncHandler(async (req, res) => {
@@ -178,17 +179,16 @@ const updateStudent = asyncHandler(async (req, res) => {
     if (admissionNumberExists) {
       res.status(400);
       throw new Error("Admission number already exists");
-    }
-
-    if (emailExists) {
+    } else if (emailExists) {
       res.status(400);
       throw new Error("Email already exists");
+    } else if (phone.length !== 10) {
+      res.status(400);
+      throw new Error("Phone number should contain only 10 digits");
+    } else {
+      const updatedStudent = await student.save();
+      res.json(updatedStudent);
     }
-
-
-    const updatedStudent = await student.save();
-
-    res.json(updatedStudent);
   } else {
     res.status(404);
     throw new Error("Student not found");
