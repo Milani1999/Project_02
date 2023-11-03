@@ -123,7 +123,7 @@ const StudentMain = () => {
             {
               key: "Payment",
               icon: <RiMoneyDollarCircleLine className="fs-4" />,
-              label: "Payment Handling",
+              label: "Payment",
             },
           ]}
         />
