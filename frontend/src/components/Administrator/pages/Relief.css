@@ -1,6 +1,6 @@
-.Relief-div button {
-    float: right;
-    margin-right: 3px;
-    margin-top: 5px;
-  }
-  
+.Relief-div button, .Reset-div button {
+  float: right;
+  margin-right: 3px;
+  margin-top: 5px;
+  width: 120px;
+}

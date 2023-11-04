@@ -52,24 +52,23 @@ const ViewStaff = () => {
     setShowEditPopup(false);
   };
 
+  const cloudinary_url = process.env.REACT_APP_CLOUDINARY_URL;
+  const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      setIsLoading(true);
       const { _id, picture, ...staffData } = selectedStaff;
 
       if (imageFile) {
         const data = new FormData();
         data.append("file", imageFile);
         data.append("upload_preset", "edutrack");
-        data.append("cloud_name", "dprnxaqxi");
-        const response = await fetch(
-          "https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload",
-          {
-            method: "post",
-            body: data,
-          }
-        );
+        data.append("cloud_name", cloud_name);
+        const response = await fetch(cloudinary_url, {
+          method: "post",
+          body: data,
+        });
         const cloudinaryData = await response.json();
         staffData.picture = cloudinaryData.url.toString();
       } else {
@@ -79,13 +78,14 @@ const ViewStaff = () => {
       await axios.put(`/api/staff/${_id}`, staffData);
       setShowEditPopup(false);
       fetchStaffData();
+      setIsLoading(true);
       alert("Staff member updated successfully.");
       setImageFile(null);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       console.error(error);
-      alert("Please fill all the fields");
+      alert(error.response.data.message);
     }
   };
 
