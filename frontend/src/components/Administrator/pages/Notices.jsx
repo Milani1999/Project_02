@@ -68,6 +68,9 @@ const Notices = () => {
       message.error("Failed to save notice details");
     }
   };
+  
+  const cloudinary_url = process.env.REACT_APP_CLOUDINARY_URL;
+  const cloud_name = process.env.REACT_APP_CLOUD_NAME;
 
   const handleSubmit = async (values) => {
     try {
@@ -80,12 +83,9 @@ const Notices = () => {
         const imageFormData = new FormData();
         imageFormData.append("file", values.fileList[0].originFileObj);
         imageFormData.append("upload_preset", "edutrack");
-        imageFormData.append("cloud_name", "dprnxaqxi");
+        imageFormData.append("cloud_name", cloud_name);
 
-        const imageResponse = await axios.post(
-          "https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload",
-          imageFormData
-        );
+        const imageResponse = await axios.post(cloudinary_url, imageFormData);
 
         formData.append("file", imageResponse.data.url);
       }

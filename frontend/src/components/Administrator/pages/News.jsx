@@ -35,6 +35,9 @@ const News = () => {
     setShowEditPopup(false);
   };
 
+  const cloudinary_url = process.env.REACT_APP_CLOUDINARY_URL;
+  const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -44,14 +47,11 @@ const News = () => {
         const data = new FormData();
         data.append("file", imageFile);
         data.append("upload_preset", "edutrack");
-        data.append("cloud_name", "dprnxaqxi");
-        const response = await fetch(
-          "https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload",
-          {
-            method: "post",
-            body: data,
-          }
-        );
+        data.append("cloud_name", cloud_name);
+        const response = await fetch(cloudinary_url, {
+          method: "post",
+          body: data,
+        });
         const cloudinaryData = await response.json();
         newsData.image = cloudinaryData.url.toString();
       } else {
@@ -99,7 +99,7 @@ const News = () => {
           <tr>
             <th colSpan={3}></th>
             <th style={{ textAlign: "center", width: "100px" }}>
-              <AddNews fetchNewsData={fetchNewsData}/>
+              <AddNews fetchNewsData={fetchNewsData} />
             </th>
           </tr>
 

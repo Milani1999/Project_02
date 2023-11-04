@@ -25,13 +25,16 @@ function AddNews({ fetchNewsData }) {
       setError("Please Select an Image");
       return;
     }
+    const cloudinary_url = process.env.REACT_APP_CLOUDINARY_URL;
+    const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+
     setError("");
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "edutrack");
-      data.append("cloud_name", "dprnxaqxi");
-      fetch("https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload", {
+      data.append("cloud_name", cloud_name);
+      fetch(cloudinary_url, {
         method: "post",
         body: data,
       })
