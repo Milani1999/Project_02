@@ -15,7 +15,7 @@ function Gallery() {
 
   const fetchImages = async () => {
     try {
-      const response = await axios.get("https://edutrack-server-lvv9.onrender.com/api/gallery/get"); 
+      const response = await axios.get("/api/gallery/get");
       setImageList(response.data);
     } catch (error) {
       console.error(error);
@@ -69,7 +69,7 @@ function Gallery() {
             <img
               className="img-fluid"
               width={500}
-              src={image.image} 
+              src={image.image}
               alt="Gallery"
             />
           </div>
