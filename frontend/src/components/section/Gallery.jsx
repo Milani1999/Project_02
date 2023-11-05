@@ -16,6 +16,7 @@ function Gallery() {
   const fetchImages = async () => {
     try {
       const response = await axios.get("/api/gallery/get");
+      console.log("Response",response);
       setImageList(response.data);
     } catch (error) {
       console.error(error);
