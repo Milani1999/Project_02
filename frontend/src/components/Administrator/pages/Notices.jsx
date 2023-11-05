@@ -25,16 +25,16 @@ const Notices = () => {
   const [isSentNoticesVisible, setIsSentNoticesVisible] = useState(false);
   const [sentNotices, setSentNotices] = useState([]);
 
-  const handleViewSentNotices = async () => {
-    try {
-      const response = await axios.get("/api/notices/sent");
-      setSentNotices(response.data);
-      setIsSentNoticesVisible(true);
-    } catch (error) {
-      console.error(error);
-      message.error("Failed to fetch sent notices");
-    }
-  };
+  // const handleViewSentNotices = async () => {
+  //   try {
+  //     const response = await axios.get("/api/notices/sent");
+  //     setSentNotices(response.data);
+  //     setIsSentNoticesVisible(true);
+  //   } catch (error) {
+  //     console.error(error);
+  //     message.error("Failed to fetch sent notices");
+  //   }
+  // };
 
   useEffect(() => {
     fetchSentNotices();
