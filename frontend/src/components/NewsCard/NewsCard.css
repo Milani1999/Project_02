@@ -69,3 +69,14 @@
   width: 280px;
   margin: auto;
 }
+
+@media screen and (max-width: 540px) {
+  .card-container, .card-title, .card-btn{
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
