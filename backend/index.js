@@ -17,6 +17,7 @@ const ImageRoutes = require("./routes/ImageRoutes");
 const oldStudentRoutes = require("./routes/oldStudentRoutes");
 const staffAttendanceRoutes = require("./routes/staffAttendanceRoutes");
 const reliefRoutes = require("./routes/reliefRoutes");
+const paymentRoutes = require("./routes/paymentRoutes"); 
 const app = express();
 dotenv.config();
 connectDB();
@@ -48,6 +49,7 @@ app.use("/api/gallery", ImageRoutes);
 app.use("/api/oldStudents", oldStudentRoutes);
 app.use("/api/staffattendance", staffAttendanceRoutes);
 app.use("/api/reliefAllocation", reliefRoutes);
+app.use("/api/payments", paymentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

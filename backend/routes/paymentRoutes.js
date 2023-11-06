@@ -1,10 +1,17 @@
-// paymentRoutes.js
 const express = require('express');
-const { processPayment} = require('../controllers/paymentController');
 const router = express.Router();
+const {
+  initiatePayment,
+  confirmPayment,
+  getPaymentHistory
+} = require('../controllers/paymentController');
 
-// Route for making payments
-router.post('/createPayment',processPayment );
+// Route to initiate a payment
+router.post('/initiate', /* protect, */ initiatePayment);
 
+// Route to confirm a payment
+router.post('/confirm', /* protect, */ confirmPayment);
+
+router.get('/history/:studentId', /* protect, */ getPaymentHistory);
 
 module.exports = router;

@@ -1,22 +1,23 @@
-// paymentModel.js
 const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
   referenceCode: {
     type: String,
-    unique: true,
     required: true,
+    unique: true,
   },
-  studentAdmissionNo: {
+  admission_no: {
     type: String,
     required: true,
   },
   studentDetails: {
+    // Assuming you have a Student model and you want to create a reference here
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Student', // Reference to the Student model
+    ref: 'Student',
+    required: true,
   },
   amount: {
-    type: Number,
+    type: mongoose.Schema.Types.Decimal128,
     required: true,
   },
   paymentDateWithTime: {
@@ -25,20 +26,28 @@ const paymentSchema = new mongoose.Schema({
   },
   purpose: {
     type: String,
-    default: 'monthlyfee',
+    default: "monthlyfee",
   },
-  paymentYear: {
+  paymentForYear: {
     type: Number,
     required: true,
   },
-  paymentMonth: {
+  paymentForMonth: {
     type: String,
     required: true,
   },
   paymentMethod: {
     type: String,
-    default: 'Online Card Payment',
+    default: "Online Card Payment",
   },
+  status: {
+    type: Boolean,
+    default: false, // false indicates payment is not completed, true indicates payment is completed
+  },
+  currency: {
+    type: String,
+    default: "LKR",
+  }
 });
 
 const Payment = mongoose.model('Payment', paymentSchema);

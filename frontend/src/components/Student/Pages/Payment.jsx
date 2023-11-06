@@ -1,83 +1,64 @@
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import StripeCheckout from 'react-stripe-checkout';
+import React, { useState, useEffect} from 'react';
+import md5 from 'crypto-js/md5';
 
-const Payment = ({ user }) => {
-  const [paymentHistory, setPaymentHistory] = useState([]);
+
+ // Update this import path to your context file
+
+const Payment = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [months, setMonths] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState('');
-  const [showPaymentForm, setShowPaymentForm] = useState(false);
-
-  const studentId = user?.admissionNo;
+  const [paymentRecords, setPaymentRecords] = useState([]); 
 
   useEffect(() => {
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
-    const availableMonths = Array.from(
-      { length: 12 },
-      (_, index) => (currentYear === selectedYear && index > currentMonth ? null : index + 1)
-    );
+    const fetchPaymentRecords = async () => {
+      // Replace with actual logic to fetch payment records
+      // ...
 
-    setMonths(availableMonths.filter((month) => month !== null));
+      // Load PayHere script
+      loadPayHereScript();
+    };
 
-    // Your existing code for fetching payment history
-    fetchPaymentHistory();
+    fetchPaymentRecords();
   }, [selectedYear]);
 
-  const handlePaymentClick = (month) => {
-    setSelectedMonth(month);
-    setShowPaymentForm(true);
-  };
-
-  const fetchPaymentHistory = async () => {
-    try {
-      const response = await axios.get(`/api/payment/payment-history?year=${selectedYear}`);
-      setPaymentHistory(response.data);
-    } catch (error) {
-      console.error('Error fetching payment history:', error);
+  const loadPayHereScript = () => {
+    // Load the PayHere script only if it's not already loaded
+    if (!window.payhere) {
+      const script = document.createElement('script');
+      script.src = 'https://www.payhere.lk/lib/payhere.js';
+      script.async = true;
+      document.body.appendChild(script);
     }
   };
 
-  const handleToken = async (token) => {
-    try {
-      // Send the token to your backend for payment processing
-      const response = await axios.post('/api/createPayment', {
-        token,
-        studentId,
-        amount: 5000, // Set the amount based on your requirements
-        paymentYear: selectedYear,
-        paymentMonth: selectedMonth,
-      });
+  const handleYearChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
 
-      if (response.data.success) {
-        console.log('Payment successful');
-        // Refresh payment history
-        fetchPaymentHistory();
-      } else {
-        console.error('Payment failed');
-        alert('Payment failed. Please try again.');
-      }
-    } catch (error) {
-      console.error('Payment error:', error);
-      alert('Payment failed. Please try again.');
-    }
+
+  // Generate an array for the months to display
+  const monthsToDisplay = Array.from({ length: selectedYear === new Date().getFullYear() ? new Date().getMonth() + 1 : 12 }, (_, i) => new Date(0, i).toLocaleString('en-US', { month: 'long' }));
+
+  // Define merchant details (normally retrieved from a secure source or environment variables)
+  const merchantId = process.env.REACT_APP_PAYHERE_MERCHANT_ID;
+  const merchantSecret = process.env.REACT_APP_PAYHERE_MERCHANT_SECRET;
+  
+
+  // Function to generate the hash (this should ideally be done on the server)
+  const generateHash = (orderId, amount) => {
+    const hashString = `${merchantId}${orderId}${amount}LKR${md5(merchantSecret).toString().toUpperCase()}`;
+    return md5(hashString).toString().toUpperCase();
   };
 
   return (
     <div>
-      <h2>Payment History</h2>
-      <div className="filter-container">
-        <label>Year:</label>
-        <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-          {Array.from({ length: new Date().getFullYear() - 2021 }, (_, index) => (
-            <option key={2022 + index} value={2022 + index}>
-              {2022 + index}
-            </option>
-          ))}
-        </select>
-      </div>
+      <h2>Payment Records for {selectedYear}</h2>
+      <select value={selectedYear} onChange={handleYearChange}>
+        {Array.from({ length: new Date().getFullYear() - 2021 + 1 }, (_, i) => new Date().getFullYear() - i).map((year) => (
+          <option key={year} value={year}>{year}</option>
+        ))}
+      </select>
+
       <table>
         <thead>
           <tr>
@@ -88,34 +69,40 @@ const Payment = ({ user }) => {
           </tr>
         </thead>
         <tbody>
-          {months.map((month) => {
-            const monthName = new Date(selectedYear, month - 1, 1).toLocaleString('default', {
-              month: 'long',
-            });
-            const paymentRecord = paymentHistory.find(
-              (record) =>
-                new Date(record.paymentDateWithTime).getMonth() === month - 1 &&
-                record.paymentYear === selectedYear
-            );
+          {monthsToDisplay.map((month) => {
+            const record = paymentRecords.find(r => r.month === month);
+            const order_id = `SCHOOLFEES_${selectedYear}_${month}`;
+            const amount = '5000.00'; // Replace with the actual fee amount
+            const hash = generateHash(order_id, amount);
 
             return (
               <tr key={month}>
-                <td>{monthName}</td>
+                <td>{month}</td>
+                <td>{record ? record.paymentDateWithTime : '-'}</td>
                 <td>
-                  {paymentRecord ? new Date(paymentRecord.paymentDateWithTime).toLocaleString() : '-'}
+                  {record && record.pdfUrl ? <a href={record.pdfUrl} target="_blank" rel="noopener noreferrer">Download PDF</a> : '-'}
                 </td>
                 <td>
-                  {paymentRecord ? (
-                    <a href={paymentRecord.review} target="_blank" rel="noopener noreferrer">
-                      Download
-                    </a>
-                  ) : (
-                    '-'
-                  )}
-                </td>
-                <td>
-                  {paymentRecord ? paymentRecord.paymentMethod : (
-                    <button onClick={() => handlePaymentClick(month)}>Pay Now</button>
+                  {record ? 'Paid' : (
+                    <form method="post" action="https://sandbox.payhere.lk/pay/checkout">
+                      <input type="hidden" name="merchant_id" value={merchantId} />
+                      <input type="hidden" name="return_url" value="http://yourwebsite.com/return" />
+                      <input type="hidden" name="cancel_url" value="http://yourwebsite.com/cancel" />
+                      <input type="hidden" name="notify_url" value="http://yourwebsite.com/notify" />
+                      <input type="hidden" name="order_id" value={order_id} />
+                      <input type="hidden" name="items" value={`School Fees for ${month} ${selectedYear}`} />
+                      <input type="hidden" name="amount" value={amount} />
+                      <input type="hidden" name="currency" value="LKR" />
+                      <input type="hidden" name="first_name" value="Your_First_Name" />
+                      <input type="hidden" name="last_name" value="Your_Last_Name" />
+                      <input type="hidden" name="email" value="Your_Email" />
+                      <input type="hidden" name="phone" value="Your_Phone_Number" />
+                      <input type="hidden" name="address" value="Your_Address" />
+                      <input type="hidden" name="city" value="Your_City" />
+                      <input type="hidden" name="country" value="Your_Country" />
+                      <input type="hidden" name="hash" value={hash} />
+                      <button type="submit">Pay Now</button>
+                    </form>
                   )}
                 </td>
               </tr>
@@ -123,19 +110,8 @@ const Payment = ({ user }) => {
           })}
         </tbody>
       </table>
-      {showPaymentForm && (
-        <div className="payment-form">
-          <h3>Make a Payment</h3>
-          <StripeCheckout
-            token={handleToken}
-            stripeKey="pk_test_51NoKBjSBqWcAaZje1PLt4TSS1EkGgbj2BGKisoki3993sizkyr0ZLA0XvT0v8XzpZailsaOJbSFDnoQWgcWVaGDb00cuHiJqd8" // Replace with your Stripe Publishable Key
-            amount={3500} // Set the amount based on your requirements
-          />
-        </div>
-      )}
     </div>
   );
 };
 
 export default Payment;
-
