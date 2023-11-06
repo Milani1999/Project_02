@@ -62,3 +62,47 @@ export const fetchStudentCount = async () => {
     return 0;
   }
 };
+
+export const fetchAttendedStaffCount = async () => {
+  try {
+    const current = new Date().toISOString().substr(0, 10);
+    const response = await axios.get(
+      `/api/staffattendance/getByDate?date=${current}`
+    );
+    const staffattendance = response.data;
+    const filteredAttendance = staffattendance.filter(
+      (row) => row.attendance !== null
+    );
+    return filteredAttendance.length;
+  } catch (error) {
+    console.error(error);
+    return 0;
+  }
+};
+
+export const fetchStudentAttendance = async () => {
+  const current = new Date().toISOString().substr(0, 10);
+  const attendedCounts = [];
+
+  for (let grade = 1; grade <= 11; grade++) {
+    const response = await axios.get(
+      `/api/studentattendance/getByDate?date=${current}&grade=${grade}`
+    );
+    const studentattendance = response.data;
+    const filteredAttendance = studentattendance.filter(
+      (row) => row.attendance !== null
+    );
+    attendedCounts.push({
+      grade: grade,
+      count: filteredAttendance.length,
+    });
+  }
+
+  let total = 0;
+
+  attendedCounts.map((c) => {
+    total += c.count;
+  });
+
+  return total;
+};

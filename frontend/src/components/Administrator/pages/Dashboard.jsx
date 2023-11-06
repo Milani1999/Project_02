@@ -8,12 +8,16 @@ import {
   fetchStaffCount,
   fetchStudentCount,
   processData,
+  fetchAttendedStaffCount,
+  fetchStudentAttendance,
 } from "../../Count/Count";
 import { StudentData } from "../../Count/Data";
 
 const Dashboard = () => {
   const [staffCount, setStaffCount] = useState(0);
   const [studentCount, setStudentCount] = useState(0);
+  const [staffAttendance, setStaffAttendance] = useState(0);
+  const [studentAttendance, setStudentAttendance] = useState(0);
   const [classWise, setClassWise] = useState([]);
 
   useEffect(() => {
@@ -23,6 +27,10 @@ const Dashboard = () => {
         const studentCount = await fetchStudentCount();
         const studentData = await StudentData();
         const processedData = processData(studentData);
+        const staffAtt = await fetchAttendedStaffCount();
+        const stuAtt = await fetchStudentAttendance();
+        setStudentAttendance(stuAtt);
+        setStaffAttendance(staffAtt);
         setClassWise(processedData);
         setStaffCount(staffCount);
         setStudentCount(studentCount);
@@ -106,9 +114,17 @@ const Dashboard = () => {
 
             <Space wrap>
               <h4>Teachers</h4>
-              <Progress type="dashboard" percent={75} />
+              <Progress
+                type="dashboard"
+                percent={((staffAttendance / staffCount) * 100).toFixed(2)}
+                gapDegree={30}
+              />
               <br></br> <h4>Students</h4>
-              <Progress type="dashboard" percent={20} gapDegree={30} />
+              <Progress
+                type="dashboard"
+                percent={((studentAttendance / studentCount) * 100).toFixed(2)}
+                gapDegree={30}
+              />
             </Space>
           </div>
         </div>
