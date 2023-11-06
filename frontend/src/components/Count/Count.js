@@ -1,38 +1,45 @@
 import axios from "axios";
 
-const processData = (studentData) => {
+export const processData = (studentData) => {
   const gradeCount = {};
 
   studentData.forEach((student) => {
     const { grade, gender } = student;
-    const gradeKey = `Class ${grade.toString().padStart(2, "0")}`;
+    const gradeKey = `${grade.toString().padStart(2, "0")}`;
     const genderKey = gender === "Female" ? "Girls" : "Boys";
 
     if (!gradeCount[gradeKey]) {
       gradeCount[gradeKey] = {
-        name: gradeKey,
+        Girls: 0,
+        Boys: 0,
       };
     }
 
-    if (!gradeCount[gradeKey][genderKey]) {
-      gradeCount[gradeKey][genderKey] = 1;
-    } else {
-      gradeCount[gradeKey][genderKey]++;
-    }
-
-    if (!gradeCount[gradeKey].students) {
-      gradeCount[gradeKey].students = 1;
-    } else {
-      gradeCount[gradeKey].students++;
-    }
+    gradeCount[gradeKey][genderKey]++;
   });
 
+  const classWiseData = [];
 
-  const classWiseData = Object.values(gradeCount);
+  Object.keys(gradeCount).forEach((gradeKey) => {
+    const { Girls, Boys } = gradeCount[gradeKey];
+
+    classWiseData.push({
+      name: "Girls",
+      grade: gradeKey,
+      students: Girls,
+    });
+
+    classWiseData.push({
+      name: "Boys",
+      grade: gradeKey,
+      students: Boys,
+    });
+  });
+
+  classWiseData.sort((a, b) => a.grade.localeCompare(b.grade));
 
   return classWiseData;
 };
-
 
 export const fetchStaffCount = async () => {
   try {
@@ -45,7 +52,6 @@ export const fetchStaffCount = async () => {
   }
 };
 
-
 export const fetchStudentCount = async () => {
   try {
     const response = await axios.get("/api/students");
@@ -56,5 +62,3 @@ export const fetchStudentCount = async () => {
     return 0;
   }
 };
-
-export { processData };

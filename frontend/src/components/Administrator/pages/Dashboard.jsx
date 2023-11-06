@@ -4,143 +4,46 @@ import { Column } from "@ant-design/plots";
 import { Progress, Space } from "antd";
 import { AiFillFacebook, AiFillYoutube } from "react-icons/ai";
 import "./Dashboard.css";
-import { fetchStaffCount, fetchStudentCount } from "../../Count/Count";
+import {
+  fetchStaffCount,
+  fetchStudentCount,
+  processData,
+} from "../../Count/Count";
+import { StudentData } from "../../Count/Data";
 
 const Dashboard = () => {
   const [staffCount, setStaffCount] = useState(0);
   const [studentCount, setStudentCount] = useState(0);
+  const [classWise, setClassWise] = useState([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const staffCount = await fetchStaffCount();
+        const studentCount = await fetchStudentCount();
+        const studentData = await StudentData();
+        const processedData = processData(studentData);
+        setClassWise(processedData);
+        setStaffCount(staffCount);
+        setStudentCount(studentCount);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchData();
   }, []);
-  const fetchData = async () => {
-    try {
-      const staffCount = await fetchStaffCount();
-      const studentCount = await fetchStudentCount();
-      setStaffCount(staffCount);
-      setStudentCount(studentCount);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
-  const data = [
-    {
-      name: "Girls",
-      Class: "01",
-      students: 18,
-    },
-    {
-      name: "Girls",
-      Class: "02",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "03",
-      students: 8,
-    },
-    {
-      name: "Girls",
-      Class: "04",
-      students: 13,
-    },
-    {
-      name: "Girls",
-      Class: "05",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "06",
-      students: 20,
-    },
-    {
-      name: "Girls",
-      Class: "07",
-      students: 18,
-    },
-    {
-      name: "Girls",
-      Class: "08",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "09",
-      students: 11,
-    },
-    {
-      name: "Girls",
-      Class: "10",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "11",
-      students: 25,
-    },
-    {
-      name: "Boys",
-      Class: "01",
-      students: 8,
-    },
-    {
-      name: "Boys",
-      Class: "02",
-      students: 14,
-    },
-    {
-      name: "Boys",
-      Class: "03",
-      students: 18,
-    },
-    {
-      name: "Boys",
-      Class: "04",
-      students: 10,
-    },
-    {
-      name: "Boys",
-      Class: "05",
-      students: 14,
-    },
-    {
-      name: "Boys",
-      Class: "06",
-      students: 15,
-    },
-    {
-      name: "Boys",
-      Class: "07",
-      students: 8,
-    },
-    {
-      name: "Boys",
-      Class: "08",
-      students: 16,
-    },
-    {
-      name: "Boys",
-      Class: "09",
-      students: 6,
-    },
-    {
-      name: "Boys",
-      Class: "10",
-      students: 15,
-    },
-    {
-      name: "Boys",
-      Class: "11",
-      students: 15,
-    },
-  ];
+  const data = classWise.map(({ name, grade, students }) => ({
+    name,
+    grade,
+    students,
+  }));
+
   const config = {
     data,
-    // classWiseData,
     isGroup: true,
-    xField: "Class",
+    xField: "grade",
     yField: "students",
     seriesField: "name",
 
@@ -210,27 +113,26 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="mt-4  custombar-width  ">
-    <h3 className="mb-5 title">No of Students in Each class</h3>
-    <div>
-      <Column {...config} />
-    </div>
-  </div>
-</div>
-<div className="mt-4 custombar-width  d-flex   flex-grow-1 gap-3 roudned-3">
-          {/* YouTube Followers Card */}
-          <div className="followers-card">
-            <AiFillYoutube className="icon youtube-icon" />
-            <h3>YouTube</h3>
-            <div className="followers-count">1000+ Followers</div>
-          </div> 
-          <div className="followers-card">
-            <AiFillFacebook className="icon facebook-icon" />
-            <h3>Facebook</h3>
-            <div className="followers-count">500+ Followers</div>
+          <h3 className="mb-5 title">No of Students in Each class</h3>
+          <div>
+            <Column {...config} />
           </div>
         </div>
+      </div>
+      <div className="mt-4 custombar-width  d-flex   flex-grow-1 gap-3 roudned-3">
+        {/* YouTube Followers Card */}
+        <div className="followers-card">
+          <AiFillYoutube className="icon youtube-icon" />
+          <h3>YouTube</h3>
+          <div className="followers-count">1000+ Followers</div>
         </div>
-    
+        <div className="followers-card">
+          <AiFillFacebook className="icon facebook-icon" />
+          <h3>Facebook</h3>
+          <div className="followers-count">500+ Followers</div>
+        </div>
+      </div>
+    </div>
   );
 };
 
