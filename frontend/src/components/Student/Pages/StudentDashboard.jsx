@@ -184,7 +184,7 @@ function StudentDashboard() {
 
           <div className="col-6">
             <h3 className="desc_stu">Total Attendance</h3>
-            <PieChart width={280} height={280}>
+            <PieChart width={300} height={280}>
               <Pie
                 dataKey="value"
                 data={data02}
