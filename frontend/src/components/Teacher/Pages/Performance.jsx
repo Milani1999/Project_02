@@ -186,7 +186,7 @@ const Performance = () => {
       </Row>
       <PieChartTable
         selectedYear={selectedYear}
-        setSelectedYear={setSelectedYear} // Pass the functions as props
+        setSelectedYear={setSelectedYear}
         selectedGrade={selectedGrade}
         setSelectedGrade={setSelectedGrade}
         selectedSubject={selectedSubject}
