@@ -160,7 +160,7 @@ function StudentDashboard() {
 
       <h2>Grade {grade}</h2>
       <div className="container">
-        <div className="row">
+        <div className="row" style={{width:"700px"}}>
           <div className="col-6">
             <h3 className="desc_stu">Total Students : {numOfClass}</h3>
             <PieChart width={280} height={280}>
