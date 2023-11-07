@@ -49,7 +49,7 @@ const TeacherMainLayout = () => {
   }
 
   return (
-    <Layout /* onContextMenu={(e) => e.preventDefault()} */>
+    <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
@@ -121,12 +121,24 @@ const TeacherMainLayout = () => {
                 },
               ],
             },
-
+            {
+              key: "notice",
+              icon: <AiOutlineFund className="fs-4" />,
+              label: "Notices",
+              children: [
             {
               key: "TNotices",
               icon: <FaClipboardList className="fs-4" />,
               label: "Notices",
             },
+            {
+              key: "SendNotices",
+              icon: <FaClipboardList className="fs-4" />,
+              label: "Send Notices",
+            },
+          
+        ],
+      },
             {
               key: "TCalendar",
               icon: <RiCalendarCheckFill className="fs-4" />,
