@@ -52,7 +52,7 @@ import LeavingCertificate from "./components/Administrator/pages/LeavingCertific
 import Payment from "./components/Student/Pages/Payment";
 import ResetPassword from "./components/signInFormComponent/ResetPassword";
 import ChangePassword from "./components/signInFormComponent/ChangePwd";
-
+import StudentDashboard from "./components/Student/Pages/StudentDashboard"
 
 function App() {
   return (
@@ -131,7 +131,7 @@ function App() {
               </Auth>
             }
           >
-
+            <Route index element={<StudentDashboard />} />
             <Route path="ProfilePage" element={<ProfilePage />} />
             <Route path="TimeTable" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
