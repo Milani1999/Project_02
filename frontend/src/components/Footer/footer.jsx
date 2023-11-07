@@ -1,27 +1,19 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEnvelope,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookF,
   faTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-import { library } from '@fortawesome/fontawesome-svg-core';
-import './footer.css';
-import Logo from '../../assets/ImageResources/universal.jpg';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import "./footer.css";
+import Logo from "../../assets/ImageResources/universal.jpg";
 import { Link } from "react-router-dom";
+
 library.add(faEnvelope, faPhone, faFacebookF, faTwitter, faYoutube);
 
 function Footer() {
-  const scrollToaboutus = () => {
-    const aboutUsSection = document.getElementById('about-us-section');
-    if (aboutUsSection) {
-      aboutUsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
   return (
     <footer className="footer">
       <div className="main-footer">
@@ -42,9 +34,9 @@ function Footer() {
                   proud that you decided to check us out, and we fervently hope
                   you will be pleased with what you see and read here. We would
                   be happy to clarify any further points you may have, and if
-                  you would like to give us a call on 0777810740 and come over to
-                  see the school for yourself, we will welcome you warmly to the
-                  Universal Family!! Enjoy your browsing of our pages!!
+                  you would like to give us a call on 0777810740 and come over
+                  to see the school for yourself, we will welcome you warmly to
+                  the Universal Family!! Enjoy your browsing of our pages!!
                 </div>
               </div>
             </div>
@@ -65,7 +57,7 @@ function Footer() {
                       <Link to="/Contact">Contact Us</Link>
                     </li>
                   </ul>
-                </div>
+                </div>
               </div>
             </div>
             <div className="col-xs-12 col-md-3">
@@ -122,8 +114,10 @@ function Footer() {
                 </h6>
                 <div className="textwidget">
                   <p>
-                    Universal International School,<br />
-                    339/, 51 Akkara 18 Rd,<br />
+                    Universal International School,
+                    <br />
+                    339/, 51 Akkara 18 Rd,
+                    <br />
                     Balangoda, Sri Lanka.
                   </p>
                   <br />
@@ -131,23 +125,35 @@ function Footer() {
                     Mobile: <FontAwesomeIcon icon={faPhone} /> 0777810740
                   </p>
                   <p>
-                    Web: <a href="http://www.uissrilanka.com/">www.uissrilanka.com</a>
+                    Web:{" "}
+                    <a href="http://www.uissrilanka.com/">
+                      www.uissrilanka.com
+                    </a>
                     <br />
-                    Email:{' '}
+                    Email:{" "}
                     <a href="mailto:info@uissrilanka.com">
                       <FontAwesomeIcon icon={faEnvelope} /> info@uissrilanka.com
                     </a>
                   </p>
                   <p>
-                    Follow us:{' '}
-                    <a  href="https://www.facebook.com/Universal-International-School-116576195107317/">
-                      <FontAwesomeIcon icon={faFacebookF} className="Fa-Icon-So" />
+                    Follow us:{" "}
+                    <a href="https://www.facebook.com/Universal-International-School-116576195107317/">
+                      <FontAwesomeIcon
+                        icon={faFacebookF}
+                        className="Fa-Icon-So"
+                      />
                     </a>
                     <a href="https://www.youtube.com/@universalschool1691">
-                      <FontAwesomeIcon icon={faYoutube} className="Fa-Icon-So" />
+                      <FontAwesomeIcon
+                        icon={faYoutube}
+                        className="Fa-Icon-So"
+                      />
                     </a>
                     <a href="https://twitter.com/i/flow/login?redirect_after_login=%2F">
-                      <FontAwesomeIcon icon={faTwitter} className="Fa-Icon-So" />
+                      <FontAwesomeIcon
+                        icon={faTwitter}
+                        className="Fa-Icon-So"
+                      />
                     </a>
                   </p>
                 </div>
