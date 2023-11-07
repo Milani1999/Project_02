@@ -160,15 +160,15 @@ function StudentDashboard() {
 
       <h2>Grade {grade}</h2>
       <div className="container">
-        <div className="row" style={{width:"700px"}}>
+        <div className="row" style={{ width: "700px" }}>
           <div className="col-6">
             <h3 className="desc_stu">Total Students : {numOfClass}</h3>
             <PieChart width={280} height={280}>
               <Pie
                 dataKey="value"
                 data={data01}
-                cx={120}
-                cy={120}
+                cx={140}
+                cy={140}
                 outerRadius={80}
                 label={(entry) => `${entry.name}: ${entry.value}`}
               >
@@ -188,8 +188,8 @@ function StudentDashboard() {
               <Pie
                 dataKey="value"
                 data={data02}
-                cx={120}
-                cy={120}
+                cx={140}
+                cy={140}
                 outerRadius={80}
                 label={(entry) => `${entry.name}: ${entry.value}`}
               >
