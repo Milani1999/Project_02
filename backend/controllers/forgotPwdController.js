@@ -16,40 +16,41 @@ const forgotPassword = asyncHandler(async (req, res) => {
   }
 
   try {
-    const user =
-      (await StaffModel.findOne({ email })) ||
-      StudentModel.findOne({ email }) ||
-      AdminModel.findOne({ email });
+    const student = await StudentModel.findOne({ email });
+    const staff = await StaffModel.findOne({ email });
+    const admin = await AdminModel.findOne({ email });
+
+    const user = student || staff || admin;
+
     if (!user) {
       return res
         .status(404)
         .json({ status: "error", message: "User not found" });
+    } else {
+      const token = generateToken(user._id);
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL,
+        to: user.email,
+        subject: "Reset Password Link",
+        text: `http://localhost:3000/reset-password/${user._id}/${token}`,
+      };
+
+      await transporter.sendMail(mailOptions);
+      return res.status(200).json({
+        status: "success",
+        message: "Reset password link sent successfully",
+      });
     }
-
-    const token = generateToken(user._id);
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL,
-      to: user.email,
-      subject: "Reset Password Link",
-      text: `http://localhost:3000/reset-password/${user._id}/${token}`,
-    };
-
-    await transporter.sendMail(mailOptions);
-    return res.status(200).json({
-      status: "success",
-      message: "Reset password link sent successfully",
-    });
   } catch (error) {
-    console.error(error);
     return res
       .status(500)
       .json({ status: "error", message: "Internal server error" });
@@ -69,18 +70,23 @@ const resetPassword = async (req, res) => {
     const hash = await bcrypt.hash(password, 10);
 
     let user = await AdminModel.findByIdAndUpdate(id, { password: hash });
-    if (!user) {
-      user_student = await StudentModel.findByIdAndUpdate(id, { password: hash });
-    }
-    if (!user_student) {
-      user = await StaffModel.findByIdAndUpdate(id, { password: hash });
+    if (user) {
+      return res.send({ message: "Password Changed Successfully" });
     }
 
-    if (!user) {
-      return res.json({ message: "User not found" });
+    let user_student = await StudentModel.findByIdAndUpdate(id, {
+      password: hash,
+    });
+    if (user_student) {
+      return res.send({ message: "Password Changed Successfully" });
     }
 
-    return res.send({ message: "Success" });
+    user = await StaffModel.findByIdAndUpdate(id, { password: hash });
+    if (user) {
+      return res.send({ message: "Password Changed Successfully" });
+    }
+
+    return res.json({ message: "User not found" });
   } catch (err) {
     return res.json({ message: "Error with Reset Link" });
   }

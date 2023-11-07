@@ -54,8 +54,8 @@ export default function Events() {
         <h1 className="h1-heading">News and Events</h1>
         <Grid container spacing={2}>
           {visibleNews.map((news, index) => (
-            <Grid item xs={6} md={4} lg={3} key={index}>
-              <Item>
+            <Grid item xs={12} s={4} md={4} lg={3} key={index}>
+              <Item className="item-events">
                 <NewsCard
                   ImgSrc={news.image}
                   ImgAlt={news.title}

@@ -3,7 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
   AiOutlineUser,
-  AiOutlineFund,
+  // AiOutlineFund,
 } from "react-icons/ai";
 import {
   RiCalendarCheckFill,

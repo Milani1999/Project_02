@@ -58,7 +58,7 @@ function Relief({ fetchTimetableData }) {
             <LoadingSpinner />
           </div>
         ) : (
-          <button className="btn btn-success" onClick={handleRelief}>
+          <button className="btn btn-success" id="relief-btn" onClick={handleRelief}>
             Allocate Relief
           </button>
         )}
@@ -69,7 +69,7 @@ function Relief({ fetchTimetableData }) {
             <LoadingSpinner />
           </div>
         ) : (
-          <button className="btn btn-success" onClick={handleReset}>
+          <button className="btn btn-danger" id="reset-btn" onClick={handleReset}>
             Reset
           </button>
         )}

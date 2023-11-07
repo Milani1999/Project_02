@@ -58,3 +58,11 @@
   text-align: center;
   border: 2px solid green;
 }
+
+@media screen and (max-width: 540px) {
+  .eventComponent {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+  }
+}

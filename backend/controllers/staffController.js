@@ -48,38 +48,40 @@ const createStaff = asyncHandler(async (req, res) => {
   }
 
   const employeeIDExists = await Staff.findOne({ employee_id });
-  if (employeeIDExists) {
-    res.status(400);
-    throw new Error("Staff employee ID already exists");
-  }
 
   const emailExists = await Staff.findOne({ email });
 
-  if (emailExists) {
+  if (employeeIDExists) {
+    res.status(400);
+    throw new Error("Staff employee ID already exists");
+  } else if (emailExists) {
     res.status(400);
     throw new Error("Email already exists");
+  } else if (phone.length !== 10) {
+    res.status(400);
+    throw new Error("Phone number should contain only 10 digits");
+  } else {
+    const staff = new Staff({
+      fullname,
+      first_name,
+      last_name,
+      address,
+      dateOfBirth,
+      phone,
+      gender,
+      picture,
+      password,
+      role,
+      employee_id,
+      email,
+      epf_No,
+      subjects_taught,
+      // assigned_classes,
+    });
+
+    const createdStaff = await staff.save();
+    res.status(201).json(createdStaff);
   }
-
-  const staff = new Staff({
-    fullname,
-    first_name,
-    last_name,
-    address,
-    dateOfBirth,
-    phone,
-    gender,
-    picture,
-    password,
-    role,
-    employee_id,
-    email,
-    epf_No,
-    subjects_taught,
-    // assigned_classes,
-  });
-
-  const createdStaff = await staff.save();
-  res.status(201).json(createdStaff);
 });
 
 const getStaffById = asyncHandler(async (req, res) => {
@@ -130,8 +132,29 @@ const updateStaff = asyncHandler(async (req, res) => {
     staff.subjects_taught = subjects_taught;
     // staff.assigned_classes = assigned_classes;
 
-    const updateStaff = await staff.save();
-    res.json(updateStaff);
+    const employeeIDExists = await Staff.findOne({
+      employee_id: { $regex: new RegExp(`^${employee_id}$`, "i") },
+      _id: { $ne: staff },
+    });
+
+    const emailExists = await Staff.findOne({
+      email: { $regex: new RegExp(`^${email}$`, "i") },
+      _id: { $ne: staff },
+    });
+
+    if (employeeIDExists) {
+      res.status(400);
+      throw new Error("Staff employee ID already exists");
+    } else if (emailExists) {
+      res.status(400);
+      throw new Error("Email already exists");
+    } else if (phone.length !== 10) {
+      res.status(400);
+      throw new Error("Phone number should contain only 10 digits");
+    } else {
+      const updateStaff = await staff.save();
+      res.json(updateStaff);
+    }
   } else {
     res.status(404);
     throw new Error("Staff not found");

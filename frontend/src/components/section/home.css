@@ -106,7 +106,8 @@
   }
 
   .HomeComponent .img_carousel {
-    height: 300px;
+    margin-top: 80px;
+    height: 200px;
   }
 
   .HomeComponent .h1-heading {
@@ -121,6 +122,6 @@
   }
 
   .HomeComponent .btn{
-    margin-top: 0;
+    margin-top: 20px;
   }
 }

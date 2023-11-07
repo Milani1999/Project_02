@@ -40,6 +40,9 @@ function AddStaff({ fetchStaffData }) {
     setFormData((prevFormData) => ({ ...prevFormData, [name]: date }));
   };
 
+  const cloudinary_url = process.env.REACT_APP_CLOUDINARY_URL;
+  const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+
   const postDetails = (pics) => {
     if (
       pics ===
@@ -53,8 +56,8 @@ function AddStaff({ fetchStaffData }) {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "edutrack");
-      data.append("cloud_name", "dprnxaqxi");
-      fetch("https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload", {
+      data.append("cloud_name", cloud_name);
+      fetch(cloudinary_url, {
         method: "post",
         body: data,
       })
