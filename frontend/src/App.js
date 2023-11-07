@@ -53,6 +53,7 @@ import Payment from "./components/Student/Pages/Payment";
 import ResetPassword from "./components/signInFormComponent/ResetPassword";
 import ChangePassword from "./components/signInFormComponent/ChangePwd";
 
+
 function App() {
   return (
     <Router>
@@ -130,7 +131,7 @@ function App() {
               </Auth>
             }
           >
-            <Route index element={<Dashboard />} />
+
             <Route path="ProfilePage" element={<ProfilePage />} />
             <Route path="TimeTable" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />

@@ -15,7 +15,7 @@ const noticeSchema = new mongoose.Schema({
     required: true,
   },
   file: {
-    type: String, //store the path to the uploaded file on the server
+    type: String, 
   },
   createdAt: {
     type: Date,

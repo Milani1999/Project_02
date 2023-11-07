@@ -12,10 +12,16 @@ import {
 import { library } from '@fortawesome/fontawesome-svg-core';
 import './footer.css';
 import Logo from '../../assets/ImageResources/universal.jpg';
-
+import { Link } from "react-router-dom";
 library.add(faEnvelope, faPhone, faFacebookF, faTwitter, faYoutube);
 
 function Footer() {
+  const scrollToaboutus = () => {
+    const aboutUsSection = document.getElementById('about-us-section');
+    if (aboutUsSection) {
+      aboutUsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <footer className="footer">
       <div className="main-footer">
@@ -50,16 +56,16 @@ function Footer() {
                 <div className="menu-footer-menu-container">
                   <ul id="menu-footer-menu" className="menu">
                     <li id="menu-item-menu" className="menu-item">
-                      <a href="/section/about us">About us</a>
+                      <Link to="/About">About us</Link>
                     </li>
                     <li id="menu-item-menu" className="menu-item">
-                      <a href="Our school">Our School</a>
+                      <Link to="/School">Our School</Link>
                     </li>
                     <li id="menu-item-menu" className="menu-item">
-                      <a href="Contact us">Contact Us</a>
+                      <Link to="/Contact">Contact Us</Link>
                     </li>
                   </ul>
-                </div>
+                </div>
               </div>
             </div>
             <div className="col-xs-12 col-md-3">
