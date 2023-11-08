@@ -9,8 +9,9 @@ router.post("/create", upload.single("file"), noticesController.createNotice);
 
 
 
-// Route to get teacher notices
+
 router.get("/get", noticesController.getTeacherNotices);
 router.get("/sent", noticesController.getSentNotices);
 router.get("/studentNotice", noticesController.getStudentNotices);
+router.delete("/deletenotices/:id", noticesController.deleteSentNotice);
 module.exports = router;

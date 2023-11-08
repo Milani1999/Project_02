@@ -3,7 +3,6 @@ import axios from "axios";
 import { Modal } from "antd";
 import "./TNotices.css";
 import { FcAbout, FcComments, FcAdvertising } from "react-icons/fc";
-
 const TeacherNotices = () => {
   const [notices, setNotices] = useState([]);
   const [selectedNotice, setSelectedNotice] = useState(null);
@@ -20,12 +19,10 @@ const TeacherNotices = () => {
     try {
       const response = await axios.get("/api/notices/get");
       console.log(response.data);
-
-      // Sort notices by date 
       const sortedNotices = response.data.sort((a, b) => {
-        const dateA = new Date(a.createdAt);
-        const dateB = new Date(b.createdAt);
-        return dateB - dateA;
+        if (a.isNew && !b.isNew) return -1; // Sort new notices to the top
+        if (!a.isNew && b.isNew) return 1; // Sort old notices to the bottom
+        return 0;
       });
 
       setNotices(sortedNotices);
@@ -35,7 +32,6 @@ const TeacherNotices = () => {
   };
 
   const handleNoticeClick = (notice) => {
-
     setSelectedNotice(notice);
   };
 
@@ -45,7 +41,8 @@ const TeacherNotices = () => {
 
   const handleScroll = () => {
     const scrollPercentage =
-      (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
+      100;
 
     const newNotices = document.querySelectorAll(".notice-card.new-notice");
     newNotices.forEach((notice) => {
@@ -53,7 +50,6 @@ const TeacherNotices = () => {
       notice.style.backgroundColor = `rgba(214, 144, 144, ${opacity})`;
     });
   };
-
   return (
     <div>
       <FcAdvertising className="file-adv" />
@@ -62,7 +58,7 @@ const TeacherNotices = () => {
         {notices.map((notice) => (
           <div
             key={notice._id}
-            className={`notice-card ${notice.unread ? "unread" : ""} ${
+            className={`notice-card ${notice.isNew ? "new-notice" : ""} ${
               selectedNotice === notice ? "selected" : ""
             }`}
             onClick={() => handleNoticeClick(notice)}
@@ -75,9 +71,7 @@ const TeacherNotices = () => {
               )}
               <h2>{notice.title}</h2>
             </div>
-            {notice.unread && (
-              <div className="unread-indicator">Unread</div>
-            )}
+
             <p>{notice.message}</p>
             <p className="sent-date">
               Sent on: {new Date(notice.createdAt).toLocaleDateString()}
