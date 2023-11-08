@@ -1,155 +1,307 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import html2pdf from "html2pdf.js";
+import "./LeavingCertificate.css";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Table, Button } from "react-bootstrap";
-import Popup from "reactjs-popup";
 
 function LeavingCertificate() {
-  const [students, setStudents] = useState([]);
-  const [selectedStudent, setSelectedStudent] = useState(null);
-  const [showViewPopup, setShowViewPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchStudents();
-  }, []);
+  const location = useLocation();
 
-  const fetchStudents = async () => {
+  const selectedStudent = location.state?.selectedStudent;
+  const pdfRef = useRef();
+
+  const downloadPDF = () => {
+    setLoading(true);
+    const input = pdfRef.current;
+    const options = {
+      filename: "LeavingCertificate.pdf",
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 10 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+    html2pdf(input, options);
+    setLoading(false);
+  };
+
+  const [editStudent, setEditStudent] = useState(selectedStudent);
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.get("/api/oldstudents");
-      setStudents(response.data);
+      const { _id, ...updatedStudent } = editStudent;
+
+      await axios.put(
+        `/api/oldStudents/${selectedStudent._id}`,
+        updatedStudent
+      );
+      alert("Leaving certificate updated successfully.");
+    
     } catch (error) {
-      console.error(error);
+      alert(error.response.data.message);
     }
   };
-
-  const handleView = (student) => {
-    setSelectedStudent(student);
-    setShowViewPopup(true);
-  };
-
-  const handleCloseViewPopup = () => {
-    setSelectedStudent(null);
-    setShowViewPopup(false);
-  };
-
-  let oldStudents = [];
-
+  let view_std = [];
   if (selectedStudent) {
-    oldStudents = [
-      { label: "Admission No", value: selectedStudent.admission_no },
-      { label: "Full Name", value: selectedStudent.fullname },
-      { label: "First Name", value: selectedStudent.first_name },
-      { label: "Last Name", value: selectedStudent.last_name },
-      { label: "Address", value: selectedStudent.address },
+    view_std = [
+      {
+        label: "Date of Admission",
+        type: "date",
+        name: "admission_year",
+        value: editStudent.admission_year.slice(0, 10),
+      },
+      {
+        label: "Admission No",
+        type: "text",
+        name: "admission_no",
+        value: editStudent.admission_no,
+      },
+      {
+        label: "Name of Student",
+        type: "text",
+        name: "fullname",
+        value: editStudent.fullname,
+      },
       {
         label: "Date of Birth",
-        value: new Date(selectedStudent.dateOfBirth).toLocaleDateString(),
+        type: "date",
+        name: "dateOfBirth",
+        value: editStudent.dateOfBirth.slice(0, 10),
       },
-      { label: "Phone", value: selectedStudent.phone },
-      { label: "Gender", value: selectedStudent.gender },
-      { label: "Parent Name", value: selectedStudent.parent_Name },
-      { label: "Parent Occupation", value: selectedStudent.parent_occupation },
       {
-        label: "Admission Date",
-        value: new Date(selectedStudent.admission_year).toLocaleDateString(),
+        label: "Name of Parent / Guardian",
+        type: "text",
+        name: "parent_Name",
+        value: editStudent.parent_Name,
       },
-      { label: "Grade", value: selectedStudent.c_grade },
-      { label: "Extra Activities", value: selectedStudent.extra_activities },
+      {
+        label: "Address",
+        type: "text",
+        name: "address",
+        value: editStudent.address,
+      },
+      {
+        label: "Medium of Instruction",
+        type: "text",
+        name: "medium",
+        value: editStudent.medium,
+      },
+      {
+        label: "Last Grade Promoted To",
+        type: "text",
+        name: "c_grade",
+        value: editStudent.c_grade,
+      },
+      {
+        label: "Subjects Followed",
+        type: "text",
+        name: "subjects_followed",
+        value: editStudent.subjects_followed,
+      },
+      {
+        label: "Conduct",
+        type: "text",
+        name: "conduct",
+        value: editStudent.conduct,
+      },
+      {
+        label: "Sports & Co-Curricular Activities",
+        type: "text",
+        name: "extra_activities",
+        value: editStudent.extra_activities,
+      },
+      {
+        label: "Special aptitudes",
+        type: "text",
+        value: editStudent.special_aptitudes,
+        name: "special_aptitudes",
+      },
+      {
+        label: "Remark",
+        type: "text",
+        name: "remark",
+        value: editStudent.remark,
+      },
+      {
+        label: "Reason for Leaving",
+        name: "leaving_reason",
+        value: editStudent.leaving_reason,
+      },
+      {
+        label: "Date of Leaving",
+        type: "date",
+        name: "leaving_date",
+        value: editStudent.leaving_date.slice(0, 10),
+      },
     ];
   }
-  return (
-    <div>
-      <Table striped hover className="mt-5" responsive="sm">
-        <thead>
-          <tr>
-            <th colSpan={6}></th>
-            <th style={{ textAlign: "center", width: "100px" }}></th>
-          </tr>
-          <tr className="colname">
-            <th style={{ textAlign: "center" }}>Picture</th>
-            <th style={{ textAlign: "center" }}>Admission No</th>
-            <th style={{ textAlign: "center" }}>Admission Date</th>
-            <th style={{ textAlign: "center" }}>Full Name</th>
-            <th style={{ textAlign: "center" }}>Address</th>
-            <th style={{ textAlign: "center" }}>Phone No</th>
-            <th style={{ textAlign: "center" }}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((student) => (
-            <tr key={student._id}>
-              <td style={{ verticalAlign: "middle" }}>
-                <img
-                  src={student.picture}
-                  alt="Profile"
-                  width="100"
-                  height="100"
-                />
-              </td>
-              <td style={{ verticalAlign: "middle" }}>
-                {student.admission_no}
-              </td>
-              <td style={{ verticalAlign: "middle" }}>
-                {new Date(student.admission_year).toLocaleDateString()}
-              </td>
-              <td style={{ verticalAlign: "middle" }}>{student.fullname}</td>
-              <td style={{ verticalAlign: "middle" }}>{student.address}</td>
-              <td style={{ verticalAlign: "middle" }}>{student.phone}</td>
-              <td style={{ verticalAlign: "middle" }}>
-                <Button
-                  variant="secondary"
-                  onClick={() => handleView(student)}
-                  className="m-1"
-                  style={{ width: "100px" }}
-                >
-                  View
-                </Button>
-                <Button variant="primary">Leaving<br/>Certificate</Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+  const navigate = useNavigate();
+  const onClose = () => {
+    navigate("/administrator/StudentLeaving");
+  };
 
-      <Popup open={showViewPopup} onClose={handleCloseViewPopup}>
-        <div className="popup-background">
-          {selectedStudent && (
-            <div className="popup-container-view">
-              <table
-                style={{ textAlign: "right" }}
-                className="viewTableStudents"
-              >
-                <tr>
-                  <td colSpan={2} style={{ textAlign: "center" }}>
-                    <img
-                      src={selectedStudent.picture}
-                      alt="Profile"
-                      width="100"
-                      height="100"
-                    />
-                  </td>
-                </tr>
-                {oldStudents.map((row, index) => (
+  useEffect(() => {}, [editStudent]);
+
+  return (
+    <div className="leaving-certificate">
+      <div className="pdf1">
+        <div className="pdf1_content">
+          <div className="form">
+            <table>
+              <tbody>
+                {view_std.map((std, index) => (
                   <tr key={index}>
-                    <td>{row.label}</td>
-                    <td>{row.value}</td>
+                    <td>
+                      {" "}
+                      <label className="pdf-label">{std.label}</label>
+                    </td>
+                    <td>
+                      {" "}
+                      <input
+                        type={std.type}
+                        className="pdf-input"
+                        name={std.name}
+                        value={std.value}
+                        onChange={(e) =>
+                          setEditStudent({
+                            ...editStudent,
+                            [std.name]: e.target.value,
+                          })
+                        }
+                      />
+                    </td>
                   </tr>
                 ))}
-                <tr>
-                  <td colSpan={2} style={{ textAlign: "center" }}>
-                    <Button
-                      variant="secondary"
-                      onClick={handleCloseViewPopup}
-                      className="mt-2"
-                    >
-                      Close
-                    </Button>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          )}
+              </tbody>
+            </table>
+          </div>
+          <div className="pdf1-1">
+            <button
+              className="btn btn-secondary rounded-0"
+              onClick={handleEditSubmit}
+            >
+              Save
+            </button>
+            <button className="btn btn-success rounded-0" onClick={downloadPDF}>
+              Generate PDF
+            </button>
+            <button className="btn btn-danger rounded-0" onClick={onClose}>
+              Close
+            </button>
+          </div>
         </div>
-      </Popup>
+      </div>
+      <div className="pdf2">
+        <div ref={pdfRef}>
+          <div className="page">
+            <div className="subpage">
+              <h2>SCHOOL LEAVING CERTIFICATE</h2>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Date of Admission</td>
+                    <td>
+                      {" "}
+                      {new Date(
+                        selectedStudent.admission_year
+                      ).toLocaleDateString()}
+                    </td>
+                    <td style={{ fontWeight: "bold", paddingRight: "10px" }}>
+                      ADMISSION NO
+                    </td>
+                    <td>{selectedStudent.admission_no}</td>
+                  </tr>
+                  <tr>
+                    <td>Name of Student</td>
+                    <td>{selectedStudent.fullname}</td>
+                  </tr>
+                  <tr>
+                    <td>Date of Birth</td>
+                    <td>
+                      {new Date(
+                        selectedStudent.dateOfBirth
+                      ).toLocaleDateString()}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Name of Parent / Guardian</td>
+                    <td>{selectedStudent.parent_Name}</td>
+                  </tr>
+                  <tr>
+                    <td>Address</td>
+                    <td>{selectedStudent.address}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Medium of Instruction</td>
+                    <td>English</td>
+                  </tr>
+                  <tr>
+                    <td>Last Grade Promoted To</td>
+                    <td>{selectedStudent.c_grade}</td>
+                  </tr>
+                  <tr>
+                    <td>Subjects Followed</td>
+                    <td>{selectedStudent.subjects_followed}</td>
+                  </tr>
+                  <tr>
+                    <td>Conduct</td>
+                    <td>{selectedStudent.conduct}</td>
+                  </tr>
+                  <tr>
+                    <td>Sports & Co-Curricular Activities</td>
+                    <td>{selectedStudent.extra_activities}</td>
+                  </tr>
+                  <tr>
+                    <td>Special Aptitudes</td>
+                    <td>{selectedStudent.special_aptitudes}</td>
+                  </tr>
+                  <tr>
+                    <td>Remarks</td>
+                    <td>{selectedStudent.remark}</td>
+                  </tr>
+                  <tr>
+                    <td>Reason for Leaving</td>
+                    <td>{selectedStudent.leaving_reason}</td>
+                  </tr>
+                  <tr>
+                    <td>Date of Leaving</td>
+                    <td>
+                      {new Date(
+                        selectedStudent.leaving_date
+                      ).toLocaleDateString()}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div className="pdf-f">
+                <table className="pdf-footer">
+                  <tbody>
+                    <tr>
+                      <td className="left-footer">_______________________</td>
+                      <td className="right-footer">_______________________</td>
+                    </tr>
+                    <tr>
+                      <td className="left-footer">Date</td>
+                      <td className="right-footer">Administrator</td>
+                    </tr>
+                    <tr>
+                      <td colSpan="2" className="hr-container">
+                        <hr className="hr-fixed" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

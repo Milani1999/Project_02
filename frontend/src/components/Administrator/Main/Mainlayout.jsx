@@ -175,9 +175,22 @@ const MainLayout = () => {
               label: "Support",
             },
             {
-              key: "LeavingCertificate",
+              key: "leaving",
               icon: <RiHistoryLine className="fs-4" />,
-              label: "Leaving",
+              label: "Alumni",
+              children: [
+                {
+                  key: "StaffLeaving",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Staff",
+                },
+
+                {
+                  key: "StudentLeaving",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Student",
+                },
+              ],
             },
           ]}
         />
@@ -204,7 +217,6 @@ const MainLayout = () => {
               <RiMoonLine className="fs-4" /> */}
               {/* <DarkMode /> */}
             </div>
-            
             <div className="position-relative">
               {contextHolder}
               <Button type="primary" onClick={openNotification}>
