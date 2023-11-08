@@ -1,0 +1,115 @@
+.leaving-certificate {
+  display: flex;
+}
+
+.pdf1 {
+  flex: 35%;
+  margin: 2% 2%;
+}
+
+.pdf1-1 {
+  text-align: center;
+}
+
+.pdf1 button {
+  width: 110px;
+  margin: 35px 10px;
+  padding: 5px;
+}
+
+.pdf1_content {
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  width: 30%;
+}
+
+.pdf2 {
+  flex: 65%;
+  background-color: rgb(75, 78, 78);
+}
+
+.subpage {
+  height: 295mm;
+  width: 220mm;
+  background-color: white;
+  font-family: "Times New Roman", Times, serif;
+  padding-left: 2cm;
+  padding-right: 2cm;
+  position: relative;
+}
+
+.subpage h2 {
+  padding-top: 54mm;
+  padding-bottom: 7mm;
+  text-align: center;
+  font-size: 16;
+}
+
+.subpage hr {
+  border: 2px solid rgb(0, 0, 0);
+}
+
+.subpage td {
+  font-family: "Times New Roman", Times, serif;
+  padding-bottom: 5mm;
+}
+
+.page {
+  background-color: rgb(75, 78, 78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@page {
+  size: A4;
+}
+.subpage tr td:first-child {
+  font-weight: bold;
+  width: 220px;
+}
+.pdf-footer {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.pdf-footer td {
+  width: 50%;
+  text-align: center;
+}
+
+.hr-container {
+  position: relative;
+}
+
+.hr-fixed {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.right-footer {
+  align-items: right;
+  width: 50%;
+}
+
+.pdf-f {
+  position: absolute;
+  bottom: 0;
+  width: 80%;
+}
+
+.pdf-f td {
+  font-weight: bold;
+}
+
+.pdf-input {
+  padding: 3px 3px;
+  margin: 3px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
