@@ -64,6 +64,34 @@ const oldStudentSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  conduct: {
+    type: String,
+    default: "-",
+  },
+  special_aptitudes: {
+    type: String,
+    default: "-",
+  },
+  remark: {
+    type: String,
+    default: "-",
+  },
+  subjects_followed: {
+    type: String,
+    default: "-",
+  },
+  leaving_reason: {
+    type: String,
+    default: "-",
+  },
+  leaving_date: {
+    type: Date,
+    default: Date.now,
+  },
+  medium: {
+    type: String,
+    default: "English",
+  },
 });
 
 const OldStudent = mongoose.model("OldStudent", oldStudentSchema);
