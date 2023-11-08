@@ -9,9 +9,9 @@ import {
   Modal,
   Upload,
 } from "antd";
-import { InboxOutlined, DeleteOutlined } from "@ant-design/icons";
+import { InboxOutlined } from "@ant-design/icons";
 import "./Notices.css";
-import SentNotices from "./SentNotices";
+import ViewNotices from "./ViewNotices";
 
 const { Option } = Select;
 const { Dragger } = Upload;
@@ -117,7 +117,7 @@ const Notices = () => {
 
   return (
     <div className="notice-page">
-        <SentNotices
+        < ViewNotices
         visible={isSentNoticesPageVisible}
         sentNotices={sentNotices}
         onClose={hideSentNoticesPage}

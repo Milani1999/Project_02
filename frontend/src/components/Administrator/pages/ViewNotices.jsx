@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Tabs, Popconfirm, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import "./SentNotices.css";
+import "./ViewNotices.css";
 const { TabPane } = Tabs;
 
-const SentNotices = () => {
+const ViewNotices = () => {
   const [isSentNoticesVisible, setIsSentNoticesVisible] = useState(false);
   const [selectedTab, setSelectedTab] = useState("teacher");
   const [teacherNotices, setTeacherNotices] = useState([]);
@@ -117,4 +117,4 @@ const SentNotices = () => {
   );
 };
 
-export default SentNotices;
+export default ViewNotices;
