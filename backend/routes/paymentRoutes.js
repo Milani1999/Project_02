@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const {
-  initiatePayment,
-  confirmPayment,
-  getPaymentHistory
-} = require('../controllers/paymentController');
+const hashGenerator = require('../config/hashGenerator');
 
-// Route to initiate a payment
-router.post('/initiate', /* protect, */ initiatePayment);
-
-// Route to confirm a payment
-router.post('/confirm', /* protect, */ confirmPayment);
-
-router.get('/history/:studentId', /* protect, */ getPaymentHistory);
+router.post('/generate-hash', (req, res) => {
+  const { merchantId, orderId, payHereAmount, currency } = req.body;
+  // Call the hash generation function and send the hash back to the client
+  const hash = hashGenerator.generateHash(merchantId, orderId, payHereAmount, currency);
+  res.json({ hash });
+});
 
 module.exports = router;

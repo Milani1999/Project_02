@@ -35,6 +35,7 @@
     "loader-utils": "^3.2.1",
     "moment": "^2.29.4",
     "nth-check": "^2.1.1",
+    "payhere-js-sdk": "^1.0.2",
     "postcss": "^8.4.31",
     "qrcode": "^1.5.3",
     "react": "^18.2.0",
