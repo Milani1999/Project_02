@@ -5,15 +5,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function LeavingCertificate() {
-  const [loading, setLoading] = useState(false);
-
   const location = useLocation();
 
   const selectedStudent = location.state?.selectedStudent;
   const pdfRef = useRef();
 
   const downloadPDF = () => {
-    setLoading(true);
     const input = pdfRef.current;
     const options = {
       filename: "LeavingCertificate.pdf",
@@ -22,7 +19,6 @@ function LeavingCertificate() {
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
     html2pdf(input, options);
-    setLoading(false);
   };
 
   const [editStudent, setEditStudent] = useState(selectedStudent);
@@ -37,7 +33,6 @@ function LeavingCertificate() {
         updatedStudent
       );
       alert("Leaving certificate updated successfully.");
-    
     } catch (error) {
       alert(error.response.data.message);
     }

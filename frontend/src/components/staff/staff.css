@@ -20,19 +20,18 @@
   width: 900px;
 }
 
-.popup-container-delete{
+.popup-container-delete {
   background-color: white;
   border: 2px solid green;
   padding: 30px;
   text-align: center;
 }
 
-.popup-container-view-staff{
+.popup-container-view-staff {
   background-color: white;
   border: 2px solid green;
-  padding: 30px;
-  text-align: center;
-  width: 400px;
+  width: 800px;
+  padding: 25px;
 }
 
 img {
@@ -66,6 +65,54 @@ img {
   text-align: center;
 }
 
-Form{
+Form {
   text-align: left;
+}
+
+.viewTableStaff td {
+  text-align: left;
+  padding-left: 10px;
+  padding-bottom: 8px;
+}
+
+.viewTableStaff h3 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.viewTableStaff .QR {
+  padding-top: 30px;
+}
+
+.button-close-view-staff {
+  background-color: white;
+  border: none;
+  color: maroon;
+  font-weight: bolder;
+  font-size: 30px;
+  float: right;
+}
+
+.button-close-view-staff:hover {
+  color: rgb(30, 65, 3);
+}
+
+.viewTableStaff {
+  width: 100%;
+  height: 100%;
+}
+
+.viewTableStaff .col-7 {
+  text-align: center;
+  background-color: #cff1d4;
+  padding: 15px 0px;
+  border-radius: 5%;
+}
+
+.viewTableStaff .col-7 .row1 {
+  margin-left: 80px;
+}
+
+.viewTableStaff .col-5 .row2 {
+  margin-left: 50px;
 }
