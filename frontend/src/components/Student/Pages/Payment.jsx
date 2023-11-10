@@ -14,10 +14,6 @@ const Payment = () => {
     Array.from({ length: new Date().getMonth() + 1 }, (_, i) => new Date(0, i).toLocaleString('en-US', { month: 'long' }))
   );
 
-  const userInfo = localStorage.getItem("userInfo");
-  const user = JSON.parse(userInfo);
-  const studentId = user?.admissionNo;
-
   useEffect(() => {
     const fetchPaymentRecords = async () => {
       try {
@@ -45,25 +41,23 @@ const Payment = () => {
     };
 
     fetchPaymentRecords();
-  }, [selectedYear]);
-
+  }, [selectedYear, monthsToDisplay]);
+  
   const makePayment = async (selectedMonth) => {
-    const checkoutDetails = {
-      studentId: "123456", // Replace with the logged-in student's ID
-      amount: '5000',
-      year: selectedYear,
-      month: selectedMonth,
-    };
-
+    const userInfo = localStorage.getItem("userInfo");
+    const user = JSON.parse(userInfo);
+    const studentId = user?.admissionNo;
+  
+    const query = `/api/payment/make-payment?admissionNo=${studentId}&amount=5000&year=${selectedYear}&month=${selectedMonth}`;
+  
     try {
-      const response = await fetch("/api/payment/make-payment", {
+      const response = await fetch(query, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(checkoutDetails),
       });
-
+  
       if (response.ok) {
         // Handle success, maybe show a modal or redirect to PayHere checkout
         console.log("Payment initiation successful");
@@ -76,18 +70,28 @@ const Payment = () => {
     }
   };
 
-  const handleYearChange = async (event) => {
-    const newSelectedYear = event.target.value;
-    setSelectedYear(newSelectedYear);
-
-    // Generate an array for the months to display based on the selected year
-    const newMonthsToDisplay = Array.from(
-      { length: newSelectedYear === new Date().getFullYear() ? new Date().getMonth() + 1 : 12 },
-      (_, i) => new Date(0, i).toLocaleString('en-US', { month: 'long' })
-    );
-
-    // Update the monthsToDisplay state
-    setMonthsToDisplay(newMonthsToDisplay);
+    let newMonthsToDisplay;
+    const handleYearChange = async (event) => {
+      const newSelectedYear = event.target.value;
+      setSelectedYear(newSelectedYear);
+  
+      // Generate an array for the months to display based on the selected year
+      const currentYear = new Date().getFullYear();
+      const currentMonth = currentYear === newSelectedYear ? new Date().getMonth() + 1 : 12;
+      if (newSelectedYear==currentYear){
+        newMonthsToDisplay = Array.from(
+          { length: currentMonth -1},
+          (_, i) => new Date(newSelectedYear, i).toLocaleString('en-US', { month: 'long' })
+        );
+      }
+      else{
+      newMonthsToDisplay = Array.from(
+        { length: currentMonth },
+        (_, i) => new Date(newSelectedYear, i).toLocaleString('en-US', { month: 'long' })
+      );}
+  
+      // Update the monthsToDisplay state
+      setMonthsToDisplay(newMonthsToDisplay);
 
     // Fetch payment records for the selected year
     try {
@@ -197,6 +201,8 @@ const Payment = () => {
                       <input type="hidden" name="country" value="Your_Country" />
                       <input type="hidden" name="hash" value={hashkey} />
                       <button type="submit">Pay Now</button>
+                      {/* <button type="button" onClick={makePayment}>Pay test</button> */}
+                      <button type="button" onClick={() => makePayment(month)}>Pay Test</button>
                     </form>
                   )}
                 </td>
