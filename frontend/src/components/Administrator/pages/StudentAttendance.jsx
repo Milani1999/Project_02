@@ -51,7 +51,6 @@ const StudentAttendance = () => {
     } catch (error) {
       console.error("Error fetching student attendance:", error);
     }
-
   };
 
   useEffect(() => {
@@ -150,6 +149,22 @@ const StudentAttendance = () => {
 
   const onTimeLateCounts = calculateOnTimeLateCounts();
 
+  const getFormattedMinDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = currentDate.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const getFormattedMaxDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = currentDate.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <Container>
       <div class="nine">
@@ -159,19 +174,26 @@ const StudentAttendance = () => {
       </div>
       <Row className="mb-3">
         <Col md={5}>
-          <label className="label_selectdate" htmlFor="datePicker">Select Date: </label>
+          <label className="label_selectdate" htmlFor="datePicker">
+            Select Date:{" "}
+          </label>
           <input
-          className="datepicker_attendance"
+            className="datepicker_attendance"
             type="date"
             id="datePicker"
+            min=""
+            max={getFormattedMaxDate()}
             value={selectedDate.toISOString().substr(0, 10)}
             onChange={(e) => setSelectedDate(new Date(e.target.value))}
           />
         </Col>
+
         <br />
 
         <Col md={3}>
-          <label className="label_selectgrade" htmlFor="gradeSelect">Select Grade: </label>
+          <label className="label_selectgrade" htmlFor="gradeSelect">
+            Select Grade:{" "}
+          </label>
           <select
             id="gradeSelect"
             value={selectedGrade}
@@ -190,117 +212,115 @@ const StudentAttendance = () => {
       </Row>
       {isLoading ? (
         <LoadingSpinner />
-      ) :(
-      <div>
-      <Row>
-        <Col md={3}>
-          <PieChart
-            data={{
-              labels: ["Present", "Absent"],
-              datasets: [
-                {
-                  data: [presentCount, absentCount],
-                  backgroundColor: ["#36A2EB", "#d9534f"],
-                },
-              ],
-            }}
-            width={100}
-            height={100}
-          />
-        </Col>
-        <Col md={6}>
-          <Clock />
-        </Col>
-        <Col md={3}>
-          <PieChart
-            data={{
-              labels: ["On-Time", "Late"],
-              datasets: [
-                {
-                  data: [
-                    onTimeLateCounts.onTimeCount,
-                    onTimeLateCounts.lateCount,
+      ) : (
+        <div>
+          <Row>
+            <Col md={3}>
+              <PieChart
+                data={{
+                  labels: ["Present", "Absent"],
+                  datasets: [
+                    {
+                      data: [presentCount, absentCount],
+                      backgroundColor: ["#36A2EB", "#d9534f"],
+                    },
                   ],
-                  backgroundColor: ["#5cb85c", "#d9534f"],
-                },
-              ],
-            }}
-            width={100}
-            height={100}
-            
-          />
-        </Col>
-      </Row>
-      <Table className="styled-table" striped bordered hover>
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Admission No</th>
-            <th>Full Name</th>
-            <th>Grade</th>
-            <th>Arrived Time</th>
-            <th>On-Time/Late</th>
-            <th>Attendance Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {attendanceData.map((entry, index) => {
-            const student = entry.student;
-            const attendance = entry.attendance;
-
-            return (
-              <tr key={student._id}>
-                <td>{index + 1}</td>
-                <td>{student.admission_no}</td>
-                <td>{student.fullname}</td>
-                <td>{student.grade}</td>
-                <td>
-                  {attendance && attendance.arrivedTime
-                    ? new Date(attendance.arrivedTime).toLocaleTimeString(
-                        "en-US"
-                      )
-                    : "-"}
-                </td>
-                <td>
-                  {attendance &&
-                  attendance.onTimeLate &&
-                  attendance.onTimeLate === "On-Time" ? (
-                    <span className="label label-success">
-                      {attendance.onTimeLate}
-                    </span>
-                  ) : attendance ? (
-                    <span className="label label-danger">
-                      &nbsp;&nbsp;&nbsp;&nbsp;{attendance.onTimeLate}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
-                  ) : (
-                    <span>-</span>
-                  )}
-                </td>
-                <td>
-                  {attendance && attendance.present ? (
-                    <input
-                      type="checkbox"
-                      checked={attendance.present}
-                      onChange={() =>
-                        handleAttendanceChange(student._id, attendance)
-                      }
-                    />
-                  ) : (
-                    <input type="checkbox" checked={false} disabled />
-                  )}
-                </td>
+                }}
+                width={100}
+                height={100}
+              />
+            </Col>
+            <Col md={6}>
+              <Clock />
+            </Col>
+            <Col md={3}>
+              <PieChart
+                data={{
+                  labels: ["On-Time", "Late"],
+                  datasets: [
+                    {
+                      data: [
+                        onTimeLateCounts.onTimeCount,
+                        onTimeLateCounts.lateCount,
+                      ],
+                      backgroundColor: ["#5cb85c", "#d9534f"],
+                    },
+                  ],
+                }}
+                width={100}
+                height={100}
+              />
+            </Col>
+          </Row>
+          <Table className="styled-table" striped bordered hover>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Admission No</th>
+                <th>Full Name</th>
+                <th>Grade</th>
+                <th>Arrived Time</th>
+                <th>On-Time/Late</th>
+                <th>Attendance Status</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-      
-      </div>
+            </thead>
+            <tbody>
+              {attendanceData.map((entry, index) => {
+                const student = entry.student;
+                const attendance = entry.attendance;
+
+                return (
+                  <tr key={student._id}>
+                    <td>{index + 1}</td>
+                    <td>{student.admission_no}</td>
+                    <td>{student.fullname}</td>
+                    <td>{student.grade}</td>
+                    <td>
+                      {attendance && attendance.arrivedTime
+                        ? new Date(attendance.arrivedTime).toLocaleTimeString(
+                            "en-US"
+                          )
+                        : "-"}
+                    </td>
+                    <td>
+                      {attendance &&
+                      attendance.onTimeLate &&
+                      attendance.onTimeLate === "On-Time" ? (
+                        <span className="label label-success">
+                          {attendance.onTimeLate}
+                        </span>
+                      ) : attendance ? (
+                        <span className="label label-danger">
+                          &nbsp;&nbsp;&nbsp;&nbsp;{attendance.onTimeLate}
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                      ) : (
+                        <span>-</span>
+                      )}
+                    </td>
+                    <td>
+                      {attendance && attendance.present ? (
+                        <input
+                          type="checkbox"
+                          checked={attendance.present}
+                          onChange={() =>
+                            handleAttendanceChange(student._id, attendance)
+                          }
+                        />
+                      ) : (
+                        <input type="checkbox" checked={false} disabled />
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
       )}
       <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-      <div className="popup-background-staff">
-              <div className="popup-container-delete">
+        <div className="popup-background-staff">
+          <div className="popup-container-delete">
             <h3>Delete Attendance</h3>
             <p>Are you sure you want to delete this student attendance?</p>
             {
