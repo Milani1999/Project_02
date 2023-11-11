@@ -1,0 +1,113 @@
+
+.ant-modal-content {
+    border-radius: 10px;
+  }
+  
+
+  .ant-tabs-nav {
+    background-color: #e4e6e5;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .ant-tabs-nav .ant-tabs-tab-active {
+    background-color: #afb2b0;
+    color: #fff;
+    border-color: #bcbec1;
+    padding: 10px;
+    
+  }
+  
+
+  .sent-notice {
+    background-color: #d0f0e2;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+ 
+
+.sent-notice .delete-button {
+    display: flex;
+    align-items:flex-end;
+  }
+  
+
+  .delete-icon {
+    color: #f5222d;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 92%;
+  }
+  
+
+  .sent-notice .sent-date {
+    color: #888;
+    font-size: 12px;
+  }
+  .ant-btn.viewbtn{
+    background-color: rgb(8, 100, 37);
+    margin-top: 10px;
+    margin-left: 99%;
+  }
+
+  .sent-notice a {
+    color: #1b76cc;
+    text-decoration: none;
+  }
+  
+  
+  .sent-notice a:hover {
+    text-decoration: underline;
+  }
+  
+ 
+  .ant-btn {
+    background-color: #88898a;
+    border-color: #d9d9d9;
+    color: #fff;
+  }
+  
+
+  .ant-btn:hover {
+    background-color: #a8a3a4;
+    border-color: #b8bdc1;
+  }
+  
+
+  .ant-btn:focus {
+    box-shadow: 0 0 0 2px rgba(42, 67, 91, 0.2);
+  }
+  
+
+  .ant-modal-title {
+    color: #1890ff;
+  }
+  
+
+  .ant-modal-close-x {
+    color: #1890ff;
+  }
+  
+
+  .ant-popover-inner-content {
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  
+
+  .ant-popover-buttons .ant-btn-primary {
+    background-color: #1890ff;
+    border-color: #1890ff;
+  }
+  
+
+  .ant-popover-buttons .ant-btn-primary:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+  }
+  

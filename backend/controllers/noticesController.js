@@ -1,6 +1,6 @@
 const Notice = require("../models/noticesModel");
 
-// Create and save a new notice
+
 const createNotice = async (req, res) => {
   try {
     const { recipientType, title, message, file } = req.body;
@@ -51,4 +51,20 @@ const getSentNotices = async (req, res) => {
   }
 };
 
-module.exports = { createNotice, getTeacherNotices, getSentNotices,getStudentNotices};
+const deleteSentNotice = async (req, res) => {
+  const noticeId = req.params.id;
+
+  try {
+    const deletedNotice = await Notice.findByIdAndDelete(noticeId);
+    if (!deletedNotice) {
+      return res.status(404).json({ error: "Notice not found." });
+    }
+    res.status(200).json({ message: "Sent notice deleted successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to delete sent notice." });
+  }
+};
+
+module.exports = { createNotice, getTeacherNotices, getSentNotices, getStudentNotices, deleteSentNotice };
+

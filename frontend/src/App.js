@@ -185,4 +185,4 @@ function FooterRoutes() {
   return <React.Fragment>{excludeFooter && <Footer />}</React.Fragment>;
 }
 
-export default App;
+export default App;

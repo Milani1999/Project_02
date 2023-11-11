@@ -1,7 +1,7 @@
 .notice-page {
     max-width: 600px;
     margin: 0 auto;
-    padding: 3px;
+    padding: 2px;
     border-radius: 8px;
   }
   .notices-container {
@@ -74,7 +74,7 @@
 }
 .sent-notice {
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 8px;
   margin: 10px 0;
   background-color: #f9f9f9;
   border-radius: 5px;
