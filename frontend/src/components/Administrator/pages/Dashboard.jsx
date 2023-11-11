@@ -12,6 +12,7 @@ import {
   fetchStudentAttendance,
 } from "../../Count/Count";
 import { StudentData } from "../../Count/Data";
+import LoadingSpinner from "../../Loading/Loading";
 
 const Dashboard = () => {
   const [staffCount, setStaffCount] = useState(0);
@@ -47,6 +48,14 @@ const Dashboard = () => {
     grade,
     students,
   }));
+
+  if (!staffCount) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   const config = {
     data,

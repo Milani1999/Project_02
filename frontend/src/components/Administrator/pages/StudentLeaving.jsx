@@ -3,6 +3,7 @@ import axios from "axios";
 import { Table, Button } from "react-bootstrap";
 import Popup from "reactjs-popup";
 import { Link } from "react-router-dom";
+import "./StudentLeaving.css";
 
 function StudentLeaving() {
   const [students, setStudents] = useState([]);
@@ -117,13 +118,10 @@ function StudentLeaving() {
         </tbody>
       </Table>
       <Popup open={showViewPopup} onClose={handleCloseViewPopup}>
-        <div className="popup-background-student">
+        <div className="popup-background-old-student">
           {selectedStudent && (
-            <div className="popup-container-view-std">
-              <table
-                style={{ textAlign: "right" }}
-                className="viewTableStudents"
-              >
+            <div className="popup-container-view-old-std">
+              <table style={{ textAlign: "right" }} className="viewTable-Old">
                 <tr>
                   <td colSpan={2} style={{ textAlign: "center" }}>
                     <img
@@ -131,6 +129,7 @@ function StudentLeaving() {
                       alt="Profile"
                       width="100"
                       height="100"
+                      className="mt-4"
                     />
                   </td>
                 </tr>
@@ -145,7 +144,7 @@ function StudentLeaving() {
                     <Button
                       variant="secondary"
                       onClick={handleCloseViewPopup}
-                      className="mt-2"
+                      className="mt-2 mb-4"
                     >
                       Close
                     </Button>
