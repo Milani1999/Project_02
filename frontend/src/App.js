@@ -54,7 +54,7 @@ import ChangePassword from "./components/signInFormComponent/ChangePwd";
 import StudentLeaving from "./components/Administrator/pages/StudentLeaving";
 import StaffLeaving from "./components/Administrator/pages/StaffLeaving";
 import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
-import SendNotices from "./components/Teacher/Pages/SendNotices";
+
 function App() {
   return (
     <Router>
@@ -96,7 +96,6 @@ function App() {
             <Route path="TClassMarks" element={<TClassMarks />} />
             <Route path="Performance" element={<Performance />} />
             <Route path="change-password" element={<ChangePassword />} />
-            <Route path="SendNotices" element={<SendNotices />} />
           </Route>
 
           <Route
