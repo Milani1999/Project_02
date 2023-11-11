@@ -9,6 +9,7 @@ import {
   processData,
 } from "../../Count/Count";
 import { StudentData } from "../../Count/Data";
+import LoadingSpinner from "../../Loading/Loading";
 
 const onPanelChange = (value, mode) => {
   console.log(value.format("YYYY-MM-DD"), mode);
@@ -36,6 +37,7 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
+
   const data = classWise.map(({ name, grade, students }) => ({
     name,
     grade,
@@ -71,6 +73,14 @@ const Dashboard = () => {
     border: `1px solid ${token.colorBorderSecondary}`,
     borderRadius: token.borderRadiusLG,
   };
+
+  if (!staffCount) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div>
