@@ -1,6 +1,7 @@
 const Staff = require("../models/staffModel");
 const OldStaff = require("../models/oldStaffModel");
 const asyncHandler = require("express-async-handler");
+const oldStaff = require("../models/oldStaffModel");
 
 const getOldStaffs = asyncHandler(async (req, res) => {
   const oldStaffs = await OldStaff.find();
@@ -38,7 +39,7 @@ const addToOldStaff = asyncHandler(async (req, res) => {
       picture: staff.picture,
       employee_id: staff.employee_id,
       email: staff.email,
-      epf_no: staff.epf_no,
+      epf_No: staff.epf_No,
       subjects_taught: staff.subjects_taught,
     });
 
@@ -52,8 +53,26 @@ const addToOldStaff = asyncHandler(async (req, res) => {
   }
 });
 
+const updateOldStaff = asyncHandler(async (req, res) => {
+  const { service_letter } = req.body;
+
+  const old_staff = await oldStaff.findById(req.params.id);
+
+  if (old_staff) {
+    old_staff.service_letter = service_letter;
+
+    const updatedOldStaff = await old_staff.save();
+
+    res.json(updatedOldStaff);
+  } else {
+    res.status(404);
+    throw new Error("Old student not found");
+  }
+});
+
 module.exports = {
   getOldStaffs,
   getOldStaffByID,
   addToOldStaff,
+  updateOldStaff,
 };
