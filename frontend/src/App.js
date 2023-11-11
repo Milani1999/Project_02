@@ -54,6 +54,7 @@ import ChangePassword from "./components/signInFormComponent/ChangePwd";
 import StudentLeaving from "./components/Administrator/pages/StudentLeaving";
 import StaffLeaving from "./components/Administrator/pages/StaffLeaving";
 import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
+import ServiceLetter from "./components/Administrator/pages/ServiceLetter";
 
 function App() {
   return (
@@ -74,7 +75,11 @@ function App() {
             path="/reset-password/:id/:token"
             element={<ResetPassword />}
           ></Route>
-          <Route path="/Student/LeavingCertificate" element={<LeavingCertificate />} />
+          <Route
+            path="/Student/LeavingCertificate"
+            element={<LeavingCertificate />}
+          />
+          <Route path="/Staff/ServiceLetter" element={<ServiceLetter />} />
 
           <Route
             path="/Teacher"
