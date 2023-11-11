@@ -31,7 +31,7 @@ const ViewNotices = () => {
   };
   const handleDeleteSentNotice = async (noticeId, noticeType) => {
     try {
-      const deleteUrl = `/api/deleteSentNotice/${noticeId}`;
+      const deleteUrl = `/api/notices/deletenotices/${noticeId}`;
       await axios.delete(deleteUrl);
       message.success("Notice deleted successfully");
  
