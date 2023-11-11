@@ -51,11 +51,16 @@ const OldStaffSchema = new mongoose.Schema(
 
     epf_No: {
       type: String,
+      required: true,
     },
 
     subjects_taught: {
       type: String,
       required: true,
+    },
+    service_letter: {
+      type: String,
+      default: "-",
     },
   },
   {
