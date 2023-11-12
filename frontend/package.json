@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:5000",
+  "proxy": "https://edutrack-server-6kv8.onrender.com",
   "dependencies": {
     "@ant-design/plots": "^1.2.5",
     "@emotion/react": "^11.11.1",
