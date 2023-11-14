@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const hashGenerator = require('../config/hashGenerator');
-const { getPaymentRecords, makePayment } = require("../controllers/paymentController");
+const { getPaymentRecords, makePayment, handlePaymentNotification } = require("../controllers/paymentController");
 
 router.post('/generate-hash', (req, res) => {
   const { merchantId, orderId, payHereAmount, currency } = req.body;
@@ -14,5 +14,6 @@ router.post('/generate-hash', (req, res) => {
 router.route("/records").get(getPaymentRecords);
 // Make a payment
 router.route("/make-payment").post(makePayment);
+router.post('/payment-notification', handlePaymentNotification);
 
 module.exports = router;

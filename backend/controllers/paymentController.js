@@ -2,7 +2,8 @@
 const asyncHandler = require("express-async-handler");
 const Payment = require("../models/paymentModel");
 const Student = require("../models/studentModel");
-
+const hashGenerator = require('../config/hashGenerator');
+const crypto = require('crypto');
 // Helper function to generate a unique reference code
 const generateReferenceCode = (admissionNo) => {
   const timestamp = new Date().getTime();
@@ -25,6 +26,82 @@ const getPaymentRecords = asyncHandler(async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
+const handlePaymentNotification = async (req, res) => {
+  try {
+    const {
+      merchant_id,
+      order_id,
+      payhere_amount,
+      payhere_currency,
+      status_code,
+      md5sig,
+    } = req.body;
+
+    // Log the received data
+    console.log('Received Data:', req.body);
+
+    // Verify the payment notification
+    const secret = 'MjE4OTUxMjE1NDM1OTMxMTE4MDEyMjQwNzg4ODMyMjk0MzczNDcz'; // Replace with your PayHere secret key
+
+    // Log the data used for hashing
+    const dataToHash = `${merchant_id}${order_id}${payhere_amount}${payhere_currency}${status_code}${secret}`;
+    console.log('Data to Hash:', dataToHash);
+
+    const hashedSecret = crypto
+      .createHash('md5')
+      .update(secret)
+      .digest('hex')
+      .toUpperCase();
+
+    const amountFormatted = parseFloat(payhere_amount).toFixed(2);
+
+    const calculatedMd5sig = crypto
+      .createHash('md5')
+      .update(`${merchant_id}${order_id}${amountFormatted}${payhere_currency}${status_code}${hashedSecret}`)
+      .digest('hex')
+      .toUpperCase();
+
+    // Log the calculated hash
+    console.log('Calculated MD5 Signature:', calculatedMd5sig);
+
+    if (calculatedMd5sig === md5sig) {
+      // Verification successful
+      // Update your database based on the payment status
+      if (status_code === '2') {
+        // Payment success
+        // Update your database with the successful payment details
+        const payment = await Payment.findOne({ referenceCode: order_id });
+
+        if (payment) {
+          payment.paymentStatus = 'Paid'; // Update payment status as per your schema
+          await payment.save();
+        } else {
+          console.error('Payment record not found for order_id:', order_id);
+        }
+      } else {
+        // Payment failed or canceled
+        // Handle accordingly
+        console.error('Payment failed or canceled for order_id:', order_id);
+      }
+
+      // Respond to PayHere with a 200 status code to acknowledge receipt of the notification
+      res.status(200).send('OK');
+    } else {
+      // Invalid notification, respond with an error
+      console.error('Invalid notification');
+      res.status(400).send('Invalid notification');
+    }
+  } catch (error) {
+    console.error('Error handling payment notification:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+module.exports = {
+  handlePaymentNotification,
+};
+
 
 // Make a payment
 const makePayment = asyncHandler(async (req, res) => {
@@ -75,4 +152,5 @@ const makePayment = asyncHandler(async (req, res) => {
 module.exports = {
   getPaymentRecords,
   makePayment,
+  handlePaymentNotification,
 };

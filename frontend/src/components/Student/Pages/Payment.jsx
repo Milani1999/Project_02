@@ -42,13 +42,14 @@ const Payment = () => {
 
     fetchPaymentRecords();
   }, [selectedYear, monthsToDisplay]);
-  
+
   const makePayment = async (selectedMonth) => {
     const userInfo = localStorage.getItem("userInfo");
     const user = JSON.parse(userInfo);
     const studentId = user?.admissionNo;
   
-    const query = `/api/payment/make-payment?admissionNo=${studentId}&amount=5000&year=${selectedYear}&month=${selectedMonth}`;
+    // const query = `/api/payment/make-payment?admissionNo=${studentId}&amount=5000&year=${selectedYear}&month=${selectedMonth}`;
+    const query = `/api/payment/payment-notification`;
   
     try {
       const response = await fetch(query, {
@@ -136,6 +137,7 @@ const Payment = () => {
       setHashKey(hash);
     });
   }, []);
+  console.log('Hash generated on the client side:', hashkey);
 
   return (
     <div>
@@ -176,7 +178,7 @@ const Payment = () => {
                       <input
                         type="hidden"
                         name="return_url"
-                        value="https://www.uissrilanka.com"
+                        value="http://localhost:3000/Student/Payment"
                       />
                       <input
                         type="hidden"
@@ -186,7 +188,7 @@ const Payment = () => {
                       <input
                         type="hidden"
                         name="notify_url"
-                        value="https://www.uissrilanka.com"
+                        value="https://edutrack-server-6kv8.onrender.com/api/payment/payment-notification"
                       />
                       <input type="hidden" name="order_id" value="19980103" />
                       <input type="hidden" name="items" value={item} />
