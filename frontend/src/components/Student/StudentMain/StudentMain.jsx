@@ -53,6 +53,11 @@ const StudentMain = () => {
     LoggedIn = true;
   }
 
+  const handleSignOut = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/Login");
+  };
+
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -193,11 +198,8 @@ const StudentMain = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    onClick={() => {
-                      localStorage.removeItem("userInfo");
-                      navigate("/Login");
-                      window.location.reload();
-                    }}
+                    onClick={handleSignOut}
+                    to="/login"
                   >
                     Signout
                   </Link>

@@ -48,6 +48,11 @@ const TeacherMainLayout = () => {
     LoggedIn = true;
   }
 
+  const handleSignOut = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/Login");
+  };
+
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -126,19 +131,18 @@ const TeacherMainLayout = () => {
               icon: <AiOutlineFund className="fs-4" />,
               label: "Notices",
               children: [
-            {
-              key: "TNotices",
-              icon: <FaClipboardList className="fs-4" />,
-              label: "Notices",
+                {
+                  key: "TNotices",
+                  icon: <FaClipboardList className="fs-4" />,
+                  label: "Notices",
+                },
+                {
+                  key: "SendNotices",
+                  icon: <FaClipboardList className="fs-4" />,
+                  label: "Send Notices",
+                },
+              ],
             },
-            {
-              key: "SendNotices",
-              icon: <FaClipboardList className="fs-4" />,
-              label: "Send Notices",
-            },
-          
-        ],
-      },
             {
               key: "TCalendar",
               icon: <RiCalendarCheckFill className="fs-4" />,
@@ -212,11 +216,8 @@ const TeacherMainLayout = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    onClick={() => {
-                      localStorage.removeItem("userInfo");
-                      navigate("/Login");
-                      window.location.reload();
-                    }}
+                    onClick={handleSignOut}
+                    to="/login"
                   >
                     Signout
                   </Link>
