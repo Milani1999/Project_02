@@ -1,14 +1,41 @@
 // sendnoticesModel.js
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const sendnoticeSchema = new mongoose.Schema({
-  grade: Number,
-  title: String,
-  message: String,
-  file: String, 
+  grade: {
+    type: Number,
+    required: true,
+  },
+
+  title: {
+    type: String,
+    required: true,
+  },
+
+  message: {
+    type: String,
+    required: true,
+  },
+
+  file: {
+    type: String,
+  },
+
+  staff: {
+    type: String,
+    required: true,
+  },
+
+  staff_name: {
+    type: String,
+    required: true,
+  },
+
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-const Notice = mongoose.model("Notice", sendnoticeSchema);
-
-
+const Notice = mongoose.model("StaffNotice", sendnoticeSchema);
 module.exports = Notice;

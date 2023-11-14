@@ -15,7 +15,11 @@ const noticeSchema = new mongoose.Schema({
     required: true,
   },
   file: {
-    type: String, 
+    type: String,
+  },
+  staff_name: {
+    type: String,
+    default: "UIS Admin",
   },
   createdAt: {
     type: Date,

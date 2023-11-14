@@ -18,6 +18,7 @@ const oldStudentRoutes = require("./routes/oldStudentRoutes");
 const staffAttendanceRoutes = require("./routes/staffAttendanceRoutes");
 const reliefRoutes = require("./routes/reliefRoutes");
 const oldStaffRoutes = require("./routes/oldStaffRoutes");
+const staffNotices = require("./routes/sendnoticesRoutes");
 
 const app = express();
 dotenv.config();
@@ -51,6 +52,7 @@ app.use("/api/oldStudents", oldStudentRoutes);
 app.use("/api/staffattendance", staffAttendanceRoutes);
 app.use("/api/reliefAllocation", reliefRoutes);
 app.use("/api/oldStaff", oldStaffRoutes);
+app.use("/api/staffNotices", staffNotices);
 
 app.use(notFound);
 app.use(errorHandler);
