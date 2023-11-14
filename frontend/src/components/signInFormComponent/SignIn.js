@@ -49,7 +49,7 @@ const SignInCom = () => {
       );
       console.log(data.role);
       localStorage.setItem("userInfo", JSON.stringify(data));
-      window.location.reload();
+      navigate("/login");
     } catch (error) {
       alert(error.response.data.message);
       setPassword("");
