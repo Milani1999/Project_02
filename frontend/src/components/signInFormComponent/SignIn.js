@@ -3,7 +3,6 @@ import "./SignIn.css";
 import img from "../../assets/ImageResources/imgClassmates.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import LoadingSpinner from "../Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import ForgotPassword from "./ForgotPassword";
 
@@ -49,7 +48,7 @@ const SignInCom = () => {
       );
       console.log(data.role);
       localStorage.setItem("userInfo", JSON.stringify(data));
-      navigate("/login");
+      navigate("/Login");
     } catch (error) {
       alert(error.response.data.message);
       setPassword("");
@@ -89,7 +88,6 @@ const SignInCom = () => {
                         <div className="acc-des text-uppercase text-center mb-5 acc-des-sub wel-statement">
                           Welcome To The UIS Family
                           <br />
-                          {loading && <LoadingSpinner />}
                         </div>
                         <div className="form-outline mb-4 wel-statement">
                           <label
@@ -128,13 +126,13 @@ const SignInCom = () => {
                         </div>
                         <ForgotPassword />
                         <div className="d-flex justify-content-end pt-5 wel-statement">
-                          <button
+                        <button
                             type="submit"
-                            className="btn  btn-lg ms-2 btn-login"
+                            className="btn btn-lg ms-2 btn-login"
+                            disabled={loading}
                           >
-                            Login
-                          </button>
-                        </div>
+                            {loading ? "Logging in..." : "Login"}
+                          </button>                                                </div>
                       </div>
                     </div>
                   </div>
