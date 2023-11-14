@@ -36,11 +36,10 @@ const handlePaymentNotification = async (req, res) => {
       payhere_currency,
       status_code,
       md5sig,
+      custom_1,
+      custom_2,
     } = req.body;
-
-    // Log the received data
-    console.log('Received Data:', req.body);
-
+  console.log(req.body);
     // Verify the payment notification
     const secret = 'MjE4OTUxMjE1NDM1OTMxMTE4MDEyMjQwNzg4ODMyMjk0MzczNDcz'; // Replace with your PayHere secret key
 
@@ -71,13 +70,50 @@ const handlePaymentNotification = async (req, res) => {
       if (status_code === '2') {
         // Payment success
         // Update your database with the successful payment details
-        const payment = await Payment.findOne({ referenceCode: order_id });
+        // const payment = await Payment.findOne({ referenceCode: order_id });
 
-        if (payment) {
-          payment.paymentStatus = 'Paid'; // Update payment status as per your schema
-          await payment.save();
-        } else {
-          console.error('Payment record not found for order_id:', order_id);
+
+        // if (payment) {
+        //   payment.paymentStatus = 'Paid'; // Update payment status as per your schema
+        //   await payment.save();
+        // } else {
+        //   console.error('Payment record not found for order_id:', order_id);
+        // }
+        try {
+          // Add logic to check if the payment for the selected year and month already exists
+          const existingPayment = await Payment.findOne({
+            admissionNo : order_id,
+            year: custom_2,
+            month: custom_1,
+          });
+      
+          if (existingPayment) {
+            return res
+              .status(400)
+              .json({ message: "Payment for this month already exists." });
+          } else {
+            const referenceCode = generateReferenceCode(order_id);
+      
+            // Create a new payment record with the generated reference code
+            const newPayment = new Payment({
+              admissionNo : order_id,
+              referenceCode, // Use the generated reference code
+              amount : payhere_amount,
+              paymentDateWithTime: new Date(),
+              purpose: "monthlyfee",
+              paymentMonth: custom_1,
+              paymentYear: custom_2,
+              paymentMethod: "Online Payment",
+            });
+      
+            // Save the new payment record
+            await newPayment.save();
+      
+            res.json({ message: "Payment successful." });
+          }
+        } catch (error) {
+          console.error("Error making payment:", error);
+          res.status(500).json({ message: "Internal Server Error" });
         }
       } else {
         // Payment failed or canceled
@@ -86,7 +122,7 @@ const handlePaymentNotification = async (req, res) => {
       }
 
       // Respond to PayHere with a 200 status code to acknowledge receipt of the notification
-      res.status(200).send('OK');
+      // res.status(200).send('OK');
     } else {
       // Invalid notification, respond with an error
       console.error('Invalid notification');
@@ -94,7 +130,7 @@ const handlePaymentNotification = async (req, res) => {
     }
   } catch (error) {
     console.error('Error handling payment notification:', error);
-    res.status(500).send('Internal Server Error');
+    // res.status(500).send('Internal Server Error');
   }
 };
 
@@ -103,54 +139,51 @@ module.exports = {
 };
 
 
-// Make a payment
-const makePayment = asyncHandler(async (req, res) => {
-  const { admissionNo, amount, year, month } = req.query;
-  console.log(admissionNo);
-  console.log(amount);
-  console.log(year);
-  console.log(month);
+// // Make a payment
+// const makePayment = asyncHandler(async (req, res) => {
+//   const { admissionNo, amount, year, month } = req.query;
 
-  try {
-    // Add logic to check if the payment for the selected year and month already exists
-    const existingPayment = await Payment.findOne({
-      admissionNo,
-      year,
-      month,
-    });
 
-    if (existingPayment) {
-      return res
-        .status(400)
-        .json({ message: "Payment for this month already exists." });
-    } else {
-      const referenceCode = generateReferenceCode("Student_001");
+//   try {
+//     // Add logic to check if the payment for the selected year and month already exists
+//     const existingPayment = await Payment.findOne({
+//       admissionNo,
+//       year,
+//       month,
+//     });
 
-      // Create a new payment record with the generated reference code
-      const newPayment = new Payment({
-        admissionNo,
-        referenceCode, // Use the generated reference code
-        amount,
-        paymentDateWithTime: new Date(),
-        purpose: "monthlyfee",
-        paymentMonth: month,
-        paymentYear: year,
-        paymentMethod: "Online Payment",
-      });
+//     if (existingPayment) {
+//       return res
+//         .status(400)
+//         .json({ message: "Payment for this month already exists." });
+//     } else {
+//       const referenceCode = generateReferenceCode();
 
-      // Save the new payment record
-      await newPayment.save();
+//       // Create a new payment record with the generated reference code
+//       const newPayment = new Payment({
+//         admissionNo,
+//         referenceCode, // Use the generated reference code
+//         amount,
+//         paymentDateWithTime: new Date(),
+//         purpose: "monthlyfee",
+//         paymentMonth: month,
+//         paymentYear: year,
+//         paymentMethod: "Online Payment",
+//       });
 
-      res.json({ message: "Payment successful." });
-    }
-  } catch (error) {
-    console.error("Error making payment:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
+//       // Save the new payment record
+//       await newPayment.save();
+
+//       res.json({ message: "Payment successful." });
+//     }
+//   } catch (error) {
+//     console.error("Error making payment:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
 
 module.exports = {
   getPaymentRecords,
-  makePayment,
+  // makePayment,
   handlePaymentNotification,
 };
