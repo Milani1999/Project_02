@@ -1,250 +1,183 @@
 import React, { useState, useEffect } from "react";
+import { Form, Button } from "react-bootstrap";
 import axios from "axios";
-import {
-  Form,
-  Input,
-  Button,
-  message,
-  Select,
-  Modal,
-  Upload,
-  Popconfirm,
-} from "antd";
-import { InboxOutlined, DeleteOutlined } from "@ant-design/icons";
-import "./SendNotices.css";
+import ViewNotices from "./ViewNotices";
+import { fetchStaffData } from "../../Count/Data";
 
-const { Option } = Select;
-const { Dragger } = Upload;
+function Notices() {
+  const [staff, setStaff] = useState("-");
 
-const Notices = () => {
-  const [form] = Form.useForm();
-  const [selectedGrade, setSelectedGrade] = useState("1"); 
-  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
-  const [isNoticeSent, setIsNoticeSent] = useState(false);
-  const [isSentNoticesVisible, setIsSentNoticesVisible] = useState(false);
-  const [sentNotices, setSentNotices] = useState([]);
-
-  const handleViewSentNotices = async () => {
-    try {
-      const response = await axios.get("/api/sendnotices/sent");
-      setSentNotices(response.data);
-      setIsSentNoticesVisible(true);
-    } catch (error) {
-      console.error(error);
-      message.error("Failed to fetch sent notices");
-    }
-  };
+  const userInfo = localStorage.getItem("userInfo");
+  const user = JSON.parse(userInfo);
+  const staffId = user?.id;
 
   useEffect(() => {
-    fetchSentNotices();
-  }, []);
-
-  const fetchSentNotices = async () => {
-    try {
-      const response = await axios.get("/api/sendnotices/sent");
-      setSentNotices(response.data);
-    } catch (error) {
-      console.error(error);
-      message.error("Failed to fetch sent notices");
-    }
-  };
-
-  const handleDeleteSentNotice = async (noticeId) => {
-    try {
-      await axios.delete(`/api/sendnotices/${noticeId}`);
-      await fetchSentNotices();
-    } catch (error) {
-      console.error(error);
-      message.error("Failed to delete the notice");
-    }
-  };
-
-  const postDetails = async (formData) => {
-    try {
-      await axios.post("/api/sendnotices/create", formData);
-    } catch (error) {
-      console.error(error);
-      message.error("Failed to save notice details");
-    }
-  };
-
-  const handleSubmit = async (values) => {
-    try {
-      const formData = new FormData();
-      formData.append("grade", selectedGrade); // Add the selected grade to the formData
-      formData.append("title", values.title);
-      formData.append("message", values.message);
-
-      if (values.fileList?.[0]?.originFileObj) {
-        const imageFormData = new FormData();
-        imageFormData.append("file", values.fileList[0].originFileObj);
-        imageFormData.append("upload_preset", "edutrack");
-        imageFormData.append("cloud_name", "dprnxaqxi");
-
-        const imageResponse = await axios.post(
-          "https://api.cloudinary.com/v1/dprnxaqxi/image/upload",
-          imageFormData
-        );
-
-        formData.append("file", imageResponse.data.url);
+    const fetchStaffDetails = async () => {
+      try {
+        const data = await fetchStaffData(staffId);
+        setStaff(data.fullname);
+      } catch (error) {
+        alert("Error fetching staff details:", error);
       }
+    };
 
-      await postDetails(formData);
+    fetchStaffDetails();
+  }, [staffId, setStaff]);
 
-      setIsNoticeSent(true);
-      showConfirmationModal();
-      form.resetFields();
+  const [formData, setFormData] = useState({
+    grade: "",
+    title: "",
+    message: "",
+    file: "",
+    staff: staffId,
+    staff_name: staff,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const cloudinary_url = process.env.REACT_APP_CLOUDINARY_URL;
+  const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+
+  const postDetails = async (pics) => {
+    try {
+      if (pics.type === "image/jpeg" || pics.type === "image/png") {
+        const data = new FormData();
+        const timestamp = new Date().getTime();
+        const fileName = `${timestamp}_${pics.name}`;
+        data.append("file", pics, fileName);
+        data.append("upload_preset", "edutrack");
+        data.append("cloud_name", cloud_name);
+
+        const cacheBuster = `?cb=${timestamp}`;
+        const urlWithCacheBuster = `${cloudinary_url}${cacheBuster}`;
+
+        const response = await fetch(urlWithCacheBuster, {
+          method: "post",
+          body: data,
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to upload image to Cloudinary");
+        }
+
+        const cloudinaryData = await response.json();
+
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          file: cloudinaryData.url.toString(),
+        }));
+
+        console.log("Cloudinary URL:", cloudinaryData.url.toString());
+      } else {
+        alert("Please Select an Image");
+      }
     } catch (error) {
-      console.error(error);
-      message.error("Failed to send notice");
+      alert(error);
     }
   };
 
-  const handleGradeChange = (value) => {
-    setSelectedGrade(value);
-  };
+  const submitHandler = async (e) => {
+    e.preventDefault();
 
-  const showConfirmationModal = () => {
-    setIsConfirmationModalVisible(true);
-  };
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-  const handleConfirmationModalClose = () => {
-    setIsConfirmationModalVisible(false);
-    setIsNoticeSent(false);
-  };
+      await axios.post("/api/staffNotices/create", formData, config);
 
-  const handleChange = async (info) => {
-    if (info.file.status === "done") {
-      const imageUrl = info.file.response.secure_url;
-      form.setFieldsValue({ fileList: [{ ...info.file, thumbUrl: imageUrl }] });
+      alert("Notice sent successfully!");
+
+      document.getElementById("file").value = "";
+
+      setFormData({
+        grade: "",
+        title: "",
+        message: "",
+        file: "",
+        staff: staffId,
+        staff_name: staff,
+      });
+    } catch (error) {
+      alert(error.response.data.message);
     }
   };
 
+  const firstCol = [
+    {
+      label: "Title",
+      type: "text",
+      name: "title",
+      value: formData.title,
+      placeholder: "Enter title",
+    },
+    {
+      label: "Message",
+      type: "text",
+      name: "message",
+      value: formData.message,
+      placeholder: "Enter message",
+    },
+  ];
   return (
     <div className="notice-page">
-      <div>
-        <h1 className="notice-sending">Send Notices</h1>
-        {/* <Button
-          className="viewbtn"
-          type="primary"
-          onClick={handleViewSentNotices}
-        >
-          View Sent Notices
-        </Button> */}
-      </div>
-
-      {isSentNoticesVisible ? (
-        <div className="sent-notices">
-          <h2>Sent Notices</h2>
-          <Modal
-            title="Sent Notices"
-            visible={isSentNoticesVisible}
-            onCancel={() => setIsSentNoticesVisible(false)}
-            footer={null}
-            width={800}
-            bodyStyle={{ maxHeight: "60vh", overflowY: "auto" }}
+      <ViewNotices />
+      <Form onSubmit={submitHandler}>
+        <h2 className="notice-sending" style={{ textAlign: "center" }}>
+          Send Notices
+        </h2>
+        <Form.Group controlId="grade">
+          <Form.Label className="grade">Grade</Form.Label>
+          <Form.Control
+            as="select"
+            name="grade"
+            value={formData.grade}
+            onChange={handleChange}
           >
-            {sentNotices.map((notice) => (
-              <div key={notice._id} className="sent-notice">
-                <p>{notice.title}</p>
-                <p>{notice.message}</p>
-                <Popconfirm
-                  title="Are you sure you want to delete this notice?"
-                  onConfirm={() => handleDeleteSentNotice(notice._id)}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <DeleteOutlined className="delete-icon" />
-                </Popconfirm>
-              </div>
+            <option value="">Select Grade</option>
+            {Array.from({ length: 11 }, (_, index) => (
+              <option key={index + 1} value={index + 1}>
+                Grade {index + 1}
+              </option>
             ))}
-          </Modal>
-        </div>
-      ) : (
-        <Form form={form} onFinish={handleSubmit} layout="vertical">
-  <Form.Item
-  label="Select Grade"
-  name="grade"
-  rules={[
-    { required: true, message: "Please select the grade" },
-  ]}
->
-  <Select
-    placeholder="Select Grade" // Add the placeholder text
-    onChange={handleGradeChange}
-  >
-    {Array.from({ length: 12 }, (_, i) => (
-      <Option key={(i + 1).toString()} value={(i + 1)}>
-        Grade {i + 1}
-      </Option>
-    ))}
-  </Select>
-</Form.Item>
-
-
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please enter the title" }]}
-          >
-            <Input placeholder="Enter the title" />
-          </Form.Item>
-          <Form.Item
-            label="Message"
-            name="message"
-            rules={[{ required: true, message: "Please enter the message" }]}
-          >
-            <Input.TextArea placeholder="Enter the message" rows={4} />
-          </Form.Item>
-          <Form.Item
-            label="Attachment"
-            name="fileList"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => e && e.fileList}
-          >
-            <Dragger
-              name="file"
-              multiple={false}
-              action="https://api.cloudinary.com/v1/dprnxaqxi/image/upload"
-              data={{ upload_preset: "edutrack" }}
+          </Form.Control>
+        </Form.Group>{" "}
+        {firstCol.map((std) => (
+          <Form.Group controlId={std.name}>
+            <Form.Label className="label-add-students">{std.label}</Form.Label>
+            <Form.Control
+              type={std.type}
+              name={std.name}
+              value={std.value}
+              placeholder={std.placeholder}
               onChange={handleChange}
-            >
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-            </Dragger>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Send
-            </Button>
-          </Form.Item>
-        </Form>
-      )}
-
-      <Modal
-        visible={isConfirmationModalVisible}
-        onCancel={handleConfirmationModalClose}
-        onOk={handleConfirmationModalClose}
-        centered
-        title={isNoticeSent ? "Notice Sent" : "Notice Sending Failed"}
-        afterClose={handleConfirmationModalClose}
-      >
-        {isNoticeSent ? (
-          <p className="confirmation-modal notice-sent">
-            The notice has been successfully sent.
-          </p>
-        ) : (
-          <p className="confirmation-modal notice-failed">
-            Failed to send the notice. Please try again.
-          </p>
-        )}
-      </Modal>
+            />
+          </Form.Group>
+        ))}
+        <Form.Group controlId="file">
+          <Form.Label className="label-add-students">File</Form.Label>
+          <Form.Control
+            type="file"
+            accept="image/jpeg, image/png"
+            onChange={(e) => postDetails(e.target.files[0])}
+          />
+        </Form.Group>
+        <Button
+          variant="primary"
+          type="submit"
+          className="mt-5"
+          style={{ width: "100px" }}
+        >
+          Add
+        </Button>
+      </Form>
     </div>
   );
-};
+}
 
 export default Notices;
