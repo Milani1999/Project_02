@@ -62,7 +62,7 @@ const Payment = () => {
   } = studentData || {};
 
   const [orderDetails, setOrderDetails] = useState({
-    merchantId: "1224594",
+    merchantId: process.env.REACT_APP_PAYHERE_MERCHANT_ID,
     orderId: studentId,
     payHereAmount: "1000.00",
     currency: "LKR",
@@ -80,16 +80,10 @@ const Payment = () => {
         });
 
         if (response.ok) {
-          // const data = await response.json();
-          const jsonData = await response.json();
-          const {paymentRecords, status_code } = jsonData;
+          const data = await response.json();
+          const paymentRecords = data;
           setPaymentRecords(paymentRecords);
-          // Check if the response includes the status_code and show an alert
-          console.log("Received status_code from server:", status_code);
-  
-          if (status_code) {
-            alert(`Payment status: ${status_code}`);
-          }
+       
           
         } else {
           console.error("Error fetching payment records");

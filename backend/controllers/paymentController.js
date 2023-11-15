@@ -1,4 +1,3 @@
-// Backend>controllers>paymentController.js
 const asyncHandler = require("express-async-handler");
 const Payment = require("../models/paymentModel");
 const Student = require("../models/studentModel");
@@ -25,9 +24,7 @@ const handlePaymentNotification = async (req, res) => {
       custom_2,
     } = req.body;
     console.log(req.body);
-    const secret = "MjE4OTUxMjE1NDM1OTMxMTE4MDEyMjQwNzg4ODMyMjk0MzczNDcz";
-
-    // const dataToHash = `${merchant_id}${order_id}${payhere_amount}${payhere_currency}${status_code}${secret}`;
+    const secret = process.env.REACT_APP_PAYHERE_MERCHANT_SECRET;
 
     const hashedSecret = crypto
       .createHash("md5")
@@ -44,7 +41,6 @@ const handlePaymentNotification = async (req, res) => {
       )
       .digest("hex")
       .toUpperCase();
-      console.log("handlePaymentNotification called with status_code:", status_code);
     if (calculatedMd5sig === md5sig) {
       if (status_code === "2") {
          // Payment Success
@@ -75,14 +71,6 @@ const handlePaymentNotification = async (req, res) => {
             });
 
             await newPayment.save();
-            // res.json({ message: "Payment successful." });
-            // res.json({ status_code, message: "Payment successful.", notificationHandled: true });
-            // Send the status code and paymentRecords to the frontend
-            return res.status(200).json({
-              message: "Payment successful.",
-              notificationHandled: true,
-              status_code,
-            });
 
             
           }
@@ -110,8 +98,7 @@ const handlePaymentNotification = async (req, res) => {
       console.error("Invalid notification");
     }
 
-    // Send the status code to the frontend
-    // res.status(200).json({ status_code });
+
    
   } catch (error) {
     console.error("Error handling payment notification:", error);
@@ -122,15 +109,12 @@ const handlePaymentNotification = async (req, res) => {
 const getPaymentRecords = asyncHandler(async (req, res) => {
   const admissionNo = req.query.admissionNo;
   const year = req.query.year;
-  const status_code = req.query.status_code;
-
   try {
     const paymentRecords = await Payment.find({
       admissionNo: admissionNo,
       paymentYear: year,
     });
-    // res.json(paymentRecords);
-    res.json({ paymentRecords, status_code });
+    res.json(paymentRecords);
   } catch (error) {
     console.error("Error fetching payment records:", error);
     res.status(500).json({ message: "Internal Server Error" });
