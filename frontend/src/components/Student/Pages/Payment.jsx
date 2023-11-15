@@ -182,9 +182,9 @@ const Payment = () => {
         <thead>
           <tr>
             <th>Month</th>
-            <th>Payment Date</th>
-            <th>Time</th>
-            <th>Review</th>
+            <th>Payment Date 🗓️</th>
+            <th>Time 🕝</th>
+            <th>Review </th>
             <th>Payment Status / Option</th>
           </tr>
         </thead>
@@ -205,10 +205,11 @@ const Payment = () => {
                 </td>
                 <td>
                   {record ? (
-                    <span className="label label-primary">
-                    &nbsp;&nbsp;&nbsp;&nbsp; Paid
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                  </span>
+                    <span>✅</span>
+                  //   <span className="label label-primary">
+                  //   &nbsp;&nbsp;&nbsp;&nbsp; Paid ✅
+                  //   &nbsp;&nbsp;&nbsp;&nbsp;
+                  // </span>
                   ) : (
                     <form
                       method="post"
