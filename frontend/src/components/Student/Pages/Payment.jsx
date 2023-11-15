@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { fetchStudentData } from "../../Count/Data";
-import axios from "axios";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
 
 const Payment = () => {
   const [studentData, setStudentData] = useState([]);
@@ -83,12 +82,9 @@ const Payment = () => {
           const data = await response.json();
           const paymentRecords = data;
           setPaymentRecords(paymentRecords);
-       
-          
         } else {
           console.error("Error fetching payment records");
         }
-          
       } catch (error) {
         console.error("Error fetching payment records:", error);
       }
@@ -139,7 +135,6 @@ const Payment = () => {
       } else {
         console.error("Error fetching payment records");
       }
-    
     } catch (error) {
       console.error("Error fetching payment records:", error);
     }
@@ -178,7 +173,7 @@ const Payment = () => {
         ))}
       </select>
 
-      <table>
+      <Table className="styled-table" striped bordered hover>
         <thead>
           <tr>
             <th>Month</th>
@@ -196,7 +191,9 @@ const Payment = () => {
             return (
               <tr key={month}>
                 <td>{month}</td>
-                <td>{record ? record.paymentDateWithTime : "-"}</td>
+                {/* <td>{record ? record.paymentDateWithTime : "-"}</td> */}
+                {/* <td>{record ? new Date(record.paymentDateWithTime).toLocaleDateString() : "-"}</td> */}
+                <td>{record ? new Date(record.paymentDateWithTime).toLocaleTimeString() : "-"}</td>
                 <td>
                   {/* {record && record.pdfUrl ? <a href={record.pdfUrl} target="_blank" rel="noopener noreferrer">Download PDF</a> : '-'} */}
                   -
@@ -223,7 +220,7 @@ const Payment = () => {
                       <input
                         type="hidden"
                         name="notify_url"
-                        value="https://7639-103-21-165-12.ngrok.io/api/payment/payment-notification"
+                        value="https://3816-103-21-165-12.ngrok.io/api/payment/payment-notification"
                       />
                       <input type="hidden" name="order_id" value={studentId} />
                       <input type="hidden" name="items" value={item} />
@@ -251,7 +248,19 @@ const Payment = () => {
                         value="Your_Country"
                       />
                       <input type="hidden" name="hash" value={hashkey} />
-                      <button type="submit">Pay Now</button>
+                      <button
+                        type="submit"
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "50%",
+                          padding: "3px",
+                          marginLeft: "30%", // Add padding for better appearance
+                        }}
+                      >
+                        Pay Now
+                      </button>
                     </form>
                   )}
                 </td>
@@ -259,7 +268,7 @@ const Payment = () => {
             );
           })}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };
