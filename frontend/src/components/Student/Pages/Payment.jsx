@@ -161,7 +161,12 @@ const Payment = () => {
 
   return (
     <div>
-      <h2>Payment Records for {selectedYear}</h2>
+       <div class="nine">
+        <h1>
+          STUDENTS<span>Payment Records for {selectedYear} </span>
+        </h1>
+      </div>
+      <label>Year : </label>
       <select value={selectedYear} onChange={handleYearChange}>
         {Array.from(
           { length: new Date().getFullYear() - 2021 + 1 },
@@ -177,9 +182,10 @@ const Payment = () => {
         <thead>
           <tr>
             <th>Month</th>
-            <th>Payment Date and Time</th>
+            <th>Payment Date</th>
+            <th>Time</th>
             <th>Review</th>
-            <th>Payment Status</th>
+            <th>Payment Status / Option</th>
           </tr>
         </thead>
         <tbody>
@@ -191,8 +197,7 @@ const Payment = () => {
             return (
               <tr key={month}>
                 <td>{month}</td>
-                {/* <td>{record ? record.paymentDateWithTime : "-"}</td> */}
-                {/* <td>{record ? new Date(record.paymentDateWithTime).toLocaleDateString() : "-"}</td> */}
+                <td>{record ? new Date(record.paymentDateWithTime).toLocaleDateString() : "-"}</td>
                 <td>{record ? new Date(record.paymentDateWithTime).toLocaleTimeString() : "-"}</td>
                 <td>
                   {/* {record && record.pdfUrl ? <a href={record.pdfUrl} target="_blank" rel="noopener noreferrer">Download PDF</a> : '-'} */}
@@ -200,7 +205,10 @@ const Payment = () => {
                 </td>
                 <td>
                   {record ? (
-                    "Paid"
+                    <span className="label label-primary">
+                    &nbsp;&nbsp;&nbsp;&nbsp; Paid
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                  </span>
                   ) : (
                     <form
                       method="post"
@@ -220,7 +228,7 @@ const Payment = () => {
                       <input
                         type="hidden"
                         name="notify_url"
-                        value="https://3816-103-21-165-12.ngrok.io/api/payment/payment-notification"
+                        value="https://c236-103-21-165-167.ngrok.io/api/payment/payment-notification"
                       />
                       <input type="hidden" name="order_id" value={studentId} />
                       <input type="hidden" name="items" value={item} />
@@ -249,17 +257,31 @@ const Payment = () => {
                       />
                       <input type="hidden" name="hash" value={hashkey} />
                       <button
+                      className="btn btn-info"
                         type="submit"
                         style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          width: "50%",
-                          padding: "3px",
+                        //   display: "flex",
+                        //   justifyContent: "center",
+                        //   alignItems: "center",
+                          width: "40%",
+                        //   padding: "3px",
                           marginLeft: "30%", // Add padding for better appearance
                         }}
                       >
-                        Pay Now
+                        {/* Pay Now */}
+                        {/* <img src="https://blog.payhere.lk/wp-content/uploads/2022/08/Pay-with-Payhere-300x80.png" alt="" /> */}
+                        <spam>Pay with </spam><img src="https://www.pngkey.com/png/full/512-5124189_payhere-sri-lankas-most-affordable-innovative-payment-audience.png"   
+                        style={{
+                        //   display: "flex",
+                        //   justifyContent: "center",
+                        //   alignItems: "center",
+                        height: "15px",
+                          width: "60%",
+                        //   padding: "3px",
+                        //   marginLeft: "35%", // Add padding for better appearance
+                        }}
+                        alt="" 
+                        />
                       </button>
                     </form>
                   )}

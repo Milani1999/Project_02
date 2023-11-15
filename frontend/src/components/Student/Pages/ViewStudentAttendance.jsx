@@ -52,7 +52,11 @@ const ViewStudentAttendance = ({}) => {
 
   return (
     <Container>
-      <h1>View Student Attendance</h1>
+      <div class="nine">
+        <h1>
+          STUDENTS<span>View Attendance Record</span>
+        </h1>
+      </div>
       <div className="mb-3">
         <label htmlFor="monthSelect">Select Month: </label>
         <select
@@ -84,7 +88,7 @@ const ViewStudentAttendance = ({}) => {
       {isLoading ? (
         <LoadingSpinner />
       ) : (
-        <Table striped bordered hover>
+        <Table className="styled-table" striped bordered hover>
           <thead>
             <tr>
               <th>Date</th>
