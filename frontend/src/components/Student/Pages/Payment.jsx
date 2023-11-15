@@ -8,7 +8,6 @@ const Payment = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [paymentRecords, setPaymentRecords] = useState([]);
   const [hashkey, setHashKey] = useState("");
-  
 
   const [monthsToDisplay, setMonthsToDisplay] = useState(
     Array.from({ length: new Date().getMonth() + 1 }, (_, i) =>
@@ -20,10 +19,7 @@ const Payment = () => {
   const studentId = user?.admissionNo;
   const objId = user?.id;
 
-
-  
   useEffect(() => {
-   
     const fetchStudentData = async () => {
       try {
         const query = `/api/students/${objId}`;
@@ -64,8 +60,6 @@ const Payment = () => {
     email,
     grade,
   } = studentData || {};
-  
-
 
   const [orderDetails, setOrderDetails] = useState({
     merchantId: "1224594",
@@ -73,35 +67,6 @@ const Payment = () => {
     payHereAmount: "1000.00",
     currency: "LKR",
   });
-
-  // const makePayment = async (selectedMonth) => {
-  //   const userInfo = localStorage.getItem("userInfo");
-  //   const user = JSON.parse(userInfo);
-  //   const studentId = user?.admissionNo;
-
-  //   const query = `/api/payment/make-payment?admissionNo=${studentId}&amount=5000&year=${selectedYear}&month=${selectedMonth}`;
-
-  //   try {
-  //     const response = await fetch(query, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-
-  //     if (response.ok) {
-  //       // Handle success, maybe show a modal or redirect to PayHere checkout
-  //       console.log("Payment initiation successful");
-  //     } else {
-  //       // Handle error
-  //       console.error("Error initiating payment");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error initiating payment:", error);
-  //   }
-
-    
-  // };
 
   useEffect(() => {
     const fetchPaymentRecords = async () => {
@@ -115,11 +80,21 @@ const Payment = () => {
         });
 
         if (response.ok) {
-          const data = await response.json();
-          setPaymentRecords(data);
+          // const data = await response.json();
+          const jsonData = await response.json();
+          const {paymentRecords, status_code } = jsonData;
+          setPaymentRecords(paymentRecords);
+          // Check if the response includes the status_code and show an alert
+          console.log("Received status_code from server:", status_code);
+  
+          if (status_code) {
+            alert(`Payment status: ${status_code}`);
+          }
+          
         } else {
           console.error("Error fetching payment records");
         }
+          
       } catch (error) {
         console.error("Error fetching payment records:", error);
       }
@@ -127,8 +102,6 @@ const Payment = () => {
 
     fetchPaymentRecords();
   }, [selectedYear, monthsToDisplay]);
-
-  
 
   let newMonthsToDisplay;
   const handleYearChange = async (event) => {
@@ -172,6 +145,7 @@ const Payment = () => {
       } else {
         console.error("Error fetching payment records");
       }
+    
     } catch (error) {
       console.error("Error fetching payment records:", error);
     }
@@ -255,13 +229,9 @@ const Payment = () => {
                       <input
                         type="hidden"
                         name="notify_url"
-                        value="https://3d24-103-21-165-209.ngrok.io/api/payment/payment-notification"
+                        value="https://7639-103-21-165-12.ngrok.io/api/payment/payment-notification"
                       />
-                      <input
-                        type="hidden"
-                        name="order_id"
-                        value={studentId}
-                      />
+                      <input type="hidden" name="order_id" value={studentId} />
                       <input type="hidden" name="items" value={item} />
                       <input type="hidden" name="amount" value={amount} />
                       <input type="hidden" name="currency" value="LKR" />
@@ -276,7 +246,11 @@ const Payment = () => {
                       <input type="hidden" name="address" value={address} />
                       <input type="hidden" name="city" value="Your_City" />
                       <input type="hidden" name="custom_1" value={month} />
-                      <input type="hidden" name="custom_2" value={selectedYear} />
+                      <input
+                        type="hidden"
+                        name="custom_2"
+                        value={selectedYear}
+                      />
                       <input
                         type="hidden"
                         name="country"
@@ -284,7 +258,6 @@ const Payment = () => {
                       />
                       <input type="hidden" name="hash" value={hashkey} />
                       <button type="submit">Pay Now</button>
-                      {/* <button type="button" onClick={() => makePayment(month)}>Test</button> */}
                     </form>
                   )}
                 </td>
