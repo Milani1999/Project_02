@@ -39,7 +39,6 @@ import TTimetable from "./components/Teacher/Pages/TTimetable";
 import StudentMain from "./components/Student/StudentMain/StudentMain";
 import ProfilePage from "./components/Student/Pages/ProfilePage";
 import TimeTable from "./components/Student/Pages/TimeTable";
-import Support from "./components/Administrator/pages/Support";
 import Marks from "./components/Student/Pages/Student_marks";
 import TClassMarks from "./components/Teacher/Pages/TClassMarks";
 import SNotices from "./components/Student/Pages/SNotices";
@@ -124,7 +123,6 @@ function App() {
             <Route path="News" element={<News />} />
             <Route path="Notices" element={<Notices />} />
             <Route path="Performance" element={<Performance />} />
-            <Route path="Support" element={<Support />} />
             <Route path="StaffAttendance" element={<StaffAttendance />} />
             <Route path="StudentAttendance" element={<StudentAttendance />} />
             <Route path="EditGallery" element={<EditGallery />} />

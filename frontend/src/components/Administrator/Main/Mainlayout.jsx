@@ -180,7 +180,7 @@ const MainLayout = () => {
               label: "Support",
             },
             {
-              key: "leaving",
+              key: "LeavingCertificate",
               icon: <RiHistoryLine className="fs-4" />,
               label: "Alumni",
               children: [

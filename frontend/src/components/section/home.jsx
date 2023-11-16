@@ -5,6 +5,7 @@ import image3 from "../../assets/ImageResources/im03.jpg";
 import image4 from "../../assets/ImageResources/im04.jpg";
 import { Link } from "react-router-dom";
 import { Element } from "react-scroll";
+import Chat from "../ChatBot/ChatBot";
 
 function Home() {
   return (
@@ -58,6 +59,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <Chat/>
     </Element>
   );
 }

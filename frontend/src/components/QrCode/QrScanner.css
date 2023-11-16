@@ -1,4 +1,14 @@
 .frame-size {
-    height: 400px;
-    width: 500px;
+    height: 470px;
+    width: 470px;
+    padding: 0%;
 }
+
+.popup-container-qr{
+    background-color: white;
+    border: 2px solid green;
+    padding: 35px;
+    text-align: center;
+    height: auto;
+    width: auto;
+  }

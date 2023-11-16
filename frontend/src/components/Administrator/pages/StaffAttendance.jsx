@@ -149,6 +149,14 @@ const StaffAttendance = () => {
   };
 
   const onTimeLateCounts = calculateOnTimeLateCounts();
+  
+  const getFormattedMaxDate = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = currentDate.getDate().toString().padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
   return (
     <Container>
       <div className="nine">
@@ -165,6 +173,8 @@ const StaffAttendance = () => {
             className="datepicker_attendance"
             type="date"
             id="datePicker"
+            min=""
+            max={getFormattedMaxDate()}
             value={selectedDate.toISOString().substr(0, 10)}
             onChange={(e) => setSelectedDate(new Date(e.target.value))}
           />
@@ -299,7 +309,7 @@ const StaffAttendance = () => {
             </tbody>
           </Table>
           <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
-            <div className="popup-background">
+            <div className="popup-background-staff">
               <div className="popup-container-delete">
               <h3>Delete Attendance</h3>
             <p>Are you sure you want to delete this staff attendance?</p>

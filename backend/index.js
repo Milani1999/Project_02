@@ -20,11 +20,15 @@ const reliefRoutes = require("./routes/reliefRoutes");
 const oldStaffRoutes = require("./routes/oldStaffRoutes");
 const staffNotices = require("./routes/sendnoticesRoutes");
 
+const paymentRoutes = require("./routes/paymentRoutes"); 
+const cors = require('cors');
 const app = express();
 dotenv.config();
 connectDB();
 
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("API is running in PORT ....");
@@ -53,6 +57,7 @@ app.use("/api/staffattendance", staffAttendanceRoutes);
 app.use("/api/reliefAllocation", reliefRoutes);
 app.use("/api/oldStaff", oldStaffRoutes);
 app.use("/api/staffNotices", staffNotices);
+app.use("/api/payment", paymentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
