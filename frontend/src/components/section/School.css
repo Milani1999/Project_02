@@ -1,19 +1,20 @@
 .SchoolComponent {
-  height: 530px;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.SchoolComponent .h1-heading {
+  text-align: center;
+  font-weight: bolder;
+  font-size: 40px;
+  color: rgb(6, 68, 46);
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .SchoolComponent .rounded {
   border: #3bd58d solid 2px;
   height: 340px;
-}
-
-.SchoolComponent .h1-heading {
-  text-align: center;
-  font-size: 40px;
-  color: rgb(6, 68, 46);
-  font-weight: bolder;
-  margin-top: 120px;
-  margin-bottom: 100px;
 }
 
 .SchoolComponent img {

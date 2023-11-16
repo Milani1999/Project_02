@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
-import Logo from '../../assets/ImageResources/uni2.png'
+import Logo from "../../assets/ImageResources/uni2.png";
+import {
+  Link as ScrollLink,
+  animateScroll as scroll,
+  Element,
+} from "react-scroll";
 
 const userInfo = localStorage.getItem("userInfo");
 const user = JSON.parse(userInfo);
@@ -35,22 +40,39 @@ class Navbar extends Component {
             onClick={this.handleClick}
           >
             <li>
-              <Link to="/">Home</Link>
+              <ScrollLink to="home" smooth={true} duration={200}>
+                Home
+              </ScrollLink>
             </li>
             <li>
-              <Link to="/About">About Us</Link>
+              <ScrollLink to="about" smooth={true} duration={200}>
+                About Us
+              </ScrollLink>
             </li>
+
             <li className="dropdown">
-              <Link to="/School" className="dropbtn">
+              <ScrollLink
+                to="our_school"
+                smooth={true}
+                duration={200}
+                className="dropbtn"
+              >
                 Our School <i className="fa fa-caret-down"></i>
-              </Link>
+              </ScrollLink>
               <div className="dropdown-content">
-                <Link to="/Events">News and Event</Link>
-                <Link to="/Gallery">Gallery</Link>
+                <ScrollLink to="news" smooth={true} duration={200}>
+                  News and Event{" "}
+                </ScrollLink>{" "}
+                <ScrollLink to="gallery" smooth={true} duration={200}>
+                  Gallery{" "}
+                </ScrollLink>{" "}
               </div>
             </li>
+
             <li>
-              <Link to="/Contact">Contact us</Link>
+              <ScrollLink to="contact" smooth={true} duration={200}>
+                Contact Us
+              </ScrollLink>
             </li>
             {LoggedIn ? (
               <Link to="/login">
