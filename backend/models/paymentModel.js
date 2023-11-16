@@ -35,7 +35,7 @@ const paymentSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      default: "Online Payment",
+      reeuired: true,
     },
     student: {
       type: mongoose.Schema.Types.ObjectId,

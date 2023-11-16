@@ -67,7 +67,7 @@ const Payment = () => {
 
   const [orderDetails, setOrderDetails] = useState({
     merchantId: process.env.REACT_APP_PAYHERE_MERCHANT_ID,
-    orderId: studentId,
+    orderId: objId,
     payHereAmount: "1000.00",
     currency: "LKR",
   });
@@ -169,12 +169,16 @@ const Payment = () => {
     const record = paymentRecords.find((r) => r.paymentMonth === details.month);
   
     // If a record is found, extract the paymentDateWithTime value
-    const paymentDateWithTime = record ? record.paymentDateWithTime : null;
+    const paymentDate = record ? new Date(record.paymentDateWithTime).toLocaleDateString() : null;
+    const paymentTime = record ? new Date(record.paymentDateWithTime).toLocaleTimeString() : null;
+    const paymentMethod = record ? record.paymentMethod : null;
   
     // Set the selected payment details, including paymentDateWithTime
     setSelectedPaymentDetails({
       ...details,
-      paymentDateWithTime,
+      paymentDate,
+      paymentTime,
+      paymentMethod,
     });
   
     // Open the popup
@@ -275,7 +279,7 @@ const Payment = () => {
                         name="notify_url"
                         value="https://61ba-103-21-165-127.ngrok.io/api/payment/payment-notification"
                       />
-                      <input type="hidden" name="order_id" value={studentId} />
+                      <input type="hidden" name="order_id" value={objId} />
                       <input type="hidden" name="items" value={item} />
                       <input type="hidden" name="amount" value={amount} />
                       <input type="hidden" name="currency" value="LKR" />
@@ -293,7 +297,7 @@ const Payment = () => {
                       <input
                         type="hidden"
                         name="custom_2"
-                        value={objId}
+                        value={studentId}
                       />
                       <input
                         type="hidden"
@@ -344,7 +348,9 @@ const Payment = () => {
           {/* Display payment details here */}
           <p>Month: {selectedPaymentDetails.month}</p>
           <p>Amount: {selectedPaymentDetails.amount}</p>
-          <p>Time And Date: {selectedPaymentDetails.paymentDateWithTime}</p>
+          <p>Date: {selectedPaymentDetails.paymentDate}</p>
+          <p>Time: {selectedPaymentDetails.paymentTime}</p>
+          <p>Payment Method: {selectedPaymentDetails.paymentMethod}</p>
         </div>
       )}
       <button onClick={closePopup}>Close</button>

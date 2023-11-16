@@ -10,6 +10,7 @@ const generateReferenceCode = (admissionNo) => {
   return `${admissionNo}_${timestamp}_${randomString}`;
 };
 
+
 const handlePaymentNotification = async (req, res) => {
   try {
     const {
@@ -21,8 +22,11 @@ const handlePaymentNotification = async (req, res) => {
       md5sig,
       custom_1,
       custom_2,
+      method,
+
     } = req.body;
     console.log(req.body);
+    const student = await Student.findOne({ custom_2 });
     const selectedYear = custom_1.substring(0, 4); 
     const month = custom_1.substring(5); 
     const secret = process.env.REACT_APP_PAYHERE_MERCHANT_SECRET;
@@ -46,7 +50,7 @@ const handlePaymentNotification = async (req, res) => {
         // Payment Success
         try {
           const existingPayment = await Payment.findOne({
-            admissionNo: order_id,
+            admissionNo: custom_2,
             paymentYear: selectedYear,
             paymentMonth: month,
           });
@@ -56,21 +60,22 @@ const handlePaymentNotification = async (req, res) => {
               .status(400)
               .json({ message: "Payment for this month already exists." });
           } else {
-            const referenceCode = generateReferenceCode(order_id);
+            const referenceCode = generateReferenceCode(custom_2);
 
             const newPayment = new Payment({
-              admissionNo: order_id,
+              admissionNo: custom_2,
               referenceCode,
               amount: payhere_amount,
               paymentDateWithTime: new Date(),
               purpose: "monthlyfee",
               paymentMonth: month,
               paymentYear: selectedYear,
-              paymentMethod: "Online Payment",
-              student: custom_2,
+              paymentMethod: method,
+              student: order_id,
             });
 
             await newPayment.save();
+            res.status(200).json({ message: "Payment Succefull" });
           }
         } catch (error) {
           console.error("Error making payment:", error);
