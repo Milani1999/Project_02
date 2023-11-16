@@ -168,7 +168,7 @@ const TeacherMainLayout = () => {
           )}
 
           <div className="d-flex gap-4 align-items-center">
-            <div className="position-relative">
+            {/* <div className="position-relative">
               {" "}
               <RiMoonLine className="fs-4" />
             </div>
@@ -181,7 +181,7 @@ const TeacherMainLayout = () => {
 
                 <IoIosNotifications className="fs-4" />
               </Button>
-            </div>
+            </div> */}
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>

@@ -217,7 +217,7 @@ const MainLayout = () => {
               <RiMoonLine className="fs-4" /> */}
               {/* <DarkMode /> */}
             </div>
-            <div className="position-relative">
+            {/* <div className="position-relative">
               {contextHolder}
               <Button type="primary" onClick={openNotification}>
                 <span className="badge bg-warning rounded-circle p-2 position-absolute">
@@ -226,7 +226,7 @@ const MainLayout = () => {
 
                 <IoIosNotifications className="fs-4" />
               </Button>
-            </div>
+            </div> */}
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>
