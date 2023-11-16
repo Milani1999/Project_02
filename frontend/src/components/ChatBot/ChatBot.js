@@ -4,14 +4,15 @@ class Chat extends Component {
   componentDidMount() {
     (function (d, m) {
       var kommunicateSettings = {
-        appId: "4bb08822ec7e9caf2d19a18b90648d79",
+        appId: process.env.REACT_APP_CHAT_BOT,
         popupWidget: true,
         automaticChatOpenOnNavigation: true,
       };
+      console.log(process.env.REACT_APP_CHAT_BOT);
       var s = document.createElement("script");
       s.type = "text/javascript";
       s.async = true;
-      s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+      s.src = process.env.REACT_APP_CHAT_SRC;
       var h = document.getElementsByTagName("head")[0];
       h.appendChild(s);
       window.kommunicate = m;
