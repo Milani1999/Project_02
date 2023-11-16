@@ -6,7 +6,6 @@ import Popup from "reactjs-popup";
 const Payment = () => {
   const [studentData, setStudentData] = useState([]);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState("");
   const [paymentRecords, setPaymentRecords] = useState([]);
   const [hashkey, setHashKey] = useState("");
   const [showPopup, setShopPopup] = useState(false);
@@ -162,7 +161,7 @@ const Payment = () => {
     generateHash().then((hash) => {
       setHashKey(hash);
     });
-  }, []);
+  });
 
   const openPopup = (details) => {
     // Find the payment record for the selected month
@@ -345,15 +344,33 @@ const Payment = () => {
     <div className="popup-container-delete">
       {selectedPaymentDetails && (
         <div>
-          {/* Display payment details here */}
-          <p>Month: {selectedPaymentDetails.month}</p>
-          <p>Amount: {selectedPaymentDetails.amount}</p>
-          <p>Date: {selectedPaymentDetails.paymentDate}</p>
-          <p>Time: {selectedPaymentDetails.paymentTime}</p>
-          <p>Payment Method: {selectedPaymentDetails.paymentMethod}</p>
+          <table class="table" style = {{textAlign: "left"}}>
+            <tbody>
+            <tr class="success">
+              <td>Month</td>
+              <td>:&nbsp; {selectedPaymentDetails.month}</td>
+            </tr>
+            <tr class="success">
+              <td>Amount</td>
+              <td>:&nbsp; {selectedPaymentDetails.amount}</td>
+            </tr>
+            <tr class="success">
+              <td>Date</td>
+              <td>:&nbsp; {selectedPaymentDetails.paymentDate}</td>
+            </tr>
+            <tr class="success">
+              <td>Time</td>
+              <td>:&nbsp; {selectedPaymentDetails.paymentTime}</td>
+            </tr>
+            <tr class="success">
+              <td>Payment Method</td>
+              <td>: &nbsp;{selectedPaymentDetails.paymentMethod}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       )}
-      <button onClick={closePopup}>Close</button>
+      <button type="button" class="btn btn-danger" onClick={closePopup}>Close</button>
     </div>
   </div>
 </Popup>
