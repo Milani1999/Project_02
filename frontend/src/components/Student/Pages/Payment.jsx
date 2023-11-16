@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import Popup from "reactjs-popup";
+import "./Payment.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Payment = () => {
   const [studentData, setStudentData] = useState([]);
