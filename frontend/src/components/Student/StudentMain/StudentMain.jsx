@@ -150,11 +150,11 @@ const StudentMain = () => {
           )}
 
           <div className="d-flex gap-4 align-items-center">
-            <div className="position-relative">
+            {/* <div className="position-relative">
               {" "}
               <RiMoonLine className="fs-4" />
-            </div>
-            <div className="position-relative">
+            </div> */}
+            {/* <div className="position-relative">
               {contextHolder}
               <Button type="primary" onClick={openNotification}>
                 <span className="badge bg-warning rounded-circle p-2 position-absolute">
@@ -163,7 +163,7 @@ const StudentMain = () => {
 
                 <IoIosNotifications className="fs-4" />
               </Button>
-            </div>
+            </div> */}
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>
