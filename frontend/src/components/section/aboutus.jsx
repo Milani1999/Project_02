@@ -2,9 +2,12 @@ import SupportEngine from "../SupportAssist/SupportEngine";
 import './Aboutus.css'
 import vision from '../../assets/ImageResources/vision.png'
 import  mission from '../../assets/ImageResources/mission.png'
+import { Element } from "react-scroll";
+
 
 function AboutUs() {
     return (
+        <Element name="about">
         <div className="container-sm-fluid">
             <SupportEngine />
             <div className="AboutComponent" id="AboutComponent">
@@ -41,6 +44,7 @@ function AboutUs() {
                 </div>
             </div>
         </div>
+        </Element>
     );
 }
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SupportEngine from "../SupportAssist/SupportEngine";
-import './School.css';
+import "./School.css";
+import { Element } from "react-scroll";
 
 function Popup({ content, closePopup }) {
   return (
@@ -80,26 +81,26 @@ function School() {
       imageUrl: "https://bootstrapious.com/i/snippets/sn-team/teacher-2.jpg",
     },
   ];
-  
 
   return (
-    <div className="SchoolComponent" id="SchoolComponent">
-      <h1 className="h1-heading">Messages</h1>
+    <Element name="our_school">
+      <div className="SchoolComponent" id="SchoolComponent">
+        <h1 className="h1-heading">Messages</h1>
 
-      <div className="container">
-        <div className="row text-center">
-          {messages.map((message, index) => (
-            <Card
-              key={index}
-              title={message.title}
-              content={message.content}
-              imageUrl={message.imageUrl}
-              
-            />
-          ))}
+        <div className="container">
+          <div className="row text-center">
+            {messages.map((message, index) => (
+              <Card
+                key={index}
+                title={message.title}
+                content={message.content}
+                imageUrl={message.imageUrl}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </Element>
   );
 }
 
