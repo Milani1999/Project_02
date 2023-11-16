@@ -10,13 +10,11 @@ import {
   faTwitter,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
-import SupportEngine from "../SupportAssist/SupportEngine";
 import "./Contactus.css";
 
 function ContactUs() {
   return (
     <div className="ContactUsComponent" id="ContactUsComponent">
-      <SupportEngine />
       <div className="row">
         <h1 className="h1-heading">Contact Us</h1>
         <div className="col-6">

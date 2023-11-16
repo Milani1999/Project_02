@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SupportEngine from "../SupportAssist/SupportEngine";
 import './School.css';
 
 function Popup({ content, closePopup }) {
@@ -33,7 +32,6 @@ function Card({ title, content, imageUrl }) {
 
   return (
     <div className="col-sm-4">
-      <SupportEngine />
       <div className="rounded shadow-sm py-4 px-4">
         <img
           src={imageUrl}

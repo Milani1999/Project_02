@@ -170,11 +170,6 @@ const MainLayout = () => {
               label: "Payments",
             },
             {
-              key: "Support",
-              icon: <RiMessage2Line className="fs-4" />,
-              label: "Support",
-            },
-            {
               key: "LeavingCertificate",
               icon: <RiHistoryLine className="fs-4" />,
               label: "Leaving",

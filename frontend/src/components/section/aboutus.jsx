@@ -1,4 +1,3 @@
-import SupportEngine from "../SupportAssist/SupportEngine";
 import './Aboutus.css'
 import vision from '../../assets/ImageResources/vision.png'
 import  mission from '../../assets/ImageResources/mission.png'
@@ -6,7 +5,6 @@ import  mission from '../../assets/ImageResources/mission.png'
 function AboutUs() {
     return (
         <div className="container-sm-fluid">
-            <SupportEngine />
             <div className="AboutComponent" id="AboutComponent">
                 <h1 className="h1-heading">Our Vision and Mission</h1>
 
