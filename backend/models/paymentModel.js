@@ -37,6 +37,10 @@ const paymentSchema = new mongoose.Schema(
       type: String,
       default: "Online Payment",
     },
+    student: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+    },
   },
   {
     timestamps: true,

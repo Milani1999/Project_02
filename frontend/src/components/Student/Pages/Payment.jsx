@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
+import Popup from "reactjs-popup";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Payment = () => {
   const [studentData, setStudentData] = useState([]);
@@ -7,6 +9,9 @@ const Payment = () => {
   const [selectedMonth, setSelectedMonth] = useState("");
   const [paymentRecords, setPaymentRecords] = useState([]);
   const [hashkey, setHashKey] = useState("");
+  const [showPopup, setShopPopup] = useState(false);
+  const [selectedPaymentDetails, setSelectedPaymentDetails] = useState(null);
+
 
   const [monthsToDisplay, setMonthsToDisplay] = useState(
     Array.from({ length: new Date().getMonth() + 1 }, (_, i) =>
@@ -159,9 +164,32 @@ const Payment = () => {
     });
   }, []);
 
+  const openPopup = (details) => {
+    // Find the payment record for the selected month
+    const record = paymentRecords.find((r) => r.paymentMonth === details.month);
+  
+    // If a record is found, extract the paymentDateWithTime value
+    const paymentDateWithTime = record ? record.paymentDateWithTime : null;
+  
+    // Set the selected payment details, including paymentDateWithTime
+    setSelectedPaymentDetails({
+      ...details,
+      paymentDateWithTime,
+    });
+  
+    // Open the popup
+    setShopPopup(true);
+  };
+  
+  
+  const closePopup = () => {
+    setShopPopup(false);
+  };
+  
+
   return (
     <div>
-       <div class="nine">
+      <div class="nine">
         <h1>
           STUDENTS<span>Payment Records for {selectedYear} </span>
         </h1>
@@ -177,7 +205,6 @@ const Payment = () => {
           </option>
         ))}
       </select>
-
       <Table className="styled-table" striped bordered hover>
         <thead>
           <tr>
@@ -193,29 +220,46 @@ const Payment = () => {
             const record = paymentRecords.find((r) => r.paymentMonth === month);
             const item = `School Fee For ${selectedYear}_${month}`;
             const amount = "1000.00";
-
+            const monthAndYear = [selectedYear,month];
             return (
               <tr key={month}>
                 <td>{month}</td>
-                <td>{record ? new Date(record.paymentDateWithTime).toLocaleDateString() : "-"}</td>
-                <td>{record ? new Date(record.paymentDateWithTime).toLocaleTimeString() : "-"}</td>
                 <td>
-                  {/* {record && record.pdfUrl ? <a href={record.pdfUrl} target="_blank" rel="noopener noreferrer">Download PDF</a> : '-'} */}
-                  -
+                  {record
+                    ? new Date(record.paymentDateWithTime).toLocaleDateString()
+                    : "-"}
+                </td>
+                <td>
+                  {record
+                    ? new Date(record.paymentDateWithTime).toLocaleTimeString()
+                    : "-"}
+                </td>
+                <td>
+                  {record ? (
+                     <Button variant="" onClick={() => openPopup({ month, amount })}>
+                     📝📋
+                   </Button>
+                  ) : (
+                    "-"
+                  )}
                 </td>
                 <td>
                   {record ? (
                     <span>✅</span>
-                  //   <span className="label label-primary">
-                  //   &nbsp;&nbsp;&nbsp;&nbsp; Paid ✅
-                  //   &nbsp;&nbsp;&nbsp;&nbsp;
-                  // </span>
                   ) : (
+                    //   <span className="label label-primary">
+                    //   &nbsp;&nbsp;&nbsp;&nbsp; Paid ✅
+                    //   &nbsp;&nbsp;&nbsp;&nbsp;
+                    // </span>
                     <form
                       method="post"
                       action="https://sandbox.payhere.lk/pay/checkout"
                     >
-                      <input type="hidden" name="merchant_id" value="1224594" />
+                      <input
+                        type="hidden"
+                        name="merchant_id"
+                        value={process.env.REACT_APP_PAYHERE_MERCHANT_ID}
+                      />
                       <input
                         type="hidden"
                         name="return_url"
@@ -229,7 +273,7 @@ const Payment = () => {
                       <input
                         type="hidden"
                         name="notify_url"
-                        value="https://c236-103-21-165-167.ngrok.io/api/payment/payment-notification"
+                        value="https://61ba-103-21-165-127.ngrok.io/api/payment/payment-notification"
                       />
                       <input type="hidden" name="order_id" value={studentId} />
                       <input type="hidden" name="items" value={item} />
@@ -245,11 +289,11 @@ const Payment = () => {
                       <input type="hidden" name="phone" value={phone} />
                       <input type="hidden" name="address" value={address} />
                       <input type="hidden" name="city" value="Your_City" />
-                      <input type="hidden" name="custom_1" value={month} />
+                      <input type="hidden" name="custom_1" value={monthAndYear} />
                       <input
                         type="hidden"
                         name="custom_2"
-                        value={selectedYear}
+                        value={objId}
                       />
                       <input
                         type="hidden"
@@ -258,30 +302,30 @@ const Payment = () => {
                       />
                       <input type="hidden" name="hash" value={hashkey} />
                       <button
-                      className="btn btn-info"
+                        className="btn btn-info"
                         type="submit"
                         style={{
-                        //   display: "flex",
-                        //   justifyContent: "center",
-                        //   alignItems: "center",
-                          width: "40%",
-                        //   padding: "3px",
+                          //   display: "flex",
+                          //   justifyContent: "center",
+                          //   alignItems: "center",
+                          width: "50%",
+                          //   padding: "3px",
                           marginLeft: "30%", // Add padding for better appearance
                         }}
                       >
-                        {/* Pay Now */}
-                        {/* <img src="https://blog.payhere.lk/wp-content/uploads/2022/08/Pay-with-Payhere-300x80.png" alt="" /> */}
-                        <spam>Pay with </spam><img src="https://www.pngkey.com/png/full/512-5124189_payhere-sri-lankas-most-affordable-innovative-payment-audience.png"   
-                        style={{
-                        //   display: "flex",
-                        //   justifyContent: "center",
-                        //   alignItems: "center",
-                        height: "15px",
-                          width: "60%",
-                        //   padding: "3px",
-                        //   marginLeft: "35%", // Add padding for better appearance
-                        }}
-                        alt="" 
+                        <spam>Pay with </spam>
+                        <img
+                          src="https://www.pngkey.com/png/full/512-5124189_payhere-sri-lankas-most-affordable-innovative-payment-audience.png"
+                          style={{
+                            //   display: "flex",
+                            //   justifyContent: "center",
+                            //   alignItems: "center",
+                            height: "15px",
+                            width: "60%",
+                            //   padding: "3px",
+                            //   marginLeft: "35%", // Add padding for better appearance
+                          }}
+                          alt=""
                         />
                       </button>
                     </form>
@@ -292,6 +336,22 @@ const Payment = () => {
           })}
         </tbody>
       </Table>
+      <Popup open={showPopup}>
+  <div className="popup-background-student">
+    <div className="popup-container-delete">
+      {selectedPaymentDetails && (
+        <div>
+          {/* Display payment details here */}
+          <p>Month: {selectedPaymentDetails.month}</p>
+          <p>Amount: {selectedPaymentDetails.amount}</p>
+          <p>Time And Date: {selectedPaymentDetails.paymentDateWithTime}</p>
+        </div>
+      )}
+      <button onClick={closePopup}>Close</button>
+    </div>
+  </div>
+</Popup>
+
     </div>
   );
 };
