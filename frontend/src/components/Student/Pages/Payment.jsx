@@ -120,8 +120,7 @@ const Payment = () => {
         new Date(newSelectedYear, i).toLocaleString("en-US", { month: "long" })
       );
     }
-
-    // Update the monthsToDisplay state
+  
     setMonthsToDisplay(newMonthsToDisplay);
 
     // Fetch payment records for the selected year
@@ -169,10 +168,8 @@ const Payment = () => {
   });
 
   const openPopup = (details) => {
-    // Find the payment record for the selected month
     const record = paymentRecords.find((r) => r.paymentMonth === details.month);
 
-    // If a record is found, extract the paymentDateWithTime value
     const paymentDate = record
       ? new Date(record.paymentDateWithTime).toLocaleDateString("en-GB")
       : null;
@@ -181,7 +178,6 @@ const Payment = () => {
       : null;
     const paymentMethod = record ? record.paymentMethod : null;
 
-    // Set the selected payment details, including paymentDateWithTime
     setSelectedPaymentDetails({
       ...details,
       paymentDate,
@@ -269,10 +265,6 @@ const Payment = () => {
                     {record ? (
                       <span>✅</span>
                     ) : (
-                      //   <span className="label label-primary">
-                      //   &nbsp;&nbsp;&nbsp;&nbsp; Paid ✅
-                      //   &nbsp;&nbsp;&nbsp;&nbsp;
-                      // </span>
                       <form
                         method="post"
                         action="https://sandbox.payhere.lk/pay/checkout"
