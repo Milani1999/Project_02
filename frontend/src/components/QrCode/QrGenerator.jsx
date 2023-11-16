@@ -21,7 +21,7 @@ function QrGenerator(props) {
   const generateQRDataURL = async (data) => {
     const options = {
       type: "image/png", // Generate PNG format
-      quality: 0.92, // Adjust quality as needed (0.0 to 1.0)
+      quality: 0.92, // Can Adjust quality (0.0 to 1.0)
       margin: 1,
       width: 200,
       errorCorrectionLevel: "M", // L, M, Q, H

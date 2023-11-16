@@ -79,7 +79,6 @@ const StudentAttendance = () => {
         alert("Error in deleting. No record found.");
       }
 
-      // Refresh attendance data after the change
       fetchStudentAttendance();
     } catch (error) {
       console.error("Error updating attendance:", error);
@@ -112,7 +111,7 @@ const StudentAttendance = () => {
           },
         });
 
-        chart.update(); // Force the chart to update
+        chart.update(); 
       }
     }, [data]);
 

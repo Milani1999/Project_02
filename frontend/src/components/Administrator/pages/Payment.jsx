@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Table ,Button} from "react-bootstrap";
+import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import LoadingSpinner from "../../Loading/Loading";
 import Popup from "reactjs-popup";
 
@@ -72,12 +72,9 @@ const AdminPaymentRecords = () => {
       : Array.from({ length: 12 }, (_, index) => index + 1);
 
   const openPopup = (details) => {
-
-    // Find the payment record for the selected month
     const record = details.payment;
     const stuDetails = details.student;
 
-    // If a record is found, extract the paymentDateWithTime value
     const paymentDate = record
       ? new Date(record.paymentDateWithTime).toLocaleDateString("en-GB")
       : null;
@@ -91,7 +88,6 @@ const AdminPaymentRecords = () => {
     const fullname = stuDetails ? stuDetails.fullname : null;
     const grade = stuDetails ? stuDetails.grade : null;
 
-    // Set the selected payment details, including paymentDateWithTime
     setSelectedPaymentDetails({
       month,
       amount,
@@ -220,7 +216,7 @@ const AdminPaymentRecords = () => {
                         {payment ? (
                           <Button
                             variant=""
-                            onClick={() => openPopup({ payment,student})}
+                            onClick={() => openPopup({ payment, student })}
                           >
                             📝📋
                           </Button>
@@ -249,7 +245,7 @@ const AdminPaymentRecords = () => {
               <div>
                 <table class="table" style={{ textAlign: "left" }}>
                   <tbody>
-                  <tr class="success">
+                    <tr class="success">
                       <td>Fullname</td>
                       <td>: &nbsp;{selectedPaymentDetails.fullname}</td>
                     </tr>

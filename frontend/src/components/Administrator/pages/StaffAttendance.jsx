@@ -29,8 +29,6 @@ const StaffAttendance = () => {
       });
       setShowDeletePopup(false);
       fetchStaffAttendance();
-
-      // alert("Student attendance deleted successfully.");
     } catch (error) {
       console.error(error);
       alert("Failed to delete staff attendance");
@@ -41,10 +39,11 @@ const StaffAttendance = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `/api/staffattendance/getByDate?date=${selectedDate.toISOString().substr(0, 10)}`
+        `/api/staffattendance/getByDate?date=${selectedDate
+          .toISOString()
+          .substr(0, 10)}`
       );
       const attendanceData = await response.json();
-
 
       setAttendanceData(attendanceData);
       setIsLoading(false);
@@ -79,13 +78,11 @@ const StaffAttendance = () => {
         alert("Error in deleting. No record found.");
       }
 
-      // Refresh attendance data after the change
       fetchStaffAttendance();
     } catch (error) {
       console.error("Error updating attendance:", error);
     }
   };
-
 
   const PieChart = ({ data, width, height }) => {
     const chartRef = useRef();
@@ -113,7 +110,7 @@ const StaffAttendance = () => {
           },
         });
 
-        chart.update(); // Force the chart to update
+        chart.update();
       }
     }, [data]);
 
@@ -149,7 +146,7 @@ const StaffAttendance = () => {
   };
 
   const onTimeLateCounts = calculateOnTimeLateCounts();
-  
+
   const getFormattedMaxDate = () => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -187,7 +184,7 @@ const StaffAttendance = () => {
         <LoadingSpinner />
       ) : (
         <div>
-          {/* <Row>
+          <Row>
             <Col md={3}>
               <PieChart
                 data={{
@@ -206,46 +203,25 @@ const StaffAttendance = () => {
             <Col md={6}>
               <Clock />
             </Col>
-          </Row> */}
-          <Row>
-        <Col md={3}>
-          <PieChart
-            data={{
-              labels: ["Present", "Absent"],
-              datasets: [
-                {
-                  data: [presentCount, absentCount],
-                  backgroundColor: ["#36A2EB", "#d9534f"],
-                },
-              ],
-            }}
-            width={100}
-            height={100}
-          />
-        </Col>
-        <Col md={6}>
-          <Clock />
-        </Col>
-        <Col md={3}>
-          <PieChart
-            data={{
-              labels: ["On-Time", "Late"],
-              datasets: [
-                {
-                  data: [
-                    onTimeLateCounts.onTimeCount,
-                    onTimeLateCounts.lateCount,
+            <Col md={3}>
+              <PieChart
+                data={{
+                  labels: ["On-Time", "Late"],
+                  datasets: [
+                    {
+                      data: [
+                        onTimeLateCounts.onTimeCount,
+                        onTimeLateCounts.lateCount,
+                      ],
+                      backgroundColor: ["#5cb85c", "#d9534f"],
+                    },
                   ],
-                  backgroundColor: ["#5cb85c", "#d9534f"],
-                },
-              ],
-            }}
-            width={100}
-            height={100}
-            
-          />
-        </Col>
-      </Row>
+                }}
+                width={100}
+                height={100}
+              />
+            </Col>
+          </Row>
           <Table className="styled-table" striped bordered hover>
             <thead>
               <tr>
@@ -311,23 +287,27 @@ const StaffAttendance = () => {
           <Popup open={showDeletePopup} onClose={handleCloseDeletePopup}>
             <div className="popup-background-staff">
               <div className="popup-container-delete">
-              <h3>Delete Attendance</h3>
-            <p>Are you sure you want to delete this staff attendance?</p>
-            {
-              <div>
-                <p>{deleteName}</p>
-              </div>
-            }
-            <Button variant="danger" onClick={confirmDelete} className="mx-2">
-              Delete
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={handleCloseDeletePopup}
-              className="mx-2"
-            >
-              Cancel
-            </Button>
+                <h3>Delete Attendance</h3>
+                <p>Are you sure you want to delete this staff attendance?</p>
+                {
+                  <div>
+                    <p>{deleteName}</p>
+                  </div>
+                }
+                <Button
+                  variant="danger"
+                  onClick={confirmDelete}
+                  className="mx-2"
+                >
+                  Delete
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={handleCloseDeletePopup}
+                  className="mx-2"
+                >
+                  Cancel
+                </Button>
               </div>
             </div>
           </Popup>
