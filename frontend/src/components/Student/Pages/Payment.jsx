@@ -168,7 +168,7 @@ const Payment = () => {
     const record = paymentRecords.find((r) => r.paymentMonth === details.month);
   
     // If a record is found, extract the paymentDateWithTime value
-    const paymentDate = record ? new Date(record.paymentDateWithTime).toLocaleDateString() : null;
+    const paymentDate = record ? new Date(record.paymentDateWithTime).toLocaleDateString("en-GB") : null;
     const paymentTime = record ? new Date(record.paymentDateWithTime).toLocaleTimeString() : null;
     const paymentMethod = record ? record.paymentMethod : null;
   
@@ -229,7 +229,7 @@ const Payment = () => {
                 <td>{month}</td>
                 <td>
                   {record
-                    ? new Date(record.paymentDateWithTime).toLocaleDateString()
+                    ? new Date(record.paymentDateWithTime).toLocaleDateString("en-GB")
                     : "-"}
                 </td>
                 <td>

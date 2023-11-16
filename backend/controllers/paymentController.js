@@ -121,7 +121,31 @@ const getPaymentRecords = asyncHandler(async (req, res) => {
   }
 });
 
+const getPaymentByDate = asyncHandler(async (req, res) => {
+  const { year, month, grade } = req.query;
+
+  try {
+    const students = await Student.find({ grade });
+    const paymentPromises = students.map(async (student) => {
+      const payment = await Payment.findOne({
+        admissionNo: student.admission_no,
+        paymentYear: year,
+        paymentMonth: month,
+      });
+      return { student, payment };
+    });
+
+    const paymentData = await Promise.all(paymentPromises);
+
+    res.json(paymentData);
+  } catch (error) {
+    console.error("Error fetching student payments:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = {
-  getPaymentRecords,
+  getPaymentByDate,
   handlePaymentNotification,
+  getPaymentRecords,
 };

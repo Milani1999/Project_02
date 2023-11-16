@@ -55,6 +55,7 @@ import StaffLeaving from "./components/Administrator/pages/StaffLeaving";
 import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
 import ServiceLetter from "./components/Administrator/pages/ServiceLetter";
 import SendNotices from "./components/Teacher/Pages/SendNotices";
+import AdminPaymentRecords from "./components/Administrator/pages/Payment";
 
 function App() {
   return (
@@ -129,6 +130,7 @@ function App() {
             <Route path="StudentLeaving" element={<StudentLeaving />} />
             <Route path="StaffLeaving" element={<StaffLeaving />} />
             <Route path="change-password" element={<ChangePassword />} />
+            <Route path="payment" element={<AdminPaymentRecords/>} />
           </Route>
 
           <Route
