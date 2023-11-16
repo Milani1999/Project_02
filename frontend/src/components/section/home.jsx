@@ -4,10 +4,12 @@ import image2 from "../../assets/ImageResources/im02.jpg";
 import image3 from "../../assets/ImageResources/im03.jpg";
 import image4 from "../../assets/ImageResources/im04.jpg";
 import { Link } from "react-router-dom";
+import Chat from "../ChatBot/ChatBot";
 
 function Home() {
   return (
     <div className="container-xl-fluid">
+      <Chat/>
       <div className="HomeComponent" id="HomeComponent">
         <div id="myCarousel" className="carousel slide" data-ride="carousel">
           <ol className="carousel-indicators">

@@ -266,17 +266,17 @@ const Payment = () => {
                       <input
                         type="hidden"
                         name="return_url"
-                        value="http://localhost:3000/Student/Payment"
+                        value="https://edutrack-uef1.onrender.com/Student/Payment"
                       />
                       <input
                         type="hidden"
                         name="cancel_url"
-                        value="https://www.uissrilanka.com"
+                        value="https://edutrack-uef1.onrender.com/Student/Payment"
                       />
                       <input
                         type="hidden"
                         name="notify_url"
-                        value="https://61ba-103-21-165-127.ngrok.io/api/payment/payment-notification"
+                        value="https://edutrack-uef1.onrender.com/api/payment/payment-notification"
                       />
                       <input type="hidden" name="order_id" value={objId} />
                       <input type="hidden" name="items" value={item} />
