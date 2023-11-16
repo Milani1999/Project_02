@@ -3,7 +3,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
   AiOutlineUser,
-  AiOutlineFund,
+  // AiOutlineFund,
 } from "react-icons/ai";
 import {
   RiCalendarCheckFill,
@@ -52,6 +52,11 @@ const StudentMain = () => {
   if (userInfo) {
     LoggedIn = true;
   }
+
+  const handleSignOut = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/Login");
+  };
 
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
@@ -193,11 +198,8 @@ const StudentMain = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    onClick={() => {
-                      localStorage.removeItem("userInfo");
-                      navigate("/Login");
-                      window.location.reload();
-                    }}
+                    onClick={handleSignOut}
+                    to="/login"
                   >
                     Signout
                   </Link>

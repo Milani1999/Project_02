@@ -43,6 +43,7 @@ const ProfilePage = () => {
     admission_year,
     admitted_grade,
     grade,
+    email,
     extra_activities,
     conduct,
     remark,
@@ -54,6 +55,7 @@ const ProfilePage = () => {
     { label: "Date Of Birth", value: dateOfBirth.substring(0, 10) },
     { label: "Address", value: address },
     { label: "Gender", value: gender },
+    { label: "Email", value: email },
   ];
 
   const parentDetails = [

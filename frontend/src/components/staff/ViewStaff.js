@@ -52,24 +52,23 @@ const ViewStaff = () => {
     setShowEditPopup(false);
   };
 
+  const cloudinary_url = process.env.REACT_APP_CLOUDINARY_URL;
+  const cloud_name = process.env.REACT_APP_CLOUD_NAME;
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      setIsLoading(true);
       const { _id, picture, ...staffData } = selectedStaff;
 
       if (imageFile) {
         const data = new FormData();
         data.append("file", imageFile);
         data.append("upload_preset", "edutrack");
-        data.append("cloud_name", "dprnxaqxi");
-        const response = await fetch(
-          "https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload",
-          {
-            method: "post",
-            body: data,
-          }
-        );
+        data.append("cloud_name", cloud_name);
+        const response = await fetch(cloudinary_url, {
+          method: "post",
+          body: data,
+        });
         const cloudinaryData = await response.json();
         staffData.picture = cloudinaryData.url.toString();
       } else {
@@ -79,13 +78,14 @@ const ViewStaff = () => {
       await axios.put(`/api/staff/${_id}`, staffData);
       setShowEditPopup(false);
       fetchStaffData();
+      setIsLoading(true);
       alert("Staff member updated successfully.");
       setImageFile(null);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       console.error(error);
-      alert("Please fill all the fields");
+      alert(error.response.data.message);
     }
   };
 
@@ -111,6 +111,49 @@ const ViewStaff = () => {
       alert("Failed to delete staff member.");
     }
   };
+
+  const confirmLeave = async () => {
+    try {
+      const { _id } = selectedStaff;
+      await axios.delete(`/api/oldstaff/${_id}`);
+      setShowDeletePopup(false);
+      fetchStaffData();
+      alert("Staff moved to old staff list successfully.");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to move staff");
+    }
+  };
+
+  let view_staff_1 = [];
+  let view_staff_2 = [];
+  let view_staff_3 = [];
+
+  if (selectedStaff) {
+    view_staff_1 = [
+      { label: "Full Name", value: selectedStaff.fullname },
+      { label: "First Name", value: selectedStaff.first_name },
+      { label: "Last Name", value: selectedStaff.last_name },
+      { label: "Address", value: selectedStaff.address },
+      {
+        label: "Date of Birth",
+        value: new Date(selectedStaff.dateOfBirth).toLocaleDateString(),
+      },
+      { label: "Gender", value: selectedStaff.gender },
+    ];
+
+    view_staff_2 = [
+      { label: "Phone", value: selectedStaff.phone },
+      { label: "Email", value: selectedStaff.email },
+    ];
+
+    view_staff_3 = [
+      { label: "Employee ID", value: selectedStaff.employee_id },
+      { label: "Role", value: selectedStaff.role },
+      { label: "EPF No", value: selectedStaff.epf_No },
+      { label: "Subjects Taught", value: selectedStaff.subjects_taught },
+    ];
+  }
 
   return (
     <div>
@@ -197,88 +240,61 @@ const ViewStaff = () => {
               {selectedStaff && (
                 <div className="popup-container-view-staff">
                   <table className="viewTableStaff">
-                    <tr>
-                      <td colSpan={2} style={{ textAlign: "center" }}>
+                    <div style={{ textAlign: "right" }}>
+                      <button
+                        onClick={handleCloseViewPopup}
+                        className="button-close-view-staff"
+                      >
+                        X
+                      </button>
+                    </div>
+                    <div className="row">
+                      <div className="col-7">
                         <img
                           src={selectedStaff.picture}
                           alt="Profile"
                           width="100"
                           height="100"
+                          className="mt-3"
                         />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Employee ID</td>
-                      <td>{selectedStaff.employee_id}</td>
-                    </tr>
-                    <tr>
-                      <td>Full Name</td>
-                      <td>{selectedStaff.fullname}</td>
-                    </tr>
-                    <tr>
-                      <td>First Name</td>
-                      <td>{selectedStaff.first_name}</td>
-                    </tr>
-                    <tr>
-                      <td>Last Name</td>
-                      <td>{selectedStaff.last_name}</td>
-                    </tr>
-                    <tr>
-                      <td>Address</td>
-                      <td>{selectedStaff.address}</td>
-                    </tr>
-                    <tr>
-                      <td>Date of Birth</td>
-                      <td>
-                        {new Date(
-                          selectedStaff.dateOfBirth
-                        ).toLocaleDateString()}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Phone</td>
-                      <td>{selectedStaff.phone}</td>
-                    </tr>
-                    <tr>
-                      <td>Gender</td>
-                      <td>{selectedStaff.gender}</td>
-                    </tr>
-                    <tr>
-                      <td>Role</td>
-                      <td>{selectedStaff.role}</td>
-                    </tr>
-                    <tr>
-                      <td>Email</td>
-                      <td>{selectedStaff.email}</td>
-                    </tr>
-                    <tr>
-                      <td>EPF No</td>
-                      <td>{selectedStaff.epf_No}</td>
-                    </tr>
-                    <tr>
-                      <td>Subjects Taught</td>
-                      <td>{selectedStaff.subjects_taught}</td>
-                    </tr>
-                    {/*--------Start--------QR Generator for each staffs according to their Employee ID */}
-                    <tr>
-                      <td colSpan={2}>
-                        <div>
+                        <h3>Personal Details</h3>
+                        <div className="row1">
+                          {view_staff_1.map((staff, index) => (
+                            <tr key={index}>
+                              <td>{staff.label}</td>
+                              <td>{staff.value}</td>
+                            </tr>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="col-5">
+                        <h3>Contact details</h3>
+                        <div className="row2">
+                          {view_staff_2.map((staff, index) => (
+                            <tr key={index}>
+                              <td>{staff.label}</td>
+                              <td>{staff.value}</td>
+                            </tr>
+                          ))}
+                        </div>
+
+                        <h3>Academic Details</h3>
+                        <div className="row2">
+                          {view_staff_3.map((staff, index) => (
+                            <tr key={index}>
+                              <td>{staff.label}</td>
+                              <td>{staff.value}</td>
+                            </tr>
+                          ))}
+                        </div>
+
+                        {/*--------Start--------QR Generator for each staffs according to their Employee ID */}
+                        <div className="QR">
                           {<QrGenerator userID={selectedStaff.employee_id} />}
                         </div>
-                      </td>
-                    </tr>
-                    {/*--------End--------QR Generator */}
-                    <tr>
-                      <td colSpan={2} style={{ textAlign: "center" }}>
-                        <Button
-                          variant="secondary"
-                          onClick={handleCloseViewPopup}
-                          className="mt-0"
-                        >
-                          Close
-                        </Button>
-                      </td>
-                    </tr>
+                        {/*--------End--------QR Generator */}
+                      </div>{" "}
+                    </div>
                   </table>
                 </div>
               )}
@@ -562,6 +578,13 @@ const ViewStaff = () => {
                   <br />
                   Full Name : {selectedStaff.fullname}
                   <br />
+                  <Button
+                    variant="primary"
+                    onClick={confirmLeave}
+                    className="mx-3 mt-3"
+                  >
+                    Leave
+                  </Button>
                   <Button
                     variant="danger"
                     onClick={confirmDelete}

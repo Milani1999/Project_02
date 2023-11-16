@@ -54,6 +54,11 @@ const MainLayout = () => {
     LoggedIn = true;
   }
 
+  const handleSignOut = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/Login");
+  };
+
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -170,9 +175,27 @@ const MainLayout = () => {
               label: "Payments",
             },
             {
+              key: "Support",
+              icon: <RiMessage2Line className="fs-4" />,
+              label: "Support",
+            },
+            {
               key: "LeavingCertificate",
               icon: <RiHistoryLine className="fs-4" />,
-              label: "Leaving",
+              label: "Alumni",
+              children: [
+                {
+                  key: "StaffLeaving",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Staff",
+                },
+
+                {
+                  key: "StudentLeaving",
+                  icon: <AiOutlineUser className="fs-4" />,
+                  label: "Student",
+                },
+              ],
             },
           ]}
         />
@@ -243,11 +266,8 @@ const MainLayout = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    onClick={() => {
-                      localStorage.removeItem("userInfo");
-                      navigate("/Login");
-                      window.location.reload();
-                    }}
+                    onClick={handleSignOut}
+                    to="/login"
                   >
                     Signout
                   </Link>

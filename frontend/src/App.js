@@ -47,10 +47,14 @@ import StudentAttendance from "./components/Administrator/pages/StudentAttendanc
 import ViewStudentAttendance from "./components/Student/Pages/ViewStudentAttendance";
 import Gallery from "./components/section/Gallery";
 import EditGallery from "./components/Administrator/pages/EditGallery";
-import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
 import Payment from "./components/Student/Pages/Payment";
 import ResetPassword from "./components/signInFormComponent/ResetPassword";
 import ChangePassword from "./components/signInFormComponent/ChangePwd";
+import StudentLeaving from "./components/Administrator/pages/StudentLeaving";
+import StaffLeaving from "./components/Administrator/pages/StaffLeaving";
+import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
+import ServiceLetter from "./components/Administrator/pages/ServiceLetter";
+import SendNotices from "./components/Teacher/Pages/SendNotices";
 
 function App() {
   return (
@@ -71,6 +75,11 @@ function App() {
             path="/reset-password/:id/:token"
             element={<ResetPassword />}
           ></Route>
+          <Route
+            path="/Student/LeavingCertificate"
+            element={<LeavingCertificate />}
+          />
+          <Route path="/Staff/ServiceLetter" element={<ServiceLetter />} />
 
           <Route
             path="/Teacher"
@@ -92,6 +101,7 @@ function App() {
             <Route path="TClassMarks" element={<TClassMarks />} />
             <Route path="Performance" element={<Performance />} />
             <Route path="change-password" element={<ChangePassword />} />
+            <Route path="SendNotices" element={<SendNotices />} />
           </Route>
 
           <Route
@@ -116,7 +126,8 @@ function App() {
             <Route path="StaffAttendance" element={<StaffAttendance />} />
             <Route path="StudentAttendance" element={<StudentAttendance />} />
             <Route path="EditGallery" element={<EditGallery />} />
-            <Route path="LeavingCertificate" element={<LeavingCertificate />} />
+            <Route path="StudentLeaving" element={<StudentLeaving />} />
+            <Route path="StaffLeaving" element={<StaffLeaving />} />
             <Route path="change-password" element={<ChangePassword />} />
           </Route>
 
@@ -179,4 +190,4 @@ function FooterRoutes() {
   return <React.Fragment>{excludeFooter && <Footer />}</React.Fragment>;
 }
 
-export default App;
+export default App;

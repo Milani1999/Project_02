@@ -48,8 +48,13 @@ const TeacherMainLayout = () => {
     LoggedIn = true;
   }
 
+  const handleSignOut = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/Login");
+  };
+
   return (
-    <Layout /* onContextMenu={(e) => e.preventDefault()} */>
+    <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
@@ -121,11 +126,22 @@ const TeacherMainLayout = () => {
                 },
               ],
             },
-
             {
-              key: "TNotices",
-              icon: <FaClipboardList className="fs-4" />,
+              key: "notice",
+              icon: <AiOutlineFund className="fs-4" />,
               label: "Notices",
+              children: [
+                {
+                  key: "TNotices",
+                  icon: <FaClipboardList className="fs-4" />,
+                  label: "Notices",
+                },
+                {
+                  key: "SendNotices",
+                  icon: <FaClipboardList className="fs-4" />,
+                  label: "Send Notices",
+                },
+              ],
             },
             {
               key: "TCalendar",
@@ -200,11 +216,8 @@ const TeacherMainLayout = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    onClick={() => {
-                      localStorage.removeItem("userInfo");
-                      navigate("/Login");
-                      window.location.reload();
-                    }}
+                    onClick={handleSignOut}
+                    to="/login"
                   >
                     Signout
                   </Link>

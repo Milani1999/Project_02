@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
+import { Element } from "react-scroll";
 
 import "./Gallery.css";
 
@@ -15,7 +16,8 @@ function Gallery() {
 
   const fetchImages = async () => {
     try {
-      const response = await axios.get("/api/gallery/get"); 
+      const response = await axios.get("/api/gallery/get");
+      console.log("Response", response);
       setImageList(response.data);
     } catch (error) {
       console.error(error);
@@ -59,23 +61,25 @@ function Gallery() {
   };
 
   return (
-    <div className="GalleryComponent" id="GalleryComponent">
-      <div className="row">
-        <h1 className="h1-heading">Gallery</h1>
+    <Element name="gallery">
+      <div className="GalleryComponent" id="GalleryComponent">
+        <div className="row">
+          <h1 className="h1-heading">Gallery</h1>
+        </div>
+        <Slider {...settings}>
+          {imageList.map((image) => (
+            <div key={image._id} className="galleryimg">
+              <img
+                className="img-fluid"
+                width={500}
+                src={image.image}
+                alt="Gallery"
+              />
+            </div>
+          ))}
+        </Slider>
       </div>
-      <Slider {...settings}>
-        {imageList.map((image) => (
-          <div key={image._id} className="galleryimg">
-            <img
-              className="img-fluid"
-              width={500}
-              src={image.image} 
-              alt="Gallery"
-            />
-          </div>
-        ))}
-      </Slider>
-    </div>
+    </Element>
   );
 }
 

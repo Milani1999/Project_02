@@ -8,10 +8,10 @@ import {
   Select,
   Modal,
   Upload,
-  Popconfirm,
 } from "antd";
-import { InboxOutlined, DeleteOutlined } from "@ant-design/icons";
+import { InboxOutlined } from "@ant-design/icons";
 import "./Notices.css";
+import ViewNotices from "./ViewNotices";
 
 const { Option } = Select;
 const { Dragger } = Upload;
@@ -19,22 +19,10 @@ const { Dragger } = Upload;
 const Notices = () => {
   const [form] = Form.useForm();
   const [recipientType, setRecipientType] = useState("Teacher");
-  const [isConfirmationModalVisible, setIsConfirmationModalVisible] =
-    useState(false);
+  const [isConfirmationModalVisible, setIsConfirmationModalVisible] = useState(false);
   const [isNoticeSent, setIsNoticeSent] = useState(false);
-  const [isSentNoticesVisible, setIsSentNoticesVisible] = useState(false);
   const [sentNotices, setSentNotices] = useState([]);
-
-  const handleViewSentNotices = async () => {
-    try {
-      const response = await axios.get("/api/notices/sent");
-      setSentNotices(response.data);
-      setIsSentNoticesVisible(true);
-    } catch (error) {
-      console.error(error);
-      message.error("Failed to fetch sent notices");
-    }
-  };
+  const [isSentNoticesPageVisible, setIsSentNoticesPageVisible] = useState(false);
 
   useEffect(() => {
     fetchSentNotices();
@@ -67,7 +55,7 @@ const Notices = () => {
       console.error(error);
       message.error("Failed to save notice details");
     }
-  };
+  }
 
   const handleSubmit = async (values) => {
     try {
@@ -80,10 +68,10 @@ const Notices = () => {
         const imageFormData = new FormData();
         imageFormData.append("file", values.fileList[0].originFileObj);
         imageFormData.append("upload_preset", "edutrack");
-        imageFormData.append("cloud_name", "dprnxaqxi");
+        imageFormData.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
 
         const imageResponse = await axios.post(
-          "https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload",
+          process.env.REACT_APP_CLOUDINARY_URL,
           imageFormData
         );
 
@@ -121,103 +109,85 @@ const Notices = () => {
     }
   };
 
+
+
+  const hideSentNoticesPage = () => {
+    setIsSentNoticesPageVisible(false);
+  };
+
   return (
     <div className="notice-page">
+        < ViewNotices
+        visible={isSentNoticesPageVisible}
+        sentNotices={sentNotices}
+        onClose={hideSentNoticesPage}
+        onDeleteNotice={handleDeleteSentNotice}
+      />
       <div>
         <h1 className="notice-sending">Send Notices</h1>
-        {/* <Button
-          className="viewbtn"
-          type="primary"
-          onClick={handleViewSentNotices}
-        >
-          View Sent Notices
-        </Button> */}
       </div>
+  
 
-      {isSentNoticesVisible ? (
-        <div className="sent-notices">
-          <h2>Sent Notices</h2>
-          <Modal
-            title="Sent Notices"
-            visible={isSentNoticesVisible}
-            onCancel={() => setIsSentNoticesVisible(false)}
-            footer={null}
-            width={800}
-            bodyStyle={{ maxHeight: "60vh", overflowY: "auto" }}
+      <Form form={form} onFinish={handleSubmit} layout="vertical">
+        <Form.Item
+          label="Recipient Type"
+          name="recipientType"
+          initialValue={recipientType}
+          rules={[
+            { required: true, message: "Please select the recipient type" },
+          ]}
+        >
+          <Select onChange={handleRecipientTypeChange}>
+            <Option value="Teacher">Teacher</Option>
+            <Option value="Student">Student</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Title"
+          name="title"
+          rules={[{ required: true, message: "Please enter the title" }]}
+        >
+          <Input placeholder="Enter the title" />
+        </Form.Item>
+        <Form.Item
+          label="Message"
+          name="message"
+          rules={[{ required: true, message: "Please enter the message" }]}
+        >
+          <Input.TextArea placeholder="Enter the message" rows={4} />
+        </Form.Item>
+        <Form.Item
+          label="Attachment"
+          name="fileList"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => e && e.fileList}
+        >
+          <Dragger
+            name="file"
+            multiple={false}
+            action={process.env.REACT_APP_CLOUDINARY_URL}
+            data={{
+              upload_preset: "edutrack",
+              cloud_name: process.env.REACT_APP_CLOUD_NAME,
+            }}
+            onChange={handleChange}
           >
-            {sentNotices.map((notice) => (
-              <div key={notice._id} className="sent-notice">
-                <p>{notice.title}</p>
-                <p>{notice.message}</p>
-                <Popconfirm
-                  title="Are you sure you want to delete this notice?"
-                  onConfirm={() => handleDeleteSentNotice(notice._id)}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <DeleteOutlined className="delete-icon" />
-                </Popconfirm>
-              </div>
-            ))}
-          </Modal>
-        </div>
-      ) : (
-        <Form form={form} onFinish={handleSubmit} layout="vertical">
-          <Form.Item
-            label="Recipient Type"
-            name="recipientType"
-            initialValue={recipientType}
-            rules={[
-              { required: true, message: "Please select the recipient type" },
-            ]}
-          >
-            <Select onChange={handleRecipientTypeChange}>
-              <Option value="Teacher">Teacher</Option>
-              <Option value="Student">Student</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please enter the title" }]}
-          >
-            <Input placeholder="Enter the title" />
-          </Form.Item>
-          <Form.Item
-            label="Message"
-            name="message"
-            rules={[{ required: true, message: "Please enter the message" }]}
-          >
-            <Input.TextArea placeholder="Enter the message" rows={4} />
-          </Form.Item>
-          <Form.Item
-            label="Attachment"
-            name="fileList"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => e && e.fileList}
-          >
-            <Dragger
-              name="file"
-              multiple={false}
-              action="https://api.cloudinary.com/v1_1/dprnxaqxi/image/upload"
-              data={{ upload_preset: "edutrack" }}
-              onChange={handleChange}
-            >
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">
-                Click or drag file to this area to upload
-              </p>
-            </Dragger>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Send
-            </Button>
-          </Form.Item>
-        </Form>
-      )}
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">
+              Click or drag file to this area to upload
+            </p>
+          </Dragger>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Send
+          </Button>
+        </Form.Item>
+      </Form>
+
+    
 
       <Modal
         visible={isConfirmationModalVisible}
@@ -237,6 +207,8 @@ const Notices = () => {
           </p>
         )}
       </Modal>
+
+     
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { FcCollaboration, FcBusinesswoman, FcKindle } from "react-icons/fc";
 import { Column } from "@ant-design/plots";
 import "./TeachDashboard.css";
@@ -6,7 +6,10 @@ import { Calendar, theme } from "antd";
 import {
   fetchStaffCount,
   fetchStudentCount,
+  processData,
 } from "../../Count/Count";
+import { StudentData } from "../../Count/Data";
+import LoadingSpinner from "../../Loading/Loading";
 
 const onPanelChange = (value, mode) => {
   console.log(value.format("YYYY-MM-DD"), mode);
@@ -14,138 +17,37 @@ const onPanelChange = (value, mode) => {
 const Dashboard = () => {
   const [staffCount, setStaffCount] = useState(0);
   const [studentCount, setStudentCount] = useState(0);
+  const [classWise, setClassWise] = useState([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const staffCount = await fetchStaffCount();
+        const studentCount = await fetchStudentCount();
+        const studentData = await StudentData();
+        const processedData = processData(studentData);
+
+        setClassWise(processedData);
+        setStaffCount(staffCount);
+        setStudentCount(studentCount);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchData();
   }, []);
-  const fetchData = async () => {
-    try {
-      const staffCount = await fetchStaffCount();
-      const studentCount = await fetchStudentCount();
-      setStaffCount(staffCount);
-      console.log(staffCount)
-      setStudentCount(studentCount);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
-  const data = [
-    {
-      name: "Girls",
-      Class: "01",
-      students: 18,
-    },
-    {
-      name: "Girls",
-      Class: "02",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "03",
-      students: 8,
-    },
-    {
-      name: "Girls",
-      Class: "04",
-      students: 13,
-    },
-    {
-      name: "Girls",
-      Class: "05",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "06",
-      students: 20,
-    },
-    {
-      name: "Girls",
-      Class: "07",
-      students: 18,
-    },
-    {
-      name: "Girls",
-      Class: "08",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "09",
-      students: 11,
-    },
-    {
-      name: "Girls",
-      Class: "10",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "11",
-      students: 25,
-    },
-    {
-      name: "Boys",
-      Class: "01",
-      students: 8,
-    },
-    {
-      name: "Boys",
-      Class: "02",
-      students: 14,
-    },
-    {
-      name: "Boys",
-      Class: "03",
-      students: 18,
-    },
-    {
-      name: "Boys",
-      Class: "04",
-      students: 10,
-    },
-    {
-      name: "Boys",
-      Class: "05",
-      students: 14,
-    },
-    {
-      name: "Boys",
-      Class: "06",
-      students: 15,
-    },
-    {
-      name: "Boys",
-      Class: "07",
-      students: 8,
-    },
-    {
-      name: "Boys",
-      Class: "08",
-      students: 16,
-    },
-    {
-      name: "Boys",
-      Class: "09",
-      students: 6,
-    },
-    {
-      name: "Boys",
-      Class: "10",
-      students: 15,
-    },
-    {
-      name: "Boys",
-      Class: "11",
-      students: 15,
-    },
-  ];
+  const data = classWise.map(({ name, grade, students }) => ({
+    name,
+    grade,
+    students,
+  }));
+
   const config = {
     data,
     isGroup: true,
-    xField: "Class",
+    xField: "grade",
     yField: "students",
     seriesField: "name",
 
@@ -171,6 +73,14 @@ const Dashboard = () => {
     border: `1px solid ${token.colorBorderSecondary}`,
     borderRadius: token.borderRadiusLG,
   };
+
+  if (!staffCount) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div>

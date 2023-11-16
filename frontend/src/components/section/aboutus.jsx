@@ -1,9 +1,12 @@
 import './Aboutus.css'
 import vision from '../../assets/ImageResources/vision.png'
 import  mission from '../../assets/ImageResources/mission.png'
+import { Element } from "react-scroll";
+
 
 function AboutUs() {
     return (
+        <Element name="about">
         <div className="container-sm-fluid">
             <div className="AboutComponent" id="AboutComponent">
                 <h1 className="h1-heading">Our Vision and Mission</h1>
@@ -39,6 +42,7 @@ function AboutUs() {
                 </div>
             </div>
         </div>
+        </Element>
     );
 }
 

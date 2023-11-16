@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import NewsCard from "../../components/NewsCard/NewsCard";
 import "./Events.css";
+import { Element } from "react-scroll";
 
 const Item = styled(Paper)(({ theme }) => ({}));
 
@@ -49,61 +50,63 @@ export default function Events() {
   };
 
   return (
-    <div className="eventComponent">
-      <Box sx={{ flexGrow: 1 }}>
-        <h1 className="h1-heading">News and Events</h1>
-        <Grid container spacing={2}>
-          {visibleNews.map((news, index) => (
-            <Grid item xs={6} md={4} lg={3} key={index}>
-              <Item>
-                <NewsCard
-                  ImgSrc={news.image}
-                  ImgAlt={news.title}
-                  title={news.title}
-                  description={
-                    news.content.length > 200
-                      ? `${news.content.substring(0, 150)}...`
-                      : news.content
-                  }
-                  btnText="Read More"
-                  onClick={() => handleCardClick(news)}
-                />
-              </Item>
-            </Grid>
-          ))}
-        </Grid>
-        <div className="pagination-div">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              className="pagination"
-              key={index + 1}
-              onClick={() => handlePageChange(index + 1)}
-              style={{
-                marginRight: "5px",
-                fontWeight: currentPage === index + 1 ? "bold" : "normal",
-              }}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
-      </Box>
-      {showPopup && selectedNews && (
-        <div className="popup-news">
-          <div className="popup-inner-news">
-            <h2>{selectedNews.title}</h2>
-            <img
-              src={selectedNews.image}
-              alt={selectedNews.title}
-              className="popup-image"
-            />
-            <p>{selectedNews.content}</p>
-            <button className="btn btn-danger" onClick={closePopup}>
-              Close
-            </button>
+    <Element name="news">
+      <div className="eventComponent">
+        <Box sx={{ flexGrow: 1 }}>
+          <h1 className="h1-heading">News and Events</h1>
+          <Grid container spacing={2}>
+            {visibleNews.map((news, index) => (
+              <Grid item xs={12} s={4} md={4} lg={3} key={index}>
+                <Item className="item-events">
+                  <NewsCard
+                    ImgSrc={news.image}
+                    ImgAlt={news.title}
+                    title={news.title}
+                    description={
+                      news.content.length > 200
+                        ? `${news.content.substring(0, 150)}...`
+                        : news.content
+                    }
+                    btnText="Read More"
+                    onClick={() => handleCardClick(news)}
+                  />
+                </Item>
+              </Grid>
+            ))}
+          </Grid>
+          <div className="pagination-div">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                className="pagination"
+                key={index + 1}
+                onClick={() => handlePageChange(index + 1)}
+                style={{
+                  marginRight: "5px",
+                  fontWeight: currentPage === index + 1 ? "bold" : "normal",
+                }}
+              >
+                {index + 1}
+              </button>
+            ))}
           </div>
-        </div>
-      )}
-    </div>
+        </Box>
+        {showPopup && selectedNews && (
+          <div className="popup-news">
+            <div className="popup-inner-news">
+              <h2>{selectedNews.title}</h2>
+              <img
+                src={selectedNews.image}
+                alt={selectedNews.title}
+                className="popup-image"
+              />
+              <p>{selectedNews.content}</p>
+              <button className="btn btn-danger" onClick={closePopup}>
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </Element>
   );
 }

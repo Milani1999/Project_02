@@ -4,143 +4,63 @@ import { Column } from "@ant-design/plots";
 import { Progress, Space } from "antd";
 import { AiFillFacebook, AiFillYoutube } from "react-icons/ai";
 import "./Dashboard.css";
-import { fetchStaffCount, fetchStudentCount } from "../../Count/Count";
+import {
+  fetchStaffCount,
+  fetchStudentCount,
+  processData,
+  fetchAttendedStaffCount,
+  fetchStudentAttendance,
+} from "../../Count/Count";
+import { StudentData } from "../../Count/Data";
+import LoadingSpinner from "../../Loading/Loading";
 
 const Dashboard = () => {
   const [staffCount, setStaffCount] = useState(0);
   const [studentCount, setStudentCount] = useState(0);
+  const [staffAttendance, setStaffAttendance] = useState(0);
+  const [studentAttendance, setStudentAttendance] = useState(0);
+  const [classWise, setClassWise] = useState([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const staffCount = await fetchStaffCount();
+        const studentCount = await fetchStudentCount();
+        const studentData = await StudentData();
+        const processedData = processData(studentData);
+        const staffAtt = await fetchAttendedStaffCount();
+        const stuAtt = await fetchStudentAttendance();
+        setStudentAttendance(stuAtt);
+        setStaffAttendance(staffAtt);
+        setClassWise(processedData);
+        setStaffCount(staffCount);
+        setStudentCount(studentCount);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchData();
   }, []);
-  const fetchData = async () => {
-    try {
-      const staffCount = await fetchStaffCount();
-      const studentCount = await fetchStudentCount();
-      setStaffCount(staffCount);
-      setStudentCount(studentCount);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
-  const data = [
-    {
-      name: "Girls",
-      Class: "01",
-      students: 18,
-    },
-    {
-      name: "Girls",
-      Class: "02",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "03",
-      students: 8,
-    },
-    {
-      name: "Girls",
-      Class: "04",
-      students: 13,
-    },
-    {
-      name: "Girls",
-      Class: "05",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "06",
-      students: 20,
-    },
-    {
-      name: "Girls",
-      Class: "07",
-      students: 18,
-    },
-    {
-      name: "Girls",
-      Class: "08",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "09",
-      students: 11,
-    },
-    {
-      name: "Girls",
-      Class: "10",
-      students: 10,
-    },
-    {
-      name: "Girls",
-      Class: "11",
-      students: 25,
-    },
-    {
-      name: "Boys",
-      Class: "01",
-      students: 8,
-    },
-    {
-      name: "Boys",
-      Class: "02",
-      students: 14,
-    },
-    {
-      name: "Boys",
-      Class: "03",
-      students: 18,
-    },
-    {
-      name: "Boys",
-      Class: "04",
-      students: 10,
-    },
-    {
-      name: "Boys",
-      Class: "05",
-      students: 14,
-    },
-    {
-      name: "Boys",
-      Class: "06",
-      students: 15,
-    },
-    {
-      name: "Boys",
-      Class: "07",
-      students: 8,
-    },
-    {
-      name: "Boys",
-      Class: "08",
-      students: 16,
-    },
-    {
-      name: "Boys",
-      Class: "09",
-      students: 6,
-    },
-    {
-      name: "Boys",
-      Class: "10",
-      students: 15,
-    },
-    {
-      name: "Boys",
-      Class: "11",
-      students: 15,
-    },
-  ];
+  const data = classWise.map(({ name, grade, students }) => ({
+    name,
+    grade,
+    students,
+  }));
+
+  if (!staffCount) {
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
   const config = {
     data,
-    // classWiseData,
     isGroup: true,
-    xField: "Class",
+    xField: "grade",
     yField: "students",
     seriesField: "name",
 
@@ -203,34 +123,41 @@ const Dashboard = () => {
 
             <Space wrap>
               <h4>Teachers</h4>
-              <Progress type="dashboard" percent={75} />
+              <Progress
+                type="dashboard"
+                percent={((staffAttendance / staffCount) * 100).toFixed(2)}
+                gapDegree={30}
+              />
               <br></br> <h4>Students</h4>
-              <Progress type="dashboard" percent={20} gapDegree={30} />
+              <Progress
+                type="dashboard"
+                percent={((studentAttendance / studentCount) * 100).toFixed(2)}
+                gapDegree={30}
+              />
             </Space>
           </div>
         </div>
         <div className="mt-4  custombar-width  ">
-    <h3 className="mb-5 title">No of Students in Each class</h3>
-    <div>
-      <Column {...config} />
-    </div>
-  </div>
-</div>
-<div className="mt-4 custombar-width  d-flex   flex-grow-1 gap-3 roudned-3">
-          {/* YouTube Followers Card */}
-          <div className="followers-card">
-            <AiFillYoutube className="icon youtube-icon" />
-            <h3>YouTube</h3>
-            <div className="followers-count">1000+ Followers</div>
-          </div> 
-          <div className="followers-card">
-            <AiFillFacebook className="icon facebook-icon" />
-            <h3>Facebook</h3>
-            <div className="followers-count">500+ Followers</div>
+          <h3 className="mb-5 title">No of Students in Each class</h3>
+          <div>
+            <Column {...config} />
           </div>
         </div>
+      </div>
+      <div className="mt-4 custombar-width  d-flex   flex-grow-1 gap-3 roudned-3">
+        {/* YouTube Followers Card */}
+        <div className="followers-card">
+          <AiFillYoutube className="icon youtube-icon" />
+          <h3>YouTube</h3>
+          <div className="followers-count">1000+ Followers</div>
         </div>
-    
+        <div className="followers-card">
+          <AiFillFacebook className="icon facebook-icon" />
+          <h3>Facebook</h3>
+          <div className="followers-count">500+ Followers</div>
+        </div>
+      </div>
+    </div>
   );
 };
 

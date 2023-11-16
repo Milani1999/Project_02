@@ -5,7 +5,7 @@ const studentRoutes = require("./routes/studentRoutes");
 const userRoutes = require("./routes/userRoutes");
 const staffRoutes = require("./routes/staffRoutes");
 const markRoutes = require("./routes/markRoutes");
-const gradeRoutes = require("./routes/gradeROutes");
+const gradeRoutes = require("./routes/gradeRoutes");
 const subjectRoutes = require("./routes/subjectRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 const studentAttendanceRoutes = require("./routes/studentAttendanceRoutes");
@@ -17,6 +17,9 @@ const ImageRoutes = require("./routes/ImageRoutes");
 const oldStudentRoutes = require("./routes/oldStudentRoutes");
 const staffAttendanceRoutes = require("./routes/staffAttendanceRoutes");
 const reliefRoutes = require("./routes/reliefRoutes");
+const oldStaffRoutes = require("./routes/oldStaffRoutes");
+const staffNotices = require("./routes/sendnoticesRoutes");
+
 const paymentRoutes = require("./routes/paymentRoutes"); 
 const cors = require('cors');
 const app = express();
@@ -52,6 +55,8 @@ app.use("/api/gallery", ImageRoutes);
 app.use("/api/oldStudents", oldStudentRoutes);
 app.use("/api/staffattendance", staffAttendanceRoutes);
 app.use("/api/reliefAllocation", reliefRoutes);
+app.use("/api/oldStaff", oldStaffRoutes);
+app.use("/api/staffNotices", staffNotices);
 app.use("/api/payment", paymentRoutes);
 
 app.use(notFound);

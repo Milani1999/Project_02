@@ -2,7 +2,11 @@
   background-color: #03411b;
   padding: 1px 0;
 }
-
+.Fa-Icon-So {
+  color: white; 
+  font-size: 20px; 
+  margin-right: 15px; 
+}
 .main-footer {
   padding-bottom: 1px;
   color: #f8f7f7;

@@ -1,0 +1,30 @@
+.popup-background-old-staff {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(3, 46, 13, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-container-view-old-staff {
+  background-color: white;
+  border: 2px solid green;
+  width: 500px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewTable-Old td {
+  text-align: left;
+  padding: 6px 30px;
+  background-color: #cff1d4;
+  border-radius: 5%;
+  width: 450px;
+}
