@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SupportEngine from "../SupportAssist/SupportEngine";
 import "./School.css";
 import { Element } from "react-scroll";
 

@@ -17,7 +17,6 @@ function ContactUs() {
   return (
     <Element name="contact">
       <div className="ContactUsComponent" id="ContactUsComponent">
-        <SupportEngine />
         <div className="row">
           <h1 className="h1-heading">Contact Us</h1>
           <div className="col-6">
