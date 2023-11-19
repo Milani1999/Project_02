@@ -55,6 +55,7 @@ import StaffLeaving from "./components/Administrator/pages/StaffLeaving";
 import LeavingCertificate from "./components/Administrator/pages/LeavingCertificate";
 import ServiceLetter from "./components/Administrator/pages/ServiceLetter";
 import SendNotices from "./components/Teacher/Pages/SendNotices";
+import StudentDashboard from "./components/Student/Pages/StudentDashboard"
 
 function App() {
   return (
@@ -139,7 +140,7 @@ function App() {
               </Auth>
             }
           >
-            <Route index element={<Dashboard />} />
+            <Route index element={<StudentDashboard />} />
             <Route path="ProfilePage" element={<ProfilePage />} />
             <Route path="TimeTable" element={<TimeTable />} />
             <Route path="Marks" element={<Marks />} />
