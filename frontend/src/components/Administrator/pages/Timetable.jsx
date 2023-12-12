@@ -21,12 +21,13 @@ const TimeTable = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [selectedID, setSelectedID] = useState("");
   const [staffData, setStaffData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     fetchSubjects();
     fetchStaff();
     fetchTimetableData();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (grade !== "") {
@@ -34,9 +35,10 @@ const TimeTable = () => {
         const data = await fetchTimetableData(grade);
         setTimetableData(data);
       };
+
       fetchData();
     }
-  }, [grade]);
+  }, [grade, refresh]);
 
   const fetchTimetableData = async (grade) => {
     try {
@@ -123,6 +125,7 @@ const TimeTable = () => {
       }
     }
   };
+
   const getCellData = (weekday, period) => {
     const matchingCell = timetableData.find(
       (data) => data.weekday === weekday && data.period === period
@@ -139,26 +142,21 @@ const TimeTable = () => {
             className="cell-data-time-table"
             onClick={() => handleCellClick(matchingCell._id)}
           >
-            <span class="hover-text">Click to Delete</span>
+            <span className="hover-text">Click to Delete</span>
 
             {Rel === "Relief" ? (
               <div>
-                <span style={{ fontWeight: "bold" }}>
-                  {" "}
-                  {matchingCell.subject}
-                </span>
+                <span style={{ fontWeight: "bold" }}>{matchingCell.subject}</span>
                 <br />
-                <div style={{ color: "red" }}>Relief: {staff.fullname}</div>
+                <div style={{ color: "red" }}>
+                  Relief: {staff?.fullname || "Staff Not Found"}
+                </div>
               </div>
             ) : (
               <div>
-                {" "}
-                <span style={{ fontWeight: "bold" }}>
-                  {" "}
-                  {matchingCell.subject}
-                </span>{" "}
+                <span style={{ fontWeight: "bold" }}>{matchingCell.subject}</span>
                 <br />
-                {staff.fullname}
+                {staff?.fullname || "Staff Not Found"}
               </div>
             )}
           </button>
@@ -211,7 +209,7 @@ const TimeTable = () => {
 
   return (
     <div className="time-table-admin">
-      <Relief fetchTimetableData={fetchTimetableData} />
+      <Relief triggerRefresh={setRefresh} />
       <div>
         <label>Select Grade:</label>
         <select value={grade} onChange={(e) => setGrade(e.target.value)}>

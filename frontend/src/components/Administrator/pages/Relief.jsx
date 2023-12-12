@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./Relief.css";
 import LoadingSpinner from "../../Loading/Loading";
 
-function Relief({ fetchTimetableData }) {
+function Relief({ triggerRefresh }) {
   const [loading, setLoading] = useState(false);
   const [reliefPopup, setReliefPopup] = useState(false);
   const [resetPopup, setResetPopup] = useState(false);
@@ -13,8 +13,7 @@ function Relief({ fetchTimetableData }) {
       setLoading(true);
       await axios.get("/api/reliefAllocation");
       setReliefPopup(false);
-      fetchTimetableData();
-      setLoading(false);
+      triggerRefresh((prev) => !prev);
     } catch (error) {
       alert("An error occurred: " + error.message);
     } finally {
@@ -25,6 +24,7 @@ function Relief({ fetchTimetableData }) {
   const handleRelief = () => {
     setReliefPopup(true);
   };
+
   const handleCancelRelief = () => {
     setReliefPopup(false);
   };
@@ -34,8 +34,7 @@ function Relief({ fetchTimetableData }) {
       setLoading(true);
       await axios.get("/api/reliefAllocation/reset");
       setResetPopup(false);
-      fetchTimetableData();
-      setLoading(false);
+      triggerRefresh((prev) => !prev);
     } catch (error) {
       alert("An error occurred: " + error.message);
     } finally {
@@ -46,6 +45,7 @@ function Relief({ fetchTimetableData }) {
   const handleReset = () => {
     setResetPopup(true);
   };
+
   const handleCancelReset = () => {
     setResetPopup(false);
   };
@@ -77,7 +77,7 @@ function Relief({ fetchTimetableData }) {
       {reliefPopup && (
         <div className="popup-background-timetable">
           <div className="popup-container-delete">
-            <h2>Releif Allocation</h2>
+            <h2>Relief Allocation</h2>
             <p>Are you sure you want to allocate Relief periods?</p>
             <button className="btn btn-danger m-3" onClick={allocateRelief}>
               Proceed
@@ -92,7 +92,7 @@ function Relief({ fetchTimetableData }) {
       {resetPopup && (
         <div className="popup-background-timetable">
           <div className="popup-container-delete">
-            <h2>Reset Releif Allocation</h2>
+            <h2>Reset Relief Allocation</h2>
             <p>Are you sure you want to reset the time table?</p>
             <button className="btn btn-danger m-3" onClick={allocateReset}>
               Reset
