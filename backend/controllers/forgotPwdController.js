@@ -41,7 +41,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
         from: process.env.EMAIL,
         to: user.email,
         subject: "Reset Password Link",
-        text: `http://localhost:3000/reset-password/${user._id}/${token}`,
+        text: `https://edutrack-uef1.onrender.com/reset-password/${user._id}/${token}`,
       };
 
       await transporter.sendMail(mailOptions);
