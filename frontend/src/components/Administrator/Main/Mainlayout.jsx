@@ -170,9 +170,9 @@ const MainLayout = () => {
               label: "Notices",
             },
             {
-              key: "payments",
+              key: "Payment",
               icon: <RiMoneyDollarCircleLine className="fs-4" />,
-              label: "Payments",
+              label: "Payment",
             },
             {
               key: "LeavingCertificate",

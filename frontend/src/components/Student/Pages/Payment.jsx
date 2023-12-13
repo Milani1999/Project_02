@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import Popup from "reactjs-popup";
+import "./Payment.css";
+import LoadingSpinner from "../../Loading/Loading";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Payment = () => {
@@ -10,7 +12,7 @@ const Payment = () => {
   const [hashkey, setHashKey] = useState("");
   const [showPopup, setShopPopup] = useState(false);
   const [selectedPaymentDetails, setSelectedPaymentDetails] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const [monthsToDisplay, setMonthsToDisplay] = useState(
     Array.from({ length: new Date().getMonth() + 1 }, (_, i) =>
@@ -26,6 +28,7 @@ const Payment = () => {
     const fetchStudentData = async () => {
       try {
         const query = `/api/students/${objId}`;
+        setIsLoading(true);
         const response = await fetch(query, {
           method: "GET",
           headers: {
@@ -39,8 +42,10 @@ const Payment = () => {
         } else {
           console.error("Error fetching payment records");
         }
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching payment records:", error);
+        setIsLoading(false);
       }
     };
 
@@ -115,8 +120,7 @@ const Payment = () => {
         new Date(newSelectedYear, i).toLocaleString("en-US", { month: "long" })
       );
     }
-
-    // Update the monthsToDisplay state
+  
     setMonthsToDisplay(newMonthsToDisplay);
 
     // Fetch payment records for the selected year
@@ -164,31 +168,30 @@ const Payment = () => {
   });
 
   const openPopup = (details) => {
-    // Find the payment record for the selected month
     const record = paymentRecords.find((r) => r.paymentMonth === details.month);
-  
-    // If a record is found, extract the paymentDateWithTime value
-    const paymentDate = record ? new Date(record.paymentDateWithTime).toLocaleDateString() : null;
-    const paymentTime = record ? new Date(record.paymentDateWithTime).toLocaleTimeString() : null;
+
+    const paymentDate = record
+      ? new Date(record.paymentDateWithTime).toLocaleDateString("en-GB")
+      : null;
+    const paymentTime = record
+      ? new Date(record.paymentDateWithTime).toLocaleTimeString()
+      : null;
     const paymentMethod = record ? record.paymentMethod : null;
-  
-    // Set the selected payment details, including paymentDateWithTime
+
     setSelectedPaymentDetails({
       ...details,
       paymentDate,
       paymentTime,
       paymentMethod,
     });
-  
+
     // Open the popup
     setShopPopup(true);
   };
-  
-  
+
   const closePopup = () => {
     setShopPopup(false);
   };
-  
 
   return (
     <div>
@@ -208,173 +211,191 @@ const Payment = () => {
           </option>
         ))}
       </select>
-      <Table className="styled-table" striped bordered hover>
-        <thead>
-          <tr>
-            <th>Month</th>
-            <th>Payment Date 🗓️</th>
-            <th>Time 🕝</th>
-            <th>Review </th>
-            <th>Payment Status / Option</th>
-          </tr>
-        </thead>
-        <tbody>
-          {monthsToDisplay.map((month) => {
-            const record = paymentRecords.find((r) => r.paymentMonth === month);
-            const item = `School Fee For ${selectedYear}_${month}`;
-            const amount = "1000.00";
-            const monthAndYear = [selectedYear,month];
-            return (
-              <tr key={month}>
-                <td>{month}</td>
-                <td>
-                  {record
-                    ? new Date(record.paymentDateWithTime).toLocaleDateString()
-                    : "-"}
-                </td>
-                <td>
-                  {record
-                    ? new Date(record.paymentDateWithTime).toLocaleTimeString()
-                    : "-"}
-                </td>
-                <td>
-                  {record ? (
-                     <Button variant="" onClick={() => openPopup({ month, amount })}>
-                     📝📋
-                   </Button>
-                  ) : (
-                    "-"
-                  )}
-                </td>
-                <td>
-                  {record ? (
-                    <span>✅</span>
-                  ) : (
-                    //   <span className="label label-primary">
-                    //   &nbsp;&nbsp;&nbsp;&nbsp; Paid ✅
-                    //   &nbsp;&nbsp;&nbsp;&nbsp;
-                    // </span>
-                    <form
-                      method="post"
-                      action="https://sandbox.payhere.lk/pay/checkout"
-                    >
-                      <input
-                        type="hidden"
-                        name="merchant_id"
-                        value={process.env.REACT_APP_PAYHERE_MERCHANT_ID}
-                      />
-                      <input
-                        type="hidden"
-                        name="return_url"
-                        value="https://edutrack-uef1.onrender.com/Student/Payment"
-                      />
-                      <input
-                        type="hidden"
-                        name="cancel_url"
-                        value="https://edutrack-uef1.onrender.com/Student/Payment"
-                      />
-                      <input
-                        type="hidden"
-                        name="notify_url"
-                        value="https://edutrack-uef1.onrender.com/api/payment/payment-notification"
-                      />
-                      <input type="hidden" name="order_id" value={objId} />
-                      <input type="hidden" name="items" value={item} />
-                      <input type="hidden" name="amount" value={amount} />
-                      <input type="hidden" name="currency" value="LKR" />
-                      <input
-                        type="hidden"
-                        name="first_name"
-                        value={first_name}
-                      />
-                      <input type="hidden" name="last_name" value={last_name} />
-                      <input type="hidden" name="email" value={email} />
-                      <input type="hidden" name="phone" value={phone} />
-                      <input type="hidden" name="address" value={address} />
-                      <input type="hidden" name="city" value="Your_City" />
-                      <input type="hidden" name="custom_1" value={monthAndYear} />
-                      <input
-                        type="hidden"
-                        name="custom_2"
-                        value={studentId}
-                      />
-                      <input
-                        type="hidden"
-                        name="country"
-                        value="Your_Country"
-                      />
-                      <input type="hidden" name="hash" value={hashkey} />
-                      <button
-                        className="btn btn-info"
-                        type="submit"
-                        style={{
-                          //   display: "flex",
-                          //   justifyContent: "center",
-                          //   alignItems: "center",
-                          width: "50%",
-                          //   padding: "3px",
-                          marginLeft: "30%", // Add padding for better appearance
-                        }}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <Table className="styled-table" striped bordered hover>
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Payment Date 🗓️</th>
+              <th>Time 🕝</th>
+              <th>Review </th>
+              <th>Payment Status / Option</th>
+            </tr>
+          </thead>
+          <tbody>
+            {monthsToDisplay.map((month) => {
+              const record = paymentRecords.find(
+                (r) => r.paymentMonth === month
+              );
+              const item = `School Fee For ${selectedYear}_${month}`;
+              const amount = "1000.00";
+              const monthAndYear = [selectedYear, month];
+              return (
+                <tr key={month}>
+                  <td>{month}</td>
+                  <td>
+                    {record
+                      ? new Date(record.paymentDateWithTime).toLocaleDateString(
+                          "en-GB"
+                        )
+                      : "-"}
+                  </td>
+                  <td>
+                    {record
+                      ? new Date(
+                          record.paymentDateWithTime
+                        ).toLocaleTimeString()
+                      : "-"}
+                  </td>
+                  <td>
+                    {record ? (
+                      <Button
+                        variant=""
+                        onClick={() => openPopup({ month, amount })}
                       >
-                        <spam>Pay with </spam>
-                        <img
-                          src="https://www.pngkey.com/png/full/512-5124189_payhere-sri-lankas-most-affordable-innovative-payment-audience.png"
+                        📝📋
+                      </Button>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {record ? (
+                      <span>✅</span>
+                    ) : (
+                      <form
+                        method="post"
+                        action="https://sandbox.payhere.lk/pay/checkout"
+                      >
+                        <input
+                          type="hidden"
+                          name="merchant_id"
+                          value={process.env.REACT_APP_PAYHERE_MERCHANT_ID}
+                        />
+                        <input
+                          type="hidden"
+                          name="return_url"
+                          value="http://localhost:3000/Student/Payment"
+                        />
+                        <input
+                          type="hidden"
+                          name="cancel_url"
+                          value="https://edutrack-uef1.onrender.com/Student/Payment"
+                        />
+                        <input
+                          type="hidden"
+                          name="notify_url"
+                          value="https://abee-103-21-164-248.ngrok.io/api/payment/payment-notification" //Need to replace with backend url
+                        />
+                        <input type="hidden" name="order_id" value={objId} />
+                        <input type="hidden" name="items" value={item} />
+                        <input type="hidden" name="amount" value={amount} />
+                        <input type="hidden" name="currency" value="LKR" />
+                        <input
+                          type="hidden"
+                          name="first_name"
+                          value={first_name}
+                        />
+                        <input
+                          type="hidden"
+                          name="last_name"
+                          value={last_name}
+                        />
+                        <input type="hidden" name="email" value={email} />
+                        <input type="hidden" name="phone" value={phone} />
+                        <input type="hidden" name="address" value={address} />
+                        <input type="hidden" name="city" value="Your_City" />
+                        <input
+                          type="hidden"
+                          name="custom_1"
+                          value={monthAndYear}
+                        />
+                        <input
+                          type="hidden"
+                          name="custom_2"
+                          value={studentId}
+                        />
+                        <input
+                          type="hidden"
+                          name="country"
+                          value="Your_Country"
+                        />
+                        <input type="hidden" name="hash" value={hashkey} />
+                        <button
+                          className="btn btn-info"
+                          type="submit"
                           style={{
                             //   display: "flex",
                             //   justifyContent: "center",
                             //   alignItems: "center",
-                            height: "15px",
-                            width: "60%",
+                            width: "50%",
                             //   padding: "3px",
-                            //   marginLeft: "35%", // Add padding for better appearance
+                            marginLeft: "30%", // Add padding for better appearance
                           }}
-                          alt=""
-                        />
-                      </button>
-                    </form>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-      <Popup open={showPopup}>
-  <div className="popup-background-student">
-    <div className="popup-container-delete">
-      {selectedPaymentDetails && (
-        <div>
-          <table class="table" style = {{textAlign: "left"}}>
-            <tbody>
-            <tr class="success">
-              <td>Month</td>
-              <td>:&nbsp; {selectedPaymentDetails.month}</td>
-            </tr>
-            <tr class="success">
-              <td>Amount</td>
-              <td>:&nbsp; {selectedPaymentDetails.amount}</td>
-            </tr>
-            <tr class="success">
-              <td>Date</td>
-              <td>:&nbsp; {selectedPaymentDetails.paymentDate}</td>
-            </tr>
-            <tr class="success">
-              <td>Time</td>
-              <td>:&nbsp; {selectedPaymentDetails.paymentTime}</td>
-            </tr>
-            <tr class="success">
-              <td>Payment Method</td>
-              <td>: &nbsp;{selectedPaymentDetails.paymentMethod}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+                        >
+                          <spam>Pay with </spam>
+                          <img
+                            src="https://www.pngkey.com/png/full/512-5124189_payhere-sri-lankas-most-affordable-innovative-payment-audience.png"
+                            style={{
+                              //   display: "flex",
+                              //   justifyContent: "center",
+                              //   alignItems: "center",
+                              height: "15px",
+                              width: "60%",
+                              //   padding: "3px",
+                              //   marginLeft: "35%", // Add padding for better appearance
+                            }}
+                            alt=""
+                          />
+                        </button>
+                      </form>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       )}
-      <button type="button" class="btn btn-danger" onClick={closePopup}>Close</button>
-    </div>
-  </div>
-</Popup>
-
+      <Popup open={showPopup}>
+        <div className="popup-background-student">
+          <div className="popup-container-delete">
+            {selectedPaymentDetails && (
+              <div>
+                <table class="table" style={{ textAlign: "left" }}>
+                  <tbody>
+                    <tr class="success">
+                      <td>Month</td>
+                      <td>:&nbsp; {selectedPaymentDetails.month}</td>
+                    </tr>
+                    <tr class="success">
+                      <td>Amount</td>
+                      <td>:&nbsp; {selectedPaymentDetails.amount}</td>
+                    </tr>
+                    <tr class="success">
+                      <td>Date</td>
+                      <td>:&nbsp; {selectedPaymentDetails.paymentDate}</td>
+                    </tr>
+                    <tr class="success">
+                      <td>Time</td>
+                      <td>:&nbsp; {selectedPaymentDetails.paymentTime}</td>
+                    </tr>
+                    <tr class="success">
+                      <td>Payment Method</td>
+                      <td>: &nbsp;{selectedPaymentDetails.paymentMethod}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
+            <button type="button" class="btn btn-danger" onClick={closePopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      </Popup>
     </div>
   );
 };
