@@ -56,6 +56,7 @@ import LeavingCertificate from "./components/Administrator/pages/LeavingCertific
 import ServiceLetter from "./components/Administrator/pages/ServiceLetter";
 import SendNotices from "./components/Teacher/Pages/SendNotices";
 import StudentDashboard from "./components/Student/Pages/StudentDashboard"
+import AdminPaymentRecords from "./components/Administrator/pages/Payment";
 
 function App() {
   return (
