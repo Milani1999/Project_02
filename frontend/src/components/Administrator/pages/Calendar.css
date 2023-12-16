@@ -5,17 +5,19 @@
   width: 90%;
   padding: 0rem 5rem;
   max-width: 100vh;
-  border: 2px solid rgb(226, 226, 227);
+  border: 2px solid rgb(215, 215, 216);
+ 
+ 
 }
 
 .fc-event {
-  background: rgb(234, 172, 130)!important;
+  background: rgb(234, 130, 132)!important;
   width: 200px;
   height: 100px; 
 }
 
 .fc .fc-timegrid-slot {
-  height: 10rem!important; 
+  height: 20rem!important; 
 }
 
 .fc .fc-daygrid-day.fc-day-today {
@@ -29,12 +31,12 @@
 }
 
 .popup.success {
-  background: #4caf50; /* Green background for success */
+  background: #4caf50; 
   color: rgb(9, 9, 9);
 }
 
 .popup.error {
-  background-color: #f44336; /* Red background for error */
+  background-color: #f44336;
   color: rgb(7, 7, 7);
 }
 

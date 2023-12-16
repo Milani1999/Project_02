@@ -19,17 +19,21 @@ const TeacherNotices = () => {
     try {
       const response = await axios.get("/api/notices/get");
       console.log(response.data);
+  
+      // Sort notices with new notices first
       const sortedNotices = response.data.sort((a, b) => {
-        if (a.isNew && !b.isNew) return -1; // Sort new notices to the top
-        if (!a.isNew && b.isNew) return 1; // Sort old notices to the bottom
-        return 0;
+        if (a.isNew && !b.isNew) return -1; // New notices first
+        if (!a.isNew && b.isNew) return 1; // Old notices next
+        // If both are new or both are old, sort by date (optional)
+        return new Date(b.createdAt) - new Date(a.createdAt);
       });
-
+  
       setNotices(sortedNotices);
     } catch (error) {
       console.error("Error fetching teacher notices:", error);
     }
   };
+  
 
   const handleNoticeClick = (notice) => {
     setSelectedNotice(notice);
