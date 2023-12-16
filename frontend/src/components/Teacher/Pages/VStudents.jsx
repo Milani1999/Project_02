@@ -111,15 +111,15 @@ function VStudents() {
       </Table>
 
       <Popup open={showViewPopup} onClose={handleCloseViewPopup}>
-        <div className="popup-background">
+        <div className="popup-background-student">
           {selectedStudent && (
-            <div className="popup-container-view">
+            <div className="popup-container-view-std" style={{ width: '450px' }}>
               <table
-                style={{ textAlign: "right"}}
-                className="viewTableStudentsStaff"
+                style={{ textAlign: "right" }}
+                className="viewTableStudents"
               >
                 <tr>
-                  <td colSpan={2} style={{ textAlign: "center"}}>
+                  <td colSpan={2} style={{ textAlign: "center" }}>
                     <img
                       src={selectedStudent.picture}
                       alt="Profile"

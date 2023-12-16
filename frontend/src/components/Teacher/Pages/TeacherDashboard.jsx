@@ -84,7 +84,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h3 className="mb-4 title">Welcome to UCS Family!!</h3>
+      <h3 className="mb-4 title">Welcome to UIS Family!!</h3>
       <div className="d-flex justify-content-between align-items-center gap-3">
         <div className="d-flex justify-content-between align-items-end flex-grow-1 bg p-3 roudned-3  ">
           <div>
