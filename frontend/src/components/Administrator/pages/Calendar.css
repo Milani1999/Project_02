@@ -2,13 +2,14 @@
 
 .calendar-container > div {
   margin: auto;
-  width: 90%;
+  width: 98%;
   padding: 0rem 5rem;
   max-width: 100vh;
   border: 2px solid rgb(215, 215, 216);
- 
+
  
 }
+
 
 .fc-event {
   background: rgb(234, 130, 132)!important;
@@ -50,6 +51,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 .modal-content {
@@ -64,7 +66,7 @@
   padding: 5px 15px;
   border: none;
   background-color: #007bff;
-  color: white;
+  color: rgb(26, 25, 25);
   cursor: pointer;
   border-radius: 3px;
 }
@@ -72,3 +74,4 @@
 .modal-content button:hover {
   background-color: #b30027;
 }
+

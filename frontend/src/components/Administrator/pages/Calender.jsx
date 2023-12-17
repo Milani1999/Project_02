@@ -90,6 +90,7 @@ const Calendar = () => {
 
   return (
     <div className="calendar-container">
+      <div className='cal'></div>
       {popupMessage && <div className="popup">{popupMessage}</div>}
 
       {showDeleteConfirmation && (
