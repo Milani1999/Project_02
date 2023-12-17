@@ -5,17 +5,17 @@ import {
   AiOutlineUser,
   AiOutlineFund,
 } from "react-icons/ai";
-import { RiCalendarCheckFill, RiMoonLine } from "react-icons/ri";
+import { RiCalendarCheckFill } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { IoIosNotifications } from "react-icons/io";
+// import { IoIosNotifications } from "react-icons/io";
 import { FaClipboardList } from "react-icons/fa";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Admin.css";
-import { Button, notification } from "antd";
+// import { notification } from "antd";
 import Logo from "../../../assets/ImageResources/uni2.png";
 
 const { Header, Sider, Content } = Layout;
@@ -25,19 +25,19 @@ const TeacherMainLayout = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
-  const [api, contextHolder] = notification.useNotification();
+  // const [api] = notification.useNotification();
 
-  const openNotification = () => {
-    api.open({
-      message: "Notification Title",
-      description:
-        "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
-      className: "custom-class",
-      style: {
-        width: 600,
-      },
-    });
-  };
+  // const openNotification = () => {
+  //   api.open({
+  //     message: "Notification Title",
+  //     description:
+  //       "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
+  //     className: "custom-class",
+  //     style: {
+  //       width: 600,
+  //     },
+  //   });
+  // };
 
   const userInfo = localStorage.getItem("userInfo");
   const user = JSON.parse(userInfo);

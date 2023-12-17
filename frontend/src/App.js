@@ -57,9 +57,13 @@ import ServiceLetter from "./components/Administrator/pages/ServiceLetter";
 import SendNotices from "./components/Teacher/Pages/SendNotices";
 import StudentDashboard from "./components/Student/Pages/StudentDashboard"
 import AdminPaymentRecords from "./components/Administrator/pages/Payment";
+import Chat from "../src/components/ChatBot/ChatBot"
 
 function App() {
+  <Chat/>
+
   return (
+    
     <Router>
       <div>
         <HeaderRoutes />
