@@ -5,6 +5,7 @@ import "./SNotices.css";
 import { FcAbout, FcComments, FcAdvertising } from "react-icons/fc";
 import { fetchStudentData } from "../../Count/Data";
 
+
 const StudentNotices = () => {
   const [notices, setNotices] = useState([]);
   const [selectedNotice, setSelectedNotice] = useState(null);
@@ -109,6 +110,7 @@ const StudentNotices = () => {
             centered
             title={selectedNotice.title}
             footer={null}
+          
           >
             <p>{selectedNotice.message}</p>
             {selectedNotice.file && (

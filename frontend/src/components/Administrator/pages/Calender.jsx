@@ -16,7 +16,13 @@ const Calendar = () => {
     async function fetchEvents() {
       try {
         const response = await axios.get('/api/events/get');
-        setCurrentEvents(response.data);
+       
+        const modifiedEvents = response.data.map(event => ({
+          ...event,
+          start: event.start.split('T')[0], 
+          end: event.end.split('T')[0],    
+        }));
+        setCurrentEvents(modifiedEvents);
       } catch (error) {
         console.error('Failed to fetch events:', error);
       }
