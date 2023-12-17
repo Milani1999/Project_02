@@ -25,16 +25,20 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const staffCount = await fetchStaffCount();
+        setStaffCount(staffCount);
+
         const studentCount = await fetchStudentCount();
+        setStudentCount(studentCount);
+
         const studentData = await StudentData();
         const processedData = processData(studentData);
+        setClassWise(processedData);
+
         const staffAtt = await fetchAttendedStaffCount();
+        setStaffAttendance(staffAtt);
+
         const stuAtt = await fetchStudentAttendance();
         setStudentAttendance(stuAtt);
-        setStaffAttendance(staffAtt);
-        setClassWise(processedData);
-        setStaffCount(staffCount);
-        setStudentCount(studentCount);
       } catch (error) {
         console.error(error);
       }
