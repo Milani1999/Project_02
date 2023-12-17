@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import "./Admin.css";
 import { Button, notification } from "antd";
 import Logo from "../../../assets/ImageResources/uni2.png";
+import logo from "../../../assets/ImageResources/universal.jpg";
 // import DarkMode from "../../DarkMode/DarkMode";
 const { Header, Sider, Content } = Layout;
 const MainLayout = () => {
@@ -234,7 +235,7 @@ const MainLayout = () => {
                   <img
                     width={35}
                     height={35}
-                    src={user.picture}
+                    src={logo}
                     alt="profile"
                   />
                 )}

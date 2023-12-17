@@ -17,6 +17,7 @@ const adminSchema = new mongoose.Schema(
     },
     picture: {
       type: String,
+      default: "https://res.cloudinary.com/dprnxaqxi/image/upload/v1702733665/h79vxt4z7ewdbpep6oum.jpg",
     },
   },
   {
