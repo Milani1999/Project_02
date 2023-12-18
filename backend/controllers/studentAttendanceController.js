@@ -2,55 +2,83 @@ const asyncHandler = require("express-async-handler");
 const Attendance = require("../models/studentAttendanceModel");
 const Student = require("../models/studentModel");
 
+class AttendanceHandler {
+  async takeAttendance(admission_no) {
+    const student = await this.findStudent(admission_no);
+
+    if (!student) {
+      return { success: false, message: "Please scan a Valid QR Code." };
+    }
+
+    const today = new Date();
+    const date = this.formatDate(today);
+    const localTime = new Date();
+
+    const onTimeLate = this.checkOnTimeLate(localTime);
+
+    const existingAttendance = await this.findExistingAttendance(
+      admission_no,
+      date
+    );
+
+    if (existingAttendance) {
+      return {
+        success: false,
+        message: "Record exists. Next student please.",
+      };
+    }
+
+    const newAttendance = new Attendance({
+      admission_no,
+      date,
+      arrivedTime: localTime,
+      onTimeLate,
+      present: true,
+      student: student._id,
+    });
+
+    await newAttendance.save();
+    return { success: true, message: `Welcome ${admission_no}, Next student please` };
+  }
+
+  async findStudent(admission_no) {
+    return await Student.findOne({ admission_no });
+  }
+
+  async findExistingAttendance(admission_no, date) {
+    return await Attendance.findOne({
+      admission_no,
+      date,
+    });
+  }
+
+  checkOnTimeLate(localTime) {
+    return localTime.getHours() < 8 || (localTime.getHours() === 8 && localTime.getMinutes() <= 45)
+      ? "On-Time"
+      : "Late";
+  }
+
+  formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+}
+
+const attendanceHandler = new AttendanceHandler();
+
 const takeAttendance = asyncHandler(async (req, res) => {
   const { admission_no } = req.body;
 
-  // Check if the student exists
-  const student = await Student.findOne({ admission_no });
-  if (!student) {
-    res.status(400).json({ message: "Please scan a Valid QR Code." });
-    return;
+  const result = await attendanceHandler.takeAttendance(admission_no);
+
+  if (result.success) {
+    res.json({ message: result.message });
+  } else {
+    res.status(400).json({ message: result.message });
   }
-
-  const today = new Date();
-
-
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
-
-
-  const date = `${year}-${month}-${day}`;
-
-  const localTime = new Date(); 
-
-  const onTimeLate = localTime.getHours() < 8 || (localTime.getHours() === 8 && localTime.getMinutes() <= 45)
-    ? "On-Time"
-    : "Late";
-
-  // Check if attendance already recorded for this student today
-  const existingAttendance = await Attendance.findOne({
-    admission_no,
-    date,
-  });
-  if (existingAttendance) {
-    res.status(400).json({ message: "Record exists. Next student please." });
-    return;
-  }
-
-  const newAttendance = new Attendance({
-    admission_no,
-    date, 
-    arrivedTime: localTime,
-    onTimeLate,
-    present: true,
-    student: student._id, 
-  });
-
-  await newAttendance.save();
-  res.json({ message: `Welcome ${admission_no}, Next student please` });
 });
-
 
 const getAttendanceByDate = asyncHandler(async (req, res) => {
   const { date, grade } = req.query;
@@ -131,11 +159,9 @@ const getAttendanceByDateAndAdmissionNo = asyncHandler(async (req, res) => {
 });
 
 
-
-
 module.exports = {
   takeAttendance,
   getAttendanceByDate,
   deleteAttendance,
-  getAttendanceByDateAndAdmissionNo, // Add this line
+  getAttendanceByDateAndAdmissionNo,
 };
