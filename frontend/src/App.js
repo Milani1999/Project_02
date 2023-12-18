@@ -60,10 +60,10 @@ import AdminPaymentRecords from "./components/Administrator/pages/Payment";
 import Chat from "../src/components/ChatBot/ChatBot"
 
 function App() {
-  <Chat/>
 
   return (
-    
+    <div>
+      <Chat/>
     <Router>
       <div>
         <HeaderRoutes />
@@ -163,6 +163,7 @@ function App() {
         <FooterRoutes />
       </div>
     </Router>
+    </div>
   );
 }
 const includedPaths = [
