@@ -70,7 +70,7 @@ function QrGenerator(props) {
   
         // Trigger download
         const link = document.createElement("a");
-        link.download = "qr_code_with_text.png";
+        link.download = "QR_"+ userID+".png";
         link.href = imgData;
         link.click();
       };
