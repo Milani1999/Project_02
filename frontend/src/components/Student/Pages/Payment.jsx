@@ -287,7 +287,7 @@ const Payment = () => {
                         <input
                           type="hidden"
                           name="notify_url"
-                          value="https://f17d-2402-4000-b12d-bb9a-9176-eea8-47d9-a91c.ngrok.io/api/payment/payment-notification" //Need to replace with backend url
+                          value="https://f0e3-45-121-91-95.ngrok.io/api/payment/payment-notification" //Need to replace with backend url
                         />
                         <input type="hidden" name="order_id" value={objId} />
                         <input type="hidden" name="items" value={item} />
